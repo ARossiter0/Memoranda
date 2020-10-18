@@ -198,7 +198,7 @@ public class WorkPanel extends JPanel {
 		filesB.setBackground(Color.white);
 		this.add(toolBar, BorderLayout.WEST);
 		this.add(panel, BorderLayout.CENTER);
-		panel.add(dailyItemsPanel, "DAILYITEMS");
+		//panel.add(dailyItemsPanel, "DAILYITEMS");
 		panel.add(filesPanel, "FILES");
 		toolBar.add(agendaB, null);
 		toolBar.add(eventsB, null);
