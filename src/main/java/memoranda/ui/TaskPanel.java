@@ -116,7 +116,7 @@ public class TaskPanel extends JPanel {
         newTaskB.setBorderPainted(false);
         
         subTaskB.setIcon(
-            new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_new_sub.png")));
+            new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/filenew.png")));
         subTaskB.setEnabled(true);
         subTaskB.setMaximumSize(new Dimension(24, 24));
         subTaskB.setMinimumSize(new Dimension(24, 24));
