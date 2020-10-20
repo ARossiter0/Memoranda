@@ -3,17 +3,32 @@
 
 ## 1: Basic Information (needed before you start with your Sprint -- Sprint Planning)
 
+Note: We had an icebreaker video meeting on 10/18/2020 where we collectively
+determined the following information. 
+
 **Topic you chose:** 
 	>Topic 2 - Teacher Course Planning Tool
+	>We chose this topic because we all have some 
+	>domain experience. We have all been students,
+	>and some of us (Tristan) are teachers. 
 
 **Sprint Number:** 
 	>1
 
 **Scrum Master**: 
 	>Maayan Janow
+	>Mayaan Janow has ~2 years of professional 
+	>experience in Agile and Scrum methodologies.
+	>She knows more about these topics than any 
+	>of the other group members. 
 
 **Git Master**: 
 	>Tristan Johnson
+	>Tristan has a little bit of experience using
+	>git and github with school projects in the 
+	>past. He asked for the challenge of being the
+	>git master, because he wants to get more
+	>experience with it. 
 
 ### Sprint Planning (For Sprint 1-3)
 Document your Sprint Planning here. Also check the kickoff document for more details on what needs to be done. This is just the documentation. 
