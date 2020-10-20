@@ -646,10 +646,10 @@ public class TaskPanel extends JPanel {
         	Task t = CurrentProject.getTaskList().getTask(thisTaskId);
         	// check if there are subtasks
 			if(CurrentProject.getTaskList().hasSubTasks(thisTaskId)) {
-				msg = Local.getString("Remove task")+"\n'" + t.getText() + Local.getString("' and all subtasks") +"\n"+Local.getString("Are you sure?");
+				msg = Local.getString("Remove course")+"\n'" + t.getText() + Local.getString("' and all assignemnts") +"\n"+Local.getString("Are you sure?");
 			}
 			else {		            
-				msg = Local.getString("Remove task")+"\n'" + t.getText() + "'\n"+Local.getString("Are you sure?");
+				msg = Local.getString("Remove course")+"\n'" + t.getText() + "'\n"+Local.getString("Are you sure?");
 			}
         }
         int n =
