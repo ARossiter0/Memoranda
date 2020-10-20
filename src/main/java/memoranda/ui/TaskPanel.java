@@ -297,7 +297,7 @@ public class TaskPanel extends JPanel {
 				ppCompleteTask_actionPerformed(e);
 			}
 		});
-	ppCompleteTask.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_complete.png")));
+	ppCompleteTask.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/filenew.png")));
 	ppCompleteTask.setEnabled(false);
 
 	ppCalcTask.setFont(new java.awt.Font("Dialog", 1, 11));
