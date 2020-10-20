@@ -646,14 +646,14 @@ public class AppFrame extends JFrame {
     
     //File | Exit action performed
     public void doExit() {
-        if (Configuration.get("ASK_ON_EXIT").equals("yes")) {
-                        Dimension frmSize = this.getSize();
-                        Point loc = this.getLocation();
-                        
-                        ExitConfirmationDialog dlg = new ExitConfirmationDialog(this,Local.getString("Exit"));
-                        dlg.setLocation((frmSize.width - dlg.getSize().width) / 2 + loc.x, (frmSize.height - dlg.getSize().height) / 2 + loc.y);
-                        dlg.setVisible(true);
-                        if(dlg.CANCELLED) return;
+        if (Configuration.get("ASK_ON_EXIT").equals("no")) {
+                Dimension frmSize = this.getSize();
+                Point loc = this.getLocation();
+
+                ExitConfirmationDialog dlg = new ExitConfirmationDialog(this,Local.getString("Exit"));
+                dlg.setLocation((frmSize.width - dlg.getSize().width) / 2 + loc.x, (frmSize.height - dlg.getSize().height) / 2 + loc.y);
+                dlg.setVisible(true);
+                if(dlg.CANCELLED) return;
         }
 
         Context.put("FRAME_WIDTH", new Integer(this.getWidth()));
@@ -670,25 +670,20 @@ public class AppFrame extends JFrame {
 
     //Help | About action performed
     public void jMenuHelpAbout_actionPerformed(ActionEvent e) {
-         AppFrame_AboutBox dlg = new AppFrame_AboutBox(this);        
-         Dimension dlgSize = dlg.getSize();
-         Dimension frmSize = getSize();
-         Point loc = getLocation();
-         dlg.setLocation((frmSize.width - dlgSize.width) / 2 + loc.x, (frmSize.height - dlgSize.height) / 2 + loc.y);
-         dlg.setModal(true);
-         dlg.setVisible(true);
+        AppFrame_AboutBox dlg = new AppFrame_AboutBox(this);        
+        Dimension dlgSize = dlg.getSize();
+        Dimension frmSize = getSize();
+        Point loc = getLocation();
+        dlg.setLocation((frmSize.width - dlgSize.width) / 2 + loc.x, (frmSize.height - dlgSize.height) / 2 + loc.y);
+        dlg.setModal(true);
+        dlg.setVisible(true);
     }
 
     protected void processWindowEvent(WindowEvent e) {
         if (e.getID() == WindowEvent.WINDOW_CLOSING) {
-            if (Configuration.get("ON_CLOSE").equals("exit"))
-                doExit();
-            else
-                doMinimize();
+            doExit();
         }
         else if ((e.getID() == WindowEvent.WINDOW_ICONIFIED)) {
-            super.processWindowEvent(new WindowEvent(this,
-                    WindowEvent.WINDOW_CLOSING));
             doMinimize();
         }
         else
