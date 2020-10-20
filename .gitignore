@@ -20,4 +20,6 @@
 # Mac DS file
 .DS_Store
 
-
+.vscode/
+settings.json
+launch.json
