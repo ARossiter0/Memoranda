@@ -3,6 +3,8 @@
 
 ## 1: Basic Information (needed before you start with your Sprint -- Sprint Planning)
 
+Note: we had a meeting on Sunday the 18th and this is when we chose the topic, the scrum master and the git master.
+
 **Topic you chose:** 
 	>Topic 2 - Teacher Course Planning Tool
 
