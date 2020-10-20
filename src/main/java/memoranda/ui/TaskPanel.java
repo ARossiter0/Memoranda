@@ -100,7 +100,7 @@ public class TaskPanel extends JPanel {
         historyForwardB.setText("");
 
         newTaskB.setIcon(
-            new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_new.png")));
+            new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/date.png")));
         newTaskB.setEnabled(true);
         newTaskB.setMaximumSize(new Dimension(24, 24));
         newTaskB.setMinimumSize(new Dimension(24, 24));
