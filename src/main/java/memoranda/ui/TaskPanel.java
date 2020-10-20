@@ -104,7 +104,7 @@ public class TaskPanel extends JPanel {
         newTaskB.setEnabled(true);
         newTaskB.setMaximumSize(new Dimension(24, 24));
         newTaskB.setMinimumSize(new Dimension(24, 24));
-        newTaskB.setToolTipText(Local.getString("Create new task"));
+        newTaskB.setToolTipText(Local.getString("Create new course"));
         newTaskB.setRequestFocusEnabled(false);
         newTaskB.setPreferredSize(new Dimension(24, 24));
         newTaskB.setFocusable(false);
@@ -244,7 +244,7 @@ public class TaskPanel extends JPanel {
     ppEditTask.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_edit.png")));
     taskPPMenu.setFont(new java.awt.Font("Dialog", 1, 10));
     ppRemoveTask.setFont(new java.awt.Font("Dialog", 1, 11));
-    ppRemoveTask.setText(Local.getString("Remove task"));
+    ppRemoveTask.setText(Local.getString("Remove course"));
     ppRemoveTask.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 ppRemoveTask_actionPerformed(e);
