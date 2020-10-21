@@ -36,7 +36,7 @@ public class SearchPanel extends JPanel {
     BorderLayout borderLayout1 = new BorderLayout();
     NotesList notesList = new NotesList(NotesList.EMPTY);
     JScrollPane scrollPane = new JScrollPane();
-    JPanel jPanel1 = new JPanel();
+    JPanel jFirstPanel = new JPanel();
     BorderLayout borderLayout2 = new BorderLayout();
     JTextField searchField = new JTextField();
     JPanel jPanel2 = new JPanel();
