@@ -216,9 +216,9 @@ public class AgendaPanel extends JPanel {
 		historyBackB.setBorderPainted(false);
 		historyBackB.setToolTipText(Local.getString("History back"));
 		historyBackB.setRequestFocusEnabled(false);
-		historyBackB.setPreferredSize(new Dimension(100, 100));
-		historyBackB.setMinimumSize(new Dimension(100, 100));
-		historyBackB.setMaximumSize(new Dimension(100, 100));
+		historyBackB.setPreferredSize(new Dimension(24, 24));
+		historyBackB.setMinimumSize(new Dimension(24, 24));
+		historyBackB.setMaximumSize(new Dimension(24, 24));
 		historyBackB.setText("");
 
 		historyForwardB.setAction(History.historyForwardAction);
