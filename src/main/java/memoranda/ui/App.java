@@ -143,6 +143,7 @@ public class App {
 			return;
 		frame.dispose();
 	}
+	
 
 	/**
 	 * Method showSplash.
