@@ -47,6 +47,7 @@ import main.java.memoranda.util.*;
 
 /*$Id: ProjectsPanel.java,v 1.14 2005/01/04 09:59:22 pbielen Exp $*/
 public class ProjectsPanel extends JPanel implements ExpandablePanel {
+	
 	BorderLayout borderLayout1 = new BorderLayout();
 	JToolBar topBar = new JToolBar();
 	JPanel toolbarPanel = new JPanel();
@@ -99,10 +100,16 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 	void jbInit() throws Exception {
 		component1 = Box.createHorizontalStrut(20);
 		this.setLayout(borderLayout1);
+
+		// Set the style for the top bar
 		topBar.setBackground(new Color(215, 225, 250));
 		topBar.setAlignmentX((float) 0.0);
 		topBar.setFloatable(false);
+
+		// Set the style for the toolbar panel
 		toolbarPanel.setLayout(borderLayout2);
+
+		// Set the style for the toggle button
 		toggleButton.setMaximumSize(new Dimension(20, 20));
 		toggleButton.setMinimumSize(new Dimension(20, 20));
 		toggleButton.setOpaque(false);
@@ -120,19 +127,26 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 
 		toggleButton.setIcon(expIcon);
 		toggleButton.setMargin(new Insets(0, 0, 0, 0));
+
+		// Set the style for the buttons panel
 		buttonsPanel.setMinimumSize(new Dimension(70, 22));
 		buttonsPanel.setOpaque(false);
 		buttonsPanel.setPreferredSize(new Dimension(80, 22));
 		buttonsPanel.setRequestFocusEnabled(false);
 		buttonsPanel.setLayout(flowLayout1);
+
+		// Set the style for the toolbar panel
 		toolbarPanel.setBackground(SystemColor.textHighlight);
 		toolbarPanel.setMinimumSize(new Dimension(91, 22));
 		toolbarPanel.setOpaque(false);
 		toolbarPanel.setPreferredSize(new Dimension(91, 22));
+
+		// Set the style for flow layout 1
 		flowLayout1.setAlignment(FlowLayout.RIGHT);
 		flowLayout1.setHgap(0);
 		flowLayout1.setVgap(0);
 
+		// Set the style for the current project title
 		curProjectTitle.setFont(new java.awt.Font("Dialog", 1, 11));
 		curProjectTitle.setForeground(new Color(64, 70, 128));
 		curProjectTitle.setMaximumSize(new Dimension(32767, 22));
@@ -148,9 +162,12 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 		 * buttonsPanel.add(newProjectB, null); buttonsPanel.add(editProjectB,
 		 * null);
 		 */
+
+		// Set the style for the 'New Project' menu item
 		ppNewProject.setFont(new java.awt.Font("Dialog", 1, 11));
 		ppNewProject.setAction(newProjectAction);
 
+		// Set the style for the 'Project properties' menu item
 		ppProperties.setFont(new java.awt.Font("Dialog", 1, 11));
 		ppProperties.setText(Local.getString("Project properties"));
 		ppProperties.addActionListener(new java.awt.event.ActionListener() {
@@ -163,6 +180,8 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 				main.java.memoranda.ui.AppFrame.class.getResource(
 					"/ui/icons/editproject.png")));
 		ppProperties.setEnabled(false);
+
+		// Set the style for the 'Delete project' menu item
 		ppDeleteProject.setFont(new java.awt.Font("Dialog", 1, 11));
 		ppDeleteProject.setText(Local.getString("Delete project"));
 		ppDeleteProject.addActionListener(new java.awt.event.ActionListener() {
@@ -176,10 +195,10 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 					"/ui/icons/removeproject.png")));
 		ppDeleteProject.setEnabled(false);
 
+
+		// Set the style for the 'Open project' menu item
 		ppOpenProject.setFont(new java.awt.Font("Dialog", 1, 11));
-
 		ppOpenProject.setText(" " + Local.getString("Open project"));
-
 		ppOpenProject.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ppOpenProject_actionPerformed(e);
@@ -187,6 +206,7 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 		});
 		ppOpenProject.setEnabled(false);
 
+		// Set the style for the 'Show active projects only' checkbox menu item
 		ppShowActiveOnlyChB.setFont(new java.awt.Font("Dialog", 1, 11));
 		ppShowActiveOnlyChB.setText(
 			Local.getString("Show active projects only"));
@@ -202,7 +222,10 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 		ppShowActiveOnlyChB.setSelected(isShao);
 		ppShowActiveOnlyChB_actionPerformed(null);
 
+		// Set the style for the projects popup menu
 		projectsPPMenu.setFont(new java.awt.Font("Dialog", 1, 10));
+
+		// Set the style for the button that opens the popup menu in the buttons panel
 		ppOpenB.setMaximumSize(new Dimension(34, 20));
 		ppOpenB.setMinimumSize(new Dimension(24, 10));
 		ppOpenB.setOpaque(false);
@@ -219,14 +242,28 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 			new ImageIcon(
 				main.java.memoranda.ui.AppFrame.class.getResource(
 					"/ui/icons/ppopen.png")));
+
+		// Add the 'open popup menu' button and component1 to the buttons panel
 		buttonsPanel.add(ppOpenB, null);
 		buttonsPanel.add(component1, null);
+
+		// Add the top bar, project table panel to this projects panel
 		this.add(topBar, BorderLayout.NORTH);
 		this.add(prjTablePanel, BorderLayout.CENTER);
+
+		// Add the toolbar panel to the top bar
 		topBar.add(toolbarPanel, null);
+
+		// Add the buttons panel to the toolbar panel
 		toolbarPanel.add(buttonsPanel, BorderLayout.EAST);
+
+		// Add the toggle button to the buttons panel
 		buttonsPanel.add(toggleButton, null);
+
+		// Add the current project title to the toolbar panel
 		toolbarPanel.add(curProjectTitle, BorderLayout.CENTER);
+
+		// Add menu items to projects popup menu. 
 		projectsPPMenu.add(ppOpenProject);
 		projectsPPMenu.addSeparator();
 		projectsPPMenu.add(ppNewProject);
@@ -235,6 +272,8 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 		projectsPPMenu.add(ppProperties);
 		projectsPPMenu.addSeparator();
 		projectsPPMenu.add(ppShowActiveOnlyChB);
+
+		// Add a project listener to the current project
 		CurrentProject.addProjectListener(new ProjectListener() {
 			public void projectChange(
 				Project p,
@@ -247,6 +286,8 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 				prjTablePanel.updateUI();
 			}
 		});
+
+
 		CurrentDate.addDateListener(new DateListener() {
 			public void dateChange(CalendarDate d) {
 				prjTablePanel.updateUI();
@@ -275,7 +316,7 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 		prjTablePanel.projectsTable.setToolTipText(
 			Local.getString("Double-click to set a current project"));
 
-			// delete projects using the DEL kew
+			// delete projects using the DEL key
 			prjTablePanel.projectsTable.addKeyListener(new KeyListener() {
 				public void keyPressed(KeyEvent e){
 					if(prjTablePanel.projectsTable.getSelectedRows().length>0 
@@ -334,6 +375,15 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 			(int) ppOpenB.getLocation().getY() + 24);
 	}
 
+	/**
+	 * Changes the open project by setting the 
+	 * current project to the selected project in the
+	 * project table panel, updating the project 
+	 * table panel ui, and disabling the menu items 
+	 * for deleting/opening the project for the 
+	 * currently selected project. 
+	 * @param e the action event that triggers opening a project
+	 */
 	void ppOpenProject_actionPerformed(ActionEvent e) {
 		CurrentProject.set(prjTablePanel.getSelectedProject());
 		prjTablePanel.updateUI();
