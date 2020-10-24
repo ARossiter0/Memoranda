@@ -103,7 +103,7 @@ public class AppFrame extends JFrame {
         }
     };
 
-    public Action minimizeAction = new AbstractAction("Close the window") {
+    public Action minimizeAction = new AbstractAction("Minimize the window") {
         public void actionPerformed(ActionEvent e) {
             doMinimize();
         }
