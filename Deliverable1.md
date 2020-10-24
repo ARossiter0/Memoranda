@@ -19,26 +19,53 @@ Note: we had a meeting on Sunday the 18th and this is when we chose the topic, t
 
 ### Sprint Planning (For Sprint 1-3)
 Document your Sprint Planning here. Also check the kickoff document for more details on what needs to be done. This is just the documentation. 
+Group meeting on 10/21/2020:
+We discussed the user stories the professor gave us and went over the tasks to make sure we understand what is required of us. We discussed our topic and some implementation
+details so that we have a better idea of how we want the software to look and function, and how and where we want to put each functionality. 
+We decided that except for the UI and bug fixing and understanding memoranda better, we also want to add the ability to add courses and view them in a way that will
+make it easy for the user to manage.
+Each team member was given a few tasks to create on Taiga and we set up our next meeting, so that everyone have time to go through the user stories and tasks again individually, 
+go through memoranada again and discuss additional insights and things that were forgotten, in the next meeting.
+
+**All group memebers attended.
+
+Group meeting 10/23/2020:
+During this meeting, we went through memeoranda together and we discussed the UI implementation in greate details, how many tabs we should add, what functionalities in memoranda 
+are going to be used and for what purpose. We talked about the topic's requirements and how we are going to execute some of the requirements and where each functionality 
+should go, and how.
+We came up with some tasks modificatios and we also added some additioanl test cases. 
+We went through a complete and comprehensive workflow of how the software is going to work, discussed some bugs (while all functionalities in memoranda are currently
+dependant on what project you are on, Events is not, so if you switch between projects, the events you add, remain the same when you switch between
+projects, which is not a desired functionality). We also discussed what used stories we want to start with (reverse engineering and bugs fixing) so that it makes it easier for us to move
+forward to the next user stories.
+
+**All group members attended. 
 
 **Sprint Goal:** Your Sprint goal
+Our sprint goal is to give a user a good understanding of what the software is about, what are the functionalities and abilities of the software, and even allow the
+user to execute some simple functionalities, so that the user is confident that we can get the product done efficeintly and include all of the desired functionalities (by adding
+all the place holders for future requirements such as tabs and general UI)
 
-**How many User Stories did you add to the Product Backlog:**  Number
+**How many User Stories did you add to the Product Backlog:**  3
 
-**How many User Stories did you add to this Sprint:** 
+**How many User Stories did you add to this Sprint:** 2
 > Answer the questions below about your Sprint Planning?
 
 **Why did you add these US, why do you think you can get them done in the next Sprint?**
-
 > Your Answer
+We feel like we have a good understanding of where we can find those functionalties and we think that it reflects out Sprint goal very well - we want to
+demonstrate to the user to the best of our ability, what the software is all about. We believe that not only by modifying the UI, but also by allowing a user
+to add a course and view its details, we can achieve our goal very well.
 
 **Why do you think these fit well with your Sprint goal? (details)**
-
 > Your Answer
+Our main goal this Sprint is to demonstrate what the software is about and what is its functionality, since we were already given with user stories and tasks to modify the UI 
+to match our topic, we wanted to also allow the user to add a course and and view it, so they get even a better idea of the software's functionality
 
 **Do you have a rough idea what you need to do? (if the answer is no then please let me know on Slack)**
 
 > Your Answer
-
+We feel confident that we know what we need to do and how to achieve our goals.
 
 
 ## 2: During the Sprint
