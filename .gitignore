@@ -6,6 +6,9 @@
 
 ### Eclipse ###
 
+### Intellij ###
+/.idea/
+
 ### Eclipse Patch ###
 # Eclipse Core		
 .project
