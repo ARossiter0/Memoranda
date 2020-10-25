@@ -103,7 +103,7 @@ public class AppFrame extends JFrame {
         }
     };
 
-    public Action minimizeAction = new AbstractAction("Close the window") {
+    public Action minimizeAction = new AbstractAction("Minimize the window") {
         public void actionPerformed(ActionEvent e) {
             doMinimize();
         }
@@ -337,7 +337,7 @@ public class AppFrame extends JFrame {
         jMenuFileImportNote.setText(Local.getString("Import one note")
                 + "...");
         jMenuFilePackPrj.setText(Local.getString("Pack project") + "...");
-        jMenuFileMin.setText(Local.getString("Close the window"));
+        jMenuFileMin.setText(Local.getString("Minimize the window"));
         jMenuFileMin.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F10,
                 InputEvent.ALT_MASK));
 
@@ -665,8 +665,7 @@ public class AppFrame extends JFrame {
     }
 
     public void doMinimize() {
-        exitNotify();
-        App.closeWindow();
+        App.minimizeWindow();
     }
 
     //Help | About action performed
@@ -688,8 +687,6 @@ public class AppFrame extends JFrame {
                 doMinimize();
         }
         else if ((e.getID() == WindowEvent.WINDOW_ICONIFIED)) {
-            super.processWindowEvent(new WindowEvent(this,
-                    WindowEvent.WINDOW_CLOSING));
             doMinimize();
         }
         else

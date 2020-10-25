@@ -5,6 +5,7 @@
 *.log
 
 ### Eclipse ###
+.settings
 
 ### Intellij ###
 /.idea/
