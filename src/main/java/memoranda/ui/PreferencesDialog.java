@@ -178,6 +178,7 @@ public class PreferencesDialog extends JDialog {
 				soundFileBrowseB_actionPerformed(e);
 			}
 		});
+/////
 		gridLayout1.setRows(4);
 		jPanel1.setBorder(titledBorder1);
 		jPanel1.setLayout(gridLayout1);
@@ -264,7 +265,7 @@ public class PreferencesDialog extends JDialog {
 		gbc.insets = new Insets(2, 0, 0, 10);
 		gbc.anchor = GridBagConstraints.WEST;
 		GeneralPanel.add(closeExitRB, gbc);
-
+////
 		closeGroup.add(closeHideRB);
 		closeHideRB.setText(Local.getString("Hide"));
 		closeHideRB.addActionListener(new java.awt.event.ActionListener() {
@@ -418,7 +419,7 @@ public class PreferencesDialog extends JDialog {
 		gbc.insets = new Insets(2, 0, 10, 10);
 		gbc.anchor = GridBagConstraints.WEST;
 		GeneralPanel.add(askConfirmChB, gbc);
-
+////
 		// Build Tab2
 		rstPanelBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
 		resourceTypePanel.setBorder(rstPanelBorder);
@@ -519,7 +520,6 @@ public class PreferencesDialog extends JDialog {
 
 		// set all config-values
 		setValues();
-
 	}
 
 	void setValues() {
@@ -820,6 +820,7 @@ public class PreferencesDialog extends JDialog {
 				.getString("Select the web-browser executable"));
 		chooser.setAcceptAllFileFilterUsed(true);
 		chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+
 		chooser.setPreferredSize(new Dimension(550, 375));
 		if (System.getProperty("os.name").startsWith("Win")) {
 			chooser.setFileFilter(new AllFilesFilter(AllFilesFilter.EXE));
