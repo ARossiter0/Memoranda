@@ -77,7 +77,7 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 
 	public Action newProjectAction =
 		new AbstractAction(
-			Local.getString("New project") + "...",
+			Local.getString("New course") + "...",
 			new ImageIcon(
 				main.java.memoranda.ui.AppFrame.class.getResource(
 					"/ui/icons/newproject.png"))) {
@@ -152,7 +152,7 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 		ppNewProject.setAction(newProjectAction);
 
 		ppProperties.setFont(new java.awt.Font("Dialog", 1, 11));
-		ppProperties.setText(Local.getString("Project properties"));
+		ppProperties.setText(Local.getString("Course properties"));
 		ppProperties.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ppProperties_actionPerformed(e);
@@ -178,7 +178,7 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 
 		ppOpenProject.setFont(new java.awt.Font("Dialog", 1, 11));
 
-		ppOpenProject.setText(" " + Local.getString("Open project"));
+		ppOpenProject.setText(" " + Local.getString("Open course"));
 
 		ppOpenProject.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -189,7 +189,7 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 
 		ppShowActiveOnlyChB.setFont(new java.awt.Font("Dialog", 1, 11));
 		ppShowActiveOnlyChB.setText(
-			Local.getString("Show active projects only"));
+			Local.getString("Show active courses only"));
 		ppShowActiveOnlyChB
 			.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -273,7 +273,7 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 			}
 		});
 		prjTablePanel.projectsTable.setToolTipText(
-			Local.getString("Double-click to set a current project"));
+			Local.getString("Double-click to set a current course"));
 
 			// delete projects using the DEL kew
 			prjTablePanel.projectsTable.addKeyListener(new KeyListener() {
@@ -356,13 +356,13 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 					+ " "
 					+ prjTablePanel.projectsTable.getSelectedRows().length
 					+ " "
-					+ Local.getString("projects")
+					+ Local.getString("courses")
 					+ "\n"
 					+ Local.getString("Are you sure?");
 		else {
 			prj = prjTablePanel.getSelectedProject();
 			msg =
-				Local.getString("Delete project")
+				Local.getString("Delete course")
 					+ " '"
 					+ prj.getTitle()
 					+ "'.\n"
@@ -373,7 +373,7 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 			JOptionPane.showConfirmDialog(
 				App.getFrame(),
 				msg,
-				Local.getString("Delete project"),
+				Local.getString("Delete course"),
 				JOptionPane.YES_NO_OPTION);
 		if (n != JOptionPane.YES_OPTION)
 			return;
@@ -402,7 +402,7 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 	void ppProperties_actionPerformed(ActionEvent e) {
 		Project prj = prjTablePanel.getSelectedProject();
 		ProjectDialog dlg =
-			new ProjectDialog(null, Local.getString("Project properties"));
+			new ProjectDialog(null, Local.getString("Course properties"));
 		Dimension dlgSize = dlg.getSize();
 		Dimension frmSize = App.getFrame().getSize();
 		Point loc = App.getFrame().getLocation();
