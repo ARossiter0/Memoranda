@@ -53,6 +53,17 @@ public class ProjectDialog extends JDialog {
     public JCheckBox endDateChB = new JCheckBox();
     public JSpinner endDate = new JSpinner(new SpinnerDateModel());
     JButton edButton = new JButton();
+    
+    JLabel ldLabel = new JLabel();
+    public JSpinner lectureDays = new JSpinner(new SpinnerDateModel());
+    JButton ldButton = new JButton();
+    
+    //test
+    JButton setLectureDays = new JButton();
+    JButton setFreeDays = new JButton();
+    JTextField todoField = new JTextField();
+    //test
+    
     //public JCheckBox freezeChB = new JCheckBox();
     JPanel bottomPanel = new JPanel();
     JButton okButton = new JButton();
@@ -76,14 +87,14 @@ public class ProjectDialog extends JDialog {
         topPanel.setBackground(Color.WHITE);        
         header.setFont(new java.awt.Font("Dialog", 0, 20));
         header.setForeground(new Color(0, 0, 124));
-        header.setText(Local.getString("Project"));
+        header.setText(Local.getString("Course"));
         //header.setHorizontalAlignment(SwingConstants.CENTER);
         header.setIcon(new ImageIcon(main.java.memoranda.ui.ProjectDialog.class.getResource(
             "/ui/icons/project48.png")));
         topPanel.add(header);
         
         centerPanel.setBorder(new EtchedBorder());
-        titleLabel.setText(Local.getString("Title"));
+        titleLabel.setText(Local.getString("Course Name"));
         gbc = new GridBagConstraints();
         gbc.gridx = 0; gbc.gridy = 0;
         gbc.gridwidth = 5;
@@ -149,12 +160,17 @@ public class ProjectDialog extends JDialog {
                 sdButton_actionPerformed(e);
             }
         });
+        
+       
         gbc = new GridBagConstraints();
         gbc.gridx = 2; gbc.gridy = 2;
         gbc.insets = new Insets(5, 0, 10, 25);
         gbc.anchor = GridBagConstraints.WEST;
         centerPanel.add(sdButton, gbc);
         
+        
+        
+        // Start of end date field
         endDateChB.setForeground(Color.gray);
         endDateChB.setText(Local.getString("End date"));
         endDateChB.addActionListener(new java.awt.event.ActionListener() {
@@ -162,6 +178,8 @@ public class ProjectDialog extends JDialog {
                 endDateChB_actionPerformed(e);
             }
         });
+        
+        
         gbc = new GridBagConstraints();
         gbc.gridx = 3; gbc.gridy = 2;
         gbc.insets = new Insets(5, 0, 10, 5);
@@ -197,6 +215,8 @@ public class ProjectDialog extends JDialog {
         gbc.anchor = GridBagConstraints.WEST;
         centerPanel.add(endDate, gbc);
         
+    
+        
         edButton.setEnabled(false);
         edButton.setMinimumSize(new Dimension(20, 20));
         edButton.setMaximumSize(new Dimension(20, 20));
@@ -212,6 +232,42 @@ public class ProjectDialog extends JDialog {
         gbc.insets = new Insets(5, 0, 10, 10);
         gbc.anchor = GridBagConstraints.WEST;
         centerPanel.add(edButton, gbc);
+        
+        
+        //TEST
+        setLectureDays.setText(Local.getString("Set Lecture Times"));
+        setLectureDays.setIcon(
+            new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/notify.png")));
+        
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0; gbc.gridy = 4;
+        gbc.insets = new Insets(5, 0, 10, 10);
+        gbc.anchor = GridBagConstraints.CENTER;
+        centerPanel.add(setLectureDays, gbc); 
+        
+        setLectureDays.setText(Local.getString("Set Lecture Times"));
+        setLectureDays.setIcon(
+            new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/notify.png")));
+        setLectureDays.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	setLectureDays_actionPerformed(e);
+            }
+        });
+        //------------------------------  
+        
+        setFreeDays.setText(Local.getString("Set Free Times"));
+        setFreeDays.setIcon(
+            new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/notify.png")));
+        
+        gbc = new GridBagConstraints();
+        gbc.gridx = 1; gbc.gridy = 4;
+        gbc.insets = new Insets(5, 0, 10, 10);
+        gbc.anchor = GridBagConstraints.CENTER;
+        centerPanel.add(setFreeDays, gbc);
+        
+        //TEST
+  
+        
         
         bottomPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
         okButton.setMaximumSize(new Dimension(100, 25));
@@ -268,6 +324,9 @@ public class ProjectDialog extends JDialog {
         });
     }
     
+    
+   
+    
     void okButton_actionPerformed(ActionEvent e) {
         CANCELLED = false;
         this.dispose();
@@ -307,7 +366,7 @@ public class ProjectDialog extends JDialog {
     }
     
     public static void newProject() {
-        ProjectDialog dlg = new ProjectDialog(null, Local.getString("New project"));
+        ProjectDialog dlg = new ProjectDialog(null, Local.getString("New course"));
         
         Dimension dlgSize = dlg.getSize();
         //dlg.setSize(dlgSize);
@@ -327,4 +386,11 @@ public class ProjectDialog extends JDialog {
             prj.freeze();*/
         CurrentStorage.get().storeProjectManager();
     }
+
+    void setLectureDays_actionPerformed(ActionEvent e) {
+    	((AppFrame)App.getFrame()).workPanel.dailyItemsPanel.eventsPanel.newEventB_actionPerformed(e, 
+			this.todoField.getText(), (Date)startDate.getModel().getValue(),(Date)endDate.getModel().getValue());
+    }
+    
+    
 }
