@@ -50,7 +50,7 @@ public class ProjectDialog extends JDialog {
     JLabel sdLabel = new JLabel();
     public JSpinner startDate = new JSpinner(new SpinnerDateModel());
     JButton sdButton = new JButton();
-    public JCheckBox endDateChB = new JCheckBox();
+//    public JCheckBox endDateChB = new JCheckBox();
     public JSpinner endDate = new JSpinner(new SpinnerDateModel());
     JButton edButton = new JButton();
     //public JCheckBox freezeChB = new JCheckBox();
@@ -155,20 +155,20 @@ public class ProjectDialog extends JDialog {
         gbc.anchor = GridBagConstraints.WEST;
         centerPanel.add(sdButton, gbc);
         
-        endDateChB.setForeground(Color.gray);
-        endDateChB.setText(Local.getString("End date"));
-        endDateChB.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                endDateChB_actionPerformed(e);
-            }
-        });
+//        endDateChB.setForeground(Color.gray);
+//        endDateChB.setText(Local.getString("End date"));
+//        endDateChB.addActionListener(new java.awt.event.ActionListener() {
+//            public void actionPerformed(ActionEvent e) {
+//                endDateChB_actionPerformed(e);
+//            }
+//        });
         gbc = new GridBagConstraints();
         gbc.gridx = 3; gbc.gridy = 2;
         gbc.insets = new Insets(5, 0, 10, 5);
         gbc.anchor = GridBagConstraints.WEST;
-        centerPanel.add(endDateChB, gbc);
+//        centerPanel.add(endDateChB, gbc);
         
-        endDate.setEnabled(false);
+//        endDate.setEnabled(false);
         endDate.setPreferredSize(new Dimension(80, 20));
         endDate.setLocale(Local.getCurrentLocale());
 		//Added by (jcscoobyrs) on 17-Nov-2003 at 14:24:43 PM
@@ -277,15 +277,15 @@ public class ProjectDialog extends JDialog {
         this.dispose();
     }
     
-    void endDateChB_actionPerformed(ActionEvent e) {
-        endDate.setEnabled(endDateChB.isSelected());
-        edButton.setEnabled(endDateChB.isSelected());
-        if (endDateChB.isSelected()) {
-            endDateChB.setForeground(Color.BLACK);
-            endDate.getModel().setValue(startDate.getModel().getValue());
-        }
-        else endDateChB.setForeground(Color.GRAY);
-    }
+//    void endDateChB_actionPerformed(ActionEvent e) {
+//        endDate.setEnabled(endDateChB.isSelected());
+//        edButton.setEnabled(endDateChB.isSelected());
+//        if (endDateChB.isSelected()) {
+//            endDateChB.setForeground(Color.BLACK);
+//            endDate.getModel().setValue(startDate.getModel().getValue());
+//        }
+//        else endDateChB.setForeground(Color.GRAY);
+//    }
     
     void sdButton_actionPerformed(ActionEvent e) {
         //startCalFrame.setLocation(sdButton.getLocation());
@@ -320,8 +320,8 @@ public class ProjectDialog extends JDialog {
         String title = dlg.prTitleField.getText();
         CalendarDate startD = new CalendarDate((Date) dlg.startDate.getModel().getValue());
         CalendarDate endD = null;
-        if (dlg.endDateChB.isSelected())
-            endD = new CalendarDate((Date) dlg.endDate.getModel().getValue());
+//        if (dlg.endDateChB.isSelected())
+        endD = new CalendarDate((Date) dlg.endDate.getModel().getValue());
         Project prj = ProjectManager.createProject(title, startD, endD);
         /*if (dlg.freezeChB.isSelected())
             prj.freeze();*/
