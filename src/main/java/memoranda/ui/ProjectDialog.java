@@ -197,7 +197,7 @@ public class ProjectDialog extends JDialog {
         gbc.anchor = GridBagConstraints.WEST;
         centerPanel.add(endDate, gbc);
         
-        edButton.setEnabled(false);
+//        edButton.setEnabled(false);
         edButton.setMinimumSize(new Dimension(20, 20));
         edButton.setMaximumSize(new Dimension(20, 20));
         edButton.setPreferredSize(new Dimension(20, 20));
