@@ -131,7 +131,7 @@ public class ProjectsTablePanel extends JPanel {
 
         String[] columnNames =
             {
-                Local.getString("Project title"),
+                Local.getString("Course Name"),
                 Local.getString("Start date"),
                 Local.getString("End date"),
                 //Local.getString("Execution"),
