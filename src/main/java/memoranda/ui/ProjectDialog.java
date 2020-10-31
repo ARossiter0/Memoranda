@@ -456,15 +456,15 @@ public class ProjectDialog extends JDialog {
         this.dispose();
     }
     
-//    void endDateChB_actionPerformed(ActionEvent e) {
-//        endDate.setEnabled(endDateChB.isSelected());
-//        edButton.setEnabled(endDateChB.isSelected());
-//        if (endDateChB.isSelected()) {
-//            endDateChB.setForeground(Color.BLACK);
-//            endDate.getModel().setValue(startDate.getModel().getValue());
-//        }
-//        else endDateChB.setForeground(Color.GRAY);
-//    }
+    void endDateChB_actionPerformed(ActionEvent e) {
+        endDate.setEnabled(endDateChB.isSelected());
+        edButton.setEnabled(endDateChB.isSelected());
+        if (endDateChB.isSelected()) {
+            endDateChB.setForeground(Color.BLACK);
+            endDate.getModel().setValue(startDate.getModel().getValue());
+        }
+        else endDateChB.setForeground(Color.GRAY);
+    }
     
     void sdButton_actionPerformed(ActionEvent e) {
         //startCalFrame.setLocation(sdButton.getLocation());
