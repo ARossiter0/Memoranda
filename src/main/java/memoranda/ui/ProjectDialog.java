@@ -179,15 +179,6 @@ public class ProjectDialog extends JDialog {
         gbc.anchor = GridBagConstraints.WEST;
         centerPanel.add(sdButton, gbc);
         
-<<<<<<< HEAD
-//        endDateChB.setForeground(Color.gray);
-//        endDateChB.setText(Local.getString("End date"));
-//        endDateChB.addActionListener(new java.awt.event.ActionListener() {
-//            public void actionPerformed(ActionEvent e) {
-//                endDateChB_actionPerformed(e);
-//            }
-//        });
-=======
         
         
         // Start of end date field
@@ -200,7 +191,6 @@ public class ProjectDialog extends JDialog {
         });
         
         
->>>>>>> US2-AddCourse
         gbc = new GridBagConstraints();
         gbc.gridx = 3; gbc.gridy = 2;
         gbc.insets = new Insets(5, 0, 10, 5);
@@ -236,13 +226,9 @@ public class ProjectDialog extends JDialog {
         gbc.anchor = GridBagConstraints.WEST;
         centerPanel.add(endDate, gbc);
         
-<<<<<<< HEAD
-//        edButton.setEnabled(false);
-=======
     
         
         edButton.setEnabled(false);
->>>>>>> US2-AddCourse
         edButton.setMinimumSize(new Dimension(20, 20));
         edButton.setMaximumSize(new Dimension(20, 20));
         edButton.setPreferredSize(new Dimension(20, 20));
