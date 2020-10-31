@@ -54,7 +54,7 @@ public class ProjectDialog extends JDialog {
     JLabel sdLabel = new JLabel();
     public JSpinner startDate = new JSpinner(new SpinnerDateModel());
     JButton sdButton = new JButton();
-//    public JCheckBox endDateChB = new JCheckBox();
+    public JCheckBox endDateChB = new JCheckBox();
     public JSpinner endDate = new JSpinner(new SpinnerDateModel());
     JButton edButton = new JButton();
     
