@@ -523,7 +523,7 @@ public class TaskPanel extends JPanel {
         TaskDialog dlg = new TaskDialog(App.getFrame(), Local.getString("New Task"));
         String parentTaskId = taskTable.getModel().getValueAt(taskTable.getSelectedRow(), TaskTable.TASK_ID).toString();
         
-//        Util.debug("Adding sub task under " + parentTaskId);
+        //        Util.debug("Adding sub task under " + parentTaskId);
         
         Dimension frmSize = App.getFrame().getSize();
         Point loc = App.getFrame().getLocation();
@@ -544,7 +544,7 @@ public class TaskPanel extends JPanel {
         if (dlg.CANCELLED)
             return;
         CalendarDate sd = new CalendarDate((Date) dlg.startDate.getModel().getValue());
-//        CalendarDate ed = new CalendarDate((Date) dlg.endDate.getModel().getValue());
+        //        CalendarDate ed = new CalendarDate((Date) dlg.endDate.getModel().getValue());
           CalendarDate ed;
  		if(dlg.chkEndDate.isSelected())
  			ed = new CalendarDate((Date) dlg.endDate.getModel().getValue());
@@ -553,7 +553,7 @@ public class TaskPanel extends JPanel {
         long effort = Util.getMillisFromHours(dlg.effortField.getText());
 		Task newTask = CurrentProject.getTaskList().createTask(sd, ed, dlg.todoField.getText(), dlg.priorityCB.getSelectedIndex(),effort, dlg.descriptionField.getText(),parentTaskId);
         newTask.setProgress(((Integer)dlg.progress.getValue()).intValue());
-//		CurrentProject.getTaskList().adjustParentTasks(newTask);
+        //		CurrentProject.getTaskList().adjustParentTasks(newTask);
 
 		CurrentStorage.get().storeTaskList(CurrentProject.getTaskList(), CurrentProject.get());
         taskTable.tableChanged();
