@@ -77,6 +77,7 @@ public class CurrentProject {
             return _resources;
     }
 
+    //Edit this to be able to insert the task list into the storage process
     public static void set(Project project) {
         if (project.getID().equals(_project.getID())) return;
         TaskList newtasklist = CurrentStorage.get().openTaskList(project);

@@ -13,6 +13,7 @@ import java.awt.event.ActionListener;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -33,6 +34,7 @@ import main.java.memoranda.ProjectManager;
 import main.java.memoranda.date.CalendarDate;
 import main.java.memoranda.util.CurrentStorage;
 import main.java.memoranda.util.Local;
+
 
 /*$Id: ProjectDialog.java,v 1.26 2004/10/18 19:09:10 ivanrise Exp $*/
 public class ProjectDialog extends JDialog {
@@ -78,7 +80,14 @@ public class ProjectDialog extends JDialog {
     JPanel bottomPanel = new JPanel();
     JButton okButton = new JButton();
     JButton cancelButton = new JButton();
-    
+
+
+    //New for adding tasks into, US90 specific
+    ArrayList<LectureTime> lectureTimes = new ArrayList<LectureTime>();
+    ArrayList<CalendarDate> freeDays = new ArrayList<CalendarDate>();
+    ArrayList<CalendarDate> breakDays = new ArrayList<CalendarDate>();
+    ArrayList<CalendarDate> holidays = new ArrayList<CalendarDate>();
+
     public ProjectDialog(Frame frame, String title) {
         super(frame, title, true);
         try {
@@ -484,9 +493,12 @@ public class ProjectDialog extends JDialog {
         endCalFrame.show();
     }
     
-    //Currently expirimental
+    //Currently in development
     void setLectureDays_actionPerformed(ActionEvent e) {
-    	((AppFrame)App.getFrame()).workPanel.dailyItemsPanel.tasksPanel.newTaskB_actionPerformed(e);
+        LectureTime posTime = ((AppFrame)App.getFrame()).workPanel.dailyItemsPanel.tasksPanel.newLectureTime_actionPerformed(e);
+        if(posTime != null) {
+            lectureTimes.add(posTime);
+        }
     }
     
     // Perform action for set free days
@@ -506,13 +518,15 @@ public class ProjectDialog extends JDialog {
         ProjectDialog dlg = new ProjectDialog(null, Local.getString("New course"));
         
         Dimension dlgSize = dlg.getSize();
-        //dlg.setSize(dlgSize);
+
         Dimension frmSize = App.getFrame().getSize();
         Point loc = App.getFrame().getLocation();
         dlg.setLocation((frmSize.width - dlgSize.width) / 2 + loc.x, (frmSize.height - dlgSize.height) / 2 + loc.y);
         dlg.setVisible(true);
+
         if (dlg.CANCELLED)
             return;
+        
         String title = dlg.prTitleField.getText();
         CalendarDate startD = new CalendarDate((Date) dlg.startDate.getModel().getValue());
         CalendarDate endD = new CalendarDate((Date) dlg.endDate.getModel().getValue());
@@ -520,8 +534,19 @@ public class ProjectDialog extends JDialog {
         CalendarDate FinalExamDate = new CalendarDate((Date) dlg.finalExam.getModel().getValue());
 
         Project prj = ProjectManager.createProject(title, startD, endD, FinalExamDate);
+        CurrentStorage.get().storeProjectManager(); //does this set the current project? If not set it before setTasks is called
+    }
 
-        CurrentStorage.get().storeProjectManager();
+    private void setTasksForPRoject() {
+
+
+        //do this for every task
+        Task newTask = CurrentProject.getTaskList().createTask(sd, ed, dlg.todoField.getText(), dlg.priorityCB.getSelectedIndex(),effort, dlg.descriptionField.getText(),null);
+
+		newTask.setProgress(((Integer)dlg.progress.getValue()).intValue());
+        CurrentStorage.get().storeTaskList(CurrentProject.getTaskList(), CurrentProject.get());
+        taskTable.tableChanged();
+        parentPanel.updateIndicators();
     }
     
 }
