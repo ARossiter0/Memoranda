@@ -16,4 +16,8 @@ public class LectureTime {
         this.hour = 12;
         this.min = 0;
     }
+
+    public String dayToString() {
+        return day.toString();
+    }
 }

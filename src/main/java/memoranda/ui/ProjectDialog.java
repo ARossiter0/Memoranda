@@ -84,9 +84,9 @@ public class ProjectDialog extends JDialog {
 
     //New for adding tasks into, US90 specific
     ArrayList<LectureTime> lectureTimes = new ArrayList<LectureTime>();
-    ArrayList<CalendarDate> freeDays = new ArrayList<CalendarDate>();
-    ArrayList<CalendarDate> breakDays = new ArrayList<CalendarDate>();
-    ArrayList<CalendarDate> holidays = new ArrayList<CalendarDate>();
+    ArrayList<SpecialCalendarDate> freeDays = new ArrayList<SpecialCalendarDate>();
+    ArrayList<SpecialCalendarDate> breakDays = new ArrayList<SpecialCalendarDate>();
+    ArrayList<SpecialCalendarDate> holidays = new ArrayList<SpecialCalendarDate>();
 
     public ProjectDialog(Frame frame, String title) {
         super(frame, title, true);
@@ -495,7 +495,7 @@ public class ProjectDialog extends JDialog {
     
     //Currently in development
     void setLectureDays_actionPerformed(ActionEvent e) {
-        LectureTime posTime = ((AppFrame)App.getFrame()).workPanel.dailyItemsPanel.tasksPanel.newLectureTime_actionPerformed(e);
+        LectureTime posTime = ((AppFrame)App.getFrame()).workPanel.dailyItemsPanel.tasksPanel.newLectureTime_actionPerformed();
         if(posTime != null) {
             lectureTimes.add(posTime);
         }
@@ -503,14 +503,18 @@ public class ProjectDialog extends JDialog {
     
     // Perform action for set free days
     void setFreeDays_actionPerformed(ActionEvent e) {
-    	((AppFrame)App.getFrame()).workPanel.dailyItemsPanel.eventsPanel.newEventB_actionPerformed(e, 
-			this.todoField.getText(), (Date)startDate.getModel().getValue(),(Date)endDate.getModel().getValue());
+        SpecialCalendarDate freeDay = ((AppFrame)App.getFrame()).workPanel.dailyItemsPanel.eventsPanel.newFreeDay_actionPerformed();
+        if(freeDay != null) {
+            freeDays.add(freeDay);
+        }
     }
     
     // Perform action for set holidays
     void setHolidays_actionPerformed(ActionEvent e) {
-    	((AppFrame)App.getFrame()).workPanel.dailyItemsPanel.eventsPanel.newEventB_actionPerformed(e, 
-			this.todoField.getText(), (Date)startDate.getModel().getValue(), (Date)endDate.getModel().getValue());
+        SpecialCalendarDate holiday = ((AppFrame)App.getFrame()).workPanel.dailyItemsPanel.eventsPanel.newHoliday_actionPerformed();
+        if(holiday != null) {
+            holidays.add(holiday);
+        }
     }
     
     
@@ -535,15 +539,22 @@ public class ProjectDialog extends JDialog {
 
         Project prj = ProjectManager.createProject(title, startD, endD, FinalExamDate);
         CurrentStorage.get().storeProjectManager(); //does this set the current project? If not set it before setTasks is called
+        CurrentProject.set(prj);
+        setTasksForProject();
     }
 
-    private void setTasksForPRoject() {
+    private void setTasksForProject() {
 
-
-        //do this for every task
-        Task newTask = CurrentProject.getTaskList().createTask(sd, ed, dlg.todoField.getText(), dlg.priorityCB.getSelectedIndex(),effort, dlg.descriptionField.getText(),null);
-
-		newTask.setProgress(((Integer)dlg.progress.getValue()).intValue());
+        for(LectureTime lt : lectureTimes) {
+            Task newTask = CurrentProject.getTaskList().createLectureTask(lt.dayToString(), lt.hour, lt.min, "Lecture")
+        }
+        for(SpecialCalendarDate fd : freeDays) {
+            Task newTask = CurrentProject.getTaskList().createSingleEventTask(fd.getName(), fd.getDate(), "FreeDay");
+        }
+        for(SpecialCalendarDate hd : holidays) {
+            Task newTask = CurrentProject.getTaskList().createSingleEventTask(hd.getName(), hd.getDate(), "Holiday");
+        }
+       
         CurrentStorage.get().storeTaskList(CurrentProject.getTaskList(), CurrentProject.get());
         taskTable.tableChanged();
         parentPanel.updateIndicators();

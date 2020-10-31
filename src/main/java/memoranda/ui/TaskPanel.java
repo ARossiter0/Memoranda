@@ -541,14 +541,51 @@ public class TaskPanel extends JPanel {
         if (dlg.CANCELLED)
             return null;
 
-        CalendarDate sd = new CalendarDate((Date) dlg.startDate.getModel().getValue());
-        CalendarDate ed = new CalendarDate((Date) dlg.endDate.getModel().getValue());
-
- 		if(dlg.chkEndDate.isSelected())
- 			ed = new CalendarDate((Date) dlg.endDate.getModel().getValue());
- 		else
- 			ed = null;
         return lecTime;
+    }
+    //NEW for freedays
+    SpecialCalendarDate newFreeDay_actionPerformed() {
+        TaskDialog dlg = new TaskDialog(App.getFrame(), Local.getString("New Lecture Time"));
+        SpecialCalendarDate freeDay = new SpecialCalendarDate();
+        
+        Dimension frmSize = App.getFrame().getSize();
+        Point loc = App.getFrame().getLocation();
+
+        dlg.startDate.getModel().setValue(CurrentDate.get().getDate());
+        dlg.endDate.getModel().setValue(CurrentDate.get().getDate());
+        dlg.setLocation((frmSize.width - dlg.getSize().width) / 2 + loc.x, (frmSize.height - dlg.getSize().height) / 2 + loc.y);
+        dlg.setVisible(true);
+        
+        /**
+         * TODO
+         * Get the value for freeday and return it
+         */
+        if (dlg.CANCELLED)
+            return null;
+
+        return holiday;
+    }
+    //New for holidays
+    SpecialCalendarDate newHoliday_actionPerformed() {
+        TaskDialog dlg = new TaskDialog(App.getFrame(), Local.getString("New Lecture Time"));
+        SpecialCalendarDate holiday = new SpecialCalendarDate();
+        
+        Dimension frmSize = App.getFrame().getSize();
+        Point loc = App.getFrame().getLocation();
+
+        dlg.startDate.getModel().setValue(CurrentDate.get().getDate());
+        dlg.endDate.getModel().setValue(CurrentDate.get().getDate());
+        dlg.setLocation((frmSize.width - dlg.getSize().width) / 2 + loc.x, (frmSize.height - dlg.getSize().height) / 2 + loc.y);
+        dlg.setVisible(true);
+        
+        /**
+         * TODO
+         * Get the value for holiday and return it
+         */
+        if (dlg.CANCELLED)
+            return null;
+
+        return holiday;
     }
 
 

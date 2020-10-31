@@ -135,6 +135,45 @@ public class TaskListImpl implements TaskList {
         
         return new TaskImpl(el, this);
     }
+    public Task createLectureTask(String day, int hour, int min, String text) {
+        Element el = new Element("LectureTask");
+
+        String id = Util.generateId();
+        el.addAttribute(new Attribute("id", id));
+
+        el.addAttribute(new Attribute("Day", day));
+        el.addAttribute(new Attribute("Hour", hour.toString()));
+        el.addAttribute(new Attribute("Minute", min.toString()));
+
+        Element txt = new Element("text");
+        txt.appendChild(text);
+        el.appendChild(txt);
+
+        _root.appendChild(el);
+        
+		elements.put(id, el);
+		
+        return new TaskImpl(el, this);
+    }
+    public Task createSingleEventTask(String name, CalendarDate date, String text) {
+        Element el = new Element("SingleEventTask");
+
+        String id = Util.generateId();
+        el.addAttribute(new Attribute("id", id));
+
+        el.addAttribute(new Attribute("Name", name));
+        el.addAttribute(new Attribute("Hour", date.toString()));
+
+        Element txt = new Element("text");
+        txt.appendChild(text);
+        el.appendChild(txt);
+
+        _root.appendChild(el);
+        
+		elements.put(id, el);
+		
+        return new TaskImpl(el, this);
+    }
 	
 	/**
      * @see net.sf.memoranda.TaskList#removeTask(import net.sf.memoranda.Task)
