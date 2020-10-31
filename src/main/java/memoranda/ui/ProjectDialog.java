@@ -258,8 +258,7 @@ public class ProjectDialog extends JDialog {
 
         finalExam.setPreferredSize(new Dimension(80, 20));
         finalExam.setLocale(Local.getCurrentLocale());
-		//Added by (jcscoobyrs) on 17-Nov-2003 at 14:24:43 PM
-		//---------------------------------------------------
+
 		SimpleDateFormat sdf1 = new SimpleDateFormat();
 		sdf1 = (SimpleDateFormat)DateFormat.getDateInstance(DateFormat.SHORT);
 		finalExam.setEditor(new JSpinner.DateEditor(finalExam, 
@@ -517,12 +516,12 @@ public class ProjectDialog extends JDialog {
             return;
         String title = dlg.prTitleField.getText();
         CalendarDate startD = new CalendarDate((Date) dlg.startDate.getModel().getValue());
-        CalendarDate endD = null;
-//        if (dlg.endDateChB.isSelected())
-        endD = new CalendarDate((Date) dlg.endDate.getModel().getValue());
-        Project prj = ProjectManager.createProject(title, startD, endD);
-        /*if (dlg.freezeChB.isSelected())
-            prj.freeze();*/
+        CalendarDate endD = new CalendarDate((Date) dlg.endDate.getModel().getValue());
+        //new for final exam date
+        CalendarDate FinalExamDate = new CalendarDate((Date) dlg.finalExam.getModel().getValue());
+
+        Project prj = ProjectManager.createProject(title, startD, endD, FinalExamDate);
+
         CurrentStorage.get().storeProjectManager();
     }
     

@@ -35,6 +35,10 @@ public interface Project {
     CalendarDate getEndDate();
     void setEndDate(CalendarDate date);
     
+    //New methods
+    CalendarDate getFinalDate();
+    void setFinalDate(CalendarDate date);
+    
     String getTitle();
     void setTitle(String title);
     
