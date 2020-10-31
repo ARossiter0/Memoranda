@@ -35,8 +35,8 @@ public class WorkPanel extends JPanel {
 	public DailyItemsPanel dailyItemsPanel = new DailyItemsPanel(this);
 	public ResourcesPanel filesPanel = new ResourcesPanel();
 	public JButton agendaB = new JButton();
-	public JButton tasksB = new JButton();
-	public JButton eventsB = new JButton();
+	public JButton assignmentsB = new JButton();
+	public JButton lecturesB = new JButton();
 	public JButton filesB = new JButton();
 	JButton currentB = null;
 	Border border1;
@@ -94,57 +94,60 @@ public class WorkPanel extends JPanel {
 		agendaB.setMargin(new Insets(0, 0, 0, 0));
 		agendaB.setSelected(true);
 
-		eventsB.setBackground(Color.white);
-		eventsB.setMaximumSize(new Dimension(60, 80));
-		eventsB.setMinimumSize(new Dimension(30, 30));
+		// Lectures button
+		lecturesB.setBackground(Color.white);
+		lecturesB.setMaximumSize(new Dimension(60, 80));
+		lecturesB.setMinimumSize(new Dimension(30, 30));
 
-		eventsB.setFont(new java.awt.Font("Dialog", 1, 10));
-		eventsB.setPreferredSize(new Dimension(50, 50));
-		eventsB.setBorderPainted(false);
-		eventsB.setContentAreaFilled(false);
-		eventsB.setFocusPainted(false);
-		eventsB.setHorizontalTextPosition(SwingConstants.CENTER);
-		eventsB.setText(Local.getString("Events"));
-		eventsB.setVerticalAlignment(SwingConstants.TOP);
-		eventsB.setVerticalTextPosition(SwingConstants.BOTTOM);
-		eventsB.addActionListener(new java.awt.event.ActionListener() {
+		lecturesB.setFont(new java.awt.Font("Dialog", 1, 10));
+		lecturesB.setPreferredSize(new Dimension(50, 50));
+		lecturesB.setBorderPainted(false);
+		lecturesB.setContentAreaFilled(false);
+		lecturesB.setFocusPainted(false);
+		lecturesB.setHorizontalTextPosition(SwingConstants.CENTER);
+		lecturesB.setText(Local.getString("Lectures"));
+		lecturesB.setVerticalAlignment(SwingConstants.TOP);
+		lecturesB.setVerticalTextPosition(SwingConstants.BOTTOM);
+		lecturesB.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				eventsB_actionPerformed(e);
 			}
 		});
-		eventsB.setIcon(
+		lecturesB.setIcon(
 			new ImageIcon(
 				main.java.memoranda.ui.AppFrame.class.getResource(
 					"/ui/icons/events.png")));
-		eventsB.setOpaque(false);
-		eventsB.setMargin(new Insets(0, 0, 0, 0));
-		//eventsB.setSelected(true);
-
-		tasksB.setSelected(true);
-		tasksB.setFont(new java.awt.Font("Dialog", 1, 10));
-		tasksB.setMargin(new Insets(0, 0, 0, 0));
-		tasksB.setIcon(
+		lecturesB.setOpaque(false);
+		lecturesB.setMargin(new Insets(0, 0, 0, 0));
+		
+		
+		// Assignments button
+		assignmentsB.setSelected(true);
+		assignmentsB.setFont(new java.awt.Font("Dialog", 1, 10));
+		assignmentsB.setMargin(new Insets(0, 0, 0, 0));
+		assignmentsB.setIcon(
 			new ImageIcon(
 				main.java.memoranda.ui.AppFrame.class.getResource(
 					"/ui/icons/tasks.png")));
-		tasksB.setVerticalTextPosition(SwingConstants.BOTTOM);
-		tasksB.addActionListener(new java.awt.event.ActionListener() {
+		assignmentsB.setVerticalTextPosition(SwingConstants.BOTTOM);
+		assignmentsB.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				tasksB_actionPerformed(e);
 			}
 		});
-		tasksB.setVerticalAlignment(SwingConstants.TOP);
-		tasksB.setText(Local.getString("Tasks"));
-		tasksB.setHorizontalTextPosition(SwingConstants.CENTER);
-		tasksB.setFocusPainted(false);
-		tasksB.setBorderPainted(false);
-		tasksB.setContentAreaFilled(false);
-		tasksB.setPreferredSize(new Dimension(50, 50));
-		tasksB.setMinimumSize(new Dimension(30, 30));
-		tasksB.setOpaque(false);
-		tasksB.setMaximumSize(new Dimension(60, 80));
-		tasksB.setBackground(Color.white);
+		assignmentsB.setVerticalAlignment(SwingConstants.TOP);
+		assignmentsB.setText(Local.getString("Assignments")); /***/
+		assignmentsB.setHorizontalTextPosition(SwingConstants.CENTER);
+		assignmentsB.setFocusPainted(false);
+		assignmentsB.setBorderPainted(false);
+		assignmentsB.setContentAreaFilled(false);
+		assignmentsB.setPreferredSize(new Dimension(50, 50));
+		assignmentsB.setMinimumSize(new Dimension(30, 30));
+		assignmentsB.setOpaque(false);
+		assignmentsB.setMaximumSize(new Dimension(60, 80));
+		assignmentsB.setBackground(Color.white);
 
+		// Notes button
 		notesB.setFont(new java.awt.Font("Dialog", 1, 10));
 		notesB.setBackground(Color.white);
 		notesB.setBorder(null);
@@ -172,6 +175,7 @@ public class WorkPanel extends JPanel {
 		notesB.setSelected(true);
 		this.setPreferredSize(new Dimension(1073, 300));
 
+		// Resources Button
 		filesB.setSelected(true);
 		filesB.setMargin(new Insets(0, 0, 0, 0));
 		filesB.setIcon(
@@ -196,13 +200,18 @@ public class WorkPanel extends JPanel {
 		filesB.setOpaque(false);
 		filesB.setMaximumSize(new Dimension(60, 80));
 		filesB.setBackground(Color.white);
+		
+		
+		
 		this.add(toolBar, BorderLayout.WEST);
 		this.add(panel, BorderLayout.CENTER);
 		panel.add(dailyItemsPanel, "DAILYITEMS");
 		panel.add(filesPanel, "FILES");
+		
+		// Adding buttons to toolbar
 		toolBar.add(agendaB, null);
-		toolBar.add(eventsB, null);
-		toolBar.add(tasksB, null);
+		toolBar.add(lecturesB, null);
+		toolBar.add(assignmentsB, null);
 		toolBar.add(notesB, null);
 		toolBar.add(filesB, null);
 		currentB = agendaB;
@@ -247,14 +256,14 @@ public class WorkPanel extends JPanel {
 	public void tasksB_actionPerformed(ActionEvent e) {
 		cardLayout1.show(panel, "DAILYITEMS");
 		dailyItemsPanel.selectPanel("TASKS");
-		setCurrentButton(tasksB);
+		setCurrentButton(assignmentsB);
 		Context.put("CURRENT_PANEL", "TASKS");
 	}
 
 	public void eventsB_actionPerformed(ActionEvent e) {
 		cardLayout1.show(panel, "DAILYITEMS");
 		dailyItemsPanel.selectPanel("EVENTS");
-		setCurrentButton(eventsB);
+		setCurrentButton(lecturesB);
 		Context.put("CURRENT_PANEL", "EVENTS");
 	}
 
