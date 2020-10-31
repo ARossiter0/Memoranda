@@ -484,10 +484,9 @@ public class ProjectDialog extends JDialog {
         endCalFrame.show();
     }
     
-    // Perform action for set lecture days
+    //Currently expirimental
     void setLectureDays_actionPerformed(ActionEvent e) {
-    	((AppFrame)App.getFrame()).workPanel.dailyItemsPanel.eventsPanel.newEventB_actionPerformed(e, 
-			this.todoField.getText(), (Date)startDate.getModel().getValue(),(Date)endDate.getModel().getValue());
+    	((AppFrame)App.getFrame()).workPanel.dailyItemsPanel.tasksPanel.newTaskB_actionPerformed(e);
     }
     
     // Perform action for set free days
@@ -499,7 +498,7 @@ public class ProjectDialog extends JDialog {
     // Perform action for set holidays
     void setHolidays_actionPerformed(ActionEvent e) {
     	((AppFrame)App.getFrame()).workPanel.dailyItemsPanel.eventsPanel.newEventB_actionPerformed(e, 
-			this.todoField.getText(), (Date)startDate.getModel().getValue(),(Date)endDate.getModel().getValue());
+			this.todoField.getText(), (Date)startDate.getModel().getValue(), (Date)endDate.getModel().getValue());
     }
     
     
