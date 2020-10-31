@@ -131,11 +131,7 @@ public class ProjectsTablePanel extends JPanel {
 
         String[] columnNames =
             {
-<<<<<<< HEAD
                 Local.getString("Course Name"),
-=======
-                Local.getString("Course title"),
->>>>>>> US19-UpdateUILabels
                 Local.getString("Start date"),
                 Local.getString("End date"),
                 //Local.getString("Execution"),
