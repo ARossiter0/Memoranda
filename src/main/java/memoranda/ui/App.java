@@ -150,7 +150,10 @@ public class App {
 		frame.setState(JFrame.ICONIFIED);
 	}
 	
-
+	/**
+	 * This is the slash menu
+	 * Changed the name to Leipzig 2.0
+	 */
 	/**
 	 * Method showSplash.
 	 */
