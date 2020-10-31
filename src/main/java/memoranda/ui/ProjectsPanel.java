@@ -77,7 +77,7 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 
 	public Action newProjectAction =
 		new AbstractAction(
-			Local.getString("New project") + "...",
+			Local.getString("New course") + "...",
 			new ImageIcon(
 				main.java.memoranda.ui.AppFrame.class.getResource(
 					"/ui/icons/newproject.png"))) {
