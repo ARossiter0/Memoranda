@@ -276,11 +276,14 @@ public class AgendaGenerator {
 				+ p.getTitle()
 				+ "</a></h2>\n"
 				+ "<table border=\"0\" width=\"100%\" cellpadding=\"2\" bgcolor=\"#EFEFEF\"><tr><td>" 
-				+ Local.getString("Start date")+": <i>"+p.getStartDate().getMediumDateString()+"</i>\n"
-				+ "<br>Holidays:";
+				+ Local.getString("Start date")+": <i>"+p.getStartDate().getMediumDateString()+"</i>\n";
+		  
 		if (p.getEndDate() != null)
 			s += "<br>" + Local.getString("End date")+": <i>"+p.getEndDate().getMediumDateString()
-			+"</i>\n";        
+			+"</i>\n";     
+		if (p.getFinalDate() != null)
+			s += "<br>" + Local.getString("Final Exam Date")+": <i>"+p.getFinalDate().getMediumDateString()
+			+"</i>\n";   
 		return s + generateTasksInfo(p, date,expandedTasks);        
 	}
 
