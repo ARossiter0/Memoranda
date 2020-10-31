@@ -94,6 +94,9 @@ public class App {
 		frame = new AppFrame();
 		if (fullmode) {
 			init();
+		} else {
+			init();
+			frame.setState(JFrame.ICONIFIED);
 		}
 		if (!Configuration.get("SHOW_SPLASH").equals("no"))
 			splash.dispose();
