@@ -237,8 +237,11 @@ public class AgendaGenerator {
 						+ " at "
 						+ t.getHour()
 						+ ":"
-						+ t.getMinute()              
-						+ "</p>";
+						+ t.getMinute();
+						if(t.getMinute().equals("0")) {
+							s += "0";
+						}
+						s += "</p>";
 			} else {
 				s += "<a name=\"" + t.getID() + "\"><li><p>" + "<a href=\"memoranda:tasks#"
 						+ p.getID()
