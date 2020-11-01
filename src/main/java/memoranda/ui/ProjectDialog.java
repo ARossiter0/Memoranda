@@ -551,7 +551,7 @@ public class ProjectDialog extends JDialog {
             Task newTask = CurrentProject.getTaskList().createLectureTask(lt.day, lt.hour, lt.min, "Lecture");
         }
         for(SpecialCalendarDate fd : dlg.freeDays) {
-            Task newTask = CurrentProject.getTaskList().createSingleEventTask(fd.getName(), fd.getDate(), "FreeDay");
+            Task newTask = CurrentProject.getTaskList().createSingleEventTask(fd.getName(), fd.getDate(), "Free Day");
         }
         for(SpecialCalendarDate hd : dlg.holidays) {
             Task newTask = CurrentProject.getTaskList().createSingleEventTask(hd.getName(), hd.getDate(), "Holiday");

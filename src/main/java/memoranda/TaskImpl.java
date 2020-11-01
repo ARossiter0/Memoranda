@@ -192,10 +192,10 @@ public class TaskImpl implements Task, Comparable {
     }
     //// -------------------------------- New methods for US 90 --------------------
     public boolean doesTaskHaveAType() {
-        return _element.getAttribute("type") != null;
+        return _element.getAttribute("Type") != null;
     }
     public String getType() {
-        return _element.getAttribute("type").getValue();
+        return _element.getAttribute("Type").getValue();
     }
     public String getDay(){
         return _element.getAttribute("Day").getValue();
