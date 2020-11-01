@@ -2,22 +2,18 @@ package main.java.memoranda;
 
 public class LectureTime {
 
-    public enum Day {
-        SUNDAY, MONDAY, TUESDAY, WEDNESDAY,
-        THURSDAY, FRIDAY, SATURDAY 
-    }
-
-    public Day day;
+    public String day;
     public int hour;
     public int min;
 
     public LectureTime() {
-        this.day = Day.MONDAY;
+        this.day = "Monday";
         this.hour = 12;
         this.min = 0;
     }
-
-    public String dayToString() {
-        return day.toString();
+    public LectureTime(String day, int hour, int min) {
+        this.day = day;
+        this.hour = hour;
+        this.min = min;
     }
 }

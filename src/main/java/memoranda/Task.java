@@ -41,6 +41,14 @@ public interface Task {
     public static final int PRIORITY_HIGH = 3;
     
     public static final int PRIORITY_HIGHEST = 4;
+
+    boolean doesTaskHaveAType();
+    String getType();
+    String getDay();
+    String getHour();
+    String getMinute();
+    String getName();
+    String getDate();
     
     CalendarDate getStartDate();
     void setStartDate(CalendarDate date);

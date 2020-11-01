@@ -15,6 +15,7 @@ import main.java.memoranda.date.CalendarDate;
 import main.java.memoranda.date.CurrentDate;
 
 import java.util.Calendar;
+import java.util.Date;
 
 import nu.xom.Attribute;
 import nu.xom.Element;
@@ -43,7 +44,11 @@ public class TaskImpl implements Task, Comparable {
     }
 
     public CalendarDate getStartDate() {
-        return new CalendarDate(_element.getAttribute("startDate").getValue());
+        if (_element.getAttribute("startDate") != null) {
+            return new CalendarDate(_element.getAttribute("startDate").getValue());
+        } else {
+            return new CalendarDate((Date) CurrentDate.get().getDate());
+        }
     }
 
     public void setStartDate(CalendarDate date) {
@@ -51,6 +56,9 @@ public class TaskImpl implements Task, Comparable {
     }
 
     public CalendarDate getEndDate() {
+        if (_element.getAttribute("startDate") == null) {
+            return new CalendarDate((Date) CurrentDate.get().getDate());
+        }
 		String ed = _element.getAttribute("endDate").getValue();
 		if (ed != "")
 			return new CalendarDate(_element.getAttribute("endDate").getValue());
@@ -182,6 +190,28 @@ public class TaskImpl implements Task, Comparable {
     private boolean isCompleted() {
         return getProgress() == 100;
     }
+    //// -------------------------------- New methods for US 90 --------------------
+    public boolean doesTaskHaveAType() {
+        return _element.getAttribute("type") != null;
+    }
+    public String getType() {
+        return _element.getAttribute("type").getValue();
+    }
+    public String getDay(){
+        return _element.getAttribute("Day").getValue();
+    }
+    public String getHour() {
+        return _element.getAttribute("Hour").getValue();
+    }
+    public String getMinute() {
+        return _element.getAttribute("Minute").getValue();
+    }
+    public String getName() {
+        return _element.getAttribute("Name").getValue();
+    }
+    public String getDate() {
+        return _element.getAttribute("Date").getValue();
+    }
 
     /**
      * @see main.java.memoranda.Task#getID()
@@ -194,7 +224,11 @@ public class TaskImpl implements Task, Comparable {
      * @see main.java.memoranda.Task#getText()
      */
     public String getText() {
-        return _element.getFirstChildElement("text").getValue();
+        if (_element.getFirstChildElement("text") != null) {
+            return _element.getFirstChildElement("text").getValue();
+        } else {
+            return "";
+        }
     }
 
     public String toString() {
@@ -263,7 +297,11 @@ public class TaskImpl implements Task, Comparable {
      * @see main.java.memoranda.Task#getProgress()
      */
     public int getProgress() {
-        return new Integer(_element.getAttribute("progress").getValue()).intValue();
+        if (_element.getAttribute("progress") != null) {
+            return new Integer(_element.getAttribute("progress").getValue()).intValue();
+        } else {
+            return 0;
+        }
     }
     /**
      * @see main.java.memoranda.Task#setProgress(int)
