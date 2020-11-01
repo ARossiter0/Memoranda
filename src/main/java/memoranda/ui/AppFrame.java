@@ -91,19 +91,19 @@ public class AppFrame extends JFrame {
 
     static Vector exitListeners = new Vector();
 
-    public Action prjPackAction = new AbstractAction("Pack current project") {
+    public Action prjPackAction = new AbstractAction("Pack current course") {
         public void actionPerformed(ActionEvent e) {
             doPrjPack();
         }
     };
 
-    public Action prjUnpackAction = new AbstractAction("Unpack project") {
+    public Action prjUnpackAction = new AbstractAction("Unpack course") {
         public void actionPerformed(ActionEvent e) {
             doPrjUnPack();
         }
     };
 
-    public Action minimizeAction = new AbstractAction("Close the window") {
+    public Action minimizeAction = new AbstractAction("Minimize the window") {
         public void actionPerformed(ActionEvent e) {
             doMinimize();
         }
@@ -331,13 +331,13 @@ public class AppFrame extends JFrame {
          */
         jMenuFileNewPrj.setAction(projectsPanel.newProjectAction);
 
-        jMenuFileUnpackPrj.setText(Local.getString("Unpack project") + "...");
+        jMenuFileUnpackPrj.setText(Local.getString("Unpack course") + "...");
         jMenuFileExportNote.setText(Local.getString("Export current note")
                 + "...");
         jMenuFileImportNote.setText(Local.getString("Import one note")
                 + "...");
-        jMenuFilePackPrj.setText(Local.getString("Pack project") + "...");
-        jMenuFileMin.setText(Local.getString("Close the window"));
+        jMenuFilePackPrj.setText(Local.getString("Pack course") + "...");
+        jMenuFileMin.setText(Local.getString("Minimize the window"));
         jMenuFileMin.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F10,
                 InputEvent.ALT_MASK));
 
@@ -583,10 +583,10 @@ public class AppFrame extends JFrame {
         this.workPanel.dailyItemsPanel.alarmB.addActionListener(
                 setMenusDisabled);
 
-        this.workPanel.tasksB.addActionListener(setMenusDisabled);
-        this.workPanel.eventsB.addActionListener(setMenusDisabled);
+        this.workPanel.assignmentsB.addActionListener(setMenusDisabled);
+        this.workPanel.lecturesB.addActionListener(setMenusDisabled);
         this.workPanel.filesB.addActionListener(setMenusDisabled);
-        this.workPanel.agendaB.addActionListener(setMenusDisabled);
+        this.workPanel.coursesB.addActionListener(setMenusDisabled);
 
         this.workPanel.notesB.addActionListener(
                 new java.awt.event.ActionListener() {
@@ -665,8 +665,7 @@ public class AppFrame extends JFrame {
     }
 
     public void doMinimize() {
-        exitNotify();
-        App.closeWindow();
+        App.minimizeWindow();
     }
 
     //Help | About action performed
@@ -688,8 +687,6 @@ public class AppFrame extends JFrame {
                 doMinimize();
         }
         else if ((e.getID() == WindowEvent.WINDOW_ICONIFIED)) {
-            super.processWindowEvent(new WindowEvent(this,
-                    WindowEvent.WINDOW_CLOSING));
             doMinimize();
         }
         else
@@ -743,7 +740,7 @@ public class AppFrame extends JFrame {
 
         JFileChooser chooser = new JFileChooser();
         chooser.setFileHidingEnabled(false);
-        chooser.setDialogTitle(Local.getString("Pack project"));
+        chooser.setDialogTitle(Local.getString("Pack course"));
         chooser.setAcceptAllFileFilterUsed(false);
         chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
         //chooser.addChoosableFileFilter(new AllFilesFilter(AllFilesFilter.RTF));
@@ -799,7 +796,7 @@ public class AppFrame extends JFrame {
 
         JFileChooser chooser = new JFileChooser();
         chooser.setFileHidingEnabled(false);
-        chooser.setDialogTitle(Local.getString("Unpack project"));
+        chooser.setDialogTitle(Local.getString("Unpack course"));
         chooser.setAcceptAllFileFilterUsed(false);
         chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
         chooser.addChoosableFileFilter(new AllFilesFilter(AllFilesFilter.ZIP));

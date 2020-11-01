@@ -94,6 +94,9 @@ public class App {
 		frame = new AppFrame();
 		if (fullmode) {
 			init();
+		} else {
+			init();
+			frame.setState(JFrame.ICONIFIED);
 		}
 		if (!Configuration.get("SHOW_SPLASH").equals("no"))
 			splash.dispose();
@@ -119,7 +122,7 @@ public class App {
 		/* --------------------------------------------------------------- */
 		double JVMVer =
 			Double
-				.valueOf(System.getProperty("java.version").substring(0, 3))
+				.valueOf(System.getProperty("java.version").substring(0, 2))
 				.doubleValue();
 
 		frame.pack();
@@ -143,6 +146,13 @@ public class App {
 			return;
 		frame.dispose();
 	}
+	
+	public static void minimizeWindow() {
+		if (frame == null)
+			return;
+		frame.setState(JFrame.ICONIFIED);
+	}
+	
 
 	/**
 	 * Method showSplash.
