@@ -170,7 +170,7 @@ public class ProjectsTablePanel extends JPanel {
 			super();
 		}
 
-		/
+		
 		public int getColumnCount() {
 			return 4;
 		}
