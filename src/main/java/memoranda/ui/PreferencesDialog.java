@@ -178,7 +178,6 @@ public class PreferencesDialog extends JDialog {
 				soundFileBrowseB_actionPerformed(e);
 			}
 		});
-/////
 		gridLayout1.setRows(4);
 		jPanel1.setBorder(titledBorder1);
 		jPanel1.setLayout(gridLayout1);
@@ -265,7 +264,7 @@ public class PreferencesDialog extends JDialog {
 		gbc.insets = new Insets(2, 0, 0, 10);
 		gbc.anchor = GridBagConstraints.WEST;
 		GeneralPanel.add(closeExitRB, gbc);
-////
+
 		closeGroup.add(closeHideRB);
 		closeHideRB.setText(Local.getString("Hide"));
 		closeHideRB.addActionListener(new java.awt.event.ActionListener() {
@@ -281,6 +280,10 @@ public class PreferencesDialog extends JDialog {
 		GeneralPanel.add(closeHideRB, gbc);
 		jLabel3.setHorizontalAlignment(SwingConstants.RIGHT);
 		jLabel3.setText(Local.getString("Look and feel:"));
+		
+		
+
+		
 		gbc = new GridBagConstraints();
 		gbc.gridx = 0;
 		gbc.gridy = 4;
@@ -293,7 +296,15 @@ public class PreferencesDialog extends JDialog {
 		gbc.gridy = 4;
 		gbc.insets = new Insets(2, 0, 0, 10);
 		gbc.anchor = GridBagConstraints.WEST;
-
+	
+		// System look and feel
+		lfGroup.add(lfSystemRB);
+		lfSystemRB.setText(Local.getString("System"));
+		lfSystemRB.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				lfSystemRB_actionPerformed(e);
+			}
+		});
 		gbc = new GridBagConstraints();
 		gbc.gridx = 1;
 		gbc.gridy = 5;
@@ -301,12 +312,22 @@ public class PreferencesDialog extends JDialog {
 		gbc.anchor = GridBagConstraints.WEST;
 		GeneralPanel.add(lfSystemRB, gbc);
 
+		// Java look and feel
+		lfGroup.add(lfJavaRB);
+		lfJavaRB.setText(Local.getString("Java"));
+		lfJavaRB.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				lfJavaRB_actionPerformed(e);
+			}
+		});
 		gbc = new GridBagConstraints();
 		gbc.gridx = 1;
 		gbc.gridy = 6;
 		gbc.insets = new Insets(2, 0, 0, 10);
 		gbc.anchor = GridBagConstraints.WEST;
 		GeneralPanel.add(lfJavaRB, gbc);
+		
+		// Custom look and feel
 		lfGroup.add(lfCustomRB);
 		lfCustomRB.setText(Local.getString("Custom"));
 		lfCustomRB.addActionListener(new java.awt.event.ActionListener() {
@@ -320,6 +341,11 @@ public class PreferencesDialog extends JDialog {
 		gbc.insets = new Insets(2, 0, 0, 10);
 		gbc.anchor = GridBagConstraints.WEST;
 		GeneralPanel.add(lfCustomRB, gbc);
+		
+		
+		
+		
+		
 		classNameLabel.setEnabled(false);
 		classNameLabel.setText(Local.getString("L&F class name:"));
 		gbc = new GridBagConstraints();
@@ -419,7 +445,7 @@ public class PreferencesDialog extends JDialog {
 		gbc.insets = new Insets(2, 0, 10, 10);
 		gbc.anchor = GridBagConstraints.WEST;
 		GeneralPanel.add(askConfirmChB, gbc);
-////
+
 		// Build Tab2
 		rstPanelBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
 		resourceTypePanel.setBorder(rstPanelBorder);
@@ -520,6 +546,7 @@ public class PreferencesDialog extends JDialog {
 
 		// set all config-values
 		setValues();
+
 	}
 
 	void setValues() {
@@ -820,7 +847,6 @@ public class PreferencesDialog extends JDialog {
 				.getString("Select the web-browser executable"));
 		chooser.setAcceptAllFileFilterUsed(true);
 		chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-
 		chooser.setPreferredSize(new Dimension(550, 375));
 		if (System.getProperty("os.name").startsWith("Win")) {
 			chooser.setFileFilter(new AllFilesFilter(AllFilesFilter.EXE));

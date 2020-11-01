@@ -55,12 +55,16 @@ public class ProjectExportDialog extends JDialog {
     fileChooser.setBorder(null);
     fileChooser.setControlButtonsAreShown(false);
     jPanel2.setLayout(borderLayout3);
+    
+    // Style the ok button, make it default button
     okB.setMaximumSize(new Dimension(100, 26));
     okB.setPreferredSize(new Dimension(100, 26));
     okB.setText(Local.getString("Save"));
     okB.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(ActionEvent e) {
         okB_actionPerformed(e);
+        
+        // Open file chooser ui
 		if (fileChooser.getUI() instanceof BasicFileChooserUI) //Added to fix problem with export note
 		//jcscoobyrs 17-Nov-2003 at 08:36:14 AM
 		{//Added to fix problem with export note jcscoobyrs 17-Nov-2003 at 08:36:14 AM
@@ -72,6 +76,8 @@ public class ProjectExportDialog extends JDialog {
       }
     });
     this.getRootPane().setDefaultButton(okB);
+    
+    // Style the cancel button
     cancelB.setMaximumSize(new Dimension(100, 26));
     cancelB.setPreferredSize(new Dimension(100, 26));
     cancelB.setText(Local.getString("Cancel"));
@@ -80,6 +86,8 @@ public class ProjectExportDialog extends JDialog {
         cancelB_actionPerformed(e);
       }
     });
+    
+    // Style the dialog and add the ok and cancel buttons. 
     jPanel3.setLayout(flowLayout1);
     flowLayout1.setAlignment(FlowLayout.RIGHT);
     borderLayout3.setHgap(5);
@@ -108,10 +116,18 @@ public class ProjectExportDialog extends JDialog {
     jPanel4.add(titlesAsHeadersChB, null);
   }
 
+  /**
+   * Dispose of this dialog without doing anything
+   * @param e the action event (pressing cancel)
+   */
    void cancelB_actionPerformed(ActionEvent e) {
         this.dispose();
     }
 
+   /**
+    * Set CANCELLED to false and dispose of this dialog. 
+    * @param e the action event (pressing ok)
+    */
     void okB_actionPerformed(ActionEvent e) {
         CANCELLED = false;
         this.dispose();
