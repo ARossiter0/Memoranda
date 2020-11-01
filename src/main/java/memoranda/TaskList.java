@@ -21,6 +21,10 @@ public interface TaskList {
 
     Task createTask(CalendarDate startDate, CalendarDate endDate, String text, int priority, long effort, String description, String parentTaskId);
 
+    //New for US90
+    Task createLectureTask(String day, int hour, int min, String text);
+    Task createSingleEventTask(String name, CalendarDate date, String text);
+    
     void removeTask(Task task);
 
     public boolean hasSubTasks(String id);

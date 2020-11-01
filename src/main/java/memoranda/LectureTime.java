@@ -1,4 +1,4 @@
-
+package main.java.memoranda;
 
 public class LectureTime {
 
@@ -12,7 +12,7 @@ public class LectureTime {
     public int min;
 
     public LectureTime() {
-        this.day = MONDAY;
+        this.day = Day.MONDAY;
         this.hour = 12;
         this.min = 0;
     }

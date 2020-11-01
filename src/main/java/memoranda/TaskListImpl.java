@@ -135,6 +135,8 @@ public class TaskListImpl implements TaskList {
         
         return new TaskImpl(el, this);
     }
+
+    //-------------------------------
     public Task createLectureTask(String day, int hour, int min, String text) {
         Element el = new Element("LectureTask");
 
@@ -142,8 +144,8 @@ public class TaskListImpl implements TaskList {
         el.addAttribute(new Attribute("id", id));
 
         el.addAttribute(new Attribute("Day", day));
-        el.addAttribute(new Attribute("Hour", hour.toString()));
-        el.addAttribute(new Attribute("Minute", min.toString()));
+        el.addAttribute(new Attribute("Hour", String.valueOf(hour)));
+        el.addAttribute(new Attribute("Minute", String.valueOf(min)));
 
         Element txt = new Element("text");
         txt.appendChild(text);
@@ -155,6 +157,7 @@ public class TaskListImpl implements TaskList {
 		
         return new TaskImpl(el, this);
     }
+    //----------------------------------
     public Task createSingleEventTask(String name, CalendarDate date, String text) {
         Element el = new Element("SingleEventTask");
 
@@ -162,7 +165,7 @@ public class TaskListImpl implements TaskList {
         el.addAttribute(new Attribute("id", id));
 
         el.addAttribute(new Attribute("Name", name));
-        el.addAttribute(new Attribute("Hour", date.toString()));
+        el.addAttribute(new Attribute("Date", date.toString()));
 
         Element txt = new Element("text");
         txt.appendChild(text);

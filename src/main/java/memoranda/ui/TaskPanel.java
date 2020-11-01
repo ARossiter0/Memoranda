@@ -39,6 +39,8 @@ import main.java.memoranda.util.Context;
 import main.java.memoranda.util.CurrentStorage;
 import main.java.memoranda.util.Local;
 import main.java.memoranda.util.Util;
+import main.java.memoranda.LectureTime;
+import main.java.memoranda.SpecialCalendarDate;
 
 /*$Id: TaskPanel.java,v 1.27 2007/01/17 20:49:12 killerjoe Exp $*/
 public class TaskPanel extends JPanel {
@@ -505,7 +507,7 @@ public class TaskPanel extends JPanel {
             return;
 
         CalendarDate sd = new CalendarDate((Date) dlg.startDate.getModel().getValue());
-        CalendarDate ed = new CalendarDate((Date) dlg.endDate.getModel().getValue());
+        //CalendarDate ed = new CalendarDate((Date) dlg.endDate.getModel().getValue());
         CalendarDate ed;
  		if(dlg.chkEndDate.isSelected())
  			ed = new CalendarDate((Date) dlg.endDate.getModel().getValue());
@@ -543,11 +545,10 @@ public class TaskPanel extends JPanel {
 
         return lecTime;
     }
-    //NEW for freedays
+    //New for freedays
     SpecialCalendarDate newFreeDay_actionPerformed() {
-        TaskDialog dlg = new TaskDialog(App.getFrame(), Local.getString("New Lecture Time"));
-        SpecialCalendarDate freeDay = new SpecialCalendarDate();
-        
+        TaskDialog dlg = new TaskDialog(App.getFrame(), Local.getString("New Free Day"));
+
         Dimension frmSize = App.getFrame().getSize();
         Point loc = App.getFrame().getLocation();
 
@@ -555,7 +556,7 @@ public class TaskPanel extends JPanel {
         dlg.endDate.getModel().setValue(CurrentDate.get().getDate());
         dlg.setLocation((frmSize.width - dlg.getSize().width) / 2 + loc.x, (frmSize.height - dlg.getSize().height) / 2 + loc.y);
         dlg.setVisible(true);
-        
+        SpecialCalendarDate freeDay = new SpecialCalendarDate(new CalendarDate((Date) dlg.startDate.getModel().getValue()), "FreeDay TP-560");
         /**
          * TODO
          * Get the value for freeday and return it
@@ -563,12 +564,12 @@ public class TaskPanel extends JPanel {
         if (dlg.CANCELLED)
             return null;
 
-        return holiday;
+        return freeDay;
     }
     //New for holidays
     SpecialCalendarDate newHoliday_actionPerformed() {
-        TaskDialog dlg = new TaskDialog(App.getFrame(), Local.getString("New Lecture Time"));
-        SpecialCalendarDate holiday = new SpecialCalendarDate();
+        TaskDialog dlg = new TaskDialog(App.getFrame(), Local.getString("New Holiday"));
+        
         
         Dimension frmSize = App.getFrame().getSize();
         Point loc = App.getFrame().getLocation();
@@ -577,7 +578,8 @@ public class TaskPanel extends JPanel {
         dlg.endDate.getModel().setValue(CurrentDate.get().getDate());
         dlg.setLocation((frmSize.width - dlg.getSize().width) / 2 + loc.x, (frmSize.height - dlg.getSize().height) / 2 + loc.y);
         dlg.setVisible(true);
-        
+
+        SpecialCalendarDate holiday = new SpecialCalendarDate(new CalendarDate((Date) dlg.startDate.getModel().getValue()), "Holiday TP-573");
         /**
          * TODO
          * Get the value for holiday and return it

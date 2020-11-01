@@ -1,4 +1,4 @@
-
+package main.java.memoranda;
 import main.java.memoranda.date.CalendarDate;
 
 public class SpecialCalendarDate {
