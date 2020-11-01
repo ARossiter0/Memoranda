@@ -33,14 +33,26 @@ public class Resource {
         _path = path;         
     }
     
+    /**
+     * Get the resource path as a string
+     * @return the path of the resource
+     */
     public String getPath() {
         return _path;
     }
     
+    /**
+     * Check if the resource is an internet shortcut
+     * @return true if the resource is an internet shortcut
+     */
     public boolean isInetShortcut() {
         return _isInetShortcut;
     }
     
+    /**
+     * Check if the resource is a project file
+     * @return true if the resource is a project file
+     */
     public boolean isProjectFile() {
     	return _isProjectFile;
     }
