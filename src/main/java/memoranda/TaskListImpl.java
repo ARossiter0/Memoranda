@@ -70,7 +70,7 @@ public class TaskListImpl implements TaskList {
 			Element el = els.get(i);
 			elements.put(el.getAttribute("id").getValue(), el);
 			buildElements(el);
-		}
+        }
 	}
 	
     /**
@@ -98,7 +98,7 @@ public class TaskListImpl implements TaskList {
      * All methods to obtain list of tasks are consolidated under getAllSubTasks and getActiveSubTasks.
      * If a root task is required, just send a null taskId
      */
-    public Collection getActiveSubTasks(String taskId,CalendarDate date) {
+    public Collection getActiveSubTasks(String taskId, CalendarDate date) {
         Collection allTasks = getAllSubTasks(taskId);        
         return filterActiveTasks(allTasks,date);
     }
@@ -133,6 +133,42 @@ public class TaskListImpl implements TaskList {
 		
         Util.debug("Created task with parent " + parentTaskId);
         
+        return new TaskImpl(el, this);
+    }
+
+    //-------------------------------
+    public Task createLectureTask(String day, int hour, int min, String text) {
+        Element el = new Element("task");
+
+        String id = Util.generateId();
+        el.addAttribute(new Attribute("id", id));
+
+        el.addAttribute(new Attribute("Day", day));
+        el.addAttribute(new Attribute("Hour", String.valueOf(hour)));
+        el.addAttribute(new Attribute("Minute", String.valueOf(min)));
+        el.addAttribute(new Attribute("Type", text));
+
+        _root.appendChild(el);
+        
+		elements.put(id, el);
+		
+        return new TaskImpl(el, this);
+    }
+    //----------------------------------
+    public Task createSingleEventTask(String name, CalendarDate date, String text) {
+        Element el = new Element("task");
+
+        String id = Util.generateId();
+        el.addAttribute(new Attribute("id", id));
+
+        el.addAttribute(new Attribute("Name", name));
+        el.addAttribute(new Attribute("Date", date.toString()));
+        el.addAttribute(new Attribute("Type", text));
+
+        _root.appendChild(el);
+        
+		elements.put(id, el);
+		
         return new TaskImpl(el, this);
     }
 	

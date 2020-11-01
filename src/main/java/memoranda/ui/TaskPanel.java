@@ -11,6 +11,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Date;
 import java.util.Vector;
+import java.util.GregorianCalendar;
+import java.util.Calendar;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -39,6 +41,8 @@ import main.java.memoranda.util.Context;
 import main.java.memoranda.util.CurrentStorage;
 import main.java.memoranda.util.Local;
 import main.java.memoranda.util.Util;
+import main.java.memoranda.LectureTime;
+import main.java.memoranda.SpecialCalendarDate;
 
 /*$Id: TaskPanel.java,v 1.27 2007/01/17 20:49:12 killerjoe Exp $*/
 public class TaskPanel extends JPanel {
@@ -495,15 +499,18 @@ public class TaskPanel extends JPanel {
         
         Dimension frmSize = App.getFrame().getSize();
         Point loc = App.getFrame().getLocation();
+
         dlg.startDate.getModel().setValue(CurrentDate.get().getDate());
         dlg.endDate.getModel().setValue(CurrentDate.get().getDate());
         dlg.setLocation((frmSize.width - dlg.getSize().width) / 2 + loc.x, (frmSize.height - dlg.getSize().height) / 2 + loc.y);
         dlg.setVisible(true);
+
         if (dlg.CANCELLED)
             return;
+
         CalendarDate sd = new CalendarDate((Date) dlg.startDate.getModel().getValue());
-//        CalendarDate ed = new CalendarDate((Date) dlg.endDate.getModel().getValue());
-          CalendarDate ed;
+        //CalendarDate ed = new CalendarDate((Date) dlg.endDate.getModel().getValue());
+        CalendarDate ed;
  		if(dlg.chkEndDate.isSelected())
  			ed = new CalendarDate((Date) dlg.endDate.getModel().getValue());
  		else
@@ -511,7 +518,7 @@ public class TaskPanel extends JPanel {
         long effort = Util.getMillisFromHours(dlg.effortField.getText());
 		//XXX Task newTask = CurrentProject.getTaskList().createTask(sd, ed, dlg.todoField.getText(), dlg.priorityCB.getSelectedIndex(),effort, dlg.descriptionField.getText(),parentTaskId);
 		Task newTask = CurrentProject.getTaskList().createTask(sd, ed, dlg.todoField.getText(), dlg.priorityCB.getSelectedIndex(),effort, dlg.descriptionField.getText(),null);
-//		CurrentProject.getTaskList().adjustParentTasks(newTask);
+        //CurrentProject.getTaskList().adjustParentTasks(newTask);
 		newTask.setProgress(((Integer)dlg.progress.getValue()).intValue());
         CurrentStorage.get().storeTaskList(CurrentProject.getTaskList(), CurrentProject.get());
         taskTable.tableChanged();
@@ -519,11 +526,80 @@ public class TaskPanel extends JPanel {
         //taskTable.updateUI();
     }
 
+    //New for add lecture times
+    LectureTime newLectureTime_actionPerformed() {
+        LectureDialog dlg = new LectureDialog(App.getFrame(), Local.getString("New Lecture Time"));
+        
+        Dimension frmSize = App.getFrame().getSize();
+        Point loc = App.getFrame().getLocation();
+        
+        dlg.setLocation((frmSize.width - dlg.getSize().width) / 2 + loc.x, (frmSize.height - dlg.getSize().height) / 2 + loc.y);
+        dlg.setVisible(true);
+        
+        //get the lecture time selected
+        Calendar calendar = new GregorianCalendar(Local.getCurrentLocale());
+		calendar.setTime(((Date)dlg.timeSpin.getModel().getValue()));
+		int hh = calendar.get(Calendar.HOUR_OF_DAY);
+        int mm = calendar.get(Calendar.MINUTE);
+
+        //gets the day selected
+        String day = (String)dlg.daysCB.getSelectedItem();
+
+        LectureTime lecTime = new LectureTime(day, hh, mm);
+
+        if (dlg.CANCELLED)
+            return null;
+
+        return lecTime;
+    }
+    //New for freedays
+    SpecialCalendarDate newFreeDay_actionPerformed() {
+        CourseSpecialDaysDialog dlg = new CourseSpecialDaysDialog(App.getFrame(), Local.getString("New Free Day"));
+
+        Dimension frmSize = App.getFrame().getSize();
+        Point loc = App.getFrame().getLocation();
+
+        dlg.dateOfEvent.getModel().setValue(CurrentDate.get().getDate());
+        
+        dlg.setLocation((frmSize.width - dlg.getSize().width) / 2 + loc.x, (frmSize.height - dlg.getSize().height) / 2 + loc.y);
+        dlg.setVisible(true);
+
+        SpecialCalendarDate freeDay = new SpecialCalendarDate(new CalendarDate((Date) dlg.dateOfEvent.getModel().getValue()), dlg.nameField.getText());
+        /**
+         * TODO
+         * Get the value for freeday and return it
+         */
+        if (dlg.CANCELLED)
+            return null;
+
+        return freeDay;
+    }
+    //New for holidays
+    SpecialCalendarDate newHoliday_actionPerformed() {
+        CourseSpecialDaysDialog dlg = new CourseSpecialDaysDialog(App.getFrame(), Local.getString("New Holiday"));
+
+        Dimension frmSize = App.getFrame().getSize();
+        Point loc = App.getFrame().getLocation();
+
+        dlg.dateOfEvent.getModel().setValue(CurrentDate.get().getDate());
+        
+        dlg.setLocation((frmSize.width - dlg.getSize().width) / 2 + loc.x, (frmSize.height - dlg.getSize().height) / 2 + loc.y);
+        dlg.setVisible(true);
+
+        SpecialCalendarDate holiday = new SpecialCalendarDate(new CalendarDate((Date) dlg.dateOfEvent.getModel().getValue()), dlg.nameField.getText());
+
+        if (dlg.CANCELLED)
+            return null;
+
+        return holiday;
+    }
+
+
     void addSubTask_actionPerformed(ActionEvent e) {
         TaskDialog dlg = new TaskDialog(App.getFrame(), Local.getString("New Task"));
         String parentTaskId = taskTable.getModel().getValueAt(taskTable.getSelectedRow(), TaskTable.TASK_ID).toString();
         
-//        Util.debug("Adding sub task under " + parentTaskId);
+        //        Util.debug("Adding sub task under " + parentTaskId);
         
         Dimension frmSize = App.getFrame().getSize();
         Point loc = App.getFrame().getLocation();
@@ -544,7 +620,7 @@ public class TaskPanel extends JPanel {
         if (dlg.CANCELLED)
             return;
         CalendarDate sd = new CalendarDate((Date) dlg.startDate.getModel().getValue());
-//        CalendarDate ed = new CalendarDate((Date) dlg.endDate.getModel().getValue());
+        //        CalendarDate ed = new CalendarDate((Date) dlg.endDate.getModel().getValue());
           CalendarDate ed;
  		if(dlg.chkEndDate.isSelected())
  			ed = new CalendarDate((Date) dlg.endDate.getModel().getValue());
@@ -553,7 +629,7 @@ public class TaskPanel extends JPanel {
         long effort = Util.getMillisFromHours(dlg.effortField.getText());
 		Task newTask = CurrentProject.getTaskList().createTask(sd, ed, dlg.todoField.getText(), dlg.priorityCB.getSelectedIndex(),effort, dlg.descriptionField.getText(),parentTaskId);
         newTask.setProgress(((Integer)dlg.progress.getValue()).intValue());
-//		CurrentProject.getTaskList().adjustParentTasks(newTask);
+        //		CurrentProject.getTaskList().adjustParentTasks(newTask);
 
 		CurrentStorage.get().storeTaskList(CurrentProject.getTaskList(), CurrentProject.get());
         taskTable.tableChanged();

@@ -414,9 +414,9 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 			prj.getStartDate().getCalendar().getTime());
 		if (prj.getEndDate() != null) {
 			dlg.edButton.setEnabled(true);
-            dlg.endDateChB.setForeground(Color.BLACK);
-
-			dlg.endDateChB.setSelected(true);
+//            dlg.endDateChB.setForeground(Color.BLACK);
+//
+//			dlg.endDateChB.setSelected(true);
 			dlg.endDate.setEnabled(true);
 			dlg.endDate.getModel().setValue(
 				prj.getEndDate().getCalendar().getTime());
@@ -430,10 +430,10 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 		prj.setStartDate(
 			new CalendarDate((Date) dlg.startDate.getModel().getValue()));
 
-		if (dlg.endDateChB.isSelected())
+//		if (dlg.endDateChB.isSelected())
 			prj.setEndDate(
 				new CalendarDate((Date) dlg.endDate.getModel().getValue()));
-		else
+//		else
 			prj.setEndDate(null);
 		prjTablePanel.updateUI();
 		/*
