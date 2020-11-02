@@ -5,6 +5,10 @@
 *.log
 
 ### Eclipse ###
+.settings
+
+### Intellij ###
+/.idea/
 
 ### Eclipse Patch ###
 # Eclipse Core		
@@ -20,4 +24,5 @@
 # Mac DS file
 .DS_Store
 
-
+.vscode/
+.settings/

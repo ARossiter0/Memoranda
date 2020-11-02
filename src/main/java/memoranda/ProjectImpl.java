@@ -71,6 +71,20 @@ public class ProjectImpl implements Project {
             setAttr("endDate", null);
     }
 
+//New methods for putting in final date to .project file
+    public CalendarDate getFinalDate() {
+        Attribute d = _root.getAttribute("finalDate");
+        if (d == null) return null;
+        return new CalendarDate(d.getValue());
+    }
+
+    public void setFinalDate(CalendarDate date) {
+        if (date != null)
+            setAttr("finalDate", date.toString());
+        else if (_root.getAttribute("finalDate") != null)
+            setAttr("finalDate", null);
+    }
+
     /**
      * @see main.java.memoranda.Project#getStatus()
      */

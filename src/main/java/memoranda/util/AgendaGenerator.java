@@ -55,31 +55,20 @@ public class AgendaGenerator {
 			tl = CurrentStorage.get().openTaskList(p);        	
 		}
 		String s = "";
-		int k = getProgress(tl);
-		if (k > -1) {
-			s += "<br>" + Local.getString("Total progress") + ": " + k + "%";        	
-		}
+
+
 		s += "</td></tr></table>\n";
 
 		Vector tasks = (Vector) tl.getActiveSubTasks(null,date);        
 		if (tasks.size() == 0) {
-			s += "<p>" + Local.getString("No actual tasks") + ".</p>\n";        	
+			s += "<p>" + Local.getString("No course dates or Lecture Hours set.") + ".</p>\n";        	
 		}
 		else {
-			s += Local.getString("Actual tasks") + ":<br>\n<ul>\n";            
-
-			//            TaskSorter.sort(tasks, date, TaskSorter.BY_IMP_RATE); // TODO: configurable method
+			s += Local.getString("Course dates and Lecture Hours") + ":<br>\n<ul>\n";
 			Collections.sort(tasks);
 			for (Iterator i = tasks.iterator(); i.hasNext();) {
 				Task t = (Task) i.next();
-				// Always show active tasks only on agenda page from now on.
-				// If it's not active, then it's probably "not on the agenda" isn't it?
-				//        		if(Context.get("SHOW_ACTIVE_TASKS_ONLY").equals(new Boolean(true))) {
-				//                    if (!((t.getStatus() == Task.ACTIVE) || (t.getStatus() == Task.DEADLINE) || (t.getStatus() == Task.FAILED))) {
-				//                    	continue;
-				//                	}	
-				//        		}
-				// ignore if it's a sub-task, iterate over ROOT tasks here only
+				
 				if (tl.hasParentTask(t.getID())) {
 					continue;
 				}
@@ -91,8 +80,6 @@ public class AgendaGenerator {
 			}
 			s += "\n</ul>\n";
 		}
-
-		//        Util.debug("html for project " + p.getTitle() + " is\n" + s); 
 		return s;
 	}
 
@@ -135,108 +122,139 @@ public class AgendaGenerator {
 	 */
 	private static String renderTask(Project p, CalendarDate date, TaskList tl, Task t, int level, Collection expandedTasks) {
 		String s = "";
+		if (!t.doesTaskHaveAType()) {
+			int pg = t.getProgress();
+			String progress = "";
+			if (pg == 100)
+				progress = "<font color=\"green\">"+Local.getString("Completed")+"</font>";
+			else
+				progress = pg + Local.getString("% done");
 
-		int pg = t.getProgress();
-		String progress = "";
-		if (pg == 100)
-			progress = "<font color=\"green\">"+Local.getString("Completed")+"</font>";
-		else
-			progress = pg + Local.getString("% done");
+			//		String nbsp = "&nbsp;&nbsp;";
+			//		String spacing = "";
+			//		for(int i = 0; i < level; i ++) {
+			//			spacing = spacing + nbsp;
+			//		}
+			//		Util.debug("Spacing for task " + t.getText() + " is " + spacing);
 
-		//		String nbsp = "&nbsp;&nbsp;";
-		//		String spacing = "";
-		//		for(int i = 0; i < level; i ++) {
-		//			spacing = spacing + nbsp;
-		//		}
-		//		Util.debug("Spacing for task " + t.getText() + " is " + spacing);
-
-		String subTaskOperation = "";
-		if (tl.hasSubTasks(t.getID())) {
-			//			Util.debug("Task " + t.getID() + " has subtasks");
-			if (expandedTasks.contains(t.getID())) {
-				//				Util.debug("Task " + t.getID() + " is in list of expanded tasks");
-				subTaskOperation = "<a href=\"memoranda:closesubtasks#" + t.getID()+ "\">(-)</a>";				
-			}
-			else {
-				//				Util.debug("Task " + t.getID() + " is not in list of expanded tasks");
-				subTaskOperation = "<a href=\"memoranda:expandsubtasks#" + t.getID()+ "\">(+)</a>";
-			}
-		}
-
-		s += "<a name=\"" + t.getID() + "\"><li><p>" + subTaskOperation + "<a href=\"memoranda:tasks#"
-				+ p.getID()
-				+ "\"><b>"
-				+ t.getText()
-				+ "</b></a> : " 
-				+ progress                 
-				+ "</p>"
-				+ "<p>"
-				+ Local.getString("Priority")
-				+ ": "
-				+ getPriorityString(t.getPriority())
-				+ "</p>";
-		/*<<<<<<< AgendaGenerator.java
-		if (!(t.getStartDate().getDate()).after(t.getEndDate().getDate())) {
-		    if (t.getEndDate().equals(date))
-		        s += "<p><font color=\"#FF9900\"><b>"
-		            + Local.getString("Should be done today")
-		            + ".</b></font></p>";
-		    else {
-		        Calendar endDateCal = t.getEndDate().getCalendar();
-		        Calendar dateCal = date.getCalendar();
-		        int numOfDays = (endDateCal.get(Calendar.YEAR)*365 + endDateCal.get(Calendar.DAY_OF_YEAR)) - 
-		                (dateCal.get(Calendar.YEAR)*365 + dateCal.get(Calendar.DAY_OF_YEAR));
-		        String days = "";
-		        if (numOfDays > 1)
-		            days = Local.getString("in")+" "+numOfDays+" "+Local.getString("day(s)");
-		        else
-		            days = Local.getString("tomorrow");
-		        s += "<p>"
-		            + Local.getString("Deadline")
-		            + ": <i>"
-		            + t.getEndDate().getMediumDateString()
-		            + "</i> ("+days+")</p>";
-		    }                    
-		}
-=======*/
-		if (t.getEndDate().equals(date))
-			s += "<p><font color=\"#FF9900\"><b>"
-					+ Local.getString("Should be done today")
-					+ ".</b></font></p>";
-		else {
-			Calendar endDateCal = t.getEndDate().getCalendar();
-			Calendar dateCal = date.getCalendar();
-			int numOfDays = (endDateCal.get(Calendar.YEAR)*365 + endDateCal.get(Calendar.DAY_OF_YEAR)) - 
-					(dateCal.get(Calendar.YEAR)*365 + dateCal.get(Calendar.DAY_OF_YEAR));
-			String days = "";
-			if(numOfDays > 0) {
-				if (numOfDays > 1) {
-					days = Local.getString("in")+" "+numOfDays+" "+Local.getString("day(s)");		        
+			String subTaskOperation = "";
+			if (tl.hasSubTasks(t.getID())) {
+				//			Util.debug("Task " + t.getID() + " has subtasks");
+				if (expandedTasks.contains(t.getID())) {
+					//				Util.debug("Task " + t.getID() + " is in list of expanded tasks");
+					subTaskOperation = "<a href=\"memoranda:closesubtasks#" + t.getID()+ "\">(-)</a>";				
 				}
 				else {
-					days = Local.getString("tomorrow");		        
+					//				Util.debug("Task " + t.getID() + " is not in list of expanded tasks");
+					subTaskOperation = "<a href=\"memoranda:expandsubtasks#" + t.getID()+ "\">(+)</a>";
 				}
-				s += "<p>"
+			}
+
+			s += "<a name=\"" + t.getID() + "\"><li><p>" + subTaskOperation + "<a href=\"memoranda:tasks#"
+					+ p.getID()
+					+ "\"><b>"
+					+ t.getText()
+					+ "</b></a> : " 
+					+ progress                 
+					+ "</p>"
+					+ "<p>"
+					+ Local.getString("Priority")
+					+ ": "
+					+ getPriorityString(t.getPriority())
+					+ "</p>";
+			/*<<<<<<< AgendaGenerator.java
+			if (!(t.getStartDate().getDate()).after(t.getEndDate().getDate())) {
+				if (t.getEndDate().equals(date))
+					s += "<p><font color=\"#FF9900\"><b>"
+						+ Local.getString("Should be done today")
+						+ ".</b></font></p>";
+				else {
+					Calendar endDateCal = t.getEndDate().getCalendar();
+					Calendar dateCal = date.getCalendar();
+					int numOfDays = (endDateCal.get(Calendar.YEAR)*365 + endDateCal.get(Calendar.DAY_OF_YEAR)) - 
+							(dateCal.get(Calendar.YEAR)*365 + dateCal.get(Calendar.DAY_OF_YEAR));
+					String days = "";
+					if (numOfDays > 1)
+						days = Local.getString("in")+" "+numOfDays+" "+Local.getString("day(s)");
+					else
+						days = Local.getString("tomorrow");
+					s += "<p>"
 						+ Local.getString("Deadline")
 						+ ": <i>"
 						+ t.getEndDate().getMediumDateString()
-						+ "</i> ("+days+")</p>";		        
+						+ "</i> ("+days+")</p>";
+				}                    
 			}
-			else if ((numOfDays < 0) && (numOfDays > -10000)) {
-				String overdueDays = String.valueOf(-1 * numOfDays);
+			=======*/
+			if (t.getEndDate().equals(date))
 				s += "<p><font color=\"#FF9900\"><b>"
-						+ overdueDays + " "
-						+ Local.getString("days overdue")
+						+ Local.getString("Should be done today")
 						+ ".</b></font></p>";
-			}
 			else {
-				// tasks that have no deadline
-				s += "<p>"
-						+ Local.getString("No Deadline")
-						+ "</p>";		        
+				Calendar endDateCal = t.getEndDate().getCalendar();
+				Calendar dateCal = date.getCalendar();
+				int numOfDays = (endDateCal.get(Calendar.YEAR)*365 + endDateCal.get(Calendar.DAY_OF_YEAR)) - 
+						(dateCal.get(Calendar.YEAR)*365 + dateCal.get(Calendar.DAY_OF_YEAR));
+				String days = "";
+				if(numOfDays > 0) {
+					if (numOfDays > 1) {
+						days = Local.getString("in")+" "+numOfDays+" "+Local.getString("day(s)");		        
+					}
+					else {
+						days = Local.getString("tomorrow");		        
+					}
+					s += "<p>"
+							+ Local.getString("Deadline")
+							+ ": <i>"
+							+ t.getEndDate().getMediumDateString()
+							+ "</i> ("+days+")</p>";		        
+				}
+				else if ((numOfDays < 0) && (numOfDays > -10000)) {
+					String overdueDays = String.valueOf(-1 * numOfDays);
+					s += "<p><font color=\"#FF9900\"><b>"
+							+ overdueDays + " "
+							+ Local.getString("days overdue")
+							+ ".</b></font></p>";
+				}
+				else {
+					// tasks that have no deadline
+					s += "<p>"
+							+ Local.getString("No Deadline")
+							+ "</p>";		        
+				}
+			}                     
+			//>>>>>>> 1.4
+		} else {
+			//render the task according to custom specs
+			String type = t.getType();
+			if(type.equals("Lecture")) {
+				s += "<a name=\"" + t.getID() + "\"><li><p>" + "<a href=\"memoranda:tasks#"
+						+ p.getID()
+						+ "\"><b>"
+						+ t.getType()
+						+ "</b></a> : " 
+						+ t.getDay() 
+						+ " at "
+						+ t.getHour()
+						+ ":"
+						+ t.getMinute();
+						if(t.getMinute().equals("0")) {
+							s += "0";
+						}
+						s += "</p>";
+			} else {
+				s += "<a name=\"" + t.getID() + "\"><li><p>" + "<a href=\"memoranda:tasks#"
+						+ p.getID()
+						+ "\"><b>"
+						+ t.getType()
+						+ "</b></a> : " 
+						+ t.getName()                 
+						+ "</p>"
+						+ "<p>"
+						+ t.getDate()
+						+ "</p>";
 			}
-		}                     
-		//>>>>>>> 1.4
+		}
 		s += "</li>\n";
 		return s;
 	}
@@ -277,17 +295,21 @@ public class AgendaGenerator {
 				+ "</a></h2>\n"
 				+ "<table border=\"0\" width=\"100%\" cellpadding=\"2\" bgcolor=\"#EFEFEF\"><tr><td>" 
 				+ Local.getString("Start date")+": <i>"+p.getStartDate().getMediumDateString()+"</i>\n";
+		  
 		if (p.getEndDate() != null)
 			s += "<br>" + Local.getString("End date")+": <i>"+p.getEndDate().getMediumDateString()
-			+"</i>\n";        
-		return s + generateTasksInfo(p, date,expandedTasks);        
+			+"</i>\n";     
+		if (p.getFinalDate() != null)
+			s += "<br>" + Local.getString("Final Exam Date")+": <i>"+p.getFinalDate().getMediumDateString()
+			+"</i>\n";   
+		return s + generateTasksInfo(p, date, expandedTasks);        
 	}
 
 	static String generateAllProjectsInfo(CalendarDate date, Collection expandedTasks) {
 		String s =
 				"<td width=\"66%\" valign=\"top\">"
 						+ "<h1>"
-						+ Local.getString("Projects and tasks")
+						+ Local.getString("Courses")
 						+ "</h1>\n";
 		s += generateProjectInfo(CurrentProject.get(), date, expandedTasks);        
 		for (Iterator i = ProjectManager.getActiveProjects().iterator();
@@ -367,7 +389,8 @@ public class AgendaGenerator {
 				.class
 				.getResource("/ui/agenda/removesticker.gif")
 				.toExternalForm();
-		 String s = "<hr><hr><table border=\"0\" cellpadding=\"0\" width=\"100%\"><tr><td><a href=\"memoranda:importstickers\"><b>"+Local.getString("Importar anotaci�n")+"</b></a></td><td><a href=\"memoranda:exportstickerst\"><b>"+Local.getString("Exportar anotaci�n como .txt")+"</b></a><td><a href=\"memoranda:exportstickersh\"><b>"+Local.getString("Exportar anotaci�n como .html")+"</b></a></td></tr></table>"
+		
+		 String s = "<hr><hr><table border=\"0\" cellpadding=\"0\" width=\"100%\"><tr><td><a href=\"memoranda:importstickers\"><b>"+Local.getString("Import sticker")+"</b></a></td><td><a href=\"memoranda:exportstickerst\"><b>"+Local.getString("Export sticker as .txt")+"</b></a><td><a href=\"memoranda:exportstickersh\"><b>"+Local.getString("Export sticker as .html")+"</b></a></td></tr></table>"
 				 +   "<table border=\"0\" cellpadding=\"0\" width=\"100%\"><tr><td><a href=\"memoranda:addsticker\"><img align=\"left\" width=\"22\" height=\"22\" src=\""				
 				 + iurl
 				+ "\" border=\"0\"  hspace=\"0\" vspace=\"0\" alt=\"New sticker\"></a></td><td width=\"100%\"><a href=\"memoranda:addsticker\"><b>&nbsp;"

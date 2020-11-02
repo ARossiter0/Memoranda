@@ -63,6 +63,7 @@ public class AddResourceDialog extends JDialog {
 	 */
 	 
     void jbInit() throws Exception {
+    	// Set the style for the title and header
 		this.setResizable(false);
         dialogTitlePanel.setBackground(Color.WHITE);
         dialogTitlePanel.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
@@ -72,10 +73,15 @@ public class AddResourceDialog extends JDialog {
         header.setIcon(new ImageIcon(main.java.memoranda.ui.AddResourceDialog.class.getResource(
             "/ui/icons/resource48.png")));
         dialogTitlePanel.add(header);
+        
+        // Add the title panel to this
         this.getContentPane().add(dialogTitlePanel, BorderLayout.NORTH);
         
+        // Create a radio button group 
         buttonGroup1.add(localFileRB);
         buttonGroup1.add(inetShortcutRB);
+        
+        // Style and add the local file radio button to the area panel
         localFileRB.setSelected(true);
         localFileRB.setText(Local.getString("Local file"));
         localFileRB.addActionListener(new java.awt.event.ActionListener() {
@@ -91,6 +97,7 @@ public class AddResourceDialog extends JDialog {
         gbc.fill = GridBagConstraints.HORIZONTAL;
         areaPanel.add(localFileRB, gbc);
         
+        // Add the project file checkbox to the area panel
         gbc = new GridBagConstraints();
         gbc.gridwidth = 2;
         gbc.gridx = 2; gbc.gridy = 0;
@@ -99,6 +106,7 @@ public class AddResourceDialog extends JDialog {
         gbc.fill = GridBagConstraints.HORIZONTAL;
         areaPanel.add(projectFileCB, gbc);
         
+        // Add the path label to the area panel
         jLabel1.setText(Local.getString("Path")+": ");
         gbc = new GridBagConstraints();
         gbc.gridx = 0; gbc.gridy = 1;
@@ -106,6 +114,8 @@ public class AddResourceDialog extends JDialog {
         gbc.anchor = GridBagConstraints.WEST;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         areaPanel.add(jLabel1, gbc);
+        
+        // Add the path input field to the area panel
         pathField.setMinimumSize(new Dimension(4, 24));
         pathField.setPreferredSize(new Dimension(250, 24));
         pathField.addCaretListener(new javax.swing.event.CaretListener() {
@@ -119,6 +129,8 @@ public class AddResourceDialog extends JDialog {
         gbc.anchor = GridBagConstraints.WEST;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         areaPanel.add(pathField, gbc);
+        
+        // Add the browse button to the area panel
         browseB.setText(Local.getString("Browse"));
         browseB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -130,6 +142,8 @@ public class AddResourceDialog extends JDialog {
         gbc.insets = new Insets(5, 10, 5, 15);
         gbc.anchor = GridBagConstraints.WEST;
         areaPanel.add(browseB, gbc);
+        
+        // Style and add the internet shortcut radio button to the area panel
         inetShortcutRB.setText(Local.getString("Internet shortcut"));
         inetShortcutRB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -142,12 +156,16 @@ public class AddResourceDialog extends JDialog {
         gbc.insets = new Insets(5, 15, 5, 15);
         gbc.anchor = GridBagConstraints.WEST;
         areaPanel.add(inetShortcutRB, gbc);
+        
+        // Add the url label to the area panel
         jLabel2.setText(Local.getString("URL")+":  ");
         gbc = new GridBagConstraints();
         gbc.gridx = 0; gbc.gridy = 3;
         gbc.insets = new Insets(5, 20, 5, 15);
         gbc.anchor = GridBagConstraints.WEST;
         areaPanel.add(jLabel2, gbc);
+        
+        // Add the url field to the area panel
         urlField.setMinimumSize(new Dimension(4, 24));
         urlField.setPreferredSize(new Dimension(335, 24));
         urlField.addCaretListener(new javax.swing.event.CaretListener() {
@@ -162,8 +180,11 @@ public class AddResourceDialog extends JDialog {
         gbc.anchor = GridBagConstraints.WEST;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         areaPanel.add(urlField, gbc);
+        
+        // Add the area panel to this
         this.getContentPane().add(areaPanel, BorderLayout.CENTER);
         
+        // Style and add the ok button
         okB.setEnabled(false);
         okB.setMaximumSize(new Dimension(100, 26));
         okB.setMinimumSize(new Dimension(100, 26));
@@ -175,6 +196,8 @@ public class AddResourceDialog extends JDialog {
             }
         });
         this.getRootPane().setDefaultButton(okB);
+        
+        // Style and add the cancel button
         cancelB.setMaximumSize(new Dimension(100, 26));
         cancelB.setMinimumSize(new Dimension(100, 26));
         cancelB.setPreferredSize(new Dimension(100, 26));

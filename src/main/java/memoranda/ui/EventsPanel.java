@@ -61,9 +61,15 @@ public class EventsPanel extends JPanel {
             new ExceptionDialog(ex);
         }
     }
+    
+    /**
+     * Initialize Events panel
+     * @throws Exception
+     */
     void jbInit() throws Exception {
         eventsToolBar.setFloatable(false);
 
+        //Initialize history back button
         historyBackB.setAction(History.historyBackAction);
         historyBackB.setFocusable(false);
         historyBackB.setBorderPainted(false);
@@ -74,6 +80,7 @@ public class EventsPanel extends JPanel {
         historyBackB.setMaximumSize(new Dimension(24, 24));
         historyBackB.setText("");
 
+        //Initialize history forward button
         historyForwardB.setAction(History.historyForwardAction);
         historyForwardB.setBorderPainted(false);
         historyForwardB.setFocusable(false);
@@ -84,6 +91,7 @@ public class EventsPanel extends JPanel {
         historyForwardB.setMaximumSize(new Dimension(24, 24));
         historyForwardB.setText("");
 
+        //Initialize New Event button
         newEventB.setIcon(
             new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/event_new.png")));
         newEventB.setEnabled(true);
@@ -100,6 +108,7 @@ public class EventsPanel extends JPanel {
         });
         newEventB.setBorderPainted(false);
 
+        //Initialize Edit Event button
         editEventB.setBorderPainted(false);
         editEventB.setFocusable(false);
         editEventB.addActionListener(new java.awt.event.ActionListener() {
@@ -116,6 +125,7 @@ public class EventsPanel extends JPanel {
         editEventB.setIcon(
             new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/event_edit.png")));
 
+        //Initialize Remove Event button
         removeEventB.setBorderPainted(false);
         removeEventB.setFocusable(false);
         removeEventB.addActionListener(new java.awt.event.ActionListener() {
@@ -131,6 +141,7 @@ public class EventsPanel extends JPanel {
         removeEventB.setIcon(
             new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/event_remove.png")));
 
+        //Initialize panel and pop-up menu
         this.setLayout(borderLayout1);
         scrollPane.getViewport().setBackground(Color.white);
         eventsTable.setMaximumSize(new Dimension(32767, 32767));
@@ -167,6 +178,8 @@ public class EventsPanel extends JPanel {
             new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/event_new.png")));
         scrollPane.getViewport().add(eventsTable, null);
         this.add(scrollPane, BorderLayout.CENTER);
+        
+        //Initialize toolbar
         eventsToolBar.add(historyBackB, null);
         eventsToolBar.add(historyForwardB, null);
         eventsToolBar.addSeparator(new Dimension(8, 24));
@@ -224,6 +237,7 @@ public class EventsPanel extends JPanel {
     }
 
     void editEventB_actionPerformed(ActionEvent e) {
+    	//Create event dialog
         EventDialog dlg = new EventDialog(App.getFrame(), Local.getString("Event"));
         main.java.memoranda.Event ev =
             (main.java.memoranda.Event) eventsTable.getModel().getValueAt(
@@ -237,9 +251,11 @@ public class EventsPanel extends JPanel {
         ((SpinnerDateModel)dlg.timeSpin.getModel()).setStart(CalendarDate.today().getDate());
         ((SpinnerDateModel)dlg.timeSpin.getModel()).setEnd(CalendarDate.tomorrow().getDate());*/    
         dlg.textField.setText(ev.getText());
+        
+        //Set Dialog box default values based on event being edited
         int rep = ev.getRepeat();
         if (rep > 0) {
-            dlg.startDate.getModel().setValue(ev.getStartDate().getDate());
+        	dlg.startDate.getModel().setValue(ev.getStartDate().getDate());
             if (rep == EventsManager.REPEAT_DAILY) {
                 dlg.dailyRepeatRB.setSelected(true);
                 dlg.dailyRepeatRB_actionPerformed(null);
@@ -248,11 +264,11 @@ public class EventsPanel extends JPanel {
             else if (rep == EventsManager.REPEAT_WEEKLY) {
                 dlg.weeklyRepeatRB.setSelected(true);
                 dlg.weeklyRepeatRB_actionPerformed(null);
-		int d = ev.getPeriod() - 1;
-		if(Configuration.get("FIRST_DAY_OF_WEEK").equals("mon")) {
-		    d--;
-		    if(d<0) d=6;
-		}
+                int d = ev.getPeriod() - 1;
+                if(Configuration.get("FIRST_DAY_OF_WEEK").equals("mon")) {
+                	d--;
+                	if(d<0) d=6;
+                }
                 dlg.weekdaysCB.setSelectedIndex(d);
             }
             else if (rep == EventsManager.REPEAT_MONTHLY) {
@@ -260,22 +276,22 @@ public class EventsPanel extends JPanel {
                 dlg.monthlyRepeatRB_actionPerformed(null);
                 dlg.dayOfMonthSpin.setValue(new Integer(ev.getPeriod()));
             }
-	    else if (rep == EventsManager.REPEAT_YEARLY) {
-		dlg.yearlyRepeatRB.setSelected(true);
-		dlg.yearlyRepeatRB_actionPerformed(null);
-		dlg.dayOfMonthSpin.setValue(new Integer(ev.getPeriod()));
-	    }
-        if (ev.getEndDate() != null) {
-           dlg.endDate.getModel().setValue(ev.getEndDate().getDate());
-           dlg.enableEndDateCB.setSelected(true);
-           dlg.enableEndDateCB_actionPerformed(null);
-        }
-		if(ev.getWorkingDays()) {
-			dlg.workingDaysOnlyCB.setSelected(true);
+            else if (rep == EventsManager.REPEAT_YEARLY) {
+            dlg.yearlyRepeatRB.setSelected(true);
+            dlg.yearlyRepeatRB_actionPerformed(null);
+            dlg.dayOfMonthSpin.setValue(new Integer(ev.getPeriod()));
+            }
+            if (ev.getEndDate() != null) {
+            	dlg.endDate.getModel().setValue(ev.getEndDate().getDate());
+            	dlg.enableEndDateCB.setSelected(true);
+            	dlg.enableEndDateCB_actionPerformed(null);
+            }
+            if(ev.getWorkingDays()) {
+            	dlg.workingDaysOnlyCB.setSelected(true);
+            }
 		}
-		
-        }
 
+        //Initialize Event Dialog
         Dimension frmSize = App.getFrame().getSize();
         Point loc = App.getFrame().getLocation();
         dlg.setLocation((frmSize.width - dlg.getSize().width) / 2 + loc.x, (frmSize.height - dlg.getSize().height) / 2 + loc.y);
@@ -360,8 +376,15 @@ public class EventsPanel extends JPanel {
         parentPanel.updateIndicators();
     }
 
+    /**
+     * Take data entered into EventDialog object and 
+     * @param dlg
+     * @param hh
+     * @param mm
+     * @param text
+     */
     private void updateEvents(EventDialog dlg, int hh, int mm, String text) {
-	int rtype;
+    	int rtype;
         int period;
         CalendarDate sd = new CalendarDate((Date) dlg.startDate.getModel().getValue());
         CalendarDate ed = null;
@@ -374,16 +397,16 @@ public class EventsPanel extends JPanel {
         else if (dlg.weeklyRepeatRB.isSelected()) {
             rtype = EventsManager.REPEAT_WEEKLY;
             period = dlg.weekdaysCB.getSelectedIndex() + 1;
-	    if (Configuration.get("FIRST_DAY_OF_WEEK").equals("mon")) {
-		if(period==7) period=1;
-		else period++;
-	    }
+            if (Configuration.get("FIRST_DAY_OF_WEEK").equals("mon")) {
+            	if(period==7) period=1;
+            	else period++;
+            }
         }
-	else if (dlg.yearlyRepeatRB.isSelected()) {
-	    rtype = EventsManager.REPEAT_YEARLY;
-	    period = sd.getCalendar().get(Calendar.DAY_OF_YEAR);
-	    if((sd.getYear() % 4) == 0 && sd.getCalendar().get(Calendar.DAY_OF_YEAR) > 60) period--;
-	}
+        else if (dlg.yearlyRepeatRB.isSelected()) {
+        	rtype = EventsManager.REPEAT_YEARLY;
+        	period = sd.getCalendar().get(Calendar.DAY_OF_YEAR);
+        	if((sd.getYear() % 4) == 0 && sd.getCalendar().get(Calendar.DAY_OF_YEAR) > 60) period--;
+        }
         else {
             rtype = EventsManager.REPEAT_MONTHLY;
             period = ((Integer) dlg.dayOfMonthSpin.getModel().getValue()).intValue();
