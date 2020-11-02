@@ -77,18 +77,22 @@ I would also advise you to already fill out the Contributions section (End of sp
 
 | Date  | Attendees  |Meeting notes (very brief)   | Burndown Info (on track, ahead behind is enough) | TravisCI info (does the master pass) | Additional Info  |
 |---|---|---|---|--|--|
-|   |   |   |   |  |  |
-|   |   |   |   |  |  |
-|   |   |   |   |  |  |
+|10/26/20   | Maayan, Tristan, Anton, Alexander, Ian  | Most of the group already started wroking on some tasks. We talked about implementation of the user stories that are more complex and costructed a plan of action  |   |  |  |
+|10/28/20   | Maayan, Tristan, Anton, Alexander, Ian  | At this point had a substantial amout of work done. We discussed our progress and agreed to continue working on the stories given y the professor and leave the ones we added to the end  |   |  |  |
+|   |   |   | Maayan, Tristan, Alexander  | In this meeting we mostly discussed US90 that was a little bt more complex and discussed some implementaion details. We discussed a coulpe of bugs Tristan found in the code and how he fixed them  |  |
 
 ### Meeting Summary:
-
+Overall the meetings were very productive. I always took more then 30 minutes but we feel it this type of communication was important to our success.
+During each meeting, we evaluated out progress but also looked at the amout of work we have left as a group and made sure everyone is aware of the dealines and the work that is left,
+so that we can finish everything on time and have time for final testing.
 > Add rows as needed and add the number how many meetings for each team member:
-
-   Name1 : Num Meetings
-
-   Name2 : Num Meetings
-
+(this doesn't include 2 additional meetings we had during the sprint planning phase)
+   Tristan: 3 
+   Maayan: 3
+   Ian: 2 
+   Alexander: 3
+   Andrew: 2 
+	
 
 ## 3: After the Sprint
 
