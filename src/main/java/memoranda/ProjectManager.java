@@ -97,6 +97,23 @@ public class ProjectManager {
         }
         return count;
     }
+    //New version to add lecture date to XML file
+    public static Project createProject(String id, String title, CalendarDate startDate, CalendarDate endDate, CalendarDate finalDate) {
+        Element el = new Element("project");
+        el.addAttribute(new Attribute("id", id));
+        _root.appendChild(el);
+        Project prj = new ProjectImpl(el);
+        prj.setTitle(title);
+        prj.setStartDate(startDate);
+        prj.setEndDate(endDate);
+        prj.setFinalDate(finalDate); //New method created
+        CurrentStorage.get().createProjectStorage(prj);
+        return prj;
+    }
+    //New version to add lecture date to XML file
+    public static Project createProject(String title, CalendarDate startDate, CalendarDate endDate, CalendarDate finalDate) {
+        return createProject(Util.generateId(), title, startDate, endDate, finalDate);
+    }
 
     public static Project createProject(String id, String title, CalendarDate startDate, CalendarDate endDate) {
         Element el = new Element("project");
@@ -109,6 +126,7 @@ public class ProjectManager {
         CurrentStorage.get().createProjectStorage(prj);
         return prj;
     }
+
 
     public static Project createProject(String title, CalendarDate startDate, CalendarDate endDate) {
         return createProject(Util.generateId(), title, startDate, endDate);

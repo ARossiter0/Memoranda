@@ -104,6 +104,8 @@ public class CurrentProject {
      * Set the current project by retrieving the appropriate 
      * tasks, notes, and resources, notifying listeners, and
      * setting last opened project id to be the id of the project. 
+     * TODO: Edit this to be able to insert the task list into the 
+     * storage process
      * @param project the project to be made current
      */
     public static void set(Project project) {

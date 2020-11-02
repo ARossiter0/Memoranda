@@ -13,6 +13,7 @@ import java.awt.event.ActionListener;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -33,6 +34,13 @@ import main.java.memoranda.ProjectManager;
 import main.java.memoranda.date.CalendarDate;
 import main.java.memoranda.util.CurrentStorage;
 import main.java.memoranda.util.Local;
+
+import main.java.memoranda.CurrentProject;
+import main.java.memoranda.LectureTime;
+import main.java.memoranda.SpecialCalendarDate;
+import main.java.memoranda.Task;
+import main.java.memoranda.TaskList;
+import main.java.memoranda.TaskListImpl;
 
 /*$Id: ProjectDialog.java,v 1.26 2004/10/18 19:09:10 ivanrise Exp $*/
 public class ProjectDialog extends JDialog {
@@ -78,7 +86,14 @@ public class ProjectDialog extends JDialog {
     JPanel bottomPanel = new JPanel();
     JButton okButton = new JButton();
     JButton cancelButton = new JButton();
-    
+
+
+    //New for adding tasks into, US90 specific
+    public ArrayList<LectureTime> lectureTimes = new ArrayList<LectureTime>();
+    public ArrayList<SpecialCalendarDate> freeDays = new ArrayList<SpecialCalendarDate>();
+    public ArrayList<SpecialCalendarDate> breakDays = new ArrayList<SpecialCalendarDate>();
+    public ArrayList<SpecialCalendarDate> holidays = new ArrayList<SpecialCalendarDate>();
+
     public ProjectDialog(Frame frame, String title) {
         super(frame, title, true);
         try {
@@ -195,9 +210,9 @@ public class ProjectDialog extends JDialog {
         gbc.gridx = 3; gbc.gridy = 2;
         gbc.insets = new Insets(5, 0, 10, 5);
         gbc.anchor = GridBagConstraints.WEST;
-        centerPanel.add(endDateChB, gbc);
+//        centerPanel.add(endDateChB, gbc);
         
-        endDate.setEnabled(false);
+//        endDate.setEnabled(false);
         endDate.setPreferredSize(new Dimension(80, 20));
         endDate.setLocale(Local.getCurrentLocale());
 		//Added by (jcscoobyrs) on 17-Nov-2003 at 14:24:43 PM
@@ -258,8 +273,7 @@ public class ProjectDialog extends JDialog {
 
         finalExam.setPreferredSize(new Dimension(80, 20));
         finalExam.setLocale(Local.getCurrentLocale());
-		//Added by (jcscoobyrs) on 17-Nov-2003 at 14:24:43 PM
-		//---------------------------------------------------
+
 		SimpleDateFormat sdf1 = new SimpleDateFormat();
 		sdf1 = (SimpleDateFormat)DateFormat.getDateInstance(DateFormat.SHORT);
 		finalExam.setEditor(new JSpinner.DateEditor(finalExam, 
@@ -487,20 +501,27 @@ public class ProjectDialog extends JDialog {
     
     // Perform action for set lecture days
     void setLectureDays_actionPerformed(ActionEvent e) {
-    	((AppFrame)App.getFrame()).workPanel.dailyItemsPanel.eventsPanel.newEventB_actionPerformed(e, 
-			this.todoField.getText(), (Date)startDate.getModel().getValue(),(Date)endDate.getModel().getValue());
+        LectureTime posTime = ((AppFrame)App.getFrame()).workPanel.dailyItemsPanel.tasksPanel.newLectureTime_actionPerformed();
+        if(posTime != null) {
+            lectureTimes.add(posTime);
+        }
     }
     
     // Perform action for set free days
     void setFreeDays_actionPerformed(ActionEvent e) {
-    	((AppFrame)App.getFrame()).workPanel.dailyItemsPanel.eventsPanel.newEventB_actionPerformed(e, 
-			this.todoField.getText(), (Date)startDate.getModel().getValue(),(Date)endDate.getModel().getValue());
+
+        SpecialCalendarDate freeDay = ((AppFrame)App.getFrame()).workPanel.dailyItemsPanel.tasksPanel.newFreeDay_actionPerformed();
+        if(freeDay != null) {
+            freeDays.add(freeDay);
+        }
     }
     
     // Perform action for set holidays
     void setHolidays_actionPerformed(ActionEvent e) {
-    	((AppFrame)App.getFrame()).workPanel.dailyItemsPanel.eventsPanel.newEventB_actionPerformed(e, 
-			this.todoField.getText(), (Date)startDate.getModel().getValue(),(Date)endDate.getModel().getValue());
+        SpecialCalendarDate holiday = ((AppFrame)App.getFrame()).workPanel.dailyItemsPanel.tasksPanel.newHoliday_actionPerformed();
+        if(holiday != null) {
+            holidays.add(holiday);
+        }
     }
     
     
@@ -508,22 +529,39 @@ public class ProjectDialog extends JDialog {
         ProjectDialog dlg = new ProjectDialog(null, Local.getString("New course"));
         
         Dimension dlgSize = dlg.getSize();
-        //dlg.setSize(dlgSize);
+
         Dimension frmSize = App.getFrame().getSize();
         Point loc = App.getFrame().getLocation();
         dlg.setLocation((frmSize.width - dlgSize.width) / 2 + loc.x, (frmSize.height - dlgSize.height) / 2 + loc.y);
         dlg.setVisible(true);
+
         if (dlg.CANCELLED)
             return;
+        
         String title = dlg.prTitleField.getText();
         CalendarDate startD = new CalendarDate((Date) dlg.startDate.getModel().getValue());
-        CalendarDate endD = null;
-        if (dlg.endDateChB.isSelected())
-            endD = new CalendarDate((Date) dlg.endDate.getModel().getValue());
-        Project prj = ProjectManager.createProject(title, startD, endD);
-        /*if (dlg.freezeChB.isSelected())
-            prj.freeze();*/
-        CurrentStorage.get().storeProjectManager();
-    }
-    
+
+        CalendarDate endD = new CalendarDate((Date) dlg.endDate.getModel().getValue());
+        //new for final exam date
+        CalendarDate FinalExamDate = new CalendarDate((Date) dlg.finalExam.getModel().getValue());
+
+        Project prj = ProjectManager.createProject(title, startD, endD, FinalExamDate);
+        CurrentStorage.get().storeProjectManager(); //does this set the current project? If not set it before setTasks is called
+        CurrentProject.set(prj);
+        
+        for(LectureTime lt : dlg.lectureTimes) {
+            Task newTask = CurrentProject.getTaskList().createLectureTask(lt.day, lt.hour, lt.min, "Lecture");
+        }
+        for(SpecialCalendarDate fd : dlg.freeDays) {
+            Task newTask = CurrentProject.getTaskList().createSingleEventTask(fd.getName(), fd.getDate(), "Free Day");
+        }
+        for(SpecialCalendarDate hd : dlg.holidays) {
+            Task newTask = CurrentProject.getTaskList().createSingleEventTask(hd.getName(), hd.getDate(), "Holiday");
+        }
+       
+        CurrentStorage.get().storeTaskList(CurrentProject.getTaskList(), CurrentProject.get());
+        //taskTable.tableChanged();
+        //parentPanel.updateIndicators();
+
+    }    
 }
