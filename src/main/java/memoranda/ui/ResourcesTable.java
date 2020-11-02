@@ -33,6 +33,9 @@ public class ResourcesTable extends JTable {
     
     ImageIcon inetIcon = new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/mimetypes/inetshortcut.png"));
 
+    /**
+     * Initialize the resources table
+     */
     public ResourcesTable() {
         super();
         initTable();
@@ -53,6 +56,9 @@ public class ResourcesTable extends JTable {
         });
     }
 
+    /**
+     * Initialize width for columns
+     */
     void initColumsWidth() {
         for (int i = 0; i < 4; i++) {
             TableColumn column = getColumnModel().getColumn(i);
@@ -66,6 +72,10 @@ public class ResourcesTable extends JTable {
         }
     }
 
+    /**
+     * If the table is changed, reinitialize the table
+     * and column width, and update the ui. 
+     */
     public void tableChanged() {
         initTable();
         sorter.tableChanged(null);
@@ -73,6 +83,10 @@ public class ResourcesTable extends JTable {
         updateUI();
     }
 
+    /**
+     * Initialize the table by getting all of the files
+     * associated with the resources.
+     */
     public void initTable() {
         Vector v = CurrentProject.getResourcesList().getAllResources();
         files = new Vector();
@@ -91,6 +105,12 @@ public class ResourcesTable extends JTable {
     
      public static final int _RESOURCE = 100;
 
+     /**
+      * Show all of the resources in the table
+      * @param row the number of rows in the table
+      * @param column the number of columns in the table
+      * @return the cell renderer
+      */
     public TableCellRenderer getCellRenderer(int row, int column) {
         return new javax.swing.table.DefaultTableCellRenderer() {
 
@@ -138,7 +158,12 @@ public class ResourcesTable extends JTable {
         }
         
        
-        
+        /**
+         * Return the value at a cell in the table
+         * @param row the row in the table
+         * @param col the column in the table
+         * @return the value at the specified cell
+         */
         public Object getValueAt(int row, int col) {
             Resource r = (Resource)files.get(row);
             if (col == _RESOURCE)

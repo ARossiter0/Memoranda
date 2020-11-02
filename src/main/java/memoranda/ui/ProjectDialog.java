@@ -499,7 +499,7 @@ public class ProjectDialog extends JDialog {
         endCalFrame.show();
     }
     
-    //Currently in development
+    // Perform action for set lecture days
     void setLectureDays_actionPerformed(ActionEvent e) {
         LectureTime posTime = ((AppFrame)App.getFrame()).workPanel.dailyItemsPanel.tasksPanel.newLectureTime_actionPerformed();
         if(posTime != null) {
@@ -509,6 +509,7 @@ public class ProjectDialog extends JDialog {
     
     // Perform action for set free days
     void setFreeDays_actionPerformed(ActionEvent e) {
+
         SpecialCalendarDate freeDay = ((AppFrame)App.getFrame()).workPanel.dailyItemsPanel.tasksPanel.newFreeDay_actionPerformed();
         if(freeDay != null) {
             freeDays.add(freeDay);
@@ -539,6 +540,7 @@ public class ProjectDialog extends JDialog {
         
         String title = dlg.prTitleField.getText();
         CalendarDate startD = new CalendarDate((Date) dlg.startDate.getModel().getValue());
+
         CalendarDate endD = new CalendarDate((Date) dlg.endDate.getModel().getValue());
         //new for final exam date
         CalendarDate FinalExamDate = new CalendarDate((Date) dlg.finalExam.getModel().getValue());

@@ -7,6 +7,9 @@
 ### Eclipse ###
 .settings
 
+### Intellij ###
+/.idea/
+
 ### Eclipse Patch ###
 # Eclipse Core		
 .project
