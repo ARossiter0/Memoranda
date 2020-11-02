@@ -79,7 +79,7 @@ I would also advise you to already fill out the Contributions section (End of sp
 |---|---|---|---|--|--|
 |10/26/20   | Maayan, Tristan, Anton, Alexander, Ian  | Most of the group already started wroking on some tasks. We talked about implementation of the user stories that are more complex and costructed a plan of action  |   |  |  |
 |10/28/20   | Maayan, Tristan, Anton, Alexander, Ian  | At this point had a substantial amout of work done. We discussed our progress and agreed to continue working on the stories given y the professor and leave the ones we added to the end  |   |  |  |
-|   |   |   | Maayan, Tristan, Alexander  | In this meeting we mostly discussed US90 that was a little bt more complex and discussed some implementaion details. We discussed a coulpe of bugs Tristan found in the code and how he fixed them  |  |
+|10/31/20   | Maayan, Tristan, Alexander  | In this meeting we mostly discussed US90 that was a little bt more complex and discussed some implementaion details. We discussed a coulpe of bugs Tristan found in the code and how he fixed them    |   |  |  |
 
 ### Meeting Summary:
 Overall the meetings were very productive. I always took more then 30 minutes but we feel it this type of communication was important to our success.
