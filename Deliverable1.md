@@ -105,15 +105,15 @@ Answer as a team!
 
 **What do you think is the value you created this Sprint?**
 
-> Your Answer
+> We adapted the UI to be useful for a teacher planning tool. We updated the project panel to be a course panel. We updated the project creation/edit dialog to provide information for a course. We added buttons for lectures,  assignments, and todo lists for teachers, ta’s and graders. We also got the options in the preferences dialog labeled and working. We also fixed the program to make it close correctly. Finally, we provided a series of partial UML diagrams and comments to add some clarity to the codebase. It is now clear that the program is meant to be a course management tool. We have also learned a lot more about how the code works, and how everything is put together. 
 
 **Do you think you worked enough and that you did what was expected of you?**
 
-> Your Answer
+> We believe that we did work enough, and we accomplished what was expected of us. We gained some familiarity with the memoranda program, and made significant adjustments to it’s user interface. We did fail to complete user story #8, which had to do with updating the title of the program and the splash screen. The team member primarily responsible for this user story did complete the work, but he failed to push it to github, and he dropped the class on the last day of our sprint. 
 
 **Would you say you met the customers’ expectations? Why, why not?**
 
-> Your Answer
+> For the most part, we believe that we did meet the customer’s expectations for this first sprint. We did make major changes to the user interface. We did not, however, make many significant changes to the backend. We also feel like we could have been more comprehensive with regards to reverse engineering memoranda. However, our main goal for this sprint was to make memoranda look like a course management system, and add some simple functionality for adding courses. We believe we were successful in meeting this goal. 
 
 
 ### Sprint Retrospective
@@ -122,35 +122,48 @@ Answer as a team!
 
 **Did you meet your sprint goal?**
 
-> Your Answer
+> Yes. We did meet the sprint goal. We added all of the buttons on the side for lectures, assignments, and todo lists. We also added additional functionality for creating courses with start dates, end dates, exam dates, holidays, and free days, and switching between courses. We also added the ability to view the details of courses. This should clearly demonstrate the purpose of the software to the customer. 
 
 **Did you complete all stories on your Spring Backlog?**
 
-> Your Answer
+> No. We did not complete user story #8, because the team member primarily responsible for it failed to push his work to github, and dropped the class on the last day of the sprint.  
 
 **If not, what went wrong?**
 
-> Your Answer
+> The team member primarily responsible for it failed to push his work to github, and dropped the class on the last day of the sprint.  
 
 **Did you work at a consistent rate of speed, or velocity? (Meaning did you work during the whole Sprint or did you start working when the deadline approached.)**
 
-> Your Answer
+> No. Some of the team members got off to a bit of a slow start, and didn’t begin to push commits until after a few days had passed. We did have a slow start with adjusting some of the technology. Some other team members, for one reason or another, had to be offline or unproductive on the project for a day or two throughout the sprint. Our code frequency slowly ramped up to a peak at around 10/25/2020. Our commits also spiked near the end of the first sprint, with 12 commits on 10/30/2020, and 10 commits on 10/31/2020. A lot of this had to do with how we merged user stories into the development branch. We did work at a consistent rate, as evidenced by our Taiga Sprint #1 Taskboard, but we didn’t start the majority of our commits and merges until later on. 
 
 **Did you deliver business value?**
 
-> Your Answer
+> Yes. The customer can now envision the purpose of the product with a quick mock-up prototype. If they have concerns about the look and feel of the product, they can now provide feedback and we can adjust accordingly. The user can now add courses and view details about them. 
 
 **Are there things the team thinks it can do better in the next Sprint?**
 
-> Your Answer
+> Yes. We can improve our git/github workflow to be more clear. After going through sprint 1, it is apparent that there are a few things missing. We also want to commit and push changes more frequently. We should also constantly merge user stories into development when they are completed, rather than waiting until the end of the sprint to merge in everything at once. We also need to make sure that we can find times for every team member to meet and communicate. Finally, we also need to better balance the workload, especially with collaborating and elaborating on user stories. 
 
 **How do you feel at this point? Get a pulse on the optimism of the team.**
 
-> Your Answer
+> We feel optimistic, yet apprehensive at the same time. Several of us worked over the ~10 hour a week guideline that was suggested in the kickoff document, and for the most part we have only changed the surface level user interface elements. We need to start working more on backend items and particularly transitioning to json. We feel, however, that we will be able to finish our project. 
 
 ### Contributions:
 
 > In this section I want you to point me to your main contributions (each of you individually). Some of the topcs are not needed for the first deliverables (you should know which things you should have done in this Sprint, if you don't then you have probably missed something):
+
+#### Tristan Johnson:
+  **Links to GitHub commits with main code contribution (up to 5 links) - all Sprints:
+
+    - https://github.com/amehlhase316/Leipzig-2/commit/a8b2e931a19857672ade0f548aa394caabee6b12
+    - https://github.com/amehlhase316/Leipzig-2/commit/e16bce5c0305317c1f31ee85e7110373266dcc9b
+    - https://github.com/amehlhase316/Leipzig-2/commit/4d463f7211064159883f3972d65325f556524b5f
+    - https://github.com/amehlhase316/Leipzig-2/commit/f65024026766bbf7bc6a412caab4a2fa5a7be14b
+    - https://github.com/amehlhase316/Leipzig-2/commit/baac25749365d9152d9f75600adc1855b75fc3a0
+ 
+ **What was your main contribution to the Quality Policy documentation?:
+
+    - I wrote the first draft of the github workflow. 
 
 #### Tristan Johnson -- replace this with your name:
   **Links to GitHub commits with main code contribution (up to 5 links) - all Sprints:
@@ -178,15 +191,15 @@ Answer as a team!
     - info
   
 ## 4: Checklist for you to see if you are done
-- [ ] Filled out the complete form from above, all fields are filled and written in full sentences
+- [x ] Filled out the complete form from above, all fields are filled and written in full sentences
 - [x ] Read the kickoff again to make sure you have all the details
-- [ ] User Stories that were not completed, were left in the Sprint and a copy created
+- [x ] User Stories that were not completed, were left in the Sprint and a copy created
 - [x ] Your Quality Policies are accurate and up to date
 - [ ] **Individual** Survey was submitted **individually** (create checkboxes below -- see Canvas to get link)
   - [ ] Team member 1
   - [ ] Team member 2
 - [x ] The original of this file was copied for the next Sprint (needed for all but last Sprint where you do not need to copy it anymore)
-  - [ ] Basic information (part 1) for next Sprint was included (meaning Spring Planning is complete)
-  - [ ] All User Stories have acceptance tests
-  - [ ] User Stories in your new Sprint Backlog have initial tasks which are in New
+  - [x ] Basic information (part 1) for next Sprint was included (meaning Spring Planning is complete)
+  - [x ] All User Stories have acceptance tests
+  - [x ] User Stories in your new Sprint Backlog have initial tasks which are in New
   - [x ] You know how to proceed
