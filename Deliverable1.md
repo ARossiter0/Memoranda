@@ -165,6 +165,19 @@ Answer as a team!
 
     - I wrote the first draft of the github workflow. 
 
+#### Ian Swanlund
+  **Links to GitHub commits with main code contribution (up to 5 links) - all Sprints:
+
+    - https://github.com/amehlhase316/Leipzig-2/commit/7d20b25dc558afab6efe9db70c279693611a9def
+    - https://github.com/amehlhase316/Leipzig-2/commit/30c80e3ff3daef7754c1f140f611522409f71b40
+    - https://github.com/amehlhase316/Leipzig-2/commit/1f4a958691b31a206cc8376e1f21ee6d8ee5ed7a
+    - https://github.com/amehlhase316/Leipzig-2/commit/634b4455223be4e57c9e2b5753aa0b95335398fb
+    - https://github.com/amehlhase316/Leipzig-2/commit/54beb6b964d874bd33768e6ee23796d1bd6d0d92
+
+ **What was your main contribution to the Quality Policy documentation?:
+
+    - Reviewing policys concerning user story commits.
+
 #### Tristan Johnson -- replace this with your name:
   **Links to GitHub commits with main code contribution (up to 5 links) - all Sprints:
 
