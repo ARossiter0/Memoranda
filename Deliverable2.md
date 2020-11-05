@@ -14,25 +14,33 @@
 
 ### Sprint Planning (For Sprint 1-3)
 Document your Sprint Planning here. Also check the kickoff document for more details on what needs to be done. This is just the documentation. 
+We have a 2 hours meeting on 11/03/2020
+Attendees: Maayan Janow, Tristan Johnson, Alexander Roisster
+We discussed the last sprint, answered the sprint review questions and discussed our conclusions from the last sprint and what can be done better.
+We decided that we should change our workflow policy to commit push and merge more often and that we should come up with User Stories and tasks together as group instead of dividing it 
+Another 2 hours meeting on 11/04/2020
+Attendees: Maayan Janow, Tristan Johnson, Alexander Roisster, Ian Swanslund
+ 
 
-**Sprint Goal:** Your Sprint goal
+**Sprint Goal:** Our sprint goal is to achive most software functionalities and allow a user to fully manage courses, assignments, lectures and todo lists
 
-**How many User Stories did you add to the Product Backlog:**  Number
+**How many User Stories did you add to the Product Backlog:**  0
 
-**How many User Stories did you add to this Sprint:** 
+**How many User Stories did you add to this Sprint:** 7
 > Answer the questions below about your Sprint Planning?
 
 **Why did you add these US, why do you think you can get them done in the next Sprint?**
 
-> Your Answer
+> We added those stories becuase all of them are related directly to the functionality for the user. We think we can get it done becuase a lot of the memeoranda functionalities
+are going to be reused
 
 **Why do you think these fit well with your Sprint goal? (details)**
 
-> Your Answer
+> Becuase they are all directly related to creating user functionality
 
 **Do you have a rough idea what you need to do? (if the answer is no then please let me know on Slack)**
 
-> Your Answer
+> Yes
 
 
 
