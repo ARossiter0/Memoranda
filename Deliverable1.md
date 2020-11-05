@@ -99,7 +99,7 @@ so that we can finish everything on time and have time for final testing.
 ### Sprint Review
 Answer as a team!
 
-**Screen Cast link**: Your link
+**Screen Cast link**: https://youtu.be/cRkWwU_FK0E
 
 > Answer the following questions as a team. 
 
@@ -177,6 +177,32 @@ Answer as a team!
  **What was your main contribution to the Quality Policy documentation?:
 
     - Reviewing policys concerning user story commits.
+
+#### Maayan Janow:
+  **Links to GitHub commits with main code contribution (up to 5 links) - all Sprints:
+
+    - https://github.com/amehlhase316/Leipzig-2/commit/85ab37122bef847097129e71d0038b1b610a8956
+    - https://github.com/amehlhase316/Leipzig-2/commit/696c0b7cdf9cd1910a4f0102fe7edcfa8ac432e2
+    - https://github.com/amehlhase316/Leipzig-2/commit/2b201ebdce15b345b958c9b6c243ee866c6282ff
+    - https://github.com/amehlhase316/Leipzig-2/commit/a04e82daebc3333e42e2c1e3565800d46ed4b5ee
+    - https://github.com/amehlhase316/Leipzig-2/commit/14bc78f1df79131fe699923003df44c29f858c49
+ 
+ **What was your main contribution to the Quality Policy documentation?:
+
+    - I modified the whole draft and added things that were missing, changes a lot of the initials suggestions and siplified the document. 
+
+#### Alexander Rossiter:
+  **Links to GitHub commits with main code contribution (up to 5 links) - all Sprints:
+
+    - https://github.com/amehlhase316/Leipzig-2/commit/0ce5a8b7702f2e716f287b83dc6e66aa47698f6c
+    - https://github.com/amehlhase316/Leipzig-2/commit/45c050664ea372c022781dace81d6b335f8e5ff0
+    - https://github.com/amehlhase316/Leipzig-2/commit/f7339638092d4f5956597b01f5c5d7c21bbb9cda
+  
+ 
+ **What was your main contribution to the Quality Policy documentation?:
+
+    - I modified the whole draft and added things that were missing, changes a lot of the initials suggestions and siplified the document. 
+
 
 #### Tristan Johnson -- replace this with your name:
   **Links to GitHub commits with main code contribution (up to 5 links) - all Sprints:
