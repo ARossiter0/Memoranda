@@ -66,17 +66,70 @@ NOTE: For a cleaner version, check the docx in the leipzig2_git slack channel
 
 
 **Unit Tests Blackbox** (due start Sprint 2)
-  > Your Blackbox testing policy 
+  > Your Blackbox testing policy:
+	Each team memeber must add at least 4 Blackbox testing every sprint.
+	Testing will be done at the end of each User Story, as possible (GUI components are usually impossible to test via unit testing)
+	If a group member finds that during the testing phase they see fit to add a unit testing to a function another member wrote, they are allowed to do so.
+	If a member works monstly on GUI based user stories and cannot find a way to do unit testing, the member can choose any other functionality in from memoranda to test
+  	  
 
  **Unit Tests Whitebox** (due start Sprint 2)
   > Your Whitebox testing policy 
+	Each team memeber must add at least 4 Whitebox testing every sprint.
+	Testing will be done at the end of each User Story, as possible (GUI components are usually impossible to test via unit testing)
+	If a group member finds that during the testing phase they see fit to add a unit testing to a function another member wrote, they are allowed to do so.
+	If a member works monstly on GUI based user stories and cannot find a way to do unit testing, the member can choose any other functionality in from memoranda to test
+  	
 
 **Code Review** (due start Sprint 2)
   > Your Code Review policy   
-
+	Each team meber will conduct a developer code review and will fill out the checklist before creating a pull request
+	After the pull request, the member testing the code will conduct a reviewer code review and will fill out the check list
   > Include a checklist/questions list which every developer will need to fill out/answe when creating a Pull Request to the Dev branch. 
+	Coding Standards (CG)
+	- [ ] All methods that have been created/changed have a Javadoc comment present and filled in with a description, explanations for parameters, and explanations for return values. 
+	- [ ] New constants and Enums are in all CAPS
+	- [ ] New class names are upper CamelCase
+	- [ ]New variables, parameters, and method names are lower camelCase. 
+	- [ ] New attributes are private
+	- [ ] New literal values, except loop indices starting at 0 or 1 are declared as constants
+	- [ ] All new code with {} appear with { at the end of a line, and } on its own line
+	- [ ] Indentation for all new statements is tabbed. 
+	- [ ] All new complex statements use explicit {} even if the body is a single line. 
 
+	Code Smells
+	- [ ] There is no significant duplicate code. 
+	- [ ] There are no new large classes.
+	- [ ] There are no new lazy classes. 
+	- [ ] There are no new switch statements. 
+	- [ ] There are no data clumps.
+	- [ ] New methods have 3 or fewer parameters. 
+	- [ ] New methods are not longer than 100 lines (with whitespace included).
+	- [ ] Identifiers are shorter than 20 characters. 
+	- [ ] Identifiers are longer than 3 characters. 
+	
   > Include a checklist/question list which every reviewer will need to fill out/anser when conducting a review, this checklist (and the answers of course) need to be put into the Pull Request review.
+	Coding Standards (CG)
+	- [ ] All methods that have been created/changed have a Javadoc comment present and filled in with a description, explanations for parameters, and explanations for return values. 
+	- [ ] New constants and Enums are in all CAPS
+	- [ ] New class names are upper CamelCase
+	- [ ]New variables, parameters, and method names are lower camelCase. 
+	- [ ] New attributes are private
+	- [ ] New literal values, except loop indices starting at 0 or 1 are declared as constants
+	- [ ] All new code with {} appear with { at the end of a line, and } on its own line
+	- [ ] Indentation for all new statements is tabbed. 
+	- [ ] All new complex statements use explicit {} even if the body is a single line. 
+
+	Code Smells
+	- [ ] There is no significant duplicate code. 
+	- [ ] There are no new large classes.
+	- [ ] There are no new lazy classes. 
+	- [ ] There are no new switch statements. 
+	- [ ] There are no data clumps.
+	- [ ] New methods have 3 or fewer parameters. 
+	- [ ] New methods are not longer than 100 lines (with whitespace included).
+	- [ ] Identifiers are shorter than 20 characters. 
+	- [ ] Identifiers are longer than 3 characters.
 
 **Static Analysis**  (due start Sprint 3)
   > Your Static Analysis policy   
