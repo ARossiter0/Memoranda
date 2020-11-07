@@ -106,7 +106,8 @@ public class ProjectDialog extends JDialog {
     }
 
     void jbInit() throws Exception {
-	this.setResizable(false);
+    	
+    	this.setResizable(false);
         getContentPane().setLayout(new GridBagLayout());
         topPanel.setBorder(new EmptyBorder(new Insets(0, 5, 0, 5)));
         topPanel.setBackground(Color.WHITE);        

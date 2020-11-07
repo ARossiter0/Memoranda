@@ -398,40 +398,40 @@ public class LecturePanel extends JPanel {
         Dimension frmSize = App.getFrame().getSize();
         Point loc = App.getFrame().getLocation();
         dlg.setLocation((frmSize.width - dlg.getSize().width) / 2 + loc.x, (frmSize.height - dlg.getSize().height) / 2 + loc.y);
-        dlg.todoField.setText(t.getText());
-        dlg.descriptionField.setText(t.getDescription());
-        dlg.startDate.getModel().setValue(t.getStartDate().getDate());
-        dlg.endDate.getModel().setValue(t.getEndDate().getDate());
-        dlg.priorityCB.setSelectedIndex(t.getPriority());                
-        dlg.effortField.setText(Util.getHoursFromMillis(t.getEffort()));
-	if((t.getStartDate().getDate()).after(t.getEndDate().getDate()))
-		dlg.chkEndDate.setSelected(false);
-	else
-		dlg.chkEndDate.setSelected(true);
-		dlg.progress.setValue(new Integer(t.getProgress()));
- 	dlg.chkEndDate_actionPerformed(null);	
-        dlg.setVisible(true);
-        if (dlg.CANCELLED)
-            return;
-        CalendarDate sd = new CalendarDate((Date) dlg.startDate.getModel().getValue());
-//        CalendarDate ed = new CalendarDate((Date) dlg.endDate.getModel().getValue());
-         CalendarDate ed;
- 		if(dlg.chkEndDate.isSelected())
- 			ed = new CalendarDate((Date) dlg.endDate.getModel().getValue());
- 		else
- 			ed = null;
-        t.setStartDate(sd);
-        t.setEndDate(ed);
-        t.setText(dlg.todoField.getText());
-        t.setDescription(dlg.descriptionField.getText());
-        t.setPriority(dlg.priorityCB.getSelectedIndex());
-        t.setEffort(Util.getMillisFromHours(dlg.effortField.getText()));
-        t.setProgress(((Integer)dlg.progress.getValue()).intValue());
-        
-//		CurrentProject.getLectureList().adjustParentLectures(t);
-
-        CurrentStorage.get().storeLectureList(CurrentProject.getLectureList(), CurrentProject.get());
-        LectureTable.tableChanged();
+//        dlg.todoField.setText(t.getText());
+//        dlg.descriptionField.setText(t.getDescription());
+//        dlg.startDate.getModel().setValue(t.getStartDate().getDate());
+//        dlg.endDate.getModel().setValue(t.getEndDate().getDate());
+//        dlg.priorityCB.setSelectedIndex(t.getPriority());                
+//        dlg.effortField.setText(Util.getHoursFromMillis(t.getEffort()));
+//	if((t.getStartDate().getDate()).after(t.getEndDate().getDate()))
+//		dlg.chkEndDate.setSelected(false);
+//	else
+//		dlg.chkEndDate.setSelected(true);
+//		dlg.progress.setValue(new Integer(t.getProgress()));
+// 	dlg.chkEndDate_actionPerformed(null);	
+//        dlg.setVisible(true);
+//        if (dlg.CANCELLED)
+//            return;
+//        CalendarDate sd = new CalendarDate((Date) dlg.startDate.getModel().getValue());
+////        CalendarDate ed = new CalendarDate((Date) dlg.endDate.getModel().getValue());
+//         CalendarDate ed;
+// 		if(dlg.chkEndDate.isSelected())
+// 			ed = new CalendarDate((Date) dlg.endDate.getModel().getValue());
+// 		else
+// 			ed = null;
+//        t.setStartDate(sd);
+//        t.setEndDate(ed);
+//        t.setText(dlg.todoField.getText());
+//        t.setDescription(dlg.descriptionField.getText());
+//        t.setPriority(dlg.priorityCB.getSelectedIndex());
+//        t.setEffort(Util.getMillisFromHours(dlg.effortField.getText()));
+//        t.setProgress(((Integer)dlg.progress.getValue()).intValue());
+//        
+////		CurrentProject.getLectureList().adjustParentLectures(t);
+//
+//        CurrentStorage.get().storeLectureList(CurrentProject.getLectureList(), CurrentProject.get());
+//        LectureTable.tableChanged();
         parentPanel.updateIndicators();
         //LectureTable.updateUI();
     }
@@ -449,25 +449,20 @@ public class LecturePanel extends JPanel {
         dlg.setLocation((frmSize.width - dlg.getSize().width) / 2 + loc.x, (frmSize.height - dlg.getSize().height) / 2 + loc.y);
         dlg.setVisible(true);
 
-        if (dlg.CANCELLED)
-            return;
-
+//        if (dlg.CANCELLED)
+//            return;
+//
 //        CalendarDate sd = new CalendarDate((Date) dlg.startDate.getModel().getValue());
 //        //CalendarDate ed = new CalendarDate((Date) dlg.endDate.getModel().getValue());
 //        CalendarDate ed;
-// 		if(dlg.chkEndDate.isSelected())
-// 			ed = new CalendarDate((Date) dlg.endDate.getModel().getValue());
-// 		else
-// 			ed = null;
-//        long effort = Util.getMillisFromHours(dlg.effortField.getText());
 //		//XXX Lecture newLecture = CurrentProject.getLectureList().createLecture(sd, ed, dlg.todoField.getText(), dlg.priorityCB.getSelectedIndex(),effort, dlg.descriptionField.getText(),parentLectureId);
 //		Lecture newLecture = CurrentProject.getLectureList().createLecture(sd, ed, dlg.todoField.getText(), dlg.priorityCB.getSelectedIndex(),effort, dlg.descriptionField.getText(),null);
 //        //CurrentProject.getLectureList().adjustParentLectures(newLecture);
 //		newLecture.setProgress(((Integer)dlg.progress.getValue()).intValue());
-        CurrentStorage.get().storeLectureList(CurrentProject.getLectureList(), CurrentProject.get());
-        LectureTable.tableChanged();
-        parentPanel.updateIndicators();
-        //LectureTable.updateUI();
+//        CurrentStorage.get().storeLectureList(CurrentProject.getLectureList(), CurrentProject.get());
+//        LectureTable.tableChanged();
+//        parentPanel.updateIndicators();
+//        //LectureTable.updateUI();
     }
 
     
@@ -543,7 +538,7 @@ public class LecturePanel extends JPanel {
     
     //method to calculate the effort of Lectures
     void calcLecture_actionPerformed(ActionEvent e) {
-        LectureCalcDialog dlg = new LectureCalcDialog(App.getFrame());
+//        LectureCalcDialog dlg = new LectureCalcDialog(App.getFrame());
         dlg.pack();
         Lecture t = CurrentProject.getLectureList().getLecture(LectureTable.getModel().getValueAt(LectureTable.getSelectedRow(), LectureTable.Lecture_ID).toString());
         
@@ -555,22 +550,22 @@ public class LecturePanel extends JPanel {
         if (dlg.CANCELLED) {
             return;            
         }
-        
-        LectureList tl = CurrentProject.getLectureList();
-        if(dlg.calcEffortChB.isSelected()) {
-            t.setEffort(tl.calculateTotalEffortFromSubLectures(t));
-        }
-        
-        if(dlg.compactDatesChB.isSelected()) {
-            t.setStartDate(tl.getEarliestStartDateFromSubLectures(t));
-            t.setEndDate(tl.getLatestEndDateFromSubLectures(t));
-        }
-        
-        if(dlg.calcCompletionChB.isSelected()) {
-            long[] res = tl.calculateCompletionFromSubLectures(t);
-            int thisProgress = (int) Math.round((((double)res[0] / (double)res[1]) * 100));
-            t.setProgress(thisProgress);
-        }
+//        
+//        LectureList tl = CurrentProject.getLectureList();
+//        if(dlg.calcEffortChB.isSelected()) {
+//            t.setEffort(tl.calculateTotalEffortFromSubLectures(t));
+//        }
+//        
+//        if(dlg.compactDatesChB.isSelected()) {
+//            t.setStartDate(tl.getEarliestStartDateFromSubLectures(t));
+//            t.setEndDate(tl.getLatestEndDateFromSubLectures(t));
+//        }
+//        
+//        if(dlg.calcCompletionChB.isSelected()) {
+//            long[] res = tl.calculateCompletionFromSubLectures(t);
+//            int thisProgress = (int) Math.round((((double)res[0] / (double)res[1]) * 100));
+//            t.setProgress(thisProgress);
+//        }
         
 //        CalendarDate sd = new CalendarDate((Date) dlg.startDate.getModel().getValue());
 ////        CalendarDate ed = new CalendarDate((Date) dlg.endDate.getModel().getValue());
@@ -583,8 +578,8 @@ public class LecturePanel extends JPanel {
 //		Lecture newLecture = CurrentProject.getLectureList().createLecture(sd, ed, dlg.todoField.getText(), dlg.priorityCB.getSelectedIndex(),effort, dlg.descriptionField.getText(),parentLectureId);
 //		
 		
-        CurrentStorage.get().storeLectureList(CurrentProject.getLectureList(), CurrentProject.get());
-        LectureTable.tableChanged();
+//        CurrentStorage.get().storeLectureList(CurrentProject.getLectureList(), CurrentProject.get());
+//        LectureTable.tableChanged();
 //        parentPanel.updateIndicators();
         //LectureTable.updateUI();
     }

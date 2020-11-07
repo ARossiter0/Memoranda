@@ -8,6 +8,7 @@ import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DateFormat;
@@ -47,6 +48,9 @@ public class LectureDialog extends JDialog {
     JPanel mPanel = new JPanel(new BorderLayout());
     JPanel areaPanel = new JPanel(new BorderLayout());
     JPanel buttonsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+    
+    JLabel topicLabel = new JLabel();
+    JTextField lecTopicField = new JTextField();
 
     JButton cancelB = new JButton();
     JButton okB = new JButton();
@@ -56,11 +60,15 @@ public class LectureDialog extends JDialog {
     Border border3;
     Border border4;
     Border border8;
+    
+    GridBagConstraints gbc;
 
     JPanel dialogTitlePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-    JPanel jPanel1 = new JPanel(new GridLayout(1,2));
-    JPanel jPanel2 = new JPanel(new FlowLayout(FlowLayout.LEFT)); //Time panel
-    JPanel jPanel3 = new JPanel(new FlowLayout(FlowLayout.RIGHT)); //Day panel 
+    JPanel jPanel1 = new JPanel(new GridBagLayout());
+    JPanel topicPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+    JPanel datePanel = new JPanel(new FlowLayout(FlowLayout.LEFT)); //Time panel
+    JPanel startTimePanel = new JPanel(new FlowLayout(FlowLayout.RIGHT)); //Day panel 
+    JPanel endTimePanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 
     String[] Days = {Local.getString("Monday"), Local.getString("Tuesday"),
         Local.getString("Wednesday"), Local.getString("Thursday"),
@@ -70,8 +78,7 @@ public class LectureDialog extends JDialog {
     JLabel dayLabel = new JLabel();
     JLabel timeLabel = new JLabel();
 
-    JComboBox daysCB = new JComboBox(Days);
-    JSpinner timeSpin = new JSpinner(new SpinnerDateModel(new Date(), null, null, Calendar.MINUTE));
+    JSpinner dateSpin = new JSpinner(new SpinnerDateModel());
 
     public boolean CANCELLED = true;
 
@@ -88,7 +95,6 @@ public class LectureDialog extends JDialog {
     
     void jbInit() throws Exception {
         this.setResizable(false);
-        this.setSize(new Dimension(430,300));
     
         //borders
         border1 = BorderFactory.createEmptyBorder(5, 5, 5, 5);
@@ -132,22 +138,23 @@ public class LectureDialog extends JDialog {
         header.setForeground(new Color(0, 0, 124));
         header.setText(Local.getString("Lecture Time and Day"));
         header.setIcon(new ImageIcon(main.java.memoranda.ui.TaskDialog.class.getResource("/ui/icons/task48.png")));
+        
+        topicLabel.setMaximumSize(new Dimension(100, 16));
+        topicLabel.setMinimumSize(new Dimension(60, 16));
+        topicLabel.setText(Local.getString("Lecture Topic"));
     				
         dayLabel.setMaximumSize(new Dimension(100, 16));
         dayLabel.setMinimumSize(new Dimension(60, 16));
-        dayLabel.setText(Local.getString("Day of the week"));
+        dayLabel.setText(Local.getString("Day of the Week"));
 
         timeLabel.setMaximumSize(new Dimension(100, 16));
         timeLabel.setMinimumSize(new Dimension(60, 16));
         timeLabel.setText(Local.getString("Lecture Time"));
 
-        //For days combo box
-        daysCB.setFont(new java.awt.Font("Dialog", 0, 11));
-        daysCB.setSelectedItem(Local.getString("Monday"));
 
         //For time spinner
-        timeSpin.setPreferredSize(new Dimension(60, 24));
-        ((JSpinner.DateEditor) timeSpin.getEditor()).getFormat().applyPattern("HH:mm");
+        dateSpin.setPreferredSize(new Dimension(60, 24));
+        ((JSpinner.DateEditor) dateSpin.getEditor()).getFormat().applyPattern("HH:mm");
 
         getContentPane().add(mPanel);
 
@@ -162,14 +169,47 @@ public class LectureDialog extends JDialog {
 
         areaPanel.add(jPanel1, BorderLayout.CENTER);
 
-        jPanel1.add(jPanel2, null);
-        jPanel1.add(jPanel3, null);
+        gbc = new GridBagConstraints();
+        gbc.gridwidth = 5;
+        gbc.gridx = 0; gbc.gridy = 0;
+        gbc.insets = new Insets(5, 10, 5, 10);
+        gbc.anchor = GridBagConstraints.NORTHWEST;
+        jPanel1.add(topicLabel, gbc);
+        
+        gbc = new GridBagConstraints();
+        gbc.gridwidth = 5;
+        gbc.gridx = 0; gbc.gridy = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(0, 10, 5, 0);
+        gbc.anchor = GridBagConstraints.CENTER;
+        jPanel1.add(lecTopicField, gbc);
+        
+        gbc = new GridBagConstraints();
+        gbc.gridwidth = 6;
+        gbc.gridx = 0; gbc.gridy = 2;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(0, 10, 5, 0);
+        gbc.anchor = GridBagConstraints.CENTER;
+        jPanel1.add(datePanel, gbc);
+        
+        gbc = new GridBagConstraints();
+        gbc.gridwidth = 5;
+        gbc.gridx = 7; gbc.gridy = 2;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(0, 10, 5, 0);
+        gbc.anchor = GridBagConstraints.CENTER;
+        jPanel1.add(startTimePanel, gbc);
+        
+//        jPanel1.add(timePanel, null);
+//        jPanel1.add(dayPanel, null);
+        
+//        topicPanel.add(topicLabel, null);
+//        topicPanel.add(lecTopicField, null);
 
-        jPanel2.add(timeLabel, null);
-        jPanel2.add(timeSpin, null);
+        datePanel.add(timeLabel, null);
+        datePanel.add(dateSpin, null);
 
-        jPanel3.add(dayLabel, null);
-        jPanel3.add(daysCB, null);
+        startTimePanel.add(dayLabel, null);
         
     }	
     void okB_actionPerformed(ActionEvent e) {
