@@ -45,7 +45,7 @@ import main.java.memoranda.LectureTime;
 import main.java.memoranda.SpecialCalendarDate;
 
 /*$Id: TaskPanel.java,v 1.27 2007/01/17 20:49:12 killerjoe Exp $*/
-public class LecturesPanel extends JPanel {
+public class LecturePanel extends JPanel {
     BorderLayout borderLayout1 = new BorderLayout();
     JButton historyBackB = new JButton();
     JToolBar tasksToolBar = new JToolBar();
@@ -70,7 +70,7 @@ public class LecturesPanel extends JPanel {
 	DailyItemsPanel parentPanel = null;
 	
 	//main task panel frame
-    public LecturesPanel(DailyItemsPanel _parentPanel) {
+    public LecturePanel(DailyItemsPanel _parentPanel) {
         try {
             parentPanel = _parentPanel;
             jbInit();
@@ -113,7 +113,7 @@ public class LecturesPanel extends JPanel {
         newLectureB.setFocusable(false);
         newLectureB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                newTaskB_actionPerformed(e);
+                newLectureB_actionPerformed(e);
             }
         });
         newLectureB.setBorderPainted(false);
@@ -122,7 +122,7 @@ public class LecturesPanel extends JPanel {
         editLectureB.setFocusable(false);
         editLectureB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                editTaskB_actionPerformed(e);
+                editLectureB_actionPerformed(e);
             }
         });
         editLectureB.setPreferredSize(new Dimension(24, 24));
@@ -390,7 +390,7 @@ public class LecturesPanel extends JPanel {
 
     }
     //defines actions to be performed when the edit task button is clicked
-    void editTaskB_actionPerformed(ActionEvent e) {
+    void editLectureB_actionPerformed(ActionEvent e) {
         Task t =
             CurrentProject.getTaskList().getTask(
                 taskTable.getModel().getValueAt(taskTable.getSelectedRow(), TaskTable.TASK_ID).toString());
@@ -436,34 +436,34 @@ public class LecturesPanel extends JPanel {
         //taskTable.updateUI();
     }
     //defines actions to be performed when new task is added
-    void newTaskB_actionPerformed(ActionEvent e) {
-        TaskDialog dlg = new TaskDialog(App.getFrame(), Local.getString("New task"));
+    void newLectureB_actionPerformed(ActionEvent e) {
+        LectureDialog dlg = new LectureDialog(App.getFrame(), Local.getString("New lecture"));
         
         //XXX String parentTaskId = taskTable.getCurrentRootTask();
         
         Dimension frmSize = App.getFrame().getSize();
         Point loc = App.getFrame().getLocation();
 
-        dlg.startDate.getModel().setValue(CurrentDate.get().getDate());
-        dlg.endDate.getModel().setValue(CurrentDate.get().getDate());
+//        dlg.startDate.getModel().setValue(CurrentDate.get().getDate());
+//        dlg.endDate.getModel().setValue(CurrentDate.get().getDate());
         dlg.setLocation((frmSize.width - dlg.getSize().width) / 2 + loc.x, (frmSize.height - dlg.getSize().height) / 2 + loc.y);
         dlg.setVisible(true);
 
         if (dlg.CANCELLED)
             return;
 
-        CalendarDate sd = new CalendarDate((Date) dlg.startDate.getModel().getValue());
-        //CalendarDate ed = new CalendarDate((Date) dlg.endDate.getModel().getValue());
-        CalendarDate ed;
- 		if(dlg.chkEndDate.isSelected())
- 			ed = new CalendarDate((Date) dlg.endDate.getModel().getValue());
- 		else
- 			ed = null;
-        long effort = Util.getMillisFromHours(dlg.effortField.getText());
-		//XXX Task newTask = CurrentProject.getTaskList().createTask(sd, ed, dlg.todoField.getText(), dlg.priorityCB.getSelectedIndex(),effort, dlg.descriptionField.getText(),parentTaskId);
-		Task newTask = CurrentProject.getTaskList().createTask(sd, ed, dlg.todoField.getText(), dlg.priorityCB.getSelectedIndex(),effort, dlg.descriptionField.getText(),null);
-        //CurrentProject.getTaskList().adjustParentTasks(newTask);
-		newTask.setProgress(((Integer)dlg.progress.getValue()).intValue());
+//        CalendarDate sd = new CalendarDate((Date) dlg.startDate.getModel().getValue());
+//        //CalendarDate ed = new CalendarDate((Date) dlg.endDate.getModel().getValue());
+//        CalendarDate ed;
+// 		if(dlg.chkEndDate.isSelected())
+// 			ed = new CalendarDate((Date) dlg.endDate.getModel().getValue());
+// 		else
+// 			ed = null;
+//        long effort = Util.getMillisFromHours(dlg.effortField.getText());
+//		//XXX Task newTask = CurrentProject.getTaskList().createTask(sd, ed, dlg.todoField.getText(), dlg.priorityCB.getSelectedIndex(),effort, dlg.descriptionField.getText(),parentTaskId);
+//		Task newTask = CurrentProject.getTaskList().createTask(sd, ed, dlg.todoField.getText(), dlg.priorityCB.getSelectedIndex(),effort, dlg.descriptionField.getText(),null);
+//        //CurrentProject.getTaskList().adjustParentTasks(newTask);
+//		newTask.setProgress(((Integer)dlg.progress.getValue()).intValue());
         CurrentStorage.get().storeTaskList(CurrentProject.getTaskList(), CurrentProject.get());
         taskTable.tableChanged();
         parentPanel.updateIndicators();
@@ -542,7 +542,7 @@ public class LecturesPanel extends JPanel {
     }
     
     //method to calculate the effort of tasks
-    void calcTask_actionPerformed(ActionEvent e) {
+    void calcLecture_actionPerformed(ActionEvent e) {
         TaskCalcDialog dlg = new TaskCalcDialog(App.getFrame());
         dlg.pack();
         Task t = CurrentProject.getTaskList().getTask(taskTable.getModel().getValueAt(taskTable.getSelectedRow(), TaskTable.TASK_ID).toString());
@@ -589,16 +589,6 @@ public class LecturesPanel extends JPanel {
         //taskTable.updateUI();
     }
 
-    //present sub tasks for a specific 
-    void listSubTasks_actionPerformed(ActionEvent e) {
-        String parentTaskId = taskTable.getModel().getValueAt(taskTable.getSelectedRow(), TaskTable.TASK_ID).toString();
-        
-        //XXX taskTable.setCurrentRootTask(parentTaskId); 
-		taskTable.tableChanged();
-
-//        parentPanel.updateIndicators();
-//        //taskTable.updateUI();
-    }
 
     void parentTask_actionPerformed(ActionEvent e) {
 //    	String taskId = taskTable.getModel().getValueAt(taskTable.getSelectedRow(), TaskTable.TASK_ID).toString();
@@ -676,7 +666,7 @@ public class LecturesPanel extends JPanel {
 			// ignore "tree" column
 			//if(taskTable.getSelectedColumn() == 1) return;
 			
-			editTaskB_actionPerformed(null);
+			editLectureB_actionPerformed(null);
 		}
         }
 
@@ -697,13 +687,13 @@ public class LecturesPanel extends JPanel {
     }
 
   void ppEditTask_actionPerformed(ActionEvent e) {
-    editTaskB_actionPerformed(e);
+    editLectureB_actionPerformed(e);
   }
   void ppRemoveTask_actionPerformed(ActionEvent e) {
     removeTaskB_actionPerformed(e);
   }
   void ppNewTask_actionPerformed(ActionEvent e) {
-    newTaskB_actionPerformed(e);
+    newLectureB_actionPerformed(e);
   }
 
   void ppListSubTasks_actionPerformed(ActionEvent e) {
@@ -715,7 +705,7 @@ public class LecturesPanel extends JPanel {
   }
 
   void ppCalcTask_actionPerformed(ActionEvent e) {
-      calcTask_actionPerformed(e);
+      calcLecture_actionPerformed(e);
   }
 
 }
