@@ -95,6 +95,7 @@ public class DailyItemsPanel extends JPanel {
     CardLayout cardLayout2 = new CardLayout();
         
     JTabbedPane tasksTabbedPane = new JTabbedPane();
+    JTabbedPane lecturesTabbedPane = new JTabbedPane();
     JTabbedPane eventsTabbedPane = new JTabbedPane();
 	JTabbedPane agendaTabbedPane = new JTabbedPane();
     Border border2;
@@ -300,6 +301,7 @@ public class DailyItemsPanel extends JPanel {
         History.add(new HistoryItem(CurrentDate.get(), CurrentProject.get()));
         cmainPanel.add(mainTabsPanel, BorderLayout.CENTER);
         mainTabsPanel.add(eventsTabbedPane, "EVENTSTAB");
+        mainTabsPanel.add(lecturesTabbedPane, "LECTURESTAB");
         mainTabsPanel.add(tasksTabbedPane, "TASKSTAB");
         mainTabsPanel.add(notesControlPane, "NOTESTAB");
 		mainTabsPanel.add(agendaTabbedPane, "AGENDATAB");
