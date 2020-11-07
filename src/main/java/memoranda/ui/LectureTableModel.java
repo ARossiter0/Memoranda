@@ -1,12 +1,12 @@
 /**
- * TaskTableModel.java         
+ * LectureTableModel.java         
  * -----------------------------------------------------------------------------
  * Project           Memoranda
  * Package           net.sf.memoranda.ui
  * Original author   Alex V. Alishevskikh
  *                   [alexeya@gmail.com]
  * Created           18.05.2005 15:16:11
- * Revision info     $RCSfile: TaskTableModel.java,v $ $Revision: 1.7 $ $State: Exp $  
+ * Revision info     $RCSfile: LectureTableModel.java,v $ $Revision: 1.7 $ $State: Exp $  
  *
  * Last modified on  $Date: 2005/12/01 08:12:26 $
  *               by  $Author: alexeya $
@@ -34,9 +34,9 @@ import java.util.Hashtable;
 
 /**
  * JAVADOC:
- * <h1>TaskTableModel</h1>
+ * <h1>LectureTableModel</h1>
  * 
- * @version $Id: TaskTableModel.java,v 1.7 2005/12/01 08:12:26 alexeya Exp $
+ * @version $Id: LectureTableModel.java,v 1.7 2005/12/01 08:12:26 alexeya Exp $
  * @author $Author: alexeya $
  */
 public class LectureTableModel extends AbstractTreeTableModel implements TreeTableModel {
@@ -51,7 +51,7 @@ public class LectureTableModel extends AbstractTreeTableModel implements TreeTab
     private boolean activeOnly = check_activeOnly();
         
     /**
-     * JAVADOC: Constructor of <code>TaskTableModel</code>
+     * JAVADOC: Constructor of <code>LectureTableModel</code>
      * 
      * @param root
      */
@@ -80,7 +80,7 @@ public class LectureTableModel extends AbstractTreeTableModel implements TreeTab
     public Object getValueAt(Object node, int column) {
         if (node instanceof Project)
             return null;
-        Task t = (Task) node;
+        Lecture t = (Lecture) node;
         switch (column) {
         case 0:
             return "";
@@ -100,9 +100,9 @@ public class LectureTableModel extends AbstractTreeTableModel implements TreeTab
         case 6:            
             //return new Integer(t.getProgress());
 			return t;
-        case TaskTable.TASK_ID:
+        case LectureTable.Lecture_ID:
             return t.getID();
-        case TaskTable.TASK:
+        case LectureTable.Lecture:
             return t;
         }
         return "";
@@ -110,19 +110,19 @@ public class LectureTableModel extends AbstractTreeTableModel implements TreeTab
 
     String getStatusString(int status) {
         switch (status) {
-        case Task.ACTIVE:
+        case Lecture.ACTIVE:
             return Local.getString("Active");
-        case Task.DEADLINE:
+        case Lecture.DEADLINE:
             return Local.getString("Deadline");
-        case Task.COMPLETED:
+        case Lecture.COMPLETED:
             return Local.getString("Completed");
-        case Task.FAILED:
+        case Lecture.FAILED:
             return Local.getString("Failed");
-        case Task.FROZEN:
+        case Lecture.FROZEN:
             return Local.getString("Frozen");
-        case Task.LOCKED:
+        case Lecture.LOCKED:
             return Local.getString("Locked");
-        case Task.SCHEDULED:
+        case Lecture.SCHEDULED:
             return Local.getString("Scheduled");
         }
         return "";
@@ -130,15 +130,15 @@ public class LectureTableModel extends AbstractTreeTableModel implements TreeTab
 
     String getPriorityString(int p) {
         switch (p) {
-        case Task.PRIORITY_NORMAL:
+        case Lecture.PRIORITY_NORMAL:
             return Local.getString("Normal");
-        case Task.PRIORITY_LOW:
+        case Lecture.PRIORITY_LOW:
             return Local.getString("Low");
-        case Task.PRIORITY_LOWEST:
+        case Lecture.PRIORITY_LOWEST:
             return Local.getString("Lowest");
-        case Task.PRIORITY_HIGH:
+        case Lecture.PRIORITY_HIGH:
             return Local.getString("High");
-        case Task.PRIORITY_HIGHEST:
+        case Lecture.PRIORITY_HIGHEST:
             return Local.getString("Highest");
         }
         return "";
@@ -150,13 +150,13 @@ public class LectureTableModel extends AbstractTreeTableModel implements TreeTab
     public int getChildCount(Object parent) {
         if (parent instanceof Project) {
 		if( activeOnly() ){
-			return CurrentProject.getTaskList().getActiveSubTasks(null, CurrentDate.get()).size();
+			return CurrentProject.getLectureList().getActiveSubLectures(null, CurrentDate.get()).size();
 		}
-		else return CurrentProject.getTaskList().getTopLevelTasks().size();
+		else return CurrentProject.getLectureList().getTopLevelLectures().size();
         }
-        Task t = (Task) parent;
-        if(activeOnly()) return CurrentProject.getTaskList().getActiveSubTasks(t.getID(), CurrentDate.get()).size();
-	else return t.getSubTasks().size();
+        Lecture t = (Lecture) parent;
+        if(activeOnly()) return CurrentProject.getLectureList().getActiveSubLectures(t.getID(), CurrentDate.get()).size();
+	else return t.getSubLectures().size();
     }
 
     /**
@@ -164,11 +164,11 @@ public class LectureTableModel extends AbstractTreeTableModel implements TreeTab
      */
     public Object getChild(Object parent, int index) {
         if (parent instanceof Project)
-            if( activeOnly() ) return CurrentProject.getTaskList().getActiveSubTasks(null, CurrentDate.get()).toArray()[index];
-	    else return CurrentProject.getTaskList().getTopLevelTasks().toArray()[index];
-        Task t = (Task) parent;
-        if(activeOnly()) return CurrentProject.getTaskList().getActiveSubTasks(t.getID(), CurrentDate.get()).toArray()[index];
-	else return t.getSubTasks().toArray()[index];
+            if( activeOnly() ) return CurrentProject.getLectureList().getActiveSubLectures(null, CurrentDate.get()).toArray()[index];
+	    else return CurrentProject.getLectureList().getTopLevelLectures().toArray()[index];
+        Lecture t = (Lecture) parent;
+        if(activeOnly()) return CurrentProject.getLectureList().getActiveSubLectures(t.getID(), CurrentDate.get()).toArray()[index];
+	else return t.getSubLectures().toArray()[index];
     }
 
     /**
@@ -180,7 +180,7 @@ public class LectureTableModel extends AbstractTreeTableModel implements TreeTab
             case 1:
                 return TreeTableModel.class;
             case 0:
-                return TaskTable.class;
+                return LectureTable.class;
             case 4:
             case 5:
                 return Class.forName("java.lang.String");
@@ -213,7 +213,7 @@ public class LectureTableModel extends AbstractTreeTableModel implements TreeTab
     }
 
     public static boolean check_activeOnly(){
-		Object o = Context.get("SHOW_ACTIVE_TASKS_ONLY");
+		Object o = Context.get("SHOW_ACTIVE_LECTURES_ONLY");
 		if(o == null) return false;
 		return o.toString().equals("true");
 	}
