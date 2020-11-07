@@ -82,7 +82,14 @@ public class CurrentProject {
     public static TaskList getTaskList() {
             return _tasklist;
     }
-
+    
+    /**
+     * Get the lectures associated with this project
+     * @return the list of lectures associated with this project
+     */
+    public static LectureList getLectureList() {
+    	return _lecturelist;
+    }
     
     /**
      * Get the notes associated with this project

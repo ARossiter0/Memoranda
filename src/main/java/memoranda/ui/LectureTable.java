@@ -51,8 +51,12 @@ public class LectureTable extends JTable {
 
     public void initTable(CalendarDate d) {
         events = (Vector)EventsManager.getEventsForDate(d);
-        getColumnModel().getColumn(0).setPreferredWidth(60);
-        getColumnModel().getColumn(0).setMaxWidth(60);
+        getColumnModel().getColumn(1).setPreferredWidth(60);
+        getColumnModel().getColumn(1).setMaxWidth(60);
+        getColumnModel().getColumn(2).setPreferredWidth(60);
+        getColumnModel().getColumn(2).setMaxWidth(60);
+        getColumnModel().getColumn(3).setPreferredWidth(60);
+        getColumnModel().getColumn(3).setMaxWidth(60);
 	clearSelection();
         updateUI();
     }
@@ -96,9 +100,10 @@ public class LectureTable extends JTable {
     class LectureTableModel extends AbstractTableModel {
 
         String[] columnNames = {
-            //Local.getString("Task name"),
-            Local.getString("Time"),
-                Local.getString("Text")
+            Local.getString("Topic"),
+                Local.getString("Date"),
+                Local.getString("Start Time"),
+                Local.getString("End Time"),             
         };
 
         LectureTableModel() {
@@ -106,7 +111,7 @@ public class LectureTable extends JTable {
         }
 
         public int getColumnCount() {
-            return 2;
+            return 4;
         }
 
         public int getRowCount() {

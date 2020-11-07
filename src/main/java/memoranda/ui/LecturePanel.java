@@ -656,7 +656,7 @@ public class LecturePanel extends JPanel {
 		Context.put(
 			"SHOW_ACTIVE_LectureS_ONLY",
 			new Boolean(ppShowActiveOnlyChB.isSelected()));
-		LectureTable.tableChanged();
+//		LectureTable.tableChanged();
 	}
 
     class PopupListener extends MouseAdapter {
