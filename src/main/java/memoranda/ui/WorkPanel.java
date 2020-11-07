@@ -113,7 +113,7 @@ public class WorkPanel extends JPanel {
 		lecturesB.setVerticalTextPosition(SwingConstants.BOTTOM);
 		lecturesB.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				eventsB_actionPerformed(e);
+				lecturesB_actionPerformed(e);
 			}
 		});
 		lecturesB.setIcon(
@@ -315,6 +315,13 @@ public class WorkPanel extends JPanel {
 		cardLayout1.show(panel, "DAILYITEMS");
 		dailyItemsPanel.selectPanel("TASKS");
 		setCurrentButton(assignmentsB);
+		Context.put("CURRENT_PANEL", "TASKS");
+	}
+	
+	public void lecturesB_actionPerformed(ActionEvent e) {
+		cardLayout1.show(panel, "DAILYITEMS");
+		dailyItemsPanel.selectPanel("TASKS");
+		setCurrentButton(lecturesB);
 		Context.put("CURRENT_PANEL", "TASKS");
 	}
 	
