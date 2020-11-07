@@ -320,9 +320,9 @@ public class WorkPanel extends JPanel {
 	
 	public void lecturesB_actionPerformed(ActionEvent e) {
 		cardLayout1.show(panel, "DAILYITEMS");
-		dailyItemsPanel.selectPanel("TASKS");
+		dailyItemsPanel.selectPanel("LECTURES");
 		setCurrentButton(lecturesB);
-		Context.put("CURRENT_PANEL", "TASKS");
+		Context.put("CURRENT_PANEL", "LECTURES");
 	}
 	
 	public void instructorTasksB_actionPerformed(ActionEvent e) {
