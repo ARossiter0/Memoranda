@@ -32,8 +32,8 @@ import main.java.memoranda.NoteList;
 import main.java.memoranda.Project;
 import main.java.memoranda.ProjectListener;
 import main.java.memoranda.ResourcesList;
-import main.java.memoranda.Task;
-import main.java.memoranda.TaskList;
+import main.java.memoranda.Lecture;
+import main.java.memoranda.LectureList;
 import main.java.memoranda.date.CalendarDate;
 import main.java.memoranda.date.CurrentDate;
 import main.java.memoranda.date.DateListener;
@@ -44,11 +44,11 @@ import main.java.memoranda.util.Util;
 import main.java.memoranda.LectureTime;
 import main.java.memoranda.SpecialCalendarDate;
 
-/*$Id: TaskPanel.java,v 1.27 2007/01/17 20:49:12 killerjoe Exp $*/
+/*$Id: LecturePanel.java,v 1.27 2007/01/17 20:49:12 killerjoe Exp $*/
 public class LecturePanel extends JPanel {
     BorderLayout borderLayout1 = new BorderLayout();
     JButton historyBackB = new JButton();
-    JToolBar tasksToolBar = new JToolBar();
+    JToolBar LecturesToolBar = new JToolBar();
     JButton historyForwardB = new JButton();
     JButton newLectureB = new JButton();
     JButton editLectureB = new JButton();
@@ -57,19 +57,19 @@ public class LecturePanel extends JPanel {
 	JCheckBoxMenuItem ppShowActiveOnlyChB = new JCheckBoxMenuItem();
 		
     JScrollPane scrollPane = new JScrollPane();
-    TaskTable taskTable = new TaskTable();
-	JMenuItem ppEditTask = new JMenuItem();
-	JPopupMenu taskPPMenu = new JPopupMenu();
-	JMenuItem ppRemoveTask = new JMenuItem();
-	JMenuItem ppNewTask = new JMenuItem();
-	JMenuItem ppCompleteTask = new JMenuItem();
-	//JMenuItem ppSubTasks = new JMenuItem();
-	//JMenuItem ppParentTask = new JMenuItem();
-	JMenuItem ppAddSubTask = new JMenuItem();
-	JMenuItem ppCalcTask = new JMenuItem();
+    LectureTable LectureTable = new LectureTable();
+	JMenuItem ppEditLecture = new JMenuItem();
+	JPopupMenu LecturePPMenu = new JPopupMenu();
+	JMenuItem ppRemoveLecture = new JMenuItem();
+	JMenuItem ppNewLecture = new JMenuItem();
+	JMenuItem ppCompleteLecture = new JMenuItem();
+	//JMenuItem ppSubLectures = new JMenuItem();
+	//JMenuItem ppParentLecture = new JMenuItem();
+	JMenuItem ppAddSubLecture = new JMenuItem();
+	JMenuItem ppCalcLecture = new JMenuItem();
 	DailyItemsPanel parentPanel = null;
 	
-	//main task panel frame
+	//main Lecture panel frame
     public LecturePanel(DailyItemsPanel _parentPanel) {
         try {
             parentPanel = _parentPanel;
@@ -80,7 +80,7 @@ public class LecturePanel extends JPanel {
         }
     }
     void jbInit() throws Exception {
-        tasksToolBar.setFloatable(false);
+        LecturesToolBar.setFloatable(false);
         //history back button size and preferences
         historyBackB.setAction(History.historyBackAction);
         historyBackB.setFocusable(false);
@@ -101,7 +101,7 @@ public class LecturePanel extends JPanel {
         historyForwardB.setMinimumSize(new Dimension(24, 24));
         historyForwardB.setMaximumSize(new Dimension(24, 24));
         historyForwardB.setText("");
-        //add new task and a call to the method newTaskB_actionPerformed(e)
+        //add new Lecture and a call to the method newLectureB_actionPerformed(e)
         newLectureB.setIcon(
             new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_new.png")));
         newLectureB.setEnabled(true);
@@ -130,16 +130,16 @@ public class LecturePanel extends JPanel {
         editLectureB.setToolTipText(Local.getString("Edit lecture"));
         editLectureB.setMinimumSize(new Dimension(24, 24));
         editLectureB.setMaximumSize(new Dimension(24, 24));
-        //        editTaskB.setEnabled(true);
+        //        editLectureB.setEnabled(true);
         editLectureB.setIcon(
             new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_edit.png")));
         
-        //remove task button setup and action
+        //remove Lecture button setup and action
         removeLectureB.setBorderPainted(false);
         removeLectureB.setFocusable(false);
         removeLectureB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                removeTaskB_actionPerformed(e);
+                removeLectureB_actionPerformed(e);
             }
         });
         removeLectureB.setPreferredSize(new Dimension(24, 24));
@@ -160,7 +160,7 @@ public class LecturePanel extends JPanel {
 //		});
 //		showActiveOnly.setPreferredSize(new Dimension(24, 24));
 //		showActiveOnly.setRequestFocusEnabled(false);
-//		if (taskTable.isShowActiveOnly()) {
+//		if (LectureTable.isShowActiveOnly()) {
 //			showActiveOnly.setToolTipText(Local.getString("Show All"));			
 //		}
 //		else {
@@ -172,7 +172,7 @@ public class LecturePanel extends JPanel {
 //			new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_remove.png")));
 		// added by rawsushi
 		
-        // show active tasks only method
+        // show active Lectures only method
         ppShowActiveOnlyChB.setFont(new java.awt.Font("Dialog", 1, 11));
 		ppShowActiveOnlyChB.setText(
 			Local.getString("Show Active only"));
@@ -183,14 +183,14 @@ public class LecturePanel extends JPanel {
 			}
 		});		
 		boolean isShao =
-			(Context.get("SHOW_ACTIVE_TASKS_ONLY") != null)
-				&& (Context.get("SHOW_ACTIVE_TASKS_ONLY").equals("true"));
+			(Context.get("SHOW_ACTIVE_LectureS_ONLY") != null)
+				&& (Context.get("SHOW_ACTIVE_LectureS_ONLY").equals("true"));
 		ppShowActiveOnlyChB.setSelected(isShao);
 		toggleShowActiveOnly_actionPerformed(null);
 
 		/*showActiveOnly.setPreferredSize(new Dimension(24, 24));
 		showActiveOnly.setRequestFocusEnabled(false);
-		if (taskTable.isShowActiveOnly()) {
+		if (LectureTable.isShowActiveOnly()) {
 			showActiveOnly.setToolTipText(Local.getString("Show All"));			
 		}
 		else {
@@ -205,87 +205,87 @@ public class LecturePanel extends JPanel {
 
         this.setLayout(borderLayout1);
         scrollPane.getViewport().setBackground(Color.white);
-        /*taskTable.setMaximumSize(new Dimension(32767, 32767));
-        taskTable.setRowHeight(24);*/
-        ppEditTask.setFont(new java.awt.Font("Dialog", 1, 11));
-    ppEditTask.setText(Local.getString("Edit lecture")+"...");
-    ppEditTask.addActionListener(new java.awt.event.ActionListener() {
+        /*LectureTable.setMaximumSize(new Dimension(32767, 32767));
+        LectureTable.setRowHeight(24);*/
+        ppEditLecture.setFont(new java.awt.Font("Dialog", 1, 11));
+    ppEditLecture.setText(Local.getString("Edit lecture")+"...");
+    ppEditLecture.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                ppEditTask_actionPerformed(e);
+                ppEditLecture_actionPerformed(e);
             }
         });
-    //edit task button 
-    ppEditTask.setEnabled(false);
-    ppEditTask.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_edit.png")));
-    taskPPMenu.setFont(new java.awt.Font("Dialog", 1, 10));
-    // remove task button and action to be called upon clicking
-    ppRemoveTask.setFont(new java.awt.Font("Dialog", 1, 11));
-    ppRemoveTask.setText(Local.getString("Remove lecture"));
-    ppRemoveTask.addActionListener(new java.awt.event.ActionListener() {
+    //edit Lecture button 
+    ppEditLecture.setEnabled(false);
+    ppEditLecture.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_edit.png")));
+    LecturePPMenu.setFont(new java.awt.Font("Dialog", 1, 10));
+    // remove Lecture button and action to be called upon clicking
+    ppRemoveLecture.setFont(new java.awt.Font("Dialog", 1, 11));
+    ppRemoveLecture.setText(Local.getString("Remove lecture"));
+    ppRemoveLecture.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                ppRemoveTask_actionPerformed(e);
+                ppRemoveLecture_actionPerformed(e);
             }
         });
-    ppRemoveTask.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_remove.png")));
-    ppRemoveTask.setEnabled(false);
-    ppNewTask.setFont(new java.awt.Font("Dialog", 1, 11));
-    ppNewTask.setText(Local.getString("New lecture")+"...");
-    ppNewTask.addActionListener(new java.awt.event.ActionListener() {
+    ppRemoveLecture.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_remove.png")));
+    ppRemoveLecture.setEnabled(false);
+    ppNewLecture.setFont(new java.awt.Font("Dialog", 1, 11));
+    ppNewLecture.setText(Local.getString("New lecture")+"...");
+    ppNewLecture.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                ppNewTask_actionPerformed(e);
+                ppNewLecture_actionPerformed(e);
             }
         });
-    ppNewTask.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_new.png")));
+    ppNewLecture.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_new.png")));
     /*
-    ppSubTasks.setFont(new java.awt.Font("Dialog", 1, 11));
-    ppSubTasks.setText(Local.getString("List sub tasks"));
-    ppSubTasks.addActionListener(new java.awt.event.ActionListener() {
+    ppSubLectures.setFont(new java.awt.Font("Dialog", 1, 11));
+    ppSubLectures.setText(Local.getString("List sub Lectures"));
+    ppSubLectures.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                ppListSubTasks_actionPerformed(e);
+                ppListSubLectures_actionPerformed(e);
             }
         });
-    ppSubTasks.setIcon(new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_new.png")));
+    ppSubLectures.setIcon(new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_new.png")));
 
-    ppParentTask.setFont(new java.awt.Font("Dialog", 1, 11));
-    ppParentTask.setText(Local.getString("Parent Task"));
-    ppParentTask.addActionListener(new java.awt.event.ActionListener() {
+    ppParentLecture.setFont(new java.awt.Font("Dialog", 1, 11));
+    ppParentLecture.setText(Local.getString("Parent Lecture"));
+    ppParentLecture.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                ppParentTask_actionPerformed(e);
+                ppParentLecture_actionPerformed(e);
             }
         });
-    ppParentTask.setIcon(new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_new.png")));
+    ppParentLecture.setIcon(new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_new.png")));
     */
 
-	// calculate task button and action performed 
-	ppCalcTask.setFont(new java.awt.Font("Dialog", 1, 11));
-	ppCalcTask.setText(Local.getString("Calculate lecture data"));
-	ppCalcTask.addActionListener(new java.awt.event.ActionListener() {
+	// calculate Lecture button and action performed 
+	ppCalcLecture.setFont(new java.awt.Font("Dialog", 1, 11));
+	ppCalcLecture.setText(Local.getString("Calculate lecture data"));
+	ppCalcLecture.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ppCalcTask_actionPerformed(e);
+				ppCalcLecture_actionPerformed(e);
 			}
 		});
-	ppCalcTask.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_complete.png")));
-	ppCalcTask.setEnabled(false);
-	//add buttons to task tool bar
-    scrollPane.getViewport().add(taskTable, null);
+	ppCalcLecture.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_complete.png")));
+	ppCalcLecture.setEnabled(false);
+	//add buttons to Lecture tool bar
+    scrollPane.getViewport().add(LectureTable, null);
         this.add(scrollPane, BorderLayout.CENTER);
-        tasksToolBar.add(historyBackB, null);
-        tasksToolBar.add(historyForwardB, null);
-        tasksToolBar.addSeparator(new Dimension(8, 24));
+        LecturesToolBar.add(historyBackB, null);
+        LecturesToolBar.add(historyForwardB, null);
+        LecturesToolBar.addSeparator(new Dimension(8, 24));
 
-        tasksToolBar.add(newLectureB, null);
-        tasksToolBar.add(removeLectureB, null);
-        tasksToolBar.addSeparator(new Dimension(8, 24));
-        tasksToolBar.add(editLectureB, null);
+        LecturesToolBar.add(newLectureB, null);
+        LecturesToolBar.add(removeLectureB, null);
+        LecturesToolBar.addSeparator(new Dimension(8, 24));
+        LecturesToolBar.add(editLectureB, null);
 
-		//tasksToolBar.add(showActiveOnly, null);
+		//LecturesToolBar.add(showActiveOnly, null);
         
 
-        this.add(tasksToolBar, BorderLayout.NORTH);
+        this.add(LecturesToolBar, BorderLayout.NORTH);
 
         PopupListener ppListener = new PopupListener();
         scrollPane.addMouseListener(ppListener);
-        taskTable.addMouseListener(ppListener);
+        LectureTable.addMouseListener(ppListener);
 
 
         //show current date 
@@ -294,93 +294,93 @@ public class LecturePanel extends JPanel {
                 newLectureB.setEnabled(d.inPeriod(CurrentProject.get().getStartDate(), CurrentProject.get().getEndDate()));
             }
         });
-        //add a new task to the current project
+        //add a new Lecture to the current project
         CurrentProject.addProjectListener(new ProjectListener() {
-            public void projectChange(Project p, NoteList nl, TaskList tl, ResourcesList rl) {
+            public void projectChange(Project p, NoteList nl, LectureList tl, ResourcesList rl) {
                 newLectureB.setEnabled(
                     CurrentDate.get().inPeriod(p.getStartDate(), p.getEndDate()));
             }
             public void projectWasChanged() {
-            	//taskTable.setCurrentRootTask(null); //XXX
+            	//LectureTable.setCurrentRootLecture(null); //XXX
             }
         });
-        //upon selection of a task or a sub task, emable edit and remove task buttons
-        taskTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+        //upon selection of a Lecture or a sub Lecture, emable edit and remove Lecture buttons
+        LectureTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent e) {
-                boolean enbl = (taskTable.getRowCount() > 0)&&(taskTable.getSelectedRow() > -1);
-                editLectureB.setEnabled(enbl);ppEditTask.setEnabled(enbl);
-                removeLectureB.setEnabled(enbl);ppRemoveTask.setEnabled(enbl);
+                boolean enbl = (LectureTable.getRowCount() > 0)&&(LectureTable.getSelectedRow() > -1);
+                editLectureB.setEnabled(enbl);ppEditLecture.setEnabled(enbl);
+                removeLectureB.setEnabled(enbl);ppRemoveLecture.setEnabled(enbl);
 				
-				ppCompleteTask.setEnabled(enbl);
-				ppAddSubTask.setEnabled(enbl);
-				//ppSubTasks.setEnabled(enbl); // default value to be over-written later depending on whether it has sub tasks
-				ppCalcTask.setEnabled(enbl); // default value to be over-written later depending on whether it has sub tasks
+				ppCompleteLecture.setEnabled(enbl);
+				ppAddSubLecture.setEnabled(enbl);
+				//ppSubLectures.setEnabled(enbl); // default value to be over-written later depending on whether it has sub Lectures
+				ppCalcLecture.setEnabled(enbl); // default value to be over-written later depending on whether it has sub Lectures
 				
-				/*if (taskTable.getCurrentRootTask() == null) {
-					ppParentTask.setEnabled(false);
+				/*if (LectureTable.getCurrentRootLecture() == null) {
+					ppParentLecture.setEnabled(false);
 				}
 				else {
-					ppParentTask.setEnabled(true);
+					ppParentLecture.setEnabled(true);
 				}XXX*/
 				
                 if (enbl) {   
-    				String thisTaskId = taskTable.getModel().getValueAt(taskTable.getSelectedRow(), TaskTable.TASK_ID).toString();
+    				String thisLectureId = LectureTable.getModel().getValueAt(LectureTable.getSelectedRow(), LectureTable.Lecture_ID).toString();
     				
-    				boolean hasSubTasks = CurrentProject.getTaskList().hasSubTasks(thisTaskId);
-    				//ppSubTasks.setEnabled(hasSubTasks);
-    				ppCalcTask.setEnabled(hasSubTasks);
-    				Task t = CurrentProject.getTaskList().getTask(thisTaskId);
-                    parentPanel.calendar.jnCalendar.renderer.setTask(t);
+    				boolean hasSubLectures = CurrentProject.getLectureList().hasSubLectures(thisLectureId);
+    				//ppSubLectures.setEnabled(hasSubLectures);
+    				ppCalcLecture.setEnabled(hasSubLectures);
+    				Lecture t = CurrentProject.getLectureList().getLecture(thisLectureId);
+                    parentPanel.calendar.jnCalendar.renderer.setLecture(t);
                     parentPanel.calendar.jnCalendar.updateUI();
                 }    
                 else {
-                    parentPanel.calendar.jnCalendar.renderer.setTask(null);
+                    parentPanel.calendar.jnCalendar.renderer.setLecture(null);
                     parentPanel.calendar.jnCalendar.updateUI();
                 }
             }
         });
         
-        //set enables for options that are not valud when there are no tasks or no tasks are selected
+        //set enables for options that are not valud when there are no Lectures or no Lectures are selected
         editLectureB.setEnabled(false);
         removeLectureB.setEnabled(false);
-		ppAddSubTask.setEnabled(false);
-		//ppSubTasks.setEnabled(false);
-		//ppParentTask.setEnabled(false);
-    taskPPMenu.add(ppEditTask);
+		ppAddSubLecture.setEnabled(false);
+		//ppSubLectures.setEnabled(false);
+		//ppParentLecture.setEnabled(false);
+    LecturePPMenu.add(ppEditLecture);
     
-    taskPPMenu.addSeparator();
-    taskPPMenu.add(ppNewTask);
-    taskPPMenu.add(ppAddSubTask);
-    taskPPMenu.add(ppRemoveTask);
+    LecturePPMenu.addSeparator();
+    LecturePPMenu.add(ppNewLecture);
+    LecturePPMenu.add(ppAddSubLecture);
+    LecturePPMenu.add(ppRemoveLecture);
     
-    taskPPMenu.addSeparator();
-	taskPPMenu.add(ppCompleteTask);
-	taskPPMenu.add(ppCalcTask);
+    LecturePPMenu.addSeparator();
+	LecturePPMenu.add(ppCompleteLecture);
+	LecturePPMenu.add(ppCalcLecture);
 	
-    //taskPPMenu.addSeparator();
+    //LecturePPMenu.addSeparator();
     
-    //taskPPMenu.add(ppSubTasks);
+    //LecturePPMenu.add(ppSubLectures);
     
-    //taskPPMenu.addSeparator();
-    //taskPPMenu.add(ppParentTask);
+    //LecturePPMenu.addSeparator();
+    //LecturePPMenu.add(ppParentLecture);
     
-    taskPPMenu.addSeparator();
-	taskPPMenu.add(ppShowActiveOnlyChB);
+    LecturePPMenu.addSeparator();
+	LecturePPMenu.add(ppShowActiveOnlyChB);
 
 	
-		// define key actions in TaskPanel:
-		// - KEY:DELETE => delete tasks (recursivly).
-		// - KEY:INTERT => insert new Subtask if another is selected.
-		// - KEY:INSERT => insert new Task if nothing is selected.
-		// - KEY:SPACE => finish Task.
-		taskTable.addKeyListener(new KeyListener() {
+		// define key actions in LecturePanel:
+		// - KEY:DELETE => delete Lectures (recursivly).
+		// - KEY:INTERT => insert new SubLecture if another is selected.
+		// - KEY:INSERT => insert new Lecture if nothing is selected.
+		// - KEY:SPACE => finish Lecture.
+		LectureTable.addKeyListener(new KeyListener() {
 			public void keyPressed(KeyEvent e){
-				if(taskTable.getSelectedRows().length>0 
+				if(LectureTable.getSelectedRows().length>0 
 					&& e.getKeyCode()==KeyEvent.VK_DELETE)
-					ppRemoveTask_actionPerformed(null);
+					ppRemoveLecture_actionPerformed(null);
 				
 				else if(e.getKeyCode()==KeyEvent.VK_INSERT) {
-					ppNewTask_actionPerformed(null);						
+					ppNewLecture_actionPerformed(null);						
 				}
 				
 			}
@@ -389,12 +389,12 @@ public class LecturePanel extends JPanel {
 		});	
 
     }
-    //defines actions to be performed when the edit task button is clicked
+    //defines actions to be performed when the edit Lecture button is clicked
     void editLectureB_actionPerformed(ActionEvent e) {
-        Task t =
-            CurrentProject.getTaskList().getTask(
-                taskTable.getModel().getValueAt(taskTable.getSelectedRow(), TaskTable.TASK_ID).toString());
-        TaskDialog dlg = new TaskDialog(App.getFrame(), Local.getString("Edit lecture"));
+        Lecture t =
+            CurrentProject.getLectureList().getLecture(
+                LectureTable.getModel().getValueAt(LectureTable.getSelectedRow(), LectureTable.Lecture_ID).toString());
+        LectureDialog dlg = new LectureDialog(App.getFrame(), Local.getString("Edit lecture"));
         Dimension frmSize = App.getFrame().getSize();
         Point loc = App.getFrame().getLocation();
         dlg.setLocation((frmSize.width - dlg.getSize().width) / 2 + loc.x, (frmSize.height - dlg.getSize().height) / 2 + loc.y);
@@ -428,18 +428,18 @@ public class LecturePanel extends JPanel {
         t.setEffort(Util.getMillisFromHours(dlg.effortField.getText()));
         t.setProgress(((Integer)dlg.progress.getValue()).intValue());
         
-//		CurrentProject.getTaskList().adjustParentTasks(t);
+//		CurrentProject.getLectureList().adjustParentLectures(t);
 
-        CurrentStorage.get().storeTaskList(CurrentProject.getTaskList(), CurrentProject.get());
-        taskTable.tableChanged();
+        CurrentStorage.get().storeLectureList(CurrentProject.getLectureList(), CurrentProject.get());
+        LectureTable.tableChanged();
         parentPanel.updateIndicators();
-        //taskTable.updateUI();
+        //LectureTable.updateUI();
     }
-    //defines actions to be performed when new task is added
+    //defines actions to be performed when new Lecture is added
     void newLectureB_actionPerformed(ActionEvent e) {
         LectureDialog dlg = new LectureDialog(App.getFrame(), Local.getString("New lecture"));
         
-        //XXX String parentTaskId = taskTable.getCurrentRootTask();
+        //XXX String parentLectureId = LectureTable.getCurrentRootLecture();
         
         Dimension frmSize = App.getFrame().getSize();
         Point loc = App.getFrame().getLocation();
@@ -460,14 +460,14 @@ public class LecturePanel extends JPanel {
 // 		else
 // 			ed = null;
 //        long effort = Util.getMillisFromHours(dlg.effortField.getText());
-//		//XXX Task newTask = CurrentProject.getTaskList().createTask(sd, ed, dlg.todoField.getText(), dlg.priorityCB.getSelectedIndex(),effort, dlg.descriptionField.getText(),parentTaskId);
-//		Task newTask = CurrentProject.getTaskList().createTask(sd, ed, dlg.todoField.getText(), dlg.priorityCB.getSelectedIndex(),effort, dlg.descriptionField.getText(),null);
-//        //CurrentProject.getTaskList().adjustParentTasks(newTask);
-//		newTask.setProgress(((Integer)dlg.progress.getValue()).intValue());
-        CurrentStorage.get().storeTaskList(CurrentProject.getTaskList(), CurrentProject.get());
-        taskTable.tableChanged();
+//		//XXX Lecture newLecture = CurrentProject.getLectureList().createLecture(sd, ed, dlg.todoField.getText(), dlg.priorityCB.getSelectedIndex(),effort, dlg.descriptionField.getText(),parentLectureId);
+//		Lecture newLecture = CurrentProject.getLectureList().createLecture(sd, ed, dlg.todoField.getText(), dlg.priorityCB.getSelectedIndex(),effort, dlg.descriptionField.getText(),null);
+//        //CurrentProject.getLectureList().adjustParentLectures(newLecture);
+//		newLecture.setProgress(((Integer)dlg.progress.getValue()).intValue());
+        CurrentStorage.get().storeLectureList(CurrentProject.getLectureList(), CurrentProject.get());
+        LectureTable.tableChanged();
         parentPanel.updateIndicators();
-        //taskTable.updateUI();
+        //LectureTable.updateUI();
     }
 
     
@@ -541,11 +541,11 @@ public class LecturePanel extends JPanel {
         return holiday;
     }
     
-    //method to calculate the effort of tasks
+    //method to calculate the effort of Lectures
     void calcLecture_actionPerformed(ActionEvent e) {
-        TaskCalcDialog dlg = new TaskCalcDialog(App.getFrame());
+        LectureCalcDialog dlg = new LectureCalcDialog(App.getFrame());
         dlg.pack();
-        Task t = CurrentProject.getTaskList().getTask(taskTable.getModel().getValueAt(taskTable.getSelectedRow(), TaskTable.TASK_ID).toString());
+        Lecture t = CurrentProject.getLectureList().getLecture(LectureTable.getModel().getValueAt(LectureTable.getSelectedRow(), LectureTable.Lecture_ID).toString());
         
         Dimension frmSize = App.getFrame().getSize();
         Point loc = App.getFrame().getLocation();
@@ -556,18 +556,18 @@ public class LecturePanel extends JPanel {
             return;            
         }
         
-        TaskList tl = CurrentProject.getTaskList();
+        LectureList tl = CurrentProject.getLectureList();
         if(dlg.calcEffortChB.isSelected()) {
-            t.setEffort(tl.calculateTotalEffortFromSubTasks(t));
+            t.setEffort(tl.calculateTotalEffortFromSubLectures(t));
         }
         
         if(dlg.compactDatesChB.isSelected()) {
-            t.setStartDate(tl.getEarliestStartDateFromSubTasks(t));
-            t.setEndDate(tl.getLatestEndDateFromSubTasks(t));
+            t.setStartDate(tl.getEarliestStartDateFromSubLectures(t));
+            t.setEndDate(tl.getLatestEndDateFromSubLectures(t));
         }
         
         if(dlg.calcCompletionChB.isSelected()) {
-            long[] res = tl.calculateCompletionFromSubTasks(t);
+            long[] res = tl.calculateCompletionFromSubLectures(t);
             int thisProgress = (int) Math.round((((double)res[0] / (double)res[1]) * 100));
             t.setProgress(thisProgress);
         }
@@ -580,45 +580,45 @@ public class LecturePanel extends JPanel {
 // 		else
 // 			ed = new CalendarDate(0,0,0);
 //        long effort = Util.getMillisFromHours(dlg.effortField.getText());
-//		Task newTask = CurrentProject.getTaskList().createTask(sd, ed, dlg.todoField.getText(), dlg.priorityCB.getSelectedIndex(),effort, dlg.descriptionField.getText(),parentTaskId);
+//		Lecture newLecture = CurrentProject.getLectureList().createLecture(sd, ed, dlg.todoField.getText(), dlg.priorityCB.getSelectedIndex(),effort, dlg.descriptionField.getText(),parentLectureId);
 //		
 		
-        CurrentStorage.get().storeTaskList(CurrentProject.getTaskList(), CurrentProject.get());
-        taskTable.tableChanged();
+        CurrentStorage.get().storeLectureList(CurrentProject.getLectureList(), CurrentProject.get());
+        LectureTable.tableChanged();
 //        parentPanel.updateIndicators();
-        //taskTable.updateUI();
+        //LectureTable.updateUI();
     }
 
 
-    void parentTask_actionPerformed(ActionEvent e) {
-//    	String taskId = taskTable.getModel().getValueAt(taskTable.getSelectedRow(), TaskTable.TASK_ID).toString();
+    void parentLecture_actionPerformed(ActionEvent e) {
+//    	String LectureId = LectureTable.getModel().getValueAt(LectureTable.getSelectedRow(), LectureTable.Lecture_ID).toString();
 //      
-//    	Task t = CurrentProject.getTaskList().getTask(taskId);
-    	/*XXX Task t2 = CurrentProject.getTaskList().getTask(taskTable.getCurrentRootTask());
+//    	Lecture t = CurrentProject.getLectureList().getLecture(LectureId);
+    	/*XXX Lecture t2 = CurrentProject.getLectureList().getLecture(LectureTable.getCurrentRootLecture());
     	
-    	String parentTaskId = t2.getParent();
-    	if((parentTaskId == null) || (parentTaskId.equals(""))) {
-    		parentTaskId = null;
+    	String parentLectureId = t2.getParent();
+    	if((parentLectureId == null) || (parentLectureId.equals(""))) {
+    		parentLectureId = null;
     	}
-    	taskTable.setCurrentRootTask(parentTaskId); 
-    	taskTable.tableChanged();*/
+    	LectureTable.setCurrentRootLecture(parentLectureId); 
+    	LectureTable.tableChanged();*/
 
 //      parentPanel.updateIndicators();
-//      //taskTable.updateUI();
+//      //LectureTable.updateUI();
   }
     
-    //actions to be performed when removing a task
-    void removeTaskB_actionPerformed(ActionEvent e) {
+    //actions to be performed when removing a Lecture
+    void removeLectureB_actionPerformed(ActionEvent e) {
         String msg;
-        String thisTaskId = taskTable.getModel().getValueAt(taskTable.getSelectedRow(), TaskTable.TASK_ID).toString();
+        String thisLectureId = LectureTable.getModel().getValueAt(LectureTable.getSelectedRow(), LectureTable.Lecture_ID).toString();
         
-        if (taskTable.getSelectedRows().length > 1)
-            msg = Local.getString("Remove")+" "+taskTable.getSelectedRows().length +" "+Local.getString("tasks")+"?"
+        if (LectureTable.getSelectedRows().length > 1)
+            msg = Local.getString("Remove")+" "+LectureTable.getSelectedRows().length +" "+Local.getString("Lectures")+"?"
              + "\n"+Local.getString("Are you sure?");
         else {        	
-        	Task t = CurrentProject.getTaskList().getTask(thisTaskId);
-        	// check if there are subtasks
-			if(CurrentProject.getTaskList().hasSubTasks(thisTaskId)) {
+        	Lecture t = CurrentProject.getLectureList().getLecture(thisLectureId);
+        	// check if there are subLectures
+			if(CurrentProject.getLectureList().hasSubLectures(thisLectureId)) {
 				msg = Local.getString("Remove lecture")+"\n'" + t.getText() + "\n"+Local.getString("Are you sure?");
 			}
 			else {		            
@@ -634,37 +634,37 @@ public class LecturePanel extends JPanel {
         if (n != JOptionPane.YES_OPTION)
             return;
         Vector toremove = new Vector();
-        for (int i = 0; i < taskTable.getSelectedRows().length; i++) {
-            Task t =
-            CurrentProject.getTaskList().getTask(
-                taskTable.getModel().getValueAt(taskTable.getSelectedRows()[i], TaskTable.TASK_ID).toString());
+        for (int i = 0; i < LectureTable.getSelectedRows().length; i++) {
+            Lecture t =
+            CurrentProject.getLectureList().getLecture(
+                LectureTable.getModel().getValueAt(LectureTable.getSelectedRows()[i], LectureTable.Lecture_ID).toString());
             if (t != null)
                 toremove.add(t);
         }
         for (int i = 0; i < toremove.size(); i++) {
-            CurrentProject.getTaskList().removeTask((Task)toremove.get(i));
+            CurrentProject.getLectureList().removeLecture((Lecture)toremove.get(i));
         }
-        taskTable.tableChanged();
-        CurrentStorage.get().storeTaskList(CurrentProject.getTaskList(), CurrentProject.get());
+        LectureTable.tableChanged();
+        CurrentStorage.get().storeLectureList(CurrentProject.getLectureList(), CurrentProject.get());
         parentPanel.updateIndicators();
-        //taskTable.updateUI();
+        //LectureTable.updateUI();
 
     }
 
 	// toggle "show active only"
 	void toggleShowActiveOnly_actionPerformed(ActionEvent e) {
 		Context.put(
-			"SHOW_ACTIVE_TASKS_ONLY",
+			"SHOW_ACTIVE_LectureS_ONLY",
 			new Boolean(ppShowActiveOnlyChB.isSelected()));
-		taskTable.tableChanged();
+		LectureTable.tableChanged();
 	}
 
     class PopupListener extends MouseAdapter {
 
         public void mouseClicked(MouseEvent e) {
-		if ((e.getClickCount() == 2) && (taskTable.getSelectedRow() > -1)){
+		if ((e.getClickCount() == 2) && (LectureTable.getSelectedRow() > -1)){
 			// ignore "tree" column
-			//if(taskTable.getSelectedColumn() == 1) return;
+			//if(LectureTable.getSelectedColumn() == 1) return;
 			
 			editLectureB_actionPerformed(null);
 		}
@@ -680,31 +680,27 @@ public class LecturePanel extends JPanel {
 
                 private void maybeShowPopup(MouseEvent e) {
                     if (e.isPopupTrigger()) {
-                        taskPPMenu.show(e.getComponent(), e.getX(), e.getY());
+                        LecturePPMenu.show(e.getComponent(), e.getX(), e.getY());
                     }
                 }
 
     }
 
-  void ppEditTask_actionPerformed(ActionEvent e) {
+  void ppEditLecture_actionPerformed(ActionEvent e) {
     editLectureB_actionPerformed(e);
   }
-  void ppRemoveTask_actionPerformed(ActionEvent e) {
-    removeTaskB_actionPerformed(e);
+  void ppRemoveLecture_actionPerformed(ActionEvent e) {
+    removeLectureB_actionPerformed(e);
   }
-  void ppNewTask_actionPerformed(ActionEvent e) {
+  void ppNewLecture_actionPerformed(ActionEvent e) {
     newLectureB_actionPerformed(e);
   }
 
-  void ppListSubTasks_actionPerformed(ActionEvent e) {
-  	listSubTasks_actionPerformed(e);
+  void ppParentLecture_actionPerformed(ActionEvent e) {
+  	parentLecture_actionPerformed(e);
   }
 
-  void ppParentTask_actionPerformed(ActionEvent e) {
-  	parentTask_actionPerformed(e);
-  }
-
-  void ppCalcTask_actionPerformed(ActionEvent e) {
+  void ppCalcLecture_actionPerformed(ActionEvent e) {
       calcLecture_actionPerformed(e);
   }
 
