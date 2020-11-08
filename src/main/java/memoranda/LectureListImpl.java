@@ -74,7 +74,7 @@ public class LectureListImpl implements LectureList {
 		Elements lecs = _root.getChildElements("lecture");
         Vector v = new Vector();
         for (int i = 0; i < lecs.size(); i++) {
-        	v.add(lecs.get(i));
+        	v.add(new LectureImpl(lecs.get(i), _project));
         }
         return v;
 	}

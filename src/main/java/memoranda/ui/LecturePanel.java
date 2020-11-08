@@ -222,11 +222,11 @@ public class LecturePanel extends JPanel {
     // remove Lecture button and action to be called upon clicking
     ppRemoveLecture.setFont(new java.awt.Font("Dialog", 1, 11));
     ppRemoveLecture.setText(Local.getString("Remove lecture"));
-//    ppRemoveLecture.addActionListener(new java.awt.event.ActionListener() {
-//            public void actionPerformed(ActionEvent e) {
-//                ppRemoveLecture_actionPerformed(e);
-//            }
-//        });
+    ppRemoveLecture.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                ppRemoveLecture_actionPerformed(e);
+            }
+        });
     ppRemoveLecture.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/event_remove.png")));
     ppRemoveLecture.setEnabled(false);
     ppNewLecture.setFont(new java.awt.Font("Dialog", 1, 11));

@@ -551,7 +551,7 @@ public class TaskPanel extends JPanel {
         
         //get the lecture time selected
         Calendar calendar = new GregorianCalendar(Local.getCurrentLocale());
-		calendar.setTime(((Date)dlg.timeSpin.getModel().getValue()));
+		calendar.setTime(((Date)dlg.dateSpin.getModel().getValue()));
 		int hh = calendar.get(Calendar.HOUR_OF_DAY);
         int mm = calendar.get(Calendar.MINUTE);
 
