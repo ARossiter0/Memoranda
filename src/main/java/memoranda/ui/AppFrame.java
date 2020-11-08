@@ -621,7 +621,7 @@ public class AppFrame extends JFrame {
 
         CurrentProject.addProjectListener(new ProjectListener() {
 
-            public void projectChange(Project prj, NoteList nl, TaskList tl,
+            public void projectChange(Project prj, NoteList nl, TaskList tl, TaskList t2,
                     ResourcesList rl) {
             }
 
