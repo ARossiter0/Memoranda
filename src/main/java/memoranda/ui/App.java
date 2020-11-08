@@ -160,9 +160,11 @@ public class App {
 	 * splash2.png rather than splash.png. 
 	 */
 	private void showSplash() {
+		final String SPLASH_DIR = "/ui/splash2.png";
+		
 		splash = new JFrame();
 		ImageIcon spl =
-			new ImageIcon(App.class.getResource("/ui/splash2.png"));
+			new ImageIcon(App.class.getResource(SPLASH_DIR));
 		JLabel l = new JLabel();
 		l.setSize(400, 300);
 		l.setIcon(spl);
