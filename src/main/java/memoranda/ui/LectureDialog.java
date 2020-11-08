@@ -84,6 +84,11 @@ public class LectureDialog extends JDialog {
     JSpinner endTimeSpin = new JSpinner (new SpinnerDateModel(new Date(), null, null, Calendar.MINUTE));
 
     public boolean CANCELLED = true;
+    
+    String topic;
+    CalendarDate date;
+    CalendarDate startTime;
+    CalendarDate endTime;
 
     public LectureDialog(Frame frame, String title) {
         super(frame, title, true);
@@ -268,6 +273,10 @@ public class LectureDialog extends JDialog {
         
     }	
     void okB_actionPerformed(ActionEvent e) {
+    	topic = lecTopicField.getText();
+    	date = (CalendarDate) dateSpin.getModel().getValue();
+    	startTime = (CalendarDate) startTimeSpin.getModel().getValue();
+    	endTime = (CalendarDate) endTimeSpin.getModel().getValue();
 	CANCELLED = false;
         this.dispose();
     }

@@ -70,9 +70,13 @@ public class LectureListImpl implements LectureList {
     }
 
 	@Override
-	public Lecture getLecture(String id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Vector getAllLectures() {
+		Elements lecs = _root.getChildElements("lecture");
+        Vector v = new Vector();
+        for (int i = 0; i < lecs.size(); i++) {
+        	v.add(lecs.get(i));
+        }
+        return v;
 	}
 
 	@Override
@@ -83,6 +87,11 @@ public class LectureListImpl implements LectureList {
 
 	@Override
 	public Document getXMLContent() {
+		return _doc;
+	}
+
+	@Override
+	public Lecture getLecture(String id) {
 		// TODO Auto-generated method stub
 		return null;
 	}

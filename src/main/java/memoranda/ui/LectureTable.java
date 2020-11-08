@@ -17,12 +17,21 @@ import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellRenderer;
 
+import main.java.memoranda.CurrentProject;
 import main.java.memoranda.Event;
 import main.java.memoranda.EventsManager;
+import main.java.memoranda.Lecture;
+import main.java.memoranda.NoteList;
+import main.java.memoranda.Project;
+import main.java.memoranda.ProjectImpl;
+import main.java.memoranda.ProjectListener;
+import main.java.memoranda.ResourcesList;
+import main.java.memoranda.TaskList;
 import main.java.memoranda.date.CalendarDate;
 import main.java.memoranda.date.CurrentDate;
 import main.java.memoranda.date.DateListener;
 import main.java.memoranda.util.Local;
+import nu.xom.Element;
 /**
  *
  */
@@ -39,18 +48,22 @@ public class LectureTable extends JTable {
     public LectureTable() {
         super();
         setModel(new LectureTableModel());
-        initTable(CurrentDate.get());
+        initTable();
         this.setShowGrid(false);
-        CurrentDate.addDateListener(new DateListener() {
-            public void dateChange(CalendarDate d) {
-                //updateUI();
-                initTable(d);
-            }
+        CurrentProject.addProjectListener(new ProjectListener() {
+			@Override
+			public void projectWasChanged() {
+				initTable();
+			}
+
+			@Override
+			public void projectChange(Project prj, NoteList nl, TaskList tl, ResourcesList rl) {
+			}
         });
     }
 
-    public void initTable(CalendarDate d) {
-        lectures = (Vector)EventsManager.getEventsForDate(d);
+    public void initTable() {
+        lectures = CurrentProject.getLectureList().getAllLectures();
         getColumnModel().getColumn(1).setPreferredWidth(60);
         getColumnModel().getColumn(1).setMaxWidth(60);
         getColumnModel().getColumn(2).setPreferredWidth(60);
@@ -62,7 +75,7 @@ public class LectureTable extends JTable {
     }
 
     public void refresh() {
-        initTable(CurrentDate.get());
+        initTable();
     }
 
      public TableCellRenderer getCellRenderer(int row, int column) {
@@ -77,26 +90,14 @@ public class LectureTable extends JTable {
                 int column) {
                 Component comp;
                 comp = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-                Event ev = (Event)getModel().getValueAt(row, EVENT);
-                comp.setForeground(java.awt.Color.gray);
-                if (ev.isRepeatable())
-                    comp.setFont(comp.getFont().deriveFont(Font.ITALIC));
-                if (CurrentDate.get().after(CalendarDate.today())) {
-                  comp.setForeground(java.awt.Color.black);
-                }                
-                else if (CurrentDate.get().equals(CalendarDate.today())) {
-                  if (ev.getTime().after(new Date())) {
-                    comp.setForeground(java.awt.Color.black);
-                    //comp.setFont(new java.awt.Font("Dialog", 1, 12));
-                    comp.setFont(comp.getFont().deriveFont(Font.BOLD));
-                  }
-                }
+                Lecture le = (Lecture)getModel().getValueAt(row, LECTURE);
+                comp.setForeground(java.awt.Color.gray);            
                 return comp;
             }
         };
 
     }
-
+    
     class LectureTableModel extends AbstractTableModel {
 
         String[] columnNames = {
@@ -126,15 +127,19 @@ public class LectureTable extends JTable {
         }
 
         public Object getValueAt(int row, int col) {
-           Event ev = (Event)lectures.get(row);
+           Lecture le = (Lecture)lectures.get(row);
            if (col == 0)
                 //return ev.getHour()+":"+ev.getMinute();
-                return ev.getTimeString();
+                return le.getTopic();
            else if (col == 1)
-                return ev.getText();
-           else if (col == EVENT_ID)
-                return ev.getId();
-           else return ev;
+                return le.getDate();
+           else if (col == 2)
+        	   return le.getStartTime();
+           else if (col == 3)
+        	   return le.getEndTime();
+           else if (col == LECTURE_ID)
+                return le.getID();
+           else return le;
         }
 
         public String getColumnName(int col) {

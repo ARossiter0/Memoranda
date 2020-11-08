@@ -8,6 +8,7 @@
  */
 package main.java.memoranda;
 import java.util.Collection;
+import java.util.Vector;
 
 import main.java.memoranda.date.CalendarDate;
 /**
@@ -24,5 +25,6 @@ public interface LectureList {
     void removeLecture(Task task);
 
     nu.xom.Document getXMLContent();
+	Vector getAllLectures();
 
 }

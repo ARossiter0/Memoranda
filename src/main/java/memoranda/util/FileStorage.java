@@ -516,9 +516,9 @@ public class FileStorage implements Storage {
                 + prj.getID()
                 + File.separator
                 + ".lecturelist");
-        Document tasklistDoc = ll.getXMLContent();
+        Document lecturelistDoc = ll.getXMLContent();
         //tasklistDoc.setDocType(TaskListVersioning.getCurrentDocType());
-        saveDocument(tasklistDoc,JN_DOCPATH + prj.getID() + File.separator + ".lecturelist");
+        saveDocument(lecturelistDoc,JN_DOCPATH + prj.getID() + File.separator + ".lecturelist");
 	}
 
 }

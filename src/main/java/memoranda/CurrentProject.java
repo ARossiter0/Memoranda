@@ -60,6 +60,7 @@ public class CurrentProject {
 		
 		// Get the tasks, notes, and resources from the project
         _tasklist = CurrentStorage.get().openTaskList(_project);
+        _lecturelist = CurrentStorage.get().openLectureList(_project);
         _notelist = CurrentStorage.get().openNoteList(_project);
         _resources = CurrentStorage.get().openResourcesList(_project);
         
@@ -118,11 +119,13 @@ public class CurrentProject {
      */
     public static void set(Project project) {
         if (project.getID().equals(_project.getID())) return;
+        LectureList newlecturelist = CurrentStorage.get().openLectureList(project);
         TaskList newtasklist = CurrentStorage.get().openTaskList(project);
         NoteList newnotelist = CurrentStorage.get().openNoteList(project);
         ResourcesList newresources = CurrentStorage.get().openResourcesList(project);
         notifyListenersBefore(project, newnotelist, newtasklist, newresources);
         _project = project;
+        _lecturelist = newlecturelist;
         _tasklist = newtasklist;
         _notelist = newnotelist;
         _resources = newresources;
@@ -176,6 +179,7 @@ public class CurrentProject {
         Storage storage = CurrentStorage.get();
 
         storage.storeNoteList(_notelist, _project);
+        storage.storeLectureList(_lecturelist, _project);
         storage.storeTaskList(_tasklist, _project); 
         storage.storeResourcesList(_resources, _project);
         storage.storeProjectManager();
@@ -186,6 +190,7 @@ public class CurrentProject {
      */
     public static void free() {
         _project = null;
+        _lecturelist = null;
         _tasklist = null;
         _notelist = null;
         _resources = null;
