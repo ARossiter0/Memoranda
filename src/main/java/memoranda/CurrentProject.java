@@ -88,6 +88,7 @@ public class CurrentProject {
      */
     public static TaskList getTaskList() {
     	if (currentTaskType == TaskType.INSTR_TODO_LIST) {
+    		final String DEBUG = "\t\t[DEBUG] Returning _instrTodoList";
     		return _instrTodoList;
     	} else {
     		return _tasklist;
