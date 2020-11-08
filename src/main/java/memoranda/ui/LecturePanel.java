@@ -458,11 +458,11 @@ public class LecturePanel extends JPanel {
         if (dlg.CANCELLED)
             return;
 
-        String topic = dlg.topic;
-        CalendarDate date = dlg.date;
-        CalendarDate startTime = dlg.startTime;
-        CalendarDate endTime = dlg.endTime;	
-        Lecture newLecture = CurrentProject.getLectureList().createLecture(date, startTime, endTime, topic);
+        String topic = dlg.lecTopicField.getText();
+        CalendarDate date = new CalendarDate((Date) dlg.dateSpin.getModel().getValue());
+        CalendarDate startTime = new CalendarDate((Date) dlg.startTimeSpin.getModel().getValue());
+        CalendarDate endTime = new CalendarDate((Date) dlg.endTimeSpin.getModel().getValue());
+        CurrentProject.getLectureList().createLecture(date, startTime, endTime, topic);
         CurrentStorage.get().storeLectureList(CurrentProject.getLectureList(), CurrentProject.get());
 //        LectureTable.tableChanged();
 //        parentPanel.updateIndicators();

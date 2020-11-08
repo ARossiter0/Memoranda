@@ -273,10 +273,6 @@ public class LectureDialog extends JDialog {
         
     }	
     void okB_actionPerformed(ActionEvent e) {
-    	topic = lecTopicField.getText();
-    	date = (CalendarDate) dateSpin.getModel().getValue();
-    	startTime = (CalendarDate) startTimeSpin.getModel().getValue();
-    	endTime = (CalendarDate) endTimeSpin.getModel().getValue();
 	CANCELLED = false;
         this.dispose();
     }
