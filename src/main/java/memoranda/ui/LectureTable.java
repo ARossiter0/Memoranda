@@ -29,10 +29,10 @@ import main.java.memoranda.util.Local;
 /*$Id: EventsTable.java,v 1.6 2004/10/11 08:48:20 alexeya Exp $*/
 public class LectureTable extends JTable {
 
-    public static final int EVENT = 100;
-    public static final int EVENT_ID = 101;
+    public static final int LECTURE = 100;
+    public static final int LECTURE_ID = 101;
 
-    Vector events = new Vector();
+    Vector lectures = new Vector();
     /**
      * Constructor for EventsTable.
      */
@@ -50,7 +50,7 @@ public class LectureTable extends JTable {
     }
 
     public void initTable(CalendarDate d) {
-        events = (Vector)EventsManager.getEventsForDate(d);
+        lectures = (Vector)EventsManager.getEventsForDate(d);
         getColumnModel().getColumn(1).setPreferredWidth(60);
         getColumnModel().getColumn(1).setMaxWidth(60);
         getColumnModel().getColumn(2).setPreferredWidth(60);
@@ -117,7 +117,7 @@ public class LectureTable extends JTable {
         public int getRowCount() {
 			int i;
 			try {
-				i = events.size();
+				i = lectures.size();
 			}
 			catch(NullPointerException e) {
 				i = 1;
@@ -126,7 +126,7 @@ public class LectureTable extends JTable {
         }
 
         public Object getValueAt(int row, int col) {
-           Event ev = (Event)events.get(row);
+           Event ev = (Event)lectures.get(row);
            if (col == 0)
                 //return ev.getHour()+":"+ev.getMinute();
                 return ev.getTimeString();

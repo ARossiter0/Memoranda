@@ -25,6 +25,7 @@ import main.java.memoranda.util.Storage;
 public class CurrentProject {
 
     private static Project _project = null;
+    private static LectureList _lecturelist = null;
     private static TaskList _tasklist = null;
     private static NoteList _notelist = null;
     private static ResourcesList _resources = null;

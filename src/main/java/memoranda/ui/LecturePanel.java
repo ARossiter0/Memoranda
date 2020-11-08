@@ -43,6 +43,7 @@ import main.java.memoranda.util.Local;
 import main.java.memoranda.util.Util;
 import main.java.memoranda.LectureTime;
 import main.java.memoranda.SpecialCalendarDate;
+import main.java.memoranda.TaskList;
 
 /*$Id: LecturePanel.java,v 1.27 2007/01/17 20:49:12 killerjoe Exp $*/
 public class LecturePanel extends JPanel {
@@ -54,7 +55,7 @@ public class LecturePanel extends JPanel {
     JButton editLectureB = new JButton();
     JButton removeLectureB = new JButton();
     
-	JCheckBoxMenuItem ppShowActiveOnlyChB = new JCheckBoxMenuItem();
+//	JCheckBoxMenuItem ppShowActiveOnlyChB = new JCheckBoxMenuItem();
 		
     JScrollPane scrollPane = new JScrollPane();
     LectureTable LectureTable = new LectureTable();
@@ -103,7 +104,7 @@ public class LecturePanel extends JPanel {
         historyForwardB.setText("");
         //add new Lecture and a call to the method newLectureB_actionPerformed(e)
         newLectureB.setIcon(
-            new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_new.png")));
+            new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/event_new.png")));
         newLectureB.setEnabled(true);
         newLectureB.setMaximumSize(new Dimension(24, 24));
         newLectureB.setMinimumSize(new Dimension(24, 24));
@@ -132,7 +133,7 @@ public class LecturePanel extends JPanel {
         editLectureB.setMaximumSize(new Dimension(24, 24));
         //        editLectureB.setEnabled(true);
         editLectureB.setIcon(
-            new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_edit.png")));
+            new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/event_edit.png")));
         
         //remove Lecture button setup and action
         removeLectureB.setBorderPainted(false);
@@ -148,7 +149,7 @@ public class LecturePanel extends JPanel {
         removeLectureB.setMinimumSize(new Dimension(24, 24));
         removeLectureB.setMaximumSize(new Dimension(24, 24));
         removeLectureB.setIcon(
-            new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_remove.png")));
+            new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/event_remove.png")));
 
 		// added by rawsushi
 //		showActiveOnly.setBorderPainted(false);
@@ -173,20 +174,20 @@ public class LecturePanel extends JPanel {
 		// added by rawsushi
 		
         // show active Lectures only method
-        ppShowActiveOnlyChB.setFont(new java.awt.Font("Dialog", 1, 11));
-		ppShowActiveOnlyChB.setText(
-			Local.getString("Show Active only"));
-		ppShowActiveOnlyChB
-			.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				toggleShowActiveOnly_actionPerformed(e);
-			}
-		});		
-		boolean isShao =
-			(Context.get("SHOW_ACTIVE_LectureS_ONLY") != null)
-				&& (Context.get("SHOW_ACTIVE_LectureS_ONLY").equals("true"));
-		ppShowActiveOnlyChB.setSelected(isShao);
-		toggleShowActiveOnly_actionPerformed(null);
+//        ppShowActiveOnlyChB.setFont(new java.awt.Font("Dialog", 1, 11));
+//		ppShowActiveOnlyChB.setText(
+//			Local.getString("Show Active only"));
+//		ppShowActiveOnlyChB
+//			.addActionListener(new java.awt.event.ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				toggleShowActiveOnly_actionPerformed(e);
+//			}
+//		});		
+//		boolean isShao =
+//			(Context.get("SHOW_ACTIVE_LectureS_ONLY") != null)
+//				&& (Context.get("SHOW_ACTIVE_LectureS_ONLY").equals("true"));
+//		ppShowActiveOnlyChB.setSelected(isShao);
+//		toggleShowActiveOnly_actionPerformed(null);
 
 		/*showActiveOnly.setPreferredSize(new Dimension(24, 24));
 		showActiveOnly.setRequestFocusEnabled(false);
@@ -216,7 +217,7 @@ public class LecturePanel extends JPanel {
         });
     //edit Lecture button 
     ppEditLecture.setEnabled(false);
-    ppEditLecture.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_edit.png")));
+    ppEditLecture.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/event_edit.png")));
     LecturePPMenu.setFont(new java.awt.Font("Dialog", 1, 10));
     // remove Lecture button and action to be called upon clicking
     ppRemoveLecture.setFont(new java.awt.Font("Dialog", 1, 11));
@@ -226,7 +227,7 @@ public class LecturePanel extends JPanel {
                 ppRemoveLecture_actionPerformed(e);
             }
         });
-    ppRemoveLecture.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_remove.png")));
+    ppRemoveLecture.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/event_remove.png")));
     ppRemoveLecture.setEnabled(false);
     ppNewLecture.setFont(new java.awt.Font("Dialog", 1, 11));
     ppNewLecture.setText(Local.getString("New lecture")+"...");
@@ -235,7 +236,7 @@ public class LecturePanel extends JPanel {
                 ppNewLecture_actionPerformed(e);
             }
         });
-    ppNewLecture.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_new.png")));
+    ppNewLecture.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/event_new.png")));
     /*
     ppSubLectures.setFont(new java.awt.Font("Dialog", 1, 11));
     ppSubLectures.setText(Local.getString("List sub Lectures"));
@@ -257,15 +258,15 @@ public class LecturePanel extends JPanel {
     */
 
 	// calculate Lecture button and action performed 
-	ppCalcLecture.setFont(new java.awt.Font("Dialog", 1, 11));
-	ppCalcLecture.setText(Local.getString("Calculate lecture data"));
-	ppCalcLecture.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				ppCalcLecture_actionPerformed(e);
-			}
-		});
-	ppCalcLecture.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_complete.png")));
-	ppCalcLecture.setEnabled(false);
+//	ppCalcLecture.setFont(new java.awt.Font("Dialog", 1, 11));
+//	ppCalcLecture.setText(Local.getString("Calculate lecture data"));
+//	ppCalcLecture.addActionListener(new java.awt.event.ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				ppCalcLecture_actionPerformed(e);
+//			}
+//		});
+//	ppCalcLecture.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_complete.png")));
+//	ppCalcLecture.setEnabled(false);
 	//add buttons to Lecture tool bar
     scrollPane.getViewport().add(LectureTable, null);
         this.add(scrollPane, BorderLayout.CENTER);
@@ -303,42 +304,47 @@ public class LecturePanel extends JPanel {
             public void projectWasChanged() {
             	//LectureTable.setCurrentRootLecture(null); //XXX
             }
+			@Override
+			public void projectChange(Project prj, NoteList nl, TaskList tl, ResourcesList rl) {
+				// TODO Auto-generated method stub
+				
+			}
         });
         //upon selection of a Lecture or a sub Lecture, emable edit and remove Lecture buttons
-        LectureTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-            public void valueChanged(ListSelectionEvent e) {
-                boolean enbl = (LectureTable.getRowCount() > 0)&&(LectureTable.getSelectedRow() > -1);
-                editLectureB.setEnabled(enbl);ppEditLecture.setEnabled(enbl);
-                removeLectureB.setEnabled(enbl);ppRemoveLecture.setEnabled(enbl);
-				
-				ppCompleteLecture.setEnabled(enbl);
-				ppAddSubLecture.setEnabled(enbl);
-				//ppSubLectures.setEnabled(enbl); // default value to be over-written later depending on whether it has sub Lectures
-				ppCalcLecture.setEnabled(enbl); // default value to be over-written later depending on whether it has sub Lectures
-				
-				/*if (LectureTable.getCurrentRootLecture() == null) {
-					ppParentLecture.setEnabled(false);
-				}
-				else {
-					ppParentLecture.setEnabled(true);
-				}XXX*/
-				
-                if (enbl) {   
-    				String thisLectureId = LectureTable.getModel().getValueAt(LectureTable.getSelectedRow(), LectureTable.Lecture_ID).toString();
-    				
-    				boolean hasSubLectures = CurrentProject.getLectureList().hasSubLectures(thisLectureId);
-    				//ppSubLectures.setEnabled(hasSubLectures);
-    				ppCalcLecture.setEnabled(hasSubLectures);
-    				Lecture t = CurrentProject.getLectureList().getLecture(thisLectureId);
-                    parentPanel.calendar.jnCalendar.renderer.setLecture(t);
-                    parentPanel.calendar.jnCalendar.updateUI();
-                }    
-                else {
-                    parentPanel.calendar.jnCalendar.renderer.setLecture(null);
-                    parentPanel.calendar.jnCalendar.updateUI();
-                }
-            }
-        });
+//        LectureTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+//            public void valueChanged(ListSelectionEvent e) {
+//                boolean enbl = (LectureTable.getRowCount() > 0)&&(LectureTable.getSelectedRow() > -1);
+//                editLectureB.setEnabled(enbl);ppEditLecture.setEnabled(enbl);
+//                removeLectureB.setEnabled(enbl);ppRemoveLecture.setEnabled(enbl);
+//				
+//				ppCompleteLecture.setEnabled(enbl);
+//				ppAddSubLecture.setEnabled(enbl);
+//				//ppSubLectures.setEnabled(enbl); // default value to be over-written later depending on whether it has sub Lectures
+//				ppCalcLecture.setEnabled(enbl); // default value to be over-written later depending on whether it has sub Lectures
+//				
+//				/*if (LectureTable.getCurrentRootLecture() == null) {
+//					ppParentLecture.setEnabled(false);
+//				}
+//				else {
+//					ppParentLecture.setEnabled(true);
+//				}XXX*/
+//				
+//                if (enbl) {   
+//    				String thisLectureId = LectureTable.getModel().getValueAt(LectureTable.getSelectedRow(), LectureTable.Lecture_ID).toString();
+//    				
+//    				boolean hasSubLectures = CurrentProject.getLectureList().hasSubLectures(thisLectureId);
+//    				//ppSubLectures.setEnabled(hasSubLectures);
+//    				ppCalcLecture.setEnabled(hasSubLectures);
+//    				Lecture t = CurrentProject.getLectureList().getLecture(thisLectureId);
+//                    parentPanel.calendar.jnCalendar.renderer.setLecture(t);
+//                    parentPanel.calendar.jnCalendar.updateUI();
+//                }    
+//                else {
+//                    parentPanel.calendar.jnCalendar.renderer.setLecture(null);
+//                    parentPanel.calendar.jnCalendar.updateUI();
+//                }
+//            }
+//        });
         
         //set enables for options that are not valud when there are no Lectures or no Lectures are selected
         editLectureB.setEnabled(false);
@@ -353,9 +359,9 @@ public class LecturePanel extends JPanel {
     LecturePPMenu.add(ppAddSubLecture);
     LecturePPMenu.add(ppRemoveLecture);
     
-    LecturePPMenu.addSeparator();
-	LecturePPMenu.add(ppCompleteLecture);
-	LecturePPMenu.add(ppCalcLecture);
+//    LecturePPMenu.addSeparator();
+//	LecturePPMenu.add(ppCompleteLecture);
+//	LecturePPMenu.add(ppCalcLecture);
 	
     //LecturePPMenu.addSeparator();
     
@@ -364,8 +370,8 @@ public class LecturePanel extends JPanel {
     //LecturePPMenu.addSeparator();
     //LecturePPMenu.add(ppParentLecture);
     
-    LecturePPMenu.addSeparator();
-	LecturePPMenu.add(ppShowActiveOnlyChB);
+//    LecturePPMenu.addSeparator();
+//	LecturePPMenu.add(ppShowActiveOnlyChB);
 
 	
 		// define key actions in LecturePanel:
@@ -393,7 +399,7 @@ public class LecturePanel extends JPanel {
     void editLectureB_actionPerformed(ActionEvent e) {
         Lecture t =
             CurrentProject.getLectureList().getLecture(
-                LectureTable.getModel().getValueAt(LectureTable.getSelectedRow(), LectureTable.Lecture_ID).toString());
+                LectureTable.getModel().getValueAt(LectureTable.getSelectedRow(), LectureTable.LECTURE_ID).toString());
         LectureDialog dlg = new LectureDialog(App.getFrame(), Local.getString("Edit lecture"));
         Dimension frmSize = App.getFrame().getSize();
         Point loc = App.getFrame().getLocation();
@@ -480,12 +486,10 @@ public class LecturePanel extends JPanel {
         
         //get the lecture time selected
         Calendar calendar = new GregorianCalendar(Local.getCurrentLocale());
-		calendar.setTime(((Date)dlg.timeSpin.getModel().getValue()));
+		calendar.setTime(((Date)dlg.startTimeSpin.getModel().getValue()));
 		int hh = calendar.get(Calendar.HOUR_OF_DAY);
         int mm = calendar.get(Calendar.MINUTE);
 
-        //gets the day selected
-        String day = (String)dlg.daysCB.getSelectedItem();
 
         LectureTime lecTime = new LectureTime(day, hh, mm);
 
@@ -495,62 +499,62 @@ public class LecturePanel extends JPanel {
         return lecTime;
     }
     //New for freedays
-    SpecialCalendarDate newFreeDay_actionPerformed() {
-        CourseSpecialDaysDialog dlg = new CourseSpecialDaysDialog(App.getFrame(), Local.getString("New Free Day"));
-
-        Dimension frmSize = App.getFrame().getSize();
-        Point loc = App.getFrame().getLocation();
-
-        dlg.dateOfEvent.getModel().setValue(CurrentDate.get().getDate());
-        
-        dlg.setLocation((frmSize.width - dlg.getSize().width) / 2 + loc.x, (frmSize.height - dlg.getSize().height) / 2 + loc.y);
-        dlg.setVisible(true);
-
-        SpecialCalendarDate freeDay = new SpecialCalendarDate(new CalendarDate((Date) dlg.dateOfEvent.getModel().getValue()), dlg.nameField.getText());
-        /**
-         * TODO
-         * Get the value for freeday and return it
-         */
-        if (dlg.CANCELLED)
-            return null;
-
-        return freeDay;
-    }
+//    SpecialCalendarDate newFreeDay_actionPerformed() {
+//        CourseSpecialDaysDialog dlg = new CourseSpecialDaysDialog(App.getFrame(), Local.getString("New Free Day"));
+//
+//        Dimension frmSize = App.getFrame().getSize();
+//        Point loc = App.getFrame().getLocation();
+//
+//        dlg.dateOfEvent.getModel().setValue(CurrentDate.get().getDate());
+//        
+//        dlg.setLocation((frmSize.width - dlg.getSize().width) / 2 + loc.x, (frmSize.height - dlg.getSize().height) / 2 + loc.y);
+//        dlg.setVisible(true);
+//
+//        SpecialCalendarDate freeDay = new SpecialCalendarDate(new CalendarDate((Date) dlg.dateOfEvent.getModel().getValue()), dlg.nameField.getText());
+//        /**
+//         * TODO
+//         * Get the value for freeday and return it
+//         */
+//        if (dlg.CANCELLED)
+//            return null;
+//
+//        return freeDay;
+//    }
     //New for holidays
-    SpecialCalendarDate newHoliday_actionPerformed() {
-        CourseSpecialDaysDialog dlg = new CourseSpecialDaysDialog(App.getFrame(), Local.getString("New Holiday"));
-
-        Dimension frmSize = App.getFrame().getSize();
-        Point loc = App.getFrame().getLocation();
-
-        dlg.dateOfEvent.getModel().setValue(CurrentDate.get().getDate());
-        
-        dlg.setLocation((frmSize.width - dlg.getSize().width) / 2 + loc.x, (frmSize.height - dlg.getSize().height) / 2 + loc.y);
-        dlg.setVisible(true);
-
-        SpecialCalendarDate holiday = new SpecialCalendarDate(new CalendarDate((Date) dlg.dateOfEvent.getModel().getValue()), dlg.nameField.getText());
-
-        if (dlg.CANCELLED)
-            return null;
-
-        return holiday;
-    }
+//    SpecialCalendarDate newHoliday_actionPerformed() {
+//        CourseSpecialDaysDialog dlg = new CourseSpecialDaysDialog(App.getFrame(), Local.getString("New Holiday"));
+//
+//        Dimension frmSize = App.getFrame().getSize();
+//        Point loc = App.getFrame().getLocation();
+//
+//        dlg.dateOfEvent.getModel().setValue(CurrentDate.get().getDate());
+//        
+//        dlg.setLocation((frmSize.width - dlg.getSize().width) / 2 + loc.x, (frmSize.height - dlg.getSize().height) / 2 + loc.y);
+//        dlg.setVisible(true);
+//
+//        SpecialCalendarDate holiday = new SpecialCalendarDate(new CalendarDate((Date) dlg.dateOfEvent.getModel().getValue()), dlg.nameField.getText());
+//
+//        if (dlg.CANCELLED)
+//            return null;
+//
+//        return holiday;
+//    }
     
     //method to calculate the effort of Lectures
-    void calcLecture_actionPerformed(ActionEvent e) {
-//        LectureCalcDialog dlg = new LectureCalcDialog(App.getFrame());
-        dlg.pack();
-        Lecture t = CurrentProject.getLectureList().getLecture(LectureTable.getModel().getValueAt(LectureTable.getSelectedRow(), LectureTable.Lecture_ID).toString());
-        
-        Dimension frmSize = App.getFrame().getSize();
-        Point loc = App.getFrame().getLocation();
-        
-        dlg.setLocation((frmSize.width - dlg.getSize().width) / 2 + loc.x, (frmSize.height - dlg.getSize().height) / 2 + loc.y);
-        dlg.setVisible(true);
-        if (dlg.CANCELLED) {
-            return;            
-        }
+//    void calcLecture_actionPerformed(ActionEvent e) {
+////        LectureCalcDialog dlg = new LectureCalcDialog(App.getFrame());
+//        dlg.pack();
+//        Lecture t = CurrentProject.getLectureList().getLecture(LectureTable.getModel().getValueAt(LectureTable.getSelectedRow(), LectureTable.Lecture_ID).toString());
 //        
+//        Dimension frmSize = App.getFrame().getSize();
+//        Point loc = App.getFrame().getLocation();
+//        
+//        dlg.setLocation((frmSize.width - dlg.getSize().width) / 2 + loc.x, (frmSize.height - dlg.getSize().height) / 2 + loc.y);
+//        dlg.setVisible(true);
+//        if (dlg.CANCELLED) {
+//            return;            
+//        }
+////        
 //        LectureList tl = CurrentProject.getLectureList();
 //        if(dlg.calcEffortChB.isSelected()) {
 //            t.setEffort(tl.calculateTotalEffortFromSubLectures(t));
@@ -585,27 +589,27 @@ public class LecturePanel extends JPanel {
     }
 
 
-    void parentLecture_actionPerformed(ActionEvent e) {
-//    	String LectureId = LectureTable.getModel().getValueAt(LectureTable.getSelectedRow(), LectureTable.Lecture_ID).toString();
-//      
-//    	Lecture t = CurrentProject.getLectureList().getLecture(LectureId);
-    	/*XXX Lecture t2 = CurrentProject.getLectureList().getLecture(LectureTable.getCurrentRootLecture());
-    	
-    	String parentLectureId = t2.getParent();
-    	if((parentLectureId == null) || (parentLectureId.equals(""))) {
-    		parentLectureId = null;
-    	}
-    	LectureTable.setCurrentRootLecture(parentLectureId); 
-    	LectureTable.tableChanged();*/
-
-//      parentPanel.updateIndicators();
-//      //LectureTable.updateUI();
-  }
+//    void parentLecture_actionPerformed(ActionEvent e) {
+////    	String LectureId = LectureTable.getModel().getValueAt(LectureTable.getSelectedRow(), LectureTable.Lecture_ID).toString();
+////      
+////    	Lecture t = CurrentProject.getLectureList().getLecture(LectureId);
+//    	/*XXX Lecture t2 = CurrentProject.getLectureList().getLecture(LectureTable.getCurrentRootLecture());
+//    	
+//    	String parentLectureId = t2.getParent();
+//    	if((parentLectureId == null) || (parentLectureId.equals(""))) {
+//    		parentLectureId = null;
+//    	}
+//    	LectureTable.setCurrentRootLecture(parentLectureId); 
+//    	LectureTable.tableChanged();*/
+//
+////      parentPanel.updateIndicators();
+////      //LectureTable.updateUI();
+//  }
     
     //actions to be performed when removing a Lecture
     void removeLectureB_actionPerformed(ActionEvent e) {
         String msg;
-        String thisLectureId = LectureTable.getModel().getValueAt(LectureTable.getSelectedRow(), LectureTable.Lecture_ID).toString();
+        String thisLectureId = LectureTable.getModel().getValueAt(LectureTable.getSelectedRow(), LectureTable.LECTURE_ID).toString();
         
         if (LectureTable.getSelectedRows().length > 1)
             msg = Local.getString("Remove")+" "+LectureTable.getSelectedRows().length +" "+Local.getString("Lectures")+"?"
@@ -632,7 +636,7 @@ public class LecturePanel extends JPanel {
         for (int i = 0; i < LectureTable.getSelectedRows().length; i++) {
             Lecture t =
             CurrentProject.getLectureList().getLecture(
-                LectureTable.getModel().getValueAt(LectureTable.getSelectedRows()[i], LectureTable.Lecture_ID).toString());
+                LectureTable.getModel().getValueAt(LectureTable.getSelectedRows()[i], LectureTable.LECTURE_ID).toString());
             if (t != null)
                 toremove.add(t);
         }

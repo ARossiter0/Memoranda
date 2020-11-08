@@ -17,31 +17,11 @@ import main.java.memoranda.date.CalendarDate;
 public interface LectureList {
 
 	Project getProject();
-    Task getTask(String id);
+    Lecture getLecture(String id);
 
-    Task createTask(CalendarDate startDate, CalendarDate endDate, String text, int priority, long effort, String description, String parentTaskId);
-
-    //New for US90
-    Task createLectureTask(String day, int hour, int min, String text);
-    Task createSingleEventTask(String name, CalendarDate date, String text);
+    Lecture createLecture(CalendarDate date, CalendarDate startTime, CalendarDate endTime, String topic);
     
-    void removeTask(Task task);
-
-    public boolean hasSubTasks(String id);
-    
-	public boolean hasParentTask(String id);
-
-	public Collection getTopLevelTasks();
-	
-    public Collection getAllSubTasks(String taskId);
-    public Collection getActiveSubTasks(String taskId,CalendarDate date);
-    
-//    public void adjustParentTasks(Task t);
-    
-    public long calculateTotalEffortFromSubTasks(Task t);
-    public CalendarDate getLatestEndDateFromSubTasks(Task t);
-    public CalendarDate getEarliestStartDateFromSubTasks(Task t);
-    public long[] calculateCompletionFromSubTasks(Task t);
+    void removeLecture(Task task);
 
     nu.xom.Document getXMLContent();
 
