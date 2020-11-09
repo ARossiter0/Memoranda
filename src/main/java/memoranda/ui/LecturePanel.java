@@ -461,12 +461,13 @@ public class LecturePanel extends JPanel {
         String topic = dlg.lecTopicField.getText();
         CalendarDate date = new CalendarDate((Date) dlg.dateSpin.getModel().getValue());
         CalendarDate startTime = new CalendarDate((Date) dlg.startTimeSpin.getModel().getValue());
+        startTime.
         CalendarDate endTime = new CalendarDate((Date) dlg.endTimeSpin.getModel().getValue());
         CurrentProject.getLectureList().createLecture(date, startTime, endTime, topic);
         CurrentStorage.get().storeLectureList(CurrentProject.getLectureList(), CurrentProject.get());
 //        LectureTable.tableChanged();
 //        parentPanel.updateIndicators();
-        //LectureTable.updateUI();
+        LectureTable.initTable();
     }
 
     
