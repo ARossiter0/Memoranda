@@ -46,6 +46,7 @@ public class LectureListImpl implements LectureList {
         _doc = doc;
         _root = _doc.getRootElement();
         _project = prj;
+        buildElements(_root);
     }
     
     public LectureListImpl(Project prj) {            
@@ -96,8 +97,7 @@ public class LectureListImpl implements LectureList {
         return v;
 	}
 
-	@Override
-	public void removeLecture(Lecture lecture) {
+	public static void removeLecture(Lecture lecture) {
 		ParentNode parent = lecture.getContent().getParent();
 		parent.removeChild(lecture.getContent());
 	}

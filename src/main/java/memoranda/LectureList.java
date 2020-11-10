@@ -24,6 +24,5 @@ public interface LectureList {
 
     nu.xom.Document getXMLContent();
 	Vector getAllLectures();
-	void removeLecture(Lecture lecture);
 
 }

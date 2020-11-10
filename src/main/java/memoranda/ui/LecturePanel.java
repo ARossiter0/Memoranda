@@ -27,6 +27,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import main.java.memoranda.CurrentProject;
+import main.java.memoranda.EventsManager;
 import main.java.memoranda.History;
 import main.java.memoranda.NoteList;
 import main.java.memoranda.Project;
@@ -138,11 +139,11 @@ public class LecturePanel extends JPanel {
         //remove Lecture button setup and action
         removeLectureB.setBorderPainted(false);
         removeLectureB.setFocusable(false);
-//        removeLectureB.addActionListener(new java.awt.event.ActionListener() {
-//            public void actionPerformed(ActionEvent e) {
-//                removeLectureB_actionPerformed(e);
-//            }
-//        });
+        removeLectureB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                removeLectureB_actionPerformed(e);
+            }
+        });
         removeLectureB.setPreferredSize(new Dimension(24, 24));
         removeLectureB.setRequestFocusEnabled(false);
         removeLectureB.setToolTipText(Local.getString("Remove lecture"));
@@ -311,40 +312,15 @@ public class LecturePanel extends JPanel {
 			}
         });
         //upon selection of a Lecture or a sub Lecture, emable edit and remove Lecture buttons
-//        LectureTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-//            public void valueChanged(ListSelectionEvent e) {
-//                boolean enbl = (LectureTable.getRowCount() > 0)&&(LectureTable.getSelectedRow() > -1);
-//                editLectureB.setEnabled(enbl);ppEditLecture.setEnabled(enbl);
-//                removeLectureB.setEnabled(enbl);ppRemoveLecture.setEnabled(enbl);
-//				
-//				ppCompleteLecture.setEnabled(enbl);
-//				ppAddSubLecture.setEnabled(enbl);
-//				//ppSubLectures.setEnabled(enbl); // default value to be over-written later depending on whether it has sub Lectures
-//				ppCalcLecture.setEnabled(enbl); // default value to be over-written later depending on whether it has sub Lectures
-//				
-//				/*if (LectureTable.getCurrentRootLecture() == null) {
-//					ppParentLecture.setEnabled(false);
-//				}
-//				else {
-//					ppParentLecture.setEnabled(true);
-//				}XXX*/
-//				
-//                if (enbl) {   
-//    				String thisLectureId = LectureTable.getModel().getValueAt(LectureTable.getSelectedRow(), LectureTable.Lecture_ID).toString();
-//    				
-//    				boolean hasSubLectures = CurrentProject.getLectureList().hasSubLectures(thisLectureId);
-//    				//ppSubLectures.setEnabled(hasSubLectures);
-//    				ppCalcLecture.setEnabled(hasSubLectures);
-//    				Lecture t = CurrentProject.getLectureList().getLecture(thisLectureId);
-//                    parentPanel.calendar.jnCalendar.renderer.setLecture(t);
-//                    parentPanel.calendar.jnCalendar.updateUI();
-//                }    
-//                else {
-//                    parentPanel.calendar.jnCalendar.renderer.setLecture(null);
-//                    parentPanel.calendar.jnCalendar.updateUI();
-//                }
-//            }
-//        });
+        LectureTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent e) {
+                boolean enbl = LectureTable.getSelectedRow() > -1;
+                editLectureB.setEnabled(enbl);
+                ppEditLecture.setEnabled(enbl);
+                removeLectureB.setEnabled(enbl);
+                ppRemoveLecture.setEnabled(enbl);
+            }
+        });
         
         //set enables for options that are not valud when there are no Lectures or no Lectures are selected
         editLectureB.setEnabled(false);
@@ -478,7 +454,7 @@ public class LecturePanel extends JPanel {
         CurrentStorage.get().storeLectureList(CurrentProject.getLectureList(), CurrentProject.get());
 //        LectureTable.tableChanged();
 //        parentPanel.updateIndicators();
-        LectureTable.initTable();
+        LectureTable.refresh();
     }
 
     
@@ -616,40 +592,37 @@ public class LecturePanel extends JPanel {
     
     //actions to be performed when removing a Lecture
     void removeLectureB_actionPerformed(ActionEvent e) {
-        String msg;
-        String thisLectureId = LectureTable.getModel().getValueAt(LectureTable.getSelectedRow(), LectureTable.LECTURE_ID).toString();
-        
-        if (LectureTable.getSelectedRows().length > 1)
-            msg = Local.getString("Remove")+" "+LectureTable.getSelectedRows().length +" "+Local.getString("Lectures")+"?"
-             + "\n"+Local.getString("Are you sure?");
-        else {        	
-        	Lecture l = CurrentProject.getLectureList().getLecture(thisLectureId);
-        	// check if there are subLectures
-        	msg = Local.getString("Remove lecture")+"\n'" + l.getTopic() + "\n"+Local.getString("Are you sure?");
-        }
+    	String msg;
+		main.java.memoranda.Lecture le;
+
+		if(LectureTable.getSelectedRows().length > 1) 
+			msg = Local.getString("Remove") + " " + LectureTable.getSelectedRows().length 
+				+ " " + Local.getString("lectures") + "\n" + Local.getString("Are you sure?");
+		else {
+			le = (main.java.memoranda.Lecture) LectureTable.getModel().getValueAt(
+					LectureTable.getSelectedRow(),
+					LectureTable.LECTURE);
+			msg = Local.getString("Remove lecture") + "\n'" 
+				+ le.getTopic() + "'\n" + Local.getString("Are you sure?");
+		}
+
         int n =
             JOptionPane.showConfirmDialog(
                 App.getFrame(),
                 msg,
                 Local.getString("Remove lecture"),
                 JOptionPane.YES_NO_OPTION);
-        if (n != JOptionPane.YES_OPTION)
-            return;
-        Vector toremove = new Vector();
-        for (int i = 0; i < LectureTable.getSelectedRows().length; i++) {
-            Lecture t =
-            CurrentProject.getLectureList().getLecture(
-                LectureTable.getModel().getValueAt(LectureTable.getSelectedRows()[i], LectureTable.LECTURE_ID).toString());
-            if (t != null)
-                toremove.add(t);
-        }
-        for (int i = 0; i < toremove.size(); i++) {
-            CurrentProject.getLectureList().removeLecture((Lecture)toremove.get(i));
-        }
-        CurrentStorage.get().storeLectureList(CurrentProject.getLectureList(), CurrentProject.get());
-        LectureTable.updateUI();
+        if (n != JOptionPane.YES_OPTION) return;
 
-    }
+        for(int i=0; i< LectureTable.getSelectedRows().length;i++) {
+			le = (main.java.memoranda.Lecture) LectureTable.getModel().getValueAt(
+					LectureTable.getSelectedRows()[i], EventsTable.EVENT);
+			main.java.memoranda.LectureListImpl.removeLecture(le);
+		}
+        LectureTable.getSelectionModel().clearSelection();
+        CurrentStorage.get().storeLectureList(CurrentProject.getLectureList(), CurrentProject.get());
+        LectureTable.refresh();
+  }
 
     class PopupListener extends MouseAdapter {
 
