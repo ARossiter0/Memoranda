@@ -36,6 +36,7 @@ public class WorkPanel extends JPanel {
 	public ResourcesPanel filesPanel = new ResourcesPanel();
 	public JButton coursesB = new JButton();
 	public JButton assignmentsB = new JButton();
+	public JButton studentsB = new JButton();
 	public JButton instructorTasksB = new JButton();
 	public JButton tagraderTasksB = new JButton();
 	public JButton lecturesB = new JButton();
@@ -150,6 +151,33 @@ public class WorkPanel extends JPanel {
 		assignmentsB.setMaximumSize(new Dimension(60, 80));
 		assignmentsB.setBackground(Color.white);
 		
+		
+		
+		// Students button
+				studentsB.setSelected(true);
+				studentsB.setFont(new java.awt.Font("Dialog", 1, 10));
+				studentsB.setMargin(new Insets(0, 0, 0, 0));	
+				studentsB.setIcon(
+					new ImageIcon(
+						main.java.memoranda.ui.AppFrame.class.getResource(
+							"/ui/icons/tasks.png")));
+				studentsB.setVerticalTextPosition(SwingConstants.BOTTOM);
+				studentsB.addActionListener(new java.awt.event.ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						studentsB_actionPerformed(e);
+					}
+				});
+				studentsB.setVerticalAlignment(SwingConstants.TOP);
+				studentsB.setText(Local.getString("Students")); /***/
+				studentsB.setHorizontalTextPosition(SwingConstants.CENTER);
+				studentsB.setFocusPainted(false);
+				studentsB.setBorderPainted(false);
+				studentsB.setContentAreaFilled(false);
+				studentsB.setPreferredSize(new Dimension(50, 50));
+				studentsB.setMinimumSize(new Dimension(30, 30));
+				studentsB.setOpaque(false);
+				studentsB.setMaximumSize(new Dimension(60, 80));
+				studentsB.setBackground(Color.white);
 		
 		// Instructor Tasks button
 		instructorTasksB.setSelected(true);
@@ -270,6 +298,7 @@ public class WorkPanel extends JPanel {
 		toolBar.add(assignmentsB, null);
 		toolBar.add(instructorTasksB, null);
 		toolBar.add(tagraderTasksB, null);
+		toolBar.add(studentsB, null);
 		toolBar.add(notesB, null);
 		toolBar.add(filesB, null);
 		currentB = coursesB;
@@ -294,6 +323,8 @@ public class WorkPanel extends JPanel {
 				eventsB_actionPerformed(null);
 			else if (pan.equals("FILES"))
 				filesB_actionPerformed(null);
+			else if (pan.contentEquals("STUDENTS"))
+				studentsB_actionPerformed(null);
 		}
 	}
 
@@ -323,6 +354,13 @@ public class WorkPanel extends JPanel {
 		dailyItemsPanel.selectPanel("LECTURES");
 		setCurrentButton(lecturesB);
 		Context.put("CURRENT_PANEL", "LECTURES");
+	}
+		
+	public void studentsB_actionPerformed(ActionEvent e) {
+		cardLayout1.show(panel, "DAILYITEMS");
+		dailyItemsPanel.selectPanel("STUDENTS");
+		setCurrentButton(studentsB);
+		Context.put("CURRENT_PANEL", "STUDENTS");
 	}
 	
 	public void instructorTasksB_actionPerformed(ActionEvent e) {

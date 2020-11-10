@@ -63,6 +63,7 @@ public class DailyItemsPanel extends JPanel {
     JLabel currentDateLabel = new JLabel();
     BorderLayout borderLayout4 = new BorderLayout();
     TaskPanel tasksPanel = new TaskPanel(this);
+    TaskPanel studentsPanel = new TaskPanel(this);
     EventsPanel eventsPanel = new EventsPanel(this);
     AgendaPanel agendaPanel = new AgendaPanel(this);
     LecturePanel lecturesPanel = new LecturePanel(this);
@@ -208,6 +209,7 @@ public class DailyItemsPanel extends JPanel {
         editorsPanel.add(lecturesPanel, "LECTURES");
         editorsPanel.add(eventsPanel, "EVENTS");
         editorsPanel.add(tasksPanel, "TASKS");
+        editorsPanel.add(studentsPanel, "STUDENTS");
         editorsPanel.add(editorPanel, "NOTES");
         
         splitPane.add(mainPanel, JSplitPane.RIGHT);
