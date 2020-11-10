@@ -222,11 +222,11 @@ public class LecturePanel extends JPanel {
     // remove Lecture button and action to be called upon clicking
     ppRemoveLecture.setFont(new java.awt.Font("Dialog", 1, 11));
     ppRemoveLecture.setText(Local.getString("Remove lecture"));
-    ppRemoveLecture.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                ppRemoveLecture_actionPerformed(e);
-            }
-        });
+//    ppRemoveLecture.addActionListener(new java.awt.event.ActionListener() {
+//            public void actionPerformed(ActionEvent e) {
+//                ppRemoveLecture_actionPerformed(e);
+//            }
+//        });
     ppRemoveLecture.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/event_remove.png")));
     ppRemoveLecture.setEnabled(false);
     ppNewLecture.setFont(new java.awt.Font("Dialog", 1, 11));
@@ -449,21 +449,32 @@ public class LecturePanel extends JPanel {
         
         Dimension frmSize = App.getFrame().getSize();
         Point loc = App.getFrame().getLocation();
+        
+        Calendar cdate = CurrentDate.get().getCalendar();
+        cdate.set(Calendar.MINUTE,0);
 
-//        dlg.startDate.getModel().setValue(CurrentDate.get().getDate());
-//        dlg.endDate.getModel().setValue(CurrentDate.get().getDate());
+        dlg.startTimeSpin.getModel().setValue(cdate.getTime());
+        dlg.endTimeSpin.getModel().setValue(cdate.getTime());
         dlg.setLocation((frmSize.width - dlg.getSize().width) / 2 + loc.x, (frmSize.height - dlg.getSize().height) / 2 + loc.y);
         dlg.setVisible(true);
 
         if (dlg.CANCELLED)
             return;
+        
 
         String topic = dlg.lecTopicField.getText();
         CalendarDate date = new CalendarDate((Date) dlg.dateSpin.getModel().getValue());
-        CalendarDate startTime = new CalendarDate((Date) dlg.startTimeSpin.getModel().getValue());
-        startTime.
+        
+        Calendar calendar = new GregorianCalendar(Local.getCurrentLocale());
+    	calendar.setTime(((Date)dlg.startTimeSpin.getModel().getValue()));
+    	
+    	int starthh = calendar.get(Calendar.HOUR_OF_DAY);
+    	int startmm = calendar.get(Calendar.MINUTE);
+    	calendar.setTime(((Date)dlg.endTimeSpin.getModel().getValue()));
+    	int endhh = calendar.get(Calendar.HOUR_OF_DAY);
+    	int endmm = calendar.get(Calendar.MINUTE);
         CalendarDate endTime = new CalendarDate((Date) dlg.endTimeSpin.getModel().getValue());
-        CurrentProject.getLectureList().createLecture(date, startTime, endTime, topic);
+        CurrentProject.getLectureList().createLecture(date, starthh, startmm, endhh, endmm, topic);
         CurrentStorage.get().storeLectureList(CurrentProject.getLectureList(), CurrentProject.get());
 //        LectureTable.tableChanged();
 //        parentPanel.updateIndicators();
@@ -604,48 +615,41 @@ public class LecturePanel extends JPanel {
 //  }
     
     //actions to be performed when removing a Lecture
-//    void removeLectureB_actionPerformed(ActionEvent e) {
-//        String msg;
-//        String thisLectureId = LectureTable.getModel().getValueAt(LectureTable.getSelectedRow(), LectureTable.LECTURE_ID).toString();
-//        
-//        if (LectureTable.getSelectedRows().length > 1)
-//            msg = Local.getString("Remove")+" "+LectureTable.getSelectedRows().length +" "+Local.getString("Lectures")+"?"
-//             + "\n"+Local.getString("Are you sure?");
-//        else {        	
-//        	Lecture t = CurrentProject.getLectureList().getLecture(thisLectureId);
-//        	// check if there are subLectures
-//			if(CurrentProject.getLectureList().hasSubLectures(thisLectureId)) {
-//				msg = Local.getString("Remove lecture")+"\n'" + t.getText() + "\n"+Local.getString("Are you sure?");
-//			}
-//			else {		            
-//				msg = Local.getString("Remove lecture")+"\n'" + t.getText() + "'\n"+Local.getString("Are you sure?");
-//			}
-//        }
-//        int n =
-//            JOptionPane.showConfirmDialog(
-//                App.getFrame(),
-//                msg,
-//                Local.getString("Remove lecture"),
-//                JOptionPane.YES_NO_OPTION);
-//        if (n != JOptionPane.YES_OPTION)
-//            return;
-//        Vector toremove = new Vector();
-//        for (int i = 0; i < LectureTable.getSelectedRows().length; i++) {
-//            Lecture t =
-//            CurrentProject.getLectureList().getLecture(
-//                LectureTable.getModel().getValueAt(LectureTable.getSelectedRows()[i], LectureTable.LECTURE_ID).toString());
-//            if (t != null)
-//                toremove.add(t);
-//        }
-//        for (int i = 0; i < toremove.size(); i++) {
-//            CurrentProject.getLectureList().removeLecture((Lecture)toremove.get(i));
-//        }
-//        LectureTable.tableChanged();
-//        CurrentStorage.get().storeLectureList(CurrentProject.getLectureList(), CurrentProject.get());
-//        parentPanel.updateIndicators();
-//        //LectureTable.updateUI();
-//
-//    }
+    void removeLectureB_actionPerformed(ActionEvent e) {
+        String msg;
+        String thisLectureId = LectureTable.getModel().getValueAt(LectureTable.getSelectedRow(), LectureTable.LECTURE_ID).toString();
+        
+        if (LectureTable.getSelectedRows().length > 1)
+            msg = Local.getString("Remove")+" "+LectureTable.getSelectedRows().length +" "+Local.getString("Lectures")+"?"
+             + "\n"+Local.getString("Are you sure?");
+        else {        	
+        	Lecture l = CurrentProject.getLectureList().getLecture(thisLectureId);
+        	// check if there are subLectures
+        	msg = Local.getString("Remove lecture")+"\n'" + l.getTopic() + "\n"+Local.getString("Are you sure?");
+        }
+        int n =
+            JOptionPane.showConfirmDialog(
+                App.getFrame(),
+                msg,
+                Local.getString("Remove lecture"),
+                JOptionPane.YES_NO_OPTION);
+        if (n != JOptionPane.YES_OPTION)
+            return;
+        Vector toremove = new Vector();
+        for (int i = 0; i < LectureTable.getSelectedRows().length; i++) {
+            Lecture t =
+            CurrentProject.getLectureList().getLecture(
+                LectureTable.getModel().getValueAt(LectureTable.getSelectedRows()[i], LectureTable.LECTURE_ID).toString());
+            if (t != null)
+                toremove.add(t);
+        }
+        for (int i = 0; i < toremove.size(); i++) {
+            CurrentProject.getLectureList().removeLecture((Lecture)toremove.get(i));
+        }
+        CurrentStorage.get().storeLectureList(CurrentProject.getLectureList(), CurrentProject.get());
+        LectureTable.updateUI();
+
+    }
 
     class PopupListener extends MouseAdapter {
 

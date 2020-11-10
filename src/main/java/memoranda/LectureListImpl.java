@@ -24,6 +24,7 @@ import nu.xom.Nodes;
 //import nu.xom.converters.*;
 //import org.apache.xerces.dom.*;
 //import nux.xom.xquery.XQueryUtil;
+import nu.xom.ParentNode;
 
 /**
  * 
@@ -34,6 +35,8 @@ public class LectureListImpl implements LectureList {
     private Project _project = null;
     private Document _doc = null;
     private Element _root = null;
+    
+    private Hashtable elements = new Hashtable();
 	
     
     /**
@@ -51,16 +54,30 @@ public class LectureListImpl implements LectureList {
             _project = prj;
     }
     
+	/*
+	 * Build the hashtable recursively
+	 */
+	private void buildElements(Element parent) {
+		Elements els = parent.getChildElements("lecture");
+		for (int i = 0; i < els.size(); i++) {
+			Element el = els.get(i);
+			elements.put(el.getAttribute("id").getValue(), el);
+			buildElements(el);
+        }
+	}
+    
 	public Project getProject() {
 		return _project;
 	}
 
 
-    public Lecture createLecture(CalendarDate date, CalendarDate startTime, CalendarDate endTime, String topic) {
+    public Lecture createLecture(CalendarDate date, int starthh, int startmm, int endhh, int endmm, String topic) {
         Element el = new Element("lecture");
         el.addAttribute(new Attribute("date", date.toString()));
-        el.addAttribute(new Attribute("startTime", startTime.toString()));
-        el.addAttribute(new Attribute("endTime", endTime.toString()));
+        el.addAttribute(new Attribute("startHour", String.valueOf(starthh)));
+        el.addAttribute(new Attribute("startMin", String.valueOf(startmm)));
+        el.addAttribute(new Attribute("endHour", String.valueOf(endhh)));
+        el.addAttribute(new Attribute("endMin", String.valueOf(endmm)));
         el.addAttribute(new Attribute("topic", topic));
 		String id = Util.generateId();
         el.addAttribute(new Attribute("id", id));
@@ -80,9 +97,9 @@ public class LectureListImpl implements LectureList {
 	}
 
 	@Override
-	public void removeLecture(Task task) {
-		// TODO Auto-generated method stub
-		
+	public void removeLecture(Lecture lecture) {
+		ParentNode parent = lecture.getContent().getParent();
+		parent.removeChild(lecture.getContent());
 	}
 
 	@Override
@@ -92,8 +109,15 @@ public class LectureListImpl implements LectureList {
 
 	@Override
 	public Lecture getLecture(String id) {
-		// TODO Auto-generated method stub
-		return null;
+		return new LectureImpl(getLectureElement(id), this._project); 
+	}
+
+	private Element getLectureElement(String id) {
+		Element el = (Element)elements.get(id);
+		if (el == null) {
+			Util.debug("Task " + id + " cannot be found in project " + _project.getTitle());
+		}
+		return el;
 	}
 
  

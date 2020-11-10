@@ -539,7 +539,7 @@ public class TaskPanel extends JPanel {
     
 
 
-    //New for add lecture times
+  //New for add lecture times
     LectureTime newLectureTime_actionPerformed() {
         LectureDialog dlg = new LectureDialog(App.getFrame(), Local.getString("New Lecture Time"));
         

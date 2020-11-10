@@ -20,11 +20,10 @@ public interface LectureList {
 	Project getProject();
     Lecture getLecture(String id);
 
-    Lecture createLecture(CalendarDate date, CalendarDate startTime, CalendarDate endTime, String topic);
-    
-    void removeLecture(Task task);
+    Lecture createLecture(CalendarDate date, int starthh, int startmm, int endhh, int endmm, String topic);
 
     nu.xom.Document getXMLContent();
 	Vector getAllLectures();
+	void removeLecture(Lecture lecture);
 
 }

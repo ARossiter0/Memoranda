@@ -64,12 +64,12 @@ public class LectureTable extends JTable {
 
     public void initTable() {
         lectures = CurrentProject.getLectureList().getAllLectures();
-        getColumnModel().getColumn(1).setPreferredWidth(60);
-        getColumnModel().getColumn(1).setMaxWidth(60);
-        getColumnModel().getColumn(2).setPreferredWidth(60);
-        getColumnModel().getColumn(2).setMaxWidth(60);
-        getColumnModel().getColumn(3).setPreferredWidth(60);
-        getColumnModel().getColumn(3).setMaxWidth(60);
+        getColumnModel().getColumn(1).setPreferredWidth(80);
+        getColumnModel().getColumn(1).setMaxWidth(80);
+        getColumnModel().getColumn(2).setPreferredWidth(80);
+        getColumnModel().getColumn(2).setMaxWidth(80);
+        getColumnModel().getColumn(3).setPreferredWidth(80);
+        getColumnModel().getColumn(3).setMaxWidth(80);
 	clearSelection();
         updateUI();
     }
@@ -132,11 +132,11 @@ public class LectureTable extends JTable {
                 //return ev.getHour()+":"+ev.getMinute();
                 return le.getTopic();
            else if (col == 1)
-                return le.getDate();
+                return le.getDate().getMediumDateString();
            else if (col == 2)
-        	   return le.getStartTime();
+        	   return le.getStartTimeString();
            else if (col == 3)
-        	   return le.getEndTime();
+        	   return le.getEndTimeString();
            else if (col == LECTURE_ID)
                 return le.getID();
            else return le;

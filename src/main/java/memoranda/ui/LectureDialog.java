@@ -178,11 +178,9 @@ public class LectureDialog extends JDialog {
         
         
         startTimeSpin.setPreferredSize(new Dimension(80, 20));
-        SimpleDateFormat sdf2 = new SimpleDateFormat("hh:mm aa");
-		startTimeSpin.setEditor(new JSpinner.DateEditor(startTimeSpin, sdf2.toPattern()));
         
         endTimeSpin.setPreferredSize(new Dimension(80, 20));
-        endTimeSpin.setEditor(new JSpinner.DateEditor(endTimeSpin, sdf2.toPattern()));
+        
 
         getContentPane().add(mPanel);
 
@@ -243,6 +241,7 @@ public class LectureDialog extends JDialog {
         gbc.insets = new Insets(0, 10, 5, 0);
         gbc.anchor = GridBagConstraints.CENTER;
         jPanel1.add(startTimeSpin, gbc);
+        ((JSpinner.DateEditor) startTimeSpin.getEditor()).getFormat().applyPattern("hh:mm aa");
         
         gbc = new GridBagConstraints();
         gbc.gridwidth = 5;
@@ -259,17 +258,8 @@ public class LectureDialog extends JDialog {
         gbc.insets = new Insets(0, 10, 5, 0);
         gbc.anchor = GridBagConstraints.CENTER;
         jPanel1.add(endTimeSpin, gbc);
+        ((JSpinner.DateEditor) endTimeSpin.getEditor()).getFormat().applyPattern("hh:mm aa");
         
-//        jPanel1.add(timePanel, null);
-//        jPanel1.add(dayPanel, null);
-        
-//        topicPanel.add(topicLabel, null);
-//        topicPanel.add(lecTopicField, null);
-
-//        datePanel.add(dateLabel, null);
-//        datePanel.add(dateSpin, null);
-//
-//        startTimePanel.add(startTimeLabel, null);
         
     }	
     void okB_actionPerformed(ActionEvent e) {

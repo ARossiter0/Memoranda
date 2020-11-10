@@ -13,6 +13,7 @@ import java.util.Vector;
 
 import main.java.memoranda.date.CalendarDate;
 import main.java.memoranda.date.CurrentDate;
+import main.java.memoranda.util.Local;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -50,35 +51,18 @@ public class LectureImpl implements Lecture, Comparable {
 	}
 
 	@Override
-	public String getDate() {
-		return _element.getAttribute("date").getValue();
-	}
+	public CalendarDate getDate() {
+        if (_element.getAttribute("date") != null) {
+            return new CalendarDate(_element.getAttribute("date").getValue());
+        } else {
+            return new CalendarDate((Date) CurrentDate.get().getDate());
+        }
+    }
 
 	@Override
 	public void setDate(String date) {
 		_element.getAttribute("date").setValue(date);
 	}
-
-	@Override
-	public String getStartTime() {
-		return _element.getAttribute("startTime").getValue();
-	}
-
-	@Override
-	public void setStartTime(String date) {
-		_element.getAttribute("startTime").setValue(date);
-	}
-
-	@Override
-	public String getEndTime() {
-		return _element.getAttribute("endTime").getValue();
-	}
-
-	@Override
-	public void setEndTime(String date) {
-		_element.getAttribute("endTime").setValue(date);
-	}
-
 
 	@Override
 	public Element getContent() {
@@ -97,5 +81,34 @@ public class LectureImpl implements Lecture, Comparable {
 		return 0;
 	}
 
+	@Override
+	public String getStartTimeString() {
+		return Local.getTimeString(getStartHour(), getStartMin());
+	}
+
+	@Override
+	public int getStartHour() {
+		return new Integer(_element.getAttribute("startHour").getValue()).intValue();
+	}
+
+	@Override
+	public int getStartMin() {
+		return new Integer(_element.getAttribute("startMin").getValue()).intValue();
+	}
+	
+	@Override
+	public String getEndTimeString() {
+		return Local.getTimeString(getEndHour(), getEndMin());
+	}
+
+	@Override
+	public int getEndHour() {
+		return new Integer(_element.getAttribute("endHour").getValue()).intValue();
+	}
+
+	@Override
+	public int getEndMin() {
+		return new Integer(_element.getAttribute("endMin").getValue()).intValue();
+	}
 	
 }

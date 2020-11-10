@@ -21,14 +21,17 @@ public interface Lecture {
     String getTopic();
     void setTopic(String topic);
     
-    String getDate();
+    CalendarDate getDate();
     void setDate(String date);
     
-    String getStartTime();
-    void setStartTime(String date);
-
-    String getEndTime();
-    void setEndTime(String date);
+    String getStartTimeString();
+    int getStartHour();
+    int getStartMin();
+    
+    String getEndTimeString();
+    int getEndHour();
+    int getEndMin();
+    
     
     String getID();
     
