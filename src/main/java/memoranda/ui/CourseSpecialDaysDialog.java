@@ -29,7 +29,6 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerDateModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
-//import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
@@ -57,13 +56,15 @@ public class CourseSpecialDaysDialog extends JDialog {
     Border border8;
 
     JPanel dialogTitlePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-    JPanel jPanel1 = new JPanel(new GridLayout(2,1));
+    JPanel jPanel1 = new JPanel(new GridLayout(3,1));
     JPanel jPanel2 = new JPanel(new FlowLayout(FlowLayout.LEFT)); //Time panel
     JPanel jPanel3 = new JPanel(new FlowLayout(FlowLayout.LEFT)); //Day panel 
+    JPanel jPanel3 = new JPanel(new FlowLayout(FlowLayout.LEFT)); //Repetition panel
 
     JLabel header = new JLabel();
     JLabel dateLabel = new JLabel();
     JLabel nameLabel = new JLabel();
+    JLabel repeatLabel = new JLabel();
 
     //name
     JTextField nameField = new JTextField();
@@ -130,6 +131,9 @@ public class CourseSpecialDaysDialog extends JDialog {
         header.setForeground(new Color(0, 0, 124));
         header.setText(Local.getString("Event Name and Date"));
         header.setIcon(new ImageIcon(main.java.memoranda.ui.TaskDialog.class.getResource("/ui/icons/task48.png")));
+
+        //Repetion panel formation
+
     				
         dateLabel.setMaximumSize(new Dimension(100, 16));
         dateLabel.setMinimumSize(new Dimension(60, 16));
@@ -164,12 +168,15 @@ public class CourseSpecialDaysDialog extends JDialog {
 
         jPanel1.add(jPanel2, null);
         jPanel1.add(jPanel3, null);
+        jPanel1.add(jPanel4, null); //New sub panel for repetition
 
         jPanel2.add(nameLabel, null);
         jPanel2.add(nameField, null);
 
         jPanel3.add(dateLabel, null);
         jPanel3.add(dateOfEvent, null);
+
+
         
     }	
     void okB_actionPerformed(ActionEvent e) {

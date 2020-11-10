@@ -606,6 +606,26 @@ public class TaskPanel extends JPanel {
 
         return holiday;
     }
+
+    //New for breaks
+    SpecialCalendarDate newBreak_actionPerformed() {
+        CourseSpecialDaysDialog dlg = new CourseSpecialDaysDialog(App.getFrame(), Local.getString("New Break"));
+
+        Dimension frmSize = App.getFrame().getSize();
+        Point loc = App.getFrame().getLocation();
+
+        dlg.dateOfEvent.getModel().setValue(CurrentDate.get().getDate());
+        
+        dlg.setLocation((frmSize.width - dlg.getSize().width) / 2 + loc.x, (frmSize.height - dlg.getSize().height) / 2 + loc.y);
+        dlg.setVisible(true);
+
+        SpecialCalendarDate courseBreak = new SpecialCalendarDate(new CalendarDate((Date) dlg.dateOfEvent.getModel().getValue()), dlg.nameField.getText());
+
+        if (dlg.CANCELLED)
+            return null;
+
+        return courseBreak;
+    }
   
     //defines actions to be performed when a new sub task is added
     void addSubTask_actionPerformed(ActionEvent e) {
