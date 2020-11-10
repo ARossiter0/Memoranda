@@ -109,7 +109,6 @@ public class CurrentProject {
      * @param project the project to be made current
      */
     public static void set(Project project) {
-        System.out.println("Setcalled");
         if (project.getID().equals(_project.getID())) return;
         TaskList newtasklist = CurrentStorage.get().openTaskList(project);
         NoteList newnotelist = CurrentStorage.get().openNoteList(project);
@@ -186,6 +185,8 @@ public class CurrentProject {
 
     /**
      * A way to update all listeners without calling set.
+     * Calling this will make the main adgenda page respond to changes, given they
+     * are exposed properly to some listener.
      * A hack, but a useful hack.
      */
     public static void updateAllListeners() {

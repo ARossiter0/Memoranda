@@ -171,7 +171,7 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 					"/ui/icons/editproject.png")));
 		ppProperties.setEnabled(false);
 		ppDeleteProject.setFont(new java.awt.Font("Dialog", 1, 11));
-		ppDeleteProject.setText(Local.getString("Delete project"));
+		ppDeleteProject.setText(Local.getString("Delete course"));
 		ppDeleteProject.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ppDeleteProject_actionPerformed(e);
@@ -319,7 +319,6 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 	void toggleButton_actionPerformed(ActionEvent e) {
 		for (int i = 0; i < expListeners.size(); i++) {
 			((ActionListener) expListeners.get(i)).actionPerformed(new ActionEvent(this, 0, "Panel expanded (collapsed)"));
-			System.out.println("I CLICK ON THE TITLE");
 		}
 		if (expanded) {
 			expanded = false;
@@ -405,6 +404,7 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 		prjTablePanel.projectsTable.clearSelection();
 		prjTablePanel.updateUI();
 		setMenuEnabled(false);
+		CurrentProject.updateAllListeners();
 	}
 
 	void ppProperties_actionPerformed(ActionEvent e) {
