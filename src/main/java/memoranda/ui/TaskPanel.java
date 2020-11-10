@@ -455,6 +455,7 @@ public class TaskPanel extends JPanel {
 		});	
 
     }
+
     //defines actions to be performed when the edit task button is clicked
     void editTaskB_actionPerformed(ActionEvent e) {
         Task t =
