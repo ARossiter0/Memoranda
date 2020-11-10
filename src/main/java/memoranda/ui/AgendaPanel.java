@@ -125,17 +125,19 @@ public class AgendaPanel extends JPanel {
 							EventsManager.createSticker(txt, sP);
 							CurrentStorage.get().storeEventsManager();
 						}
-						refresh(CurrentDate.get());
+
 						System.out.println("agregué un sticker");
 					} else if (d.startsWith("memoranda:expandsubtasks")) {
 						String id = d.split("#")[1];
 						gotoTask = id;
 						expandedTasks.add(id);
+
 						refresh(CurrentDate.get());
 					} else if (d.startsWith("memoranda:closesubtasks")) {
 						String id = d.split("#")[1];
 						gotoTask = id;
 						expandedTasks.remove(id);
+
 						refresh(CurrentDate.get());
 					} else if (d.startsWith("memoranda:expandsticker")) {
 						String id = d.split("#")[1];
@@ -192,6 +194,7 @@ public class AgendaPanel extends JPanel {
 							EventsManager.createSticker(txt, sP);
 							CurrentStorage.get().storeEventsManager();
 						}
+	
 						refresh(CurrentDate.get());
 					} else if (d.startsWith("memoranda:exportstickerst")) {
 						/* Need to add the export sticker in the meantime.. */
@@ -256,6 +259,9 @@ public class AgendaPanel extends JPanel {
 		CurrentProject.addProjectListener(new ProjectListener() {
 
 			public void projectChange(Project prj, NoteList nl, TaskList tl, ResourcesList rl) {
+				if (isActive)
+
+					refresh(CurrentDate.get());
 			}
 
 			public void projectWasChanged() {
@@ -266,11 +272,13 @@ public class AgendaPanel extends JPanel {
 		EventsScheduler.addListener(new EventNotificationListener() {
 			public void eventIsOccured(main.java.memoranda.Event ev) {
 				if (isActive)
+
 					refresh(CurrentDate.get());
 			}
 
 			public void eventsChanged() {
 				if (isActive)
+
 					refresh(CurrentDate.get());
 			}
 		});

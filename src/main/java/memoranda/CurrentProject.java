@@ -109,6 +109,7 @@ public class CurrentProject {
      * @param project the project to be made current
      */
     public static void set(Project project) {
+        System.out.println("Setcalled");
         if (project.getID().equals(_project.getID())) return;
         TaskList newtasklist = CurrentStorage.get().openTaskList(project);
         NoteList newnotelist = CurrentStorage.get().openNoteList(project);
@@ -181,5 +182,14 @@ public class CurrentProject {
         _tasklist = null;
         _notelist = null;
         _resources = null;
+    }
+
+    /**
+     * A way to update all listeners without calling set.
+     * A hack, but a useful hack.
+     */
+    public static void updateAllListeners() {
+        System.out.println("[DEBUG] - update all listeners called. CurrentProject.java - Line 192.\n");
+        notifyListenersAfter();
     }
 }
