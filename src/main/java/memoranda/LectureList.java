@@ -7,6 +7,7 @@
  * Copyright (c) 2003 Memoranda Team. http://memoranda.sf.net
  */
 package main.java.memoranda;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Vector;
 
@@ -20,7 +21,7 @@ public interface LectureList {
 	Project getProject();
     Lecture getLecture(String id);
 
-    Lecture createLecture(CalendarDate date, int starthh, int startmm, int endhh, int endmm, String topic);
+    Lecture createLecture(CalendarDate date, Calendar startTime, Calendar endTime, String topic);
 
     nu.xom.Document getXMLContent();
 	Vector getAllLectures();

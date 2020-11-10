@@ -8,6 +8,7 @@
  */
 package main.java.memoranda;
 
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Hashtable;
 import java.util.Iterator;
@@ -72,13 +73,13 @@ public class LectureListImpl implements LectureList {
 	}
 
 
-    public Lecture createLecture(CalendarDate date, int starthh, int startmm, int endhh, int endmm, String topic) {
+    public Lecture createLecture(CalendarDate date, Calendar startTime, Calendar endTime, String topic) {
         Element el = new Element("lecture");
         el.addAttribute(new Attribute("date", date.toString()));
-        el.addAttribute(new Attribute("startHour", String.valueOf(starthh)));
-        el.addAttribute(new Attribute("startMin", String.valueOf(startmm)));
-        el.addAttribute(new Attribute("endHour", String.valueOf(endhh)));
-        el.addAttribute(new Attribute("endMin", String.valueOf(endmm)));
+        el.addAttribute(new Attribute("startHour", String.valueOf(startTime.get(Calendar.HOUR_OF_DAY))));
+        el.addAttribute(new Attribute("startMin", String.valueOf(startTime.get(Calendar.MINUTE))));
+        el.addAttribute(new Attribute("endHour", String.valueOf(endTime.get(Calendar.HOUR_OF_DAY))));
+        el.addAttribute(new Attribute("endMin", String.valueOf(endTime.get(Calendar.MINUTE))));
         el.addAttribute(new Attribute("topic", topic));
 		String id = Util.generateId();
         el.addAttribute(new Attribute("id", id));

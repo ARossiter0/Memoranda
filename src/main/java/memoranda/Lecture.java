@@ -26,11 +26,15 @@ public interface Lecture {
     
     String getStartTimeString();
     int getStartHour();
+    void setStartHour(int hh);
     int getStartMin();
+    void setStartMin(int mm);
     
     String getEndTimeString();
     int getEndHour();
+    void setEndHour(int hh);
     int getEndMin();
+    void setEndMin(int mm);
     
     
     String getID();

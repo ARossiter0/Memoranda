@@ -38,6 +38,7 @@ import main.java.memoranda.LectureList;
 import main.java.memoranda.date.CalendarDate;
 import main.java.memoranda.date.CurrentDate;
 import main.java.memoranda.date.DateListener;
+import main.java.memoranda.util.Configuration;
 import main.java.memoranda.util.Context;
 import main.java.memoranda.util.CurrentStorage;
 import main.java.memoranda.util.Local;
@@ -293,7 +294,7 @@ public class LecturePanel extends JPanel {
         //show current date 
         CurrentDate.addDateListener(new DateListener() {
             public void dateChange(CalendarDate d) {
-                newLectureB.setEnabled(d.inPeriod(CurrentProject.get().getStartDate(), CurrentProject.get().getEndDate()));
+ //               newLectureB.setEnabled(d.inPeriod(CurrentProject.get().getStartDate(), CurrentProject.get().getEndDate()));
             }
         });
         //add a new Lecture to the current project
@@ -315,6 +316,7 @@ public class LecturePanel extends JPanel {
         LectureTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent e) {
                 boolean enbl = LectureTable.getSelectedRow() > -1;
+                
                 editLectureB.setEnabled(enbl);
                 ppEditLecture.setEnabled(enbl);
                 removeLectureB.setEnabled(enbl);
@@ -373,49 +375,49 @@ public class LecturePanel extends JPanel {
     }
     //defines actions to be performed when the edit Lecture button is clicked
     void editLectureB_actionPerformed(ActionEvent e) {
-        Lecture t =
-            CurrentProject.getLectureList().getLecture(
-                LectureTable.getModel().getValueAt(LectureTable.getSelectedRow(), LectureTable.LECTURE_ID).toString());
-        LectureDialog dlg = new LectureDialog(App.getFrame(), Local.getString("Edit lecture"));
-        Dimension frmSize = App.getFrame().getSize();
+    	Lecture le = (Lecture) LectureTable.getModel().getValueAt(LectureTable.getSelectedRow(), LectureTable.LECTURE);
+		LectureDialog dlg = new LectureDialog(App.getFrame(), Local.getString("New lecture"));
+		
+		Dimension frmSize = App.getFrame().getSize();
         Point loc = App.getFrame().getLocation();
+        
+        dlg.lecTopicField.setText(le.getTopic());
+        
+        dlg.dateSpin.getModel().setValue(CalendarDate.toDate(le.getDate().getDay(), le.getDate().getMonth(), le.getDate().getYear()));
+        
+        Calendar cdate = new GregorianCalendar();
+        cdate.set(Calendar.HOUR_OF_DAY, le.getStartHour());
+        cdate.set(Calendar.MINUTE,0);
+        dlg.startTimeSpin.getModel().setValue(cdate.getTime());
+        
+        cdate.set(Calendar.HOUR_OF_DAY, le.getEndHour());
+        dlg.endTimeSpin.getModel().setValue(cdate.getTime());
         dlg.setLocation((frmSize.width - dlg.getSize().width) / 2 + loc.x, (frmSize.height - dlg.getSize().height) / 2 + loc.y);
-//        dlg.todoField.setText(t.getText());
-//        dlg.descriptionField.setText(t.getDescription());
-//        dlg.startDate.getModel().setValue(t.getStartDate().getDate());
-//        dlg.endDate.getModel().setValue(t.getEndDate().getDate());
-//        dlg.priorityCB.setSelectedIndex(t.getPriority());                
-//        dlg.effortField.setText(Util.getHoursFromMillis(t.getEffort()));
-//	if((t.getStartDate().getDate()).after(t.getEndDate().getDate()))
-//		dlg.chkEndDate.setSelected(false);
-//	else
-//		dlg.chkEndDate.setSelected(true);
-//		dlg.progress.setValue(new Integer(t.getProgress()));
-// 	dlg.chkEndDate_actionPerformed(null);	
-//        dlg.setVisible(true);
-//        if (dlg.CANCELLED)
-//            return;
-//        CalendarDate sd = new CalendarDate((Date) dlg.startDate.getModel().getValue());
-////        CalendarDate ed = new CalendarDate((Date) dlg.endDate.getModel().getValue());
-//         CalendarDate ed;
-// 		if(dlg.chkEndDate.isSelected())
-// 			ed = new CalendarDate((Date) dlg.endDate.getModel().getValue());
-// 		else
-// 			ed = null;
-//        t.setStartDate(sd);
-//        t.setEndDate(ed);
-//        t.setText(dlg.todoField.getText());
-//        t.setDescription(dlg.descriptionField.getText());
-//        t.setPriority(dlg.priorityCB.getSelectedIndex());
-//        t.setEffort(Util.getMillisFromHours(dlg.effortField.getText()));
-//        t.setProgress(((Integer)dlg.progress.getValue()).intValue());
-//        
-////		CurrentProject.getLectureList().adjustParentLectures(t);
-//
-//        CurrentStorage.get().storeLectureList(CurrentProject.getLectureList(), CurrentProject.get());
-//        LectureTable.tableChanged();
-        parentPanel.updateIndicators();
-        //LectureTable.updateUI();
+        dlg.setVisible(true);
+
+        if (dlg.CANCELLED)
+            return;
+        
+        // Get Topic and set
+        le.setTopic(dlg.lecTopicField.getText());
+        
+        // Get date and set
+        le.setDate(new CalendarDate((Date) dlg.dateSpin.getModel().getValue()).toString());
+        
+        // Get start time and set
+        Calendar calendar = new GregorianCalendar(Local.getCurrentLocale());
+    	calendar.setTime(((Date)dlg.startTimeSpin.getModel().getValue()));
+    	le.setStartHour(calendar.get(Calendar.HOUR_OF_DAY));
+    	le.setStartMin(calendar.get(Calendar.MINUTE));
+    	
+    	// Get end time and set
+    	calendar.setTime(((Date)dlg.endTimeSpin.getModel().getValue()));
+    	le.setEndHour(calendar.get(Calendar.HOUR_OF_DAY));
+    	le.setEndMin(calendar.get(Calendar.MINUTE));
+
+        LectureTable.getSelectionModel().clearSelection();
+        CurrentStorage.get().storeLectureList(CurrentProject.getLectureList(), CurrentProject.get());
+        LectureTable.refresh();
     }
     //defines actions to be performed when new Lecture is added
     void newLectureB_actionPerformed(ActionEvent e) {
@@ -441,16 +443,13 @@ public class LecturePanel extends JPanel {
         String topic = dlg.lecTopicField.getText();
         CalendarDate date = new CalendarDate((Date) dlg.dateSpin.getModel().getValue());
         
-        Calendar calendar = new GregorianCalendar(Local.getCurrentLocale());
-    	calendar.setTime(((Date)dlg.startTimeSpin.getModel().getValue()));
-    	
-    	int starthh = calendar.get(Calendar.HOUR_OF_DAY);
-    	int startmm = calendar.get(Calendar.MINUTE);
-    	calendar.setTime(((Date)dlg.endTimeSpin.getModel().getValue()));
-    	int endhh = calendar.get(Calendar.HOUR_OF_DAY);
-    	int endmm = calendar.get(Calendar.MINUTE);
-        CalendarDate endTime = new CalendarDate((Date) dlg.endTimeSpin.getModel().getValue());
-        CurrentProject.getLectureList().createLecture(date, starthh, startmm, endhh, endmm, topic);
+        Calendar startTime = new GregorianCalendar(Local.getCurrentLocale());
+        startTime.setTime(((Date)dlg.startTimeSpin.getModel().getValue()));
+        
+        Calendar endTime = new GregorianCalendar(Local.getCurrentLocale());
+    	endTime.setTime(((Date)dlg.endTimeSpin.getModel().getValue()));
+    
+    	CurrentProject.getLectureList().createLecture(date, startTime, endTime, topic);
         CurrentStorage.get().storeLectureList(CurrentProject.getLectureList(), CurrentProject.get());
 //        LectureTable.tableChanged();
 //        parentPanel.updateIndicators();

@@ -110,5 +110,26 @@ public class LectureImpl implements Lecture, Comparable {
 	public int getEndMin() {
 		return new Integer(_element.getAttribute("endMin").getValue()).intValue();
 	}
+
+	@Override
+	public void setStartHour(int hh) {
+		_element.getAttribute("startHour").setValue(String.valueOf(hh));
+		
+	}
+
+	@Override
+	public void setStartMin(int mm) {
+		_element.getAttribute("startMin").setValue(String.valueOf(mm));
+	}
+
+	@Override
+	public void setEndHour(int hh) {
+		_element.getAttribute("endHour").setValue(String.valueOf(hh));
+	}
+
+	@Override
+	public void setEndMin(int mm) {
+		_element.getAttribute("endMin").setValue(String.valueOf(mm));
+	}
 	
 }
