@@ -69,9 +69,19 @@ public class LectureDialog extends JDialog {
     JLabel header = new JLabel();
     JLabel dayLabel = new JLabel();
     JLabel timeLabel = new JLabel();
+    JLabel cyclesLabel = new JLabel();
+    JLabel repeatUntilLabel = new JLabel();
+
+    //Repetion panel formation
+    JCheckBoxMenuItem repeatCheckBox = new JCheckBoxMenuItem("Repeating");
+
+    String[] cycles = {Local.getString("Daily"), Local.getString("Weekly"), Local.getString("Mothly")};
+    JComboBox repeatCB = new JComboBox(cycles);
 
     JComboBox daysCB = new JComboBox(Days);
     JSpinner timeSpin = new JSpinner(new SpinnerDateModel(new Date(), null, null, Calendar.MINUTE));
+    //get an ending date for repeating events
+    JSpinner repeatUntil = new JSpinner(new SpinnerDateModel(new Date(),null,null,Calendar.DAY_OF_WEEK));
 
     public boolean CANCELLED = true;
 
@@ -141,6 +151,10 @@ public class LectureDialog extends JDialog {
         timeLabel.setMinimumSize(new Dimension(60, 16));
         timeLabel.setText(Local.getString("Lecture Time"));
 
+        cyclesLabel.setMaximumSize(new Dimension(100, 16));
+        cyclesLabel.setMinimumSize(new Dimension(60, 16));
+        cyclesLabel.setText(Local.getString("Frequency"));
+
         //For days combo box
         daysCB.setFont(new java.awt.Font("Dialog", 0, 11));
         daysCB.setSelectedItem(Local.getString("Monday"));
@@ -148,6 +162,14 @@ public class LectureDialog extends JDialog {
         //For time spinner
         timeSpin.setPreferredSize(new Dimension(60, 24));
         ((JSpinner.DateEditor) timeSpin.getEditor()).getFormat().applyPattern("HH:mm");
+
+        repeatUntilLabel.setMaximumSize(new Dimension(100, 16));
+        repeatUntilLabel.setMinimumSize(new Dimension(60, 16));
+        repeatUntilLabel.setText(Local.getString("Repeat until"));
+
+        //settings for last date field
+        repeatUntil.setPreferredSize(new Dimension(80, 24));
+        repeatUntil.setEditor(new JSpinner.DateEditor(repeatUntil, sdf.toPattern()));
 
         getContentPane().add(mPanel);
 
@@ -164,16 +186,70 @@ public class LectureDialog extends JDialog {
 
         jPanel1.add(jPanel2, null);
         jPanel1.add(jPanel3, null);
+        jPanel1.add(jPanel4, null);
+        jPanel1.add(jPanel5, null); 
 
         jPanel2.add(timeLabel, null);
         jPanel2.add(timeSpin, null);
 
         jPanel3.add(dayLabel, null);
         jPanel3.add(daysCB, null);
+
+        jPanel5.add(cyclesLabel, null);
+        jPanel5.add(repeatCB, null);
+        jPanel5.add(repeatUntilLabel, null);
+        jPanel5.add(repeatUntil, null);
+
+        jPanel4.add(repeatCheckBox, null);
+
+        cyclesLabel.setEnabled(false);
+        repeatCB.setEnabled(false);
+        repeatUntilLabel.setEnabled(false);
+        repeatUntil.setEnabled(false);
+
+        repeatCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent av) {
+                if(repeatCheckBox.getState()) {
+                    cyclesLabel.setEnabled(true);
+                    repeatCB.setEnabled(true);
+                    repeatUntilLabel.setEnabled(true);
+                    repeatUntil.setEnabled(true);
+                } else {
+                    cyclesLabel.setEnabled(false);
+                    repeatCB.setEnabled(false);
+                    repeatUntilLabel.setEnabled(false);
+                    repeatUntil.setEnabled(false);
+                }
+            }
+        });
         
     }	
     void okB_actionPerformed(ActionEvent e) {
-	CANCELLED = false;
+        CANCELLED = false;
+        if(this.repeatCheckBox.getState()) {
+            int rType = 1;
+            int period =1;
+            CalendarDate sd = new CalendarDate((Date) dateOfEvent.getModel().getValue());
+            CalendarDate ed =  new CalendarDate((Date) repeatUntil.getModel().getValue());
+            switch ((String)repeatCB.getSelectedItem()) {
+                case "Daily":
+                    rType = EventsManager.REPEAT_DAILY;
+                    period = 1;
+                    break;
+                case "Weekly":
+                    rType = EventsManager.REPEAT_WEEKLY;
+                    period = sd.getCalendar().get(Calendar.DAY_OF_WEEK);
+                    break;
+                case "Monthly":
+                    rType = EventsManager.REPEAT_MONTHLY;
+                    period = sd.getCalendar().get(Calendar.DAY_OF_MONTH);
+                    break;
+                default:
+                    break;
+            }
+            EventsManager.createRepeatableEvent(rType, sd, ed, period, 0, 0, nameField.getText(), true);
+        }
         this.dispose();
     }
 
