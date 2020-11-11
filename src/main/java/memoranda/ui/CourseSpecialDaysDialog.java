@@ -266,7 +266,7 @@ public class CourseSpecialDaysDialog extends JDialog {
                 default:
                     break;
             }
-            EventsManager.createRepeatableEvent(rType, sd, ed, period, 0, 0, nameField.getText(), true);
+            EventsManager.createRepeatableEvent(rType, sd, ed, period, 0, 0, nameField.getText(), false);
         }
         this.dispose();
     }
