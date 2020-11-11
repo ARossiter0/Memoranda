@@ -579,6 +579,7 @@ public class TaskPanel extends JPanel {
         dlg.setVisible(true);
 
         SpecialCalendarDate freeDay = new SpecialCalendarDate(new CalendarDate((Date) dlg.dateOfEvent.getModel().getValue()), dlg.nameField.getText());
+
         /**
          * TODO
          * Get the value for freeday and return it
