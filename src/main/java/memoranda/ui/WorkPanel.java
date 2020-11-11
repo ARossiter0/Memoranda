@@ -154,30 +154,30 @@ public class WorkPanel extends JPanel {
 		
 		
 		// Students button
-				studentsB.setSelected(true);
-				studentsB.setFont(new java.awt.Font("Dialog", 1, 10));
-				studentsB.setMargin(new Insets(0, 0, 0, 0));	
-				studentsB.setIcon(
-					new ImageIcon(
-						main.java.memoranda.ui.AppFrame.class.getResource(
-							"/ui/icons/tasks.png")));
-				studentsB.setVerticalTextPosition(SwingConstants.BOTTOM);
-				studentsB.addActionListener(new java.awt.event.ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						studentsB_actionPerformed(e);
-					}
-				});
-				studentsB.setVerticalAlignment(SwingConstants.TOP);
-				studentsB.setText(Local.getString("Students")); /***/
-				studentsB.setHorizontalTextPosition(SwingConstants.CENTER);
-				studentsB.setFocusPainted(false);
-				studentsB.setBorderPainted(false);
-				studentsB.setContentAreaFilled(false);
-				studentsB.setPreferredSize(new Dimension(50, 50));
-				studentsB.setMinimumSize(new Dimension(30, 30));
-				studentsB.setOpaque(false);
-				studentsB.setMaximumSize(new Dimension(60, 80));
-				studentsB.setBackground(Color.white);
+		studentsB.setSelected(true);
+		studentsB.setFont(new java.awt.Font("Dialog", 1, 10));
+		studentsB.setMargin(new Insets(0, 0, 0, 0));	
+		studentsB.setIcon(
+			new ImageIcon(
+				main.java.memoranda.ui.AppFrame.class.getResource(
+					"/ui/icons/tasks.png")));
+		studentsB.setVerticalTextPosition(SwingConstants.BOTTOM);
+		studentsB.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				studentsB_actionPerformed(e);
+			}
+		});
+		studentsB.setVerticalAlignment(SwingConstants.TOP);
+		studentsB.setText(Local.getString("Students")); /***/
+		studentsB.setHorizontalTextPosition(SwingConstants.CENTER);
+		studentsB.setFocusPainted(false);
+		studentsB.setBorderPainted(false);
+		studentsB.setContentAreaFilled(false);
+		studentsB.setPreferredSize(new Dimension(50, 50));
+		studentsB.setMinimumSize(new Dimension(30, 30));
+		studentsB.setOpaque(false);
+		studentsB.setMaximumSize(new Dimension(60, 80));
+		studentsB.setBackground(Color.white);
 		
 		// Instructor Tasks button
 		instructorTasksB.setSelected(true);
