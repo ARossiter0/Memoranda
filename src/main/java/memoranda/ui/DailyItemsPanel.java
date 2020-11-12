@@ -451,6 +451,9 @@ public class DailyItemsPanel extends JPanel {
             calendar.jnCalendar.renderer.setTask(null);
          //   calendar.jnCalendar.updateUI();
         }
+        
+        tasksPanel.refresh();
+
         if (pan.equals("TASKS") && (tasksPanel.taskTable.getSelectedRow() > -1)) {
             Task t =
                 CurrentProject.getTaskList().getTask(
@@ -460,12 +463,12 @@ public class DailyItemsPanel extends JPanel {
                         .getValueAt(tasksPanel.taskTable.getSelectedRow(), TaskTable.TASK_ID)
                         .toString());
             calendar.jnCalendar.renderer.setTask(t);
-       //     calendar.jnCalendar.updateUI();
         }
         boolean isAg = pan.equals("AGENDA");
         agendaPanel.setActive(isAg);
-        if (isAg)
-        	agendaPanel.refresh(CurrentDate.get());
+        if (isAg) {
+            agendaPanel.refresh(CurrentDate.get());
+        }
         cardLayout1.show(editorsPanel, pan);
         cardLayout2.show(mainTabsPanel, pan + "TAB");
 		calendar.jnCalendar.updateUI();

@@ -29,6 +29,7 @@ public class CurrentProject {
     private static NoteList _notelist = null;
     private static ResourcesList _resources = null;
     private static Vector projectListeners = new Vector();
+    private static String panel = "OTHER";
 
         
     static {
@@ -181,5 +182,12 @@ public class CurrentProject {
         _tasklist = null;
         _notelist = null;
         _resources = null;
+    }
+
+    public static void setCurrentPannel(String _panel) {
+        panel = _panel;
+    }
+    public static String getCurrentPanel() {
+        return panel;
     }
 }

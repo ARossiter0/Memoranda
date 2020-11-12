@@ -109,6 +109,8 @@ public class TaskPanel extends JPanel {
         newTaskB.setEnabled(true);
         newTaskB.setMaximumSize(new Dimension(24, 24));
         newTaskB.setMinimumSize(new Dimension(24, 24));
+        //Changes the layout of the tasks panel
+        
         newTaskB.setToolTipText(Local.getString("Create new task"));
         newTaskB.setRequestFocusEnabled(false);
         newTaskB.setPreferredSize(new Dimension(24, 24));
@@ -126,6 +128,7 @@ public class TaskPanel extends JPanel {
         subTaskB.setEnabled(true);
         subTaskB.setMaximumSize(new Dimension(24, 24));
         subTaskB.setMinimumSize(new Dimension(24, 24));
+        
         subTaskB.setToolTipText(Local.getString("Add subtask"));
         subTaskB.setRequestFocusEnabled(false);
         subTaskB.setPreferredSize(new Dimension(24, 24));
@@ -146,6 +149,9 @@ public class TaskPanel extends JPanel {
         });
         editTaskB.setPreferredSize(new Dimension(24, 24));
         editTaskB.setRequestFocusEnabled(false);
+
+        //Changes edit task to edit assignment
+        
         editTaskB.setToolTipText(Local.getString("Edit task"));
         editTaskB.setMinimumSize(new Dimension(24, 24));
         editTaskB.setMaximumSize(new Dimension(24, 24));
@@ -163,6 +169,7 @@ public class TaskPanel extends JPanel {
         });
         removeTaskB.setPreferredSize(new Dimension(24, 24));
         removeTaskB.setRequestFocusEnabled(false);
+        //Changes layout
         removeTaskB.setToolTipText(Local.getString("Remove task"));
         removeTaskB.setMinimumSize(new Dimension(24, 24));
         removeTaskB.setMaximumSize(new Dimension(24, 24));
@@ -242,92 +249,94 @@ public class TaskPanel extends JPanel {
         /*taskTable.setMaximumSize(new Dimension(32767, 32767));
         taskTable.setRowHeight(24);*/
         ppEditTask.setFont(new java.awt.Font("Dialog", 1, 11));
-    ppEditTask.setText(Local.getString("Edit task")+"...");
-    ppEditTask.addActionListener(new java.awt.event.ActionListener() {
+        ppEditTask.setText(Local.getString("Edit task")+"...");
+        ppEditTask.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 ppEditTask_actionPerformed(e);
             }
         });
-    //edit task button 
-    ppEditTask.setEnabled(false);
-    ppEditTask.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_edit.png")));
-    taskPPMenu.setFont(new java.awt.Font("Dialog", 1, 10));
-    // remove task button and action to be called upon clicking
-    ppRemoveTask.setFont(new java.awt.Font("Dialog", 1, 11));
-    ppRemoveTask.setText(Local.getString("Remove task"));
-    ppRemoveTask.addActionListener(new java.awt.event.ActionListener() {
+        //edit task button 
+        ppEditTask.setEnabled(false);
+        ppEditTask.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_edit.png")));
+        taskPPMenu.setFont(new java.awt.Font("Dialog", 1, 10));
+        // remove task button and action to be called upon clicking
+        ppRemoveTask.setFont(new java.awt.Font("Dialog", 1, 11));
+        ppRemoveTask.setText(Local.getString("Remove task"));
+        ppRemoveTask.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 ppRemoveTask_actionPerformed(e);
             }
         });
-    ppRemoveTask.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_remove.png")));
-    ppRemoveTask.setEnabled(false);
-    ppNewTask.setFont(new java.awt.Font("Dialog", 1, 11));
-    ppNewTask.setText(Local.getString("New task")+"...");
-    ppNewTask.addActionListener(new java.awt.event.ActionListener() {
+        ppRemoveTask.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_remove.png")));
+        ppRemoveTask.setEnabled(false);
+        ppNewTask.setFont(new java.awt.Font("Dialog", 1, 11));
+        ppNewTask.setText(Local.getString("New task")+"...");
+        ppNewTask.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 ppNewTask_actionPerformed(e);
             }
         });
-    ppNewTask.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_new.png")));
-    //add sub task action performed
-    ppAddSubTask.setFont(new java.awt.Font("Dialog", 1, 11));
-    ppAddSubTask.setText(Local.getString("Add subtask"));
-    ppAddSubTask.addActionListener(new java.awt.event.ActionListener() {
+        ppNewTask.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_new.png")));
+        //add sub task action performed
+        ppAddSubTask.setFont(new java.awt.Font("Dialog", 1, 11));
+        ppAddSubTask.setText(Local.getString("Add subtask"));
+        ppAddSubTask.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 ppAddSubTask_actionPerformed(e);
             }
         });
-    ppAddSubTask.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_new_sub.png")));
+        ppAddSubTask.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_new_sub.png")));
 
-    /*
-    ppSubTasks.setFont(new java.awt.Font("Dialog", 1, 11));
-    ppSubTasks.setText(Local.getString("List sub tasks"));
-    ppSubTasks.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                ppListSubTasks_actionPerformed(e);
-            }
-        });
-    ppSubTasks.setIcon(new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_new.png")));
+        /*
+        ppSubTasks.setFont(new java.awt.Font("Dialog", 1, 11));
+        ppSubTasks.setText(Local.getString("List sub tasks"));
+        ppSubTasks.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    ppListSubTasks_actionPerformed(e);
+                }
+            });
+        ppSubTasks.setIcon(new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_new.png")));
 
-    ppParentTask.setFont(new java.awt.Font("Dialog", 1, 11));
-    ppParentTask.setText(Local.getString("Parent Task"));
-    ppParentTask.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                ppParentTask_actionPerformed(e);
-            }
-        });
-    ppParentTask.setIcon(new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_new.png")));
-    */
-    //complete task button and action performed
-	ppCompleteTask.setFont(new java.awt.Font("Dialog", 1, 11));
-	ppCompleteTask.setText(Local.getString("Complete task"));
-	ppCompleteTask.addActionListener(new java.awt.event.ActionListener() {
+        ppParentTask.setFont(new java.awt.Font("Dialog", 1, 11));
+        ppParentTask.setText(Local.getString("Parent Task"));
+        ppParentTask.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    ppParentTask_actionPerformed(e);
+                }
+            });
+        ppParentTask.setIcon(new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_new.png")));
+        */
+        //complete task button and action performed
+        ppCompleteTask.setFont(new java.awt.Font("Dialog", 1, 11));
+        ppCompleteTask.setText(Local.getString("Complete task"));
+        ppCompleteTask.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ppCompleteTask_actionPerformed(e);
 			}
 		});
-	ppCompleteTask.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_complete.png")));
-	ppCompleteTask.setEnabled(false);
-	// calculate task button and action performed 
-	ppCalcTask.setFont(new java.awt.Font("Dialog", 1, 11));
-	ppCalcTask.setText(Local.getString("Calculate task data"));
-	ppCalcTask.addActionListener(new java.awt.event.ActionListener() {
+        ppCompleteTask.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_complete.png")));
+        ppCompleteTask.setEnabled(false);
+        // calculate task button and action performed 
+        ppCalcTask.setFont(new java.awt.Font("Dialog", 1, 11));
+        ppCalcTask.setText(Local.getString("Calculate task data"));
+        ppCalcTask.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ppCalcTask_actionPerformed(e);
 			}
 		});
-	ppCalcTask.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_complete.png")));
-	ppCalcTask.setEnabled(false);
-	//add buttons to task tool bar
-    scrollPane.getViewport().add(taskTable, null);
+        ppCalcTask.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_complete.png")));
+        ppCalcTask.setEnabled(false);
+        //add buttons to task tool bar
+        scrollPane.getViewport().add(taskTable, null);
         this.add(scrollPane, BorderLayout.CENTER);
         tasksToolBar.add(historyBackB, null);
         tasksToolBar.add(historyForwardB, null);
         tasksToolBar.addSeparator(new Dimension(8, 24));
 
         tasksToolBar.add(newTaskB, null);
+
         tasksToolBar.add(subTaskB, null);
+
         tasksToolBar.add(removeTaskB, null);
         tasksToolBar.addSeparator(new Dimension(8, 24));
         tasksToolBar.add(editTaskB, null);
@@ -849,6 +858,24 @@ public class TaskPanel extends JPanel {
 
   void ppCalcTask_actionPerformed(ActionEvent e) {
       calcTask_actionPerformed(e);
+  }
+
+  /**
+   * This serves to change the behavior of tasks panel for when Assignments are being displayed.
+   */
+  public void refresh() {
+    taskTable.refresh();
+    if(CurrentProject.getCurrentPanel().equals("ASSIGN")) {
+        newTaskB.setToolTipText(Local.getString("Create new Assignment"));
+        removeTaskB.setToolTipText(Local.getString("Remove Assignment"));
+        editTaskB.setToolTipText(Local.getString("Edit Assignment"));
+        subTaskB.setToolTipText(Local.getString("Add sub-Assignment"));
+    } else {
+        newTaskB.setToolTipText(Local.getString("Create new task"));
+        subTaskB.setToolTipText(Local.getString("Add subtask"));
+        editTaskB.setToolTipText(Local.getString("Edit task"));
+        removeTaskB.setToolTipText(Local.getString("Remove task"));
+    }
   }
 
 }

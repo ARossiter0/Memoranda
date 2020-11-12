@@ -149,14 +149,14 @@ public class TaskTableModel extends AbstractTreeTableModel implements TreeTableM
      */
     public int getChildCount(Object parent) {
         if (parent instanceof Project) {
-		if( activeOnly() ){
-			return CurrentProject.getTaskList().getActiveSubTasks(null, CurrentDate.get()).size();
-		}
-		else return CurrentProject.getTaskList().getTopLevelTasks().size();
+            if( activeOnly() ){
+                return CurrentProject.getTaskList().getActiveSubTasks(null, CurrentDate.get()).size();
+            }
+            else return CurrentProject.getTaskList().getTopLevelTasks().size();
         }
         Task t = (Task) parent;
         if(activeOnly()) return CurrentProject.getTaskList().getActiveSubTasks(t.getID(), CurrentDate.get()).size();
-	else return t.getSubTasks().size();
+	        else return t.getSubTasks().size();
     }
 
     /**
@@ -225,6 +225,19 @@ public class TaskTableModel extends AbstractTreeTableModel implements TreeTableM
     public boolean isCellEditable(Object node, int column) {
 		if(column == 6) return true; 
         return super.isCellEditable(node, column); 
+    }
+    public void refresh() {
+        if(CurrentProject.getCurrentPanel().equals("ASSIGN")) {
+            String[] columnNames = {"", Local.getString("Assignments"),
+                    Local.getString("Start date"), Local.getString("End date"),
+                    Local.getString("Priority"), Local.getString("Status"),
+                    "% " + Local.getString("done") };
+        } else {
+            String[] columnNames = {"", Local.getString("To-do"),
+            Local.getString("Start date"), Local.getString("End date"),
+            Local.getString("Priority"), Local.getString("Status"),
+            "% " + Local.getString("done") };
+        }
     }
 
 }

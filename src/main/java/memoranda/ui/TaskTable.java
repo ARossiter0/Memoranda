@@ -526,6 +526,9 @@ public class TaskTable extends JTable {
 			System.out.println(expanded.size());
 		}
 		
-	} // }}}	
+    } // }}}	
+    public void refresh() {
+        model.refresh();
+    }
 	
 }
