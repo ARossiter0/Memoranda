@@ -10,6 +10,7 @@ package main.java.memoranda;
 import java.util.Collection;
 
 import main.java.memoranda.date.CalendarDate;
+import main.java.memoranda.Task;
 /**
  * 
  */
@@ -20,6 +21,7 @@ public interface TaskList {
     Task getTask(String id);
 
     Task createTask(CalendarDate startDate, CalendarDate endDate, String text, int priority, long effort, String description, String parentTaskId);
+    Task createTask(CalendarDate startDate, CalendarDate endDate, String text, int priority, long effort, String description, String parentTaskId, boolean isInReduced);
 
     //New for US90
     Task createLectureTask(String day, int hour, int min, String text);

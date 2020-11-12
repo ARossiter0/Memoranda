@@ -82,6 +82,18 @@ public class TaskPanel extends JPanel {
             ex.printStackTrace();
         }
     }
+    
+    public void toggleReducedOnlyChB(boolean on) {
+        if (on) {
+            taskPPMenu.add(ppShowReducedOnlyChB);
+            
+            toggleShowReducedOnly_actionPerformed(null);
+        } else {
+            Context.put("SHOW_REDUCED_ONLY", false);
+            taskTable.tableChanged();
+            taskPPMenu.remove(ppShowReducedOnlyChB);
+        }
+    }
 
     void jbInit() throws Exception {
         tasksToolBar.setFloatable(false);
@@ -220,19 +232,17 @@ public class TaskPanel extends JPanel {
         toggleShowActiveOnly_actionPerformed(null);
 
         // For instructor todo list
-        if (CurrentProject.currentTaskType == CurrentProject.TaskType.INSTR_TODO_LIST) {
-            ppShowReducedOnlyChB.setFont(new java.awt.Font("Dialog", 1, 11));
-            ppShowReducedOnlyChB.setText(Local.getString("Show only todo items visible to students"));
-            ppShowReducedOnlyChB.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    toggleShowReducedOnly_actionPerformed(e);
-                }
-            });
-            boolean isShro = (Context.get("SHOW_REDUCED_ONLY") != null)
-                    && (Context.get("SHOW_REDUCED_ONLY").equals("true"));
-            ppShowReducedOnlyChB.setSelected(isShro);
-            toggleShowReducedOnly_actionPerformed(null);
-        }
+        ppShowReducedOnlyChB.setFont(new java.awt.Font("Dialog", 1, 11));
+        ppShowReducedOnlyChB.setText(Local.getString("Show only todo items visible to students"));
+        ppShowReducedOnlyChB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                toggleShowReducedOnly_actionPerformed(e);
+            }
+        });
+        boolean isShro = (Context.get("SHOW_REDUCED_ONLY") != null)
+                && (Context.get("SHOW_REDUCED_ONLY").equals("true"));
+        ppShowReducedOnlyChB.setSelected(isShro);
+        toggleShowReducedOnly_actionPerformed(null);
 
         /*
          * showActiveOnly.setPreferredSize(new Dimension(24, 24));
@@ -440,9 +450,7 @@ public class TaskPanel extends JPanel {
         taskPPMenu.add(ppShowActiveOnlyChB);
         
         // For instructor todo list
-        if (CurrentProject.currentTaskType == CurrentProject.TaskType.INSTR_TODO_LIST) {
-            taskPPMenu.add(ppShowReducedOnlyChB);
-        }
+        
 
         // define key actions in TaskPanel:
         // - KEY:DELETE => delete tasks (recursivly).
@@ -475,6 +483,7 @@ public class TaskPanel extends JPanel {
         });
 
     }
+    
 
     // defines actions to be performed when the edit task button is clicked
     void editTaskB_actionPerformed(ActionEvent e) {
@@ -490,6 +499,7 @@ public class TaskPanel extends JPanel {
         dlg.startDate.getModel().setValue(t.getStartDate().getDate());
         dlg.endDate.getModel().setValue(t.getEndDate().getDate());
         dlg.priorityCB.setSelectedIndex(t.getPriority());
+        dlg.setChkIsInReduced(t.getIsInReduced());
         dlg.effortField.setText(Util.getHoursFromMillis(t.getEffort()));
         if ((t.getStartDate().getDate()).after(t.getEndDate().getDate()))
             dlg.chkEndDate.setSelected(false);
@@ -512,6 +522,7 @@ public class TaskPanel extends JPanel {
         t.setText(dlg.todoField.getText());
         t.setDescription(dlg.descriptionField.getText());
         t.setPriority(dlg.priorityCB.getSelectedIndex());
+        t.setIsInReduced(dlg.getIsInReduced());
         t.setEffort(Util.getMillisFromHours(dlg.effortField.getText()));
         t.setProgress(((Integer) dlg.progress.getValue()).intValue());
 
@@ -827,6 +838,7 @@ public class TaskPanel extends JPanel {
     // toggle "show is in reduced only"
     void toggleShowReducedOnly_actionPerformed(ActionEvent e) {
         Context.put("SHOW_REDUCED_ONLY", new Boolean(ppShowReducedOnlyChB.isSelected()));
+        taskTable.tableChanged();
     }
 
     class PopupListener extends MouseAdapter {

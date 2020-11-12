@@ -64,10 +64,15 @@ public interface Task {
     int getPriority();
     void setPriority(int p);
     
+    boolean getIsInReduced();
+    void setIsInReduced(boolean isInReduced);
+    
     String getID();
     
     String getText();
     void setText(String s);
+    
+    
     
     /*Collection getDependsFrom();
     

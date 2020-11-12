@@ -109,7 +109,7 @@ public class TaskListImpl implements TaskList {
     }
 
     public Task createTask(CalendarDate startDate, CalendarDate endDate, String text, int priority, long effort, String description, String parentTaskId) {
-        createTask(startDate, endDate, text, priority, effort, description, parentTaskId, false);
+        return createTask(startDate, endDate, text, priority, effort, description, parentTaskId, false);
     }
     
     public Task createTask(CalendarDate startDate, CalendarDate endDate, String text, int priority, long effort, String description, String parentTaskId, boolean isInReduced) {
@@ -121,7 +121,7 @@ public class TaskListImpl implements TaskList {
         el.addAttribute(new Attribute("progress", "0"));
         el.addAttribute(new Attribute("effort", String.valueOf(effort)));
         el.addAttribute(new Attribute("priority", String.valueOf(priority)));
-        el.addAttribute(new Attribute("isInReduced", String.valueOf(isInReduced)));
+        el.addAttribute(new Attribute("inReduced", String.valueOf(isInReduced)));
                 
         Element txt = new Element("text");
         txt.appendChild(text);
@@ -358,7 +358,7 @@ public class TaskListImpl implements TaskList {
     /*
      * private methods below this line
      */
-    private org.w3c.dom.Element getTaskElement(String id) {
+    private Element getTaskElement(String id) {
                
 		/*Nodes nodes = XQueryUtil.xquery(_doc, "//task[@id='" + id + "']");
         if (nodes.size() > 0) {
@@ -407,7 +407,7 @@ public class TaskListImpl implements TaskList {
         
         for(Iterator iter = tasks.iterator(); iter.hasNext();) {
             Task t = (Task) iter.next();
-            if(getTaskElement("isInReduced").equals("true")) {
+            if(t.getIsInReduced()) {
                 v.add(t);
             }
         }

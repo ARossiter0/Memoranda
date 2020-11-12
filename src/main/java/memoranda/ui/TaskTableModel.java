@@ -148,38 +148,40 @@ public class TaskTableModel extends AbstractTreeTableModel implements TreeTableM
      */
     public int getChildCount(Object parent) {
         if (parent instanceof Project) {
-            Collection c = (Collection) CurrentProject.getTaskList();
+            TaskList taskList = CurrentProject.getTaskList();
+            Collection collection = null;
             if (activeOnly()) {
-                c = ((TaskList) c).getActiveSubTasks(null, CurrentDate.get());
+                collection = taskList.getActiveSubTasks(null, CurrentDate.get());
                 //return CurrentProject.getTaskList().getActiveSubTasks(null, CurrentDate.get()).size();
             } else {
-                c = ((TaskList) c).getTopLevelTasks();
+                collection = taskList.getTopLevelTasks();
                 //return CurrentProject.getTaskList().getTopLevelTasks().size();
             }
             
             if (check_isInReducedOnly()) {
-                c = ((TaskList) c).getReducedSubTasks(c);
+                collection = taskList.getReducedSubTasks(collection);
             }
             
-            return c.size();
+            return collection.size();
         }
         
-        Task t = (Task) parent;
-        Collection c = null;
+        Task task = (Task) parent;
+        TaskList taskList = CurrentProject.getTaskList();
+        Collection collection = null;
         if (activeOnly()) {
-            c = CurrentProject.getTaskList().getActiveSubTasks(t.getID(), CurrentDate.get());
+            collection = taskList.getActiveSubTasks(task.getID(), CurrentDate.get());
             //return CurrentProject.getTaskList().getActiveSubTasks(t.getID(), CurrentDate.get()).size();
         }
         else {
-            c = t.getSubTasks();
+            collection = (Collection) task.getSubTasks();
             //return t.getSubTasks().size();
         }
         
         if (check_isInReducedOnly()) {
-            c = ((TaskList) c).getReducedSubTasks(c);
+            collection = taskList.getReducedSubTasks(collection);
         }
         
-        return c.size();
+        return collection.size();
     }
 
     /**
@@ -187,40 +189,41 @@ public class TaskTableModel extends AbstractTreeTableModel implements TreeTableM
      */
     public Object getChild(Object parent, int index) {
         if (parent instanceof Project) {
-            Collection c = (Collection) CurrentProject.getTaskList();
+            TaskList taskList = CurrentProject.getTaskList();
+            Collection collection = null;
             if (activeOnly()) {
-                c = ((TaskList) c).getActiveSubTasks(null, CurrentDate.get());
-                //return CurrentProject.getTaskList().getActiveSubTasks(null, CurrentDate.get()).toArray()[index];
+                collection = taskList.getActiveSubTasks(null, CurrentDate.get());
+                //return CurrentProject.getTaskList().getActiveSubTasks(null, CurrentDate.get()).size();
+            } else {
+                collection = taskList.getTopLevelTasks();
+                //return CurrentProject.getTaskList().getTopLevelTasks().size();
             }
-            else {
-                c = (Collection) CurrentProject.getTaskList();
-                //return CurrentProject.getTaskList().getTopLevelTasks().toArray()[index];
-            } 
             
             if (check_isInReducedOnly()) {
-                c = ((TaskList) c).getReducedSubTasks(c);
+                collection = taskList.getReducedSubTasks(collection);
             }
             
-            return c.toArray()[index];
+            return collection.toArray()[index];
         }
         
-        Task t = (Task) parent;
-        Collection c = null;
+        Task task = (Task) parent;
+        TaskList taskList = CurrentProject.getTaskList();
+        Collection collection = null;
         
         if (activeOnly()) {
-            c = CurrentProject.getTaskList().getActiveSubTasks(t.getID(), CurrentDate.get());
-            //return CurrentProject.getTaskList().getActiveSubTasks(t.getID(), CurrentDate.get()).toArray()[index];
+            collection = taskList.getActiveSubTasks(task.getID(), CurrentDate.get());
+            //return CurrentProject.getTaskList().getActiveSubTasks(t.getID(), CurrentDate.get()).size();
         }
         else {
-            c = t.getSubTasks();
-            //return t.getSubTasks().toArray()[index];
+            collection = (Collection) task.getSubTasks();
+            //return t.getSubTasks().size();
         }
         
         if (check_isInReducedOnly()) {
-            c = ((TaskList) c).getReducedSubTasks(c);
+            collection = taskList.getReducedSubTasks(collection);
         }
         
-        return c.toArray()[index];
+        return collection.toArray()[index];
     }
 
     /**

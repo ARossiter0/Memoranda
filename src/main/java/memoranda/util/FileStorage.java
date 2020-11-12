@@ -301,8 +301,8 @@ public class FileStorage implements Storage {
         System.out.println(SAVE_INSTR_TODOLIST + JN_DOCPATH + prj.getID() + File.separator + INSTR_TODOLIST_EXT);
         
         
-        Document tasklistDoc = instrTodoList.getXMLContent();
-        saveDocument(tasklistDoc,JN_DOCPATH + prj.getID() + File.separator + INSTR_TODOLIST_EXT);
+        Document instrTodoListDoc = instrTodoList.getXMLContent();
+        saveDocument(instrTodoListDoc,JN_DOCPATH + prj.getID() + File.separator + INSTR_TODOLIST_EXT);
     }
 
 	/**

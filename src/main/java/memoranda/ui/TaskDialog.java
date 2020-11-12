@@ -165,7 +165,7 @@ public class TaskDialog extends JDialog {
 		});
 		
 		// Only for instructor todo
-		chkIsInReduced.setSelected(false);
+		//chkIsInReduced.setSelected(false);
 		chkIsInReduced.setLabel("Visible to students");
 		
 		//set dimensions for the OK button and call the event listener
@@ -397,6 +397,11 @@ public class TaskDialog extends JDialog {
 
         jPanel2.add(jPanel4, null);
         jPanel4.add(priorityCB, null);
+        
+        if (CurrentProject.currentTaskType == CurrentProject.TaskType.INSTR_TODO_LIST) {
+            jPanel4.add(chkIsInReduced, null);
+        }
+        
         jPanel2.add(jPanel3, null);
         
         jPanel3.add(setNotifB, null);
@@ -436,6 +441,10 @@ public class TaskDialog extends JDialog {
 			this.endDate.getModel().setValue(d.getDate());
 	}
 	
+	public void setChkIsInReduced(boolean isInReduced) {
+	    chkIsInReduced.setSelected(isInReduced);
+	}
+	
 	public void setStartDateLimit(CalendarDate min, CalendarDate max) {
 		this.startDateMin = min;
 		this.startDateMax = max;
@@ -447,7 +456,7 @@ public class TaskDialog extends JDialog {
 	}
 	
 	public boolean getIsInReduced() {
-	    return chkIsInReduced.isEnabled();
+	    return chkIsInReduced.isSelected();
 	}
 	
 	//action to be performed upon clicking ok
