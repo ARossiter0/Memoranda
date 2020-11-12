@@ -102,16 +102,26 @@ public class TaskListImpl implements TaskList {
         Collection allTasks = getAllSubTasks(taskId);        
         return filterActiveTasks(allTasks,date);
     }
+    
+    public Collection getReducedSubTasks(Collection allTasks) {
+        return filterReducedTasks(allTasks);              
+        
+    }
 
     public Task createTask(CalendarDate startDate, CalendarDate endDate, String text, int priority, long effort, String description, String parentTaskId) {
+        createTask(startDate, endDate, text, priority, effort, description, parentTaskId, false);
+    }
+    
+    public Task createTask(CalendarDate startDate, CalendarDate endDate, String text, int priority, long effort, String description, String parentTaskId, boolean isInReduced) {
         Element el = new Element("task");
         el.addAttribute(new Attribute("startDate", startDate.toString()));
         el.addAttribute(new Attribute("endDate", endDate != null? endDate.toString():""));
-		String id = Util.generateId();
+        String id = Util.generateId();
         el.addAttribute(new Attribute("id", id));
         el.addAttribute(new Attribute("progress", "0"));
         el.addAttribute(new Attribute("effort", String.valueOf(effort)));
         el.addAttribute(new Attribute("priority", String.valueOf(priority)));
+        el.addAttribute(new Attribute("isInReduced", String.valueOf(isInReduced)));
                 
         Element txt = new Element("text");
         txt.appendChild(text);
@@ -129,8 +139,8 @@ public class TaskListImpl implements TaskList {
             parent.appendChild(el);
         }
         
-		elements.put(id, el);
-		
+        elements.put(id, el);
+        
         Util.debug("Created task with parent " + parentTaskId);
         
         return new TaskImpl(el, this);
@@ -348,7 +358,7 @@ public class TaskListImpl implements TaskList {
     /*
      * private methods below this line
      */
-    private Element getTaskElement(String id) {
+    private org.w3c.dom.Element getTaskElement(String id) {
                
 		/*Nodes nodes = XQueryUtil.xquery(_doc, "//task[@id='" + id + "']");
         if (nodes.size() > 0) {
@@ -391,6 +401,19 @@ public class TaskListImpl implements TaskList {
         }
         return v;
     }
+    
+    private Collection filterReducedTasks(Collection tasks) {
+        Vector v = new Vector();
+        
+        for(Iterator iter = tasks.iterator(); iter.hasNext();) {
+            Task t = (Task) iter.next();
+            if(getTaskElement("isInReduced").equals("true")) {
+                v.add(t);
+            }
+        }
+        
+        return v;
+    }
 
     private boolean isActive(Task t,CalendarDate date) {
     	if ((t.getStatus(date) == Task.ACTIVE) || (t.getStatus(date) == Task.DEADLINE) || (t.getStatus(date) == Task.FAILED)) {
@@ -400,6 +423,8 @@ public class TaskListImpl implements TaskList {
     		return false;
     	}
     }
+    
+
 
     /*
      * deprecated methods below

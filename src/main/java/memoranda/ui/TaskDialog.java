@@ -109,6 +109,7 @@ public class TaskDialog extends JDialog {
 	CalendarDate startDateMax = CurrentProject.get().getEndDate();
 	CalendarDate endDateMin = startDateMin;
 	CalendarDate endDateMax = startDateMax;
+	JCheckBox chkIsInReduced = new JCheckBox();
     
     
 	//main frame for the task dialog
@@ -162,6 +163,10 @@ public class TaskDialog extends JDialog {
 				chkEndDate_actionPerformed(e);
 			}
 		});
+		
+		// Only for instructor todo
+		chkIsInReduced.setSelected(false);
+		chkIsInReduced.setLabel("Visible to students");
 		
 		//set dimensions for the OK button and call the event listener
         okB.setMaximumSize(new Dimension(100, 26));
@@ -441,9 +446,13 @@ public class TaskDialog extends JDialog {
 		this.endDateMax = max;
 	}
 	
+	public boolean getIsInReduced() {
+	    return chkIsInReduced.isEnabled();
+	}
+	
 	//action to be performed upon clicking ok
     void okB_actionPerformed(ActionEvent e) {
-	CANCELLED = false;
+        CANCELLED = false;
         this.dispose();
     }
     //action to be performed upon clicking cancel
@@ -463,6 +472,7 @@ public class TaskDialog extends JDialog {
 			}
 		}
 	}
+	
 	//action to be performed upon entering start date
     void setStartDateB_actionPerformed(ActionEvent e) {
         startCalFrame.setLocation(setStartDateB.getLocation());

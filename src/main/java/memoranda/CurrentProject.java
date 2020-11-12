@@ -94,7 +94,7 @@ public class CurrentProject {
     		return _tasklist;
     	}
     }
-
+    
     /**
      * Get the instructor todo list associated with this project
      * @return the instructor todo list associated with this project

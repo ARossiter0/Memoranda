@@ -35,6 +35,7 @@ public interface TaskList {
 	
     public Collection getAllSubTasks(String taskId);
     public Collection getActiveSubTasks(String taskId,CalendarDate date);
+    public Collection getReducedSubTasks(Collection c);
     
 //    public void adjustParentTasks(Task t);
     
@@ -44,5 +45,6 @@ public interface TaskList {
     public long[] calculateCompletionFromSubTasks(Task t);
 
     nu.xom.Document getXMLContent();
+    
 
 }
