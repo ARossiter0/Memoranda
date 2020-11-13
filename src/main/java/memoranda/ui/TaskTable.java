@@ -124,7 +124,7 @@ public class TaskTable extends JTable {
     private void initTable() {
 	
 		//model = new TaskTableModel();
-		model = new TaskTableSorter( this );
+		model = new TaskTableSorter(this, false); //Starts the table off as a task table
 	
 		// Create the tree. It will be used as a renderer and editor.
 		tree = new TreeTableCellRenderer(model);
@@ -151,9 +151,11 @@ public class TaskTable extends JTable {
 
 		setDefaultEditor(TreeTableModel.class, new TreeTableCellEditor());
 		
-		// column name is repeated in 2 places, do something about it!
-		getColumn( "% " + Local.getString("done") ).setCellEditor(new TaskProgressEditor());
-		
+        //Ignores the exception for when there is no slider.
+        try {
+		    getColumn( "% " + Local.getString("done") ).setCellEditor(new TaskProgressEditor());
+        } catch (Exception e) {}
+
 		// TODO: editor for task progress
 		
 		
@@ -174,8 +176,35 @@ public class TaskTable extends JTable {
 		getTableHeader().setReorderingAllowed(false);
     }
 
+    /**
+     * These two methods allow the TaskTableModel, from which TaskTableSorter inherits,
+     * to be toggled between tasks and assignments.
+     * Added for US149.
+     */
+    public void setAsAssignmentTable() {
+        model = new TaskTableSorter(this, true);
+        modelAdapter = new TreeTableModelAdapter(model, tree);
+        super.setModel(modelAdapter);
+        setShowGrid(false);
+		setIntercellSpacing(new Dimension(0, 0));
+		setRowHeight(18);
+		initColumnWidths();
+		getTableHeader().setReorderingAllowed(false);
+        }
+    public void setAsTaskTable() {
+        model = new TaskTableSorter(this, false);
+        modelAdapter = new TreeTableModelAdapter(model, tree);
+        super.setModel(modelAdapter);
+        setShowGrid(false);
+		setIntercellSpacing(new Dimension(0, 0));
+		setRowHeight(18);
+		initColumnWidths();
+		getTableHeader().setReorderingAllowed(false);
+    }
+
     void initColumnWidths() {
-        for (int i = 0; i < 7; i++) {
+        int numColumns = model.getColumnCount();
+        for (int i = 0; i < numColumns; i++) {
             TableColumn column = getColumnModel().getColumn(i);
             if (i == 0) {
                 column.setPreferredWidth(8);
@@ -526,9 +555,5 @@ public class TaskTable extends JTable {
 			System.out.println(expanded.size());
 		}
 		
-    } // }}}	
-    public void refresh() {
-        model.refresh();
-    }
-	
+    } // }}}		
 }

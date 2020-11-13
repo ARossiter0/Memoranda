@@ -544,6 +544,43 @@ public class TaskPanel extends JPanel {
         parentPanel.updateIndicators();
         //taskTable.updateUI();
     }
+    /**
+     * When the new assignment button is clicked, makes a new window for adding an assignment.
+     * Added for US149.
+     */
+    void newAssignmentButton_actionPerformed(ActionEvent e) {
+        TaskDialog dlg = new TaskDialog(App.getFrame(), Local.getString("New task"));
+        
+        //XXX String parentTaskId = taskTable.getCurrentRootTask();
+        
+        Dimension frmSize = App.getFrame().getSize();
+        Point loc = App.getFrame().getLocation();
+
+        dlg.startDate.getModel().setValue(CurrentDate.get().getDate());
+        dlg.endDate.getModel().setValue(CurrentDate.get().getDate());
+        dlg.setLocation((frmSize.width - dlg.getSize().width) / 2 + loc.x, (frmSize.height - dlg.getSize().height) / 2 + loc.y);
+        dlg.setVisible(true);
+
+        if (dlg.CANCELLED)
+            return;
+
+        CalendarDate sd = new CalendarDate((Date) dlg.startDate.getModel().getValue());
+        //CalendarDate ed = new CalendarDate((Date) dlg.endDate.getModel().getValue());
+        CalendarDate ed;
+ 		if(dlg.chkEndDate.isSelected())
+ 			ed = new CalendarDate((Date) dlg.endDate.getModel().getValue());
+ 		else
+ 			ed = null;
+        long effort = Util.getMillisFromHours(dlg.effortField.getText());
+		//XXX Task newTask = CurrentProject.getTaskList().createTask(sd, ed, dlg.todoField.getText(), dlg.priorityCB.getSelectedIndex(),effort, dlg.descriptionField.getText(),parentTaskId);
+		Task newTask = CurrentProject.getTaskList().createTask(sd, ed, dlg.todoField.getText(), dlg.priorityCB.getSelectedIndex(),effort, dlg.descriptionField.getText(),null);
+        //CurrentProject.getTaskList().adjustParentTasks(newTask);
+		newTask.setProgress(((Integer)dlg.progress.getValue()).intValue());
+        CurrentStorage.get().storeTaskList(CurrentProject.getTaskList(), CurrentProject.get());
+        taskTable.tableChanged();
+        parentPanel.updateIndicators();
+        //taskTable.updateUI();
+    }
 
     
 
@@ -864,13 +901,16 @@ public class TaskPanel extends JPanel {
    * This serves to change the behavior of tasks panel for when Assignments are being displayed.
    */
   public void refresh() {
-    taskTable.refresh();
     if(CurrentProject.getCurrentPanel().equals("ASSIGN")) {
+        taskTable.setAsAssignmentTable();
+        taskTable.repaint();
         newTaskB.setToolTipText(Local.getString("Create new Assignment"));
         removeTaskB.setToolTipText(Local.getString("Remove Assignment"));
         editTaskB.setToolTipText(Local.getString("Edit Assignment"));
         subTaskB.setToolTipText(Local.getString("Add sub-Assignment"));
     } else {
+        taskTable.setAsTaskTable();
+        taskTable.repaint();
         newTaskB.setToolTipText(Local.getString("Create new task"));
         subTaskB.setToolTipText(Local.getString("Add subtask"));
         editTaskB.setToolTipText(Local.getString("Edit task"));

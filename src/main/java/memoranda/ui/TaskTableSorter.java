@@ -34,7 +34,7 @@ public class TaskTableSorter extends TaskTableModel{
 			Task task2 = (Task) o2;
 			
 			// based on TaskTableModel.columnNames
-			switch(sorting_column){
+			switch (sorting_column) {
 				case 1: return task1.getText().compareTo(task2.getText());
 				case 2: return task1.getStartDate().getDate().compareTo(task2.getStartDate().getDate());
 				case 3: return task1.getEndDate().getDate().compareTo(task2.getEndDate().getDate());
@@ -49,6 +49,16 @@ public class TaskTableSorter extends TaskTableModel{
 	};
 	
 	public TaskTableSorter( TaskTable table ){
+		JTableHeader tableHeader = table.getTableHeader();
+		tableHeader.addMouseListener( new MouseHandler() );
+		tableHeader.setDefaultRenderer( new SortableHeaderRenderer());
+	}
+	/**
+	 * This constructor allows for the correct TaskTableModel to be instanciated.
+	 * Added for US149.
+	 */
+	public TaskTableSorter(TaskTable table, boolean isAssign){
+		super(isAssign);
 		JTableHeader tableHeader = table.getTableHeader();
 		tableHeader.addMouseListener( new MouseHandler() );
 		tableHeader.setDefaultRenderer( new SortableHeaderRenderer());

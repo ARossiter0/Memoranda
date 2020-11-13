@@ -147,7 +147,6 @@ public class WorkPanel extends JPanel {
 		assignmentsB.setVerticalTextPosition(SwingConstants.BOTTOM);
 		assignmentsB.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("\n HELLO ?? \n");
 				tasksB_actionPerformed(e);
 			}
 		});
