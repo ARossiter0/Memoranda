@@ -77,9 +77,67 @@ public class LectureImpl implements Lecture, Comparable {
 
 	@Override
 	public int compareTo(Object o) {
-		// TODO Auto-generated method stub
-		return 0;
+	    Lecture l = (Lecture) o;
+	    
+	    if (this.getDate().getYear() < l.getDate().getYear()) {
+	        return -1;
+	    } else if (this.getDate().getYear() == l.getDate().getYear()) {
+	        
+	        if (this.getDate().getMonth() < l.getDate().getMonth()) {
+	            return -1;
+	        } else if (this.getDate().getMonth() == l.getDate().getMonth()) {
+	            
+	            if (this.getDate().getDay() < l.getDate().getDay()) {
+	                return -1;
+	            } else if (this.getDate().getDay() == l.getDate().getDay()) {
+	                
+	                if (this.getStartHour() < l.getStartHour()) {
+	                    return -1;
+	                } else if (this.getStartHour() == l.getStartHour()) {
+	                    
+	                    if (this.getEndHour() < l.getEndHour()) {
+	                        return -1;
+	                    } else if (this.getEndHour() == l.getEndHour()) {
+	                        
+	                        return this.getTopic().compareToIgnoreCase(l.getTopic());
+	                    } else {
+	                        return 1;
+	                    }
+	                } else {
+	                    return 1;
+	                }
+	            } else { 
+	                return 1;
+	            }
+	        } else {
+	            return 1;
+	        }
+	        
+	    } else { 
+	        return 1;
+	    }
 	}
+	
+	
+	@Override
+	public boolean equals(Object o) {
+	    if (this == o) {
+	        return true;
+	    }
+	    if (o == null) {
+	        return false;
+	    }
+	    if (this.getClass() != o.getClass()) {
+	        return false;
+	    }
+	    if (this.compareTo(o) == 0) {
+	        return true;
+	    } else {
+	        return false;
+	    }
+	}
+	
+	
 
 	@Override
 	public String getStartTimeString() {
