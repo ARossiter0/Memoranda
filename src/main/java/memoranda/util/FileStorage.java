@@ -19,6 +19,7 @@ import java.net.URL;
 import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
 
+import main.java.memoranda.CurrentProject;
 import main.java.memoranda.EventsManager;
 import main.java.memoranda.Note;
 import main.java.memoranda.NoteList;
@@ -263,7 +264,15 @@ public class FileStorage implements Storage {
     }
 
     public TaskList openTaskList(Project prj) {
-        String fn = JN_DOCPATH + prj.getID() + File.separator + ".tasklist";
+        String file = null;
+        if (CurrentProject.taskType == CurrentProject.TaskType.TASK) {
+            file = ".tasklist";
+            
+        } else {
+            file = ".studenttodo";
+        }
+        
+        String fn = JN_DOCPATH + prj.getID() + File.separator + file;
 
         if (documentExists(fn)) {
             /*DEBUG*/
@@ -272,19 +281,9 @@ public class FileStorage implements Storage {
                     + JN_DOCPATH
                     + prj.getID()
                     + File.separator
-                    + ".tasklist");
+                    + file);
             
             Document tasklistDoc = openDocument(fn);
-            /*DocType tasklistDoctype = tasklistDoc.getDocType();
-            String publicId = null;
-            if (tasklistDoctype != null) {
-                publicId = tasklistDoctype.getPublicID();
-            }
-            boolean upgradeOccurred = TaskListVersioning.upgradeTaskList(publicId);
-            if (upgradeOccurred) {
-                // reload from new file
-                tasklistDoc = openDocument(fn);
-            }*/
             return new TaskListImpl(tasklistDoc, prj);   
         }
         else {
@@ -292,19 +291,27 @@ public class FileStorage implements Storage {
             System.out.println("[DEBUG] New task list created");
             return new TaskListImpl(prj);
         }
+        
     }
 
     public void storeTaskList(TaskList tasklist, Project prj) {
+        String file;
+        if (CurrentProject.taskType == CurrentProject.TaskType.TASK) {
+            file = ".tasklist";
+            
+        } else {
+            file = ".studenttodo";
+        }
         /*DEBUG*/
         System.out.println(
             "[DEBUG] Save task list: "
                 + JN_DOCPATH
                 + prj.getID()
                 + File.separator
-                + ".tasklist");
+                + file);
         Document tasklistDoc = tasklist.getXMLContent();
         //tasklistDoc.setDocType(TaskListVersioning.getCurrentDocType());
-        saveDocument(tasklistDoc,JN_DOCPATH + prj.getID() + File.separator + ".tasklist");
+        saveDocument(tasklistDoc,JN_DOCPATH + prj.getID() + File.separator + file);
     }
     /**
      * @see main.java.memoranda.util.Storage#createProjectStorage(main.java.memoranda.Project)

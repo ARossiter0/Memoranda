@@ -60,7 +60,7 @@ public class NotesList extends JList {
         });
 
         CurrentProject.addProjectListener(new ProjectListener() {
-            public void projectChange(Project p, NoteList nl, TaskList tl, ResourcesList rl) {
+            public void projectChange(Project p, NoteList nl, TaskList tl, ResourcesList rl, TaskList s1) {
             }
             public void projectWasChanged() {
                 update();

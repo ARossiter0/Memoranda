@@ -16,6 +16,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
 
+import main.java.memoranda.CurrentProject;
 import main.java.memoranda.util.Context;
 import main.java.memoranda.util.Local;
 
@@ -343,6 +344,7 @@ public class WorkPanel extends JPanel {
 	}
 
 	public void tasksB_actionPerformed(ActionEvent e) {
+	    CurrentProject.taskType = CurrentProject.TaskType.TASK;
 		cardLayout1.show(panel, "DAILYITEMS");
 		dailyItemsPanel.selectPanel("TASKS");
 		setCurrentButton(assignmentsB);
@@ -350,10 +352,14 @@ public class WorkPanel extends JPanel {
 	}
 	
 	public void studentsB_actionPerformed(ActionEvent e) {
+	    CurrentProject.taskType = CurrentProject.TaskType.STUDENT_TODO;
 		cardLayout1.show(panel, "DAILYITEMS");
 		dailyItemsPanel.selectPanel("STUDENTS");
 		setCurrentButton(studentsB);
 		Context.put("CURRENT_PANEL", "STUDENTS");
+		
+		final String DEBUG = "[DEBUG] Clicked instructor todo list button";
+        System.out.println(DEBUG);
 	}
 	
 	public void instructorTasksB_actionPerformed(ActionEvent e) {
@@ -364,6 +370,7 @@ public class WorkPanel extends JPanel {
 	}
 	
 	public void tagraderTasksB_actionPerformed(ActionEvent e) {
+	    CurrentProject.taskType = CurrentProject.TaskType.TASK;
 		cardLayout1.show(panel, "DAILYITEMS");
 		dailyItemsPanel.selectPanel("TASKS");
 		setCurrentButton(tagraderTasksB);

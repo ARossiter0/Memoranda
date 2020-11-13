@@ -622,7 +622,7 @@ public class AppFrame extends JFrame {
         CurrentProject.addProjectListener(new ProjectListener() {
 
             public void projectChange(Project prj, NoteList nl, TaskList tl,
-                    ResourcesList rl) {
+                    ResourcesList rl, TaskList s1) {
             }
 
             public void projectWasChanged() {
