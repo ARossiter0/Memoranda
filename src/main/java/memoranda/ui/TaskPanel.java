@@ -25,6 +25,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JToolBar;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.border.Border;
+import javax.swing.border.TitledBorder;
 
 import main.java.memoranda.CurrentProject;
 import main.java.memoranda.History;
@@ -117,7 +119,11 @@ public class TaskPanel extends JPanel {
         newTaskB.setFocusable(false);
         newTaskB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                newTaskB_actionPerformed(e);
+                if(Context.get("CURRENT_PANEL").equals("ASSIGN")) {
+                    newAssignmentButton_actionPerformed(e);
+                } else {
+                    newTaskB_actionPerformed(e);
+                }
             }
         });
         newTaskB.setBorderPainted(false);
@@ -549,7 +555,7 @@ public class TaskPanel extends JPanel {
      * Added for US149.
      */
     void newAssignmentButton_actionPerformed(ActionEvent e) {
-        TaskDialog dlg = new TaskDialog(App.getFrame(), Local.getString("New task"));
+        TaskDialog dlg = new TaskDialog(App.getFrame(), Local.getString("New Assignment"));
         
         //XXX String parentTaskId = taskTable.getCurrentRootTask();
         
@@ -559,6 +565,19 @@ public class TaskPanel extends JPanel {
         dlg.startDate.getModel().setValue(CurrentDate.get().getDate());
         dlg.endDate.getModel().setValue(CurrentDate.get().getDate());
         dlg.setLocation((frmSize.width - dlg.getSize().width) / 2 + loc.x, (frmSize.height - dlg.getSize().height) / 2 + loc.y);
+        
+
+        //Modifications to make task window into assignment window
+
+        dlg.border3.setTitle(Local.getString("Assignment Name"));
+        dlg.jLabel6.setText(Local.getString("Assigned"));
+        dlg.jLabel2.setText(Local.getString("Due Date"));
+
+        dlg.chkEndDate_Augmented();
+        dlg.chkEndDate.setVisible(false);
+        dlg.jPanel4.setVisible(false);
+        dlg.jPanelProgress.setVisible(false);
+        
         dlg.setVisible(true);
 
         if (dlg.CANCELLED)
@@ -566,17 +585,11 @@ public class TaskPanel extends JPanel {
 
         CalendarDate sd = new CalendarDate((Date) dlg.startDate.getModel().getValue());
         //CalendarDate ed = new CalendarDate((Date) dlg.endDate.getModel().getValue());
-        CalendarDate ed;
- 		if(dlg.chkEndDate.isSelected())
- 			ed = new CalendarDate((Date) dlg.endDate.getModel().getValue());
- 		else
- 			ed = null;
+        CalendarDate ed = new CalendarDate((Date) dlg.endDate.getModel().getValue());
+
         long effort = Util.getMillisFromHours(dlg.effortField.getText());
-		//XXX Task newTask = CurrentProject.getTaskList().createTask(sd, ed, dlg.todoField.getText(), dlg.priorityCB.getSelectedIndex(),effort, dlg.descriptionField.getText(),parentTaskId);
-		Task newTask = CurrentProject.getTaskList().createTask(sd, ed, dlg.todoField.getText(), dlg.priorityCB.getSelectedIndex(),effort, dlg.descriptionField.getText(),null);
-        //CurrentProject.getTaskList().adjustParentTasks(newTask);
-		newTask.setProgress(((Integer)dlg.progress.getValue()).intValue());
-        CurrentStorage.get().storeTaskList(CurrentProject.getTaskList(), CurrentProject.get());
+		Task newTask = CurrentProject.getAssignList().createTask(sd, ed, dlg.todoField.getText(), dlg.priorityCB.getSelectedIndex(),effort, dlg.descriptionField.getText(),null);
+        CurrentStorage.get().storeAssignList(CurrentProject.getAssignList(), CurrentProject.get());
         taskTable.tableChanged();
         parentPanel.updateIndicators();
         //taskTable.updateUI();
@@ -878,7 +891,11 @@ public class TaskPanel extends JPanel {
     removeTaskB_actionPerformed(e);
   }
   void ppNewTask_actionPerformed(ActionEvent e) {
-    newTaskB_actionPerformed(e);
+    if(Context.get("CURRENT_PANEL").equals("ASSIGN")) {
+        newAssignmentButton_actionPerformed(e);
+    } else {
+        newTaskB_actionPerformed(e);
+    }    
   }
 
   void ppAddSubTask_actionPerformed(ActionEvent e) {
@@ -901,7 +918,7 @@ public class TaskPanel extends JPanel {
    * This serves to change the behavior of tasks panel for when Assignments are being displayed.
    */
   public void refresh() {
-    if(CurrentProject.getCurrentPanel().equals("ASSIGN")) {
+    if(Context.get("CURRENT_PANEL").equals("ASSIGN")) {
         taskTable.setAsAssignmentTable();
         taskTable.repaint();
         newTaskB.setToolTipText(Local.getString("Create new Assignment"));

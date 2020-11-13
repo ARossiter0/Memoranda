@@ -275,21 +275,49 @@ public class FileStorage implements Storage {
                     + ".tasklist");
             
             Document tasklistDoc = openDocument(fn);
-            /*DocType tasklistDoctype = tasklistDoc.getDocType();
-            String publicId = null;
-            if (tasklistDoctype != null) {
-                publicId = tasklistDoctype.getPublicID();
-            }
-            boolean upgradeOccurred = TaskListVersioning.upgradeTaskList(publicId);
-            if (upgradeOccurred) {
-                // reload from new file
-                tasklistDoc = openDocument(fn);
-            }*/
             return new TaskListImpl(tasklistDoc, prj);   
         }
         else {
             /*DEBUG*/
             System.out.println("[DEBUG] New task list created");
+            return new TaskListImpl(prj);
+        }
+    }
+
+    /**
+     * Store and open assignment lists, functions identical to a task list, just
+     * different name. Is a task list.
+     * Added for US149.
+     */
+    public void storeAssignList(TaskList assignlist, Project prj) {
+        /*DEBUG*/
+        System.out.println(
+            "[DEBUG] Save task list: "
+                + JN_DOCPATH
+                + prj.getID()
+                + File.separator
+                + ".assignlist");
+        Document assignlistDoc = assignlist.getXMLContent();
+        saveDocument(assignlistDoc,JN_DOCPATH + prj.getID() + File.separator + ".assignlist");
+    }
+    public TaskList openAssignList(Project prj) {
+        String fn = JN_DOCPATH + prj.getID() + File.separator + ".assignlist";
+
+        if (documentExists(fn)) {
+            /*DEBUG*/
+            System.out.println(
+                "[DEBUG] Open assignment list: "
+                    + JN_DOCPATH
+                    + prj.getID()
+                    + File.separator
+                    + ".assignlist");
+            
+            Document assignlistDoc = openDocument(fn);
+            return new TaskListImpl(assignlistDoc, prj);   
+        }
+        else {
+            /*DEBUG*/
+            System.out.println("[DEBUG] New assignment list created");
             return new TaskListImpl(prj);
         }
     }
