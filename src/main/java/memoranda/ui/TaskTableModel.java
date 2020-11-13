@@ -159,7 +159,7 @@ public class TaskTableModel extends AbstractTreeTableModel implements TreeTableM
             }
             
             if (check_isInReducedOnly()) {
-                collection = taskList.getReducedSubTasks(collection);
+                collection = taskList.getReducedTasks(collection);
             }
             
             return collection.size();
@@ -178,7 +178,7 @@ public class TaskTableModel extends AbstractTreeTableModel implements TreeTableM
         }
         
         if (check_isInReducedOnly()) {
-            collection = taskList.getReducedSubTasks(collection);
+            collection = taskList.getReducedTasks(collection);
         }
         
         return collection.size();
@@ -200,7 +200,7 @@ public class TaskTableModel extends AbstractTreeTableModel implements TreeTableM
             }
             
             if (check_isInReducedOnly()) {
-                collection = taskList.getReducedSubTasks(collection);
+                collection = taskList.getReducedTasks(collection);
             }
             
             return collection.toArray()[index];
@@ -220,7 +220,7 @@ public class TaskTableModel extends AbstractTreeTableModel implements TreeTableM
         }
         
         if (check_isInReducedOnly()) {
-            collection = taskList.getReducedSubTasks(collection);
+            collection = taskList.getReducedTasks(collection);
         }
         
         return collection.toArray()[index];

@@ -94,16 +94,7 @@ public class CurrentProject {
     		return _tasklist;
     	}
     }
-    
-    /**
-     * Get the instructor todo list associated with this project
-     * @return the instructor todo list associated with this project
-     */
-    public static TaskList getInstrTodoList() {
-            return _instrTodoList;
-    }
-
-    
+       
     /**
      * Get the notes associated with this project
      * @return the list of notes associated with this project

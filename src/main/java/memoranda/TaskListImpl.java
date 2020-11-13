@@ -103,15 +103,43 @@ public class TaskListImpl implements TaskList {
         return filterActiveTasks(allTasks,date);
     }
     
-    public Collection getReducedSubTasks(Collection allTasks) {
-        return filterReducedTasks(allTasks);              
-        
+    /**
+     * Get the collection of tasks that are flagged
+     * as being in the reduced set. 
+     * @param allTasks the initial collection of tasks
+     * @return the collection of tasks that are in the reduced set
+     */
+    public Collection getReducedTasks(Collection allTasks) {
+        return filterReducedTasks(allTasks);                      
     }
 
+    /**
+     * Create a new task, and add it to this task list. 
+     * @param startDate the starting date for the task
+     * @param endDate the ending date for the task
+     * @param text the text (title) for the task
+     * @param priority the priority level for the task
+     * @param effort the amount of effort required for the task
+     * @param description the description of the task
+     * @param parentTaskId the id of this task's parent
+     * @return the newly created task
+     */
     public Task createTask(CalendarDate startDate, CalendarDate endDate, String text, int priority, long effort, String description, String parentTaskId) {
         return createTask(startDate, endDate, text, priority, effort, description, parentTaskId, false);
     }
     
+    /**
+     * Create a new task, and add it to this task list. 
+     * @param startDate the starting date for the task
+     * @param endDate the ending date for the task
+     * @param text the text (title) for the task
+     * @param priority the priority level for the task
+     * @param effort the amount of effort required for the task
+     * @param description the description of the task
+     * @param parentTaskId the id of this task's parent
+     * @param isInReduced if the task should be in the reduced set
+     * @return the newly created task
+     */
     public Task createTask(CalendarDate startDate, CalendarDate endDate, String text, int priority, long effort, String description, String parentTaskId, boolean isInReduced) {
         Element el = new Element("task");
         el.addAttribute(new Attribute("startDate", startDate.toString()));
@@ -402,6 +430,12 @@ public class TaskListImpl implements TaskList {
         return v;
     }
     
+    /**
+     * Return the collection of tasks that are in the 
+     * reduced set. 
+     * @param tasks the initial collection of tasks
+     * @return the collection of tasks in the reduced set. 
+     */
     private Collection filterReducedTasks(Collection tasks) {
         Vector v = new Vector();
         
