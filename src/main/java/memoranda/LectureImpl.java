@@ -117,6 +117,7 @@ public class LectureImpl implements Lecture, Comparable {
 	        return 1;
 	    }
 	}
+
 	
 	
 	@Override
