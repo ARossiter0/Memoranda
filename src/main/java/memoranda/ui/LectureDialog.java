@@ -9,6 +9,7 @@ import java.awt.event.ItemEvent;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DateFormat;
@@ -51,51 +52,35 @@ public class LectureDialog extends JDialog {
     JPanel mPanel = new JPanel(new BorderLayout());
     JPanel areaPanel = new JPanel(new BorderLayout());
     JPanel buttonsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+    
+    JLabel topicLabel = new JLabel();
+    JTextField lecTopicField = new JTextField();
 
     JButton cancelB = new JButton();
     JButton okB = new JButton();
 
     Border border1;
     Border border2;
-    Border border3;
-    Border border4;
     Border border8;
+    
+    GridBagConstraints gbc;
 
-    JPanel dialogTitlePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-    JPanel jPanel1 = new JPanel(new GridLayout(5,1));
-    JPanel jPanel2 = new JPanel(new FlowLayout(FlowLayout.LEFT)); //Time panel
-    JPanel jPanel3 = new JPanel(new GridLayout(2,1)); //Day panel 
-    JPanel jPanel4 = new JPanel(new GridLayout()); //Repetition super panel
-    JPanel jPanel5 = new JPanel(new FlowLayout(FlowLayout.LEFT)); //subpanel to put all repeat options in
-    JPanel jPanel6 = new JPanel(new FlowLayout(FlowLayout.LEFT)); 
+    JPanel jPanel1 = new JPanel(new GridBagLayout());
 
     String[] Days = {Local.getString("Monday"), Local.getString("Tuesday"),
         Local.getString("Wednesday"), Local.getString("Thursday"),
         Local.getString("Friday"), Local.getString("Saturday"), Local.getString("Sunday")};
 
-    JTextField nameField = new JTextField();
-
-    JLabel header = new JLabel();
+    JCheckBoxMenuItem repeatCheckBox = new JCheckBoxMenuItem("Repeat Every : ");
     JLabel dayLabel = new JLabel();
-    JLabel timeLabel = new JLabel();
-    JLabel cyclesLabel = new JLabel();
-    JLabel nameLabel = new JLabel();
-    JLabel startDateLabel = new JLabel();
-    JLabel endDateLabel = new JLabel();
 
-    //Repetion panel formation
-    JCheckBoxMenuItem repeatCheckBox = new JCheckBoxMenuItem("Repeat weekly");
+    JLabel startTimeLabel = new JLabel();
+    JLabel endTimeLabel = new JLabel();
+    JLabel dateLabel = new JLabel();
 
-    String[] cycles = {Local.getString("Daily"), Local.getString("Weekly"), Local.getString("Mothly")};
-    JComboBox repeatCB = new JComboBox(cycles);
-
-    JComboBox daysCB = new JComboBox(Days);
-
-
-    JSpinner timeSpin = new JSpinner(new SpinnerDateModel(new Date(), null, null, Calendar.MINUTE));
-    //get an ending date for repeating events
-    JSpinner startDate = new JSpinner(new SpinnerDateModel(new Date(),null,null,Calendar.DAY_OF_WEEK));
-    JSpinner endDate = new JSpinner(new SpinnerDateModel(new Date(),null,null,Calendar.DAY_OF_WEEK));
+    JSpinner dateSpin = new JSpinner(new SpinnerDateModel());
+    JSpinner startTimeSpin = new JSpinner (new SpinnerDateModel(new Date(), null, null, Calendar.MINUTE));
+    JSpinner endTimeSpin = new JSpinner (new SpinnerDateModel(new Date(), null, null, Calendar.MINUTE));
 
     public boolean CANCELLED = true;
 
@@ -111,13 +96,11 @@ public class LectureDialog extends JDialog {
     }
     
     void jbInit() throws Exception {
+        
         this.setResizable(false);
-        this.setSize(new Dimension(430,300));
     
-        //borders
         border1 = BorderFactory.createEmptyBorder(5, 5, 5, 5);
         border2 = BorderFactory.createEtchedBorder(Color.white, new Color(142, 142, 142));
-        border4 = BorderFactory.createEmptyBorder(0, 5, 0, 5);
         border8 = BorderFactory.createEtchedBorder(Color.white, new Color(178, 178, 178));
 
         //cancel button
@@ -149,79 +132,55 @@ public class LectureDialog extends JDialog {
         mPanel.setBorder(border1);
         areaPanel.setBorder(border2);
         
-        //lecture name
-        nameField.setBorder(border8);
-        nameField.setPreferredSize(new Dimension(375, 24));
-
-        dialogTitlePanel.setBackground(Color.WHITE);
-        dialogTitlePanel.setBorder(border4);
-
-        header.setFont(new java.awt.Font("Dialog", 0, 20));
-        header.setForeground(new Color(0, 0, 124));
-        header.setText(Local.getString("Lecture Time and Day"));
-        header.setIcon(new ImageIcon(main.java.memoranda.ui.TaskDialog.class.getResource("/ui/icons/task48.png")));
+        topicLabel.setMaximumSize(new Dimension(100, 16));
+        topicLabel.setMinimumSize(new Dimension(60, 16));
+        topicLabel.setText(Local.getString("Lecture Topic"));
     				
+        startTimeLabel.setMaximumSize(new Dimension(100, 16));
+        startTimeLabel.setMinimumSize(new Dimension(60, 16));
+        startTimeLabel.setText(Local.getString("Day of the Week"));
+
+        dateLabel.setMaximumSize(new Dimension(100, 16));
+        dateLabel.setMinimumSize(new Dimension(60, 16));
+        dateLabel.setText(Local.getString("Lecture Day"));
+        
+        startTimeLabel.setMaximumSize(new Dimension(100, 16));
+        startTimeLabel.setMinimumSize(new Dimension(60, 16));
+        startTimeLabel.setText(Local.getString("Start Time"));
+        
+        endTimeLabel.setMaximumSize(new Dimension(100, 16));
+        endTimeLabel.setMinimumSize(new Dimension(60, 16));
+        endTimeLabel.setText(Local.getString("End Time"));
+        
         dayLabel.setMaximumSize(new Dimension(100, 16));
         dayLabel.setMinimumSize(new Dimension(60, 16));
-        dayLabel.setText(Local.getString("Day of the week"));
+        dayLabel.setBorder(border8);
 
-        timeLabel.setMaximumSize(new Dimension(100, 16));
-        timeLabel.setMinimumSize(new Dimension(60, 16));
-        timeLabel.setText(Local.getString("Lecture Time"));
+        repeatCheckBox.setHorizontalTextPosition(SwingConstants.RIGHT);
 
-        cyclesLabel.setMaximumSize(new Dimension(100, 16));
-        cyclesLabel.setMinimumSize(new Dimension(60, 16));
-        cyclesLabel.setText(Local.getString("Frequency"));
-
-        startDateLabel.setMaximumSize(new Dimension(100, 16));
-        startDateLabel.setMinimumSize(new Dimension(60, 16));
-        startDateLabel.setText(Local.getString("First Lecture"));
-
-        endDateLabel.setMaximumSize(new Dimension(100, 16));
-        endDateLabel.setMinimumSize(new Dimension(60, 16));
-        endDateLabel.setText(Local.getString("Last Lecture"));
-
-        nameLabel.setMaximumSize(new Dimension(100, 16));
-        nameLabel.setMinimumSize(new Dimension(60, 16));
-        nameLabel.setText(Local.getString("Lecture Title"));
-
-        //For days combo box
-        daysCB.setFont(new java.awt.Font("Dialog", 0, 11));
-        daysCB.setSelectedItem(Local.getString("Select"));
-
-        //For time spinner
-        timeSpin.setPreferredSize(new Dimension(60, 24));
-        ((JSpinner.DateEditor) timeSpin.getEditor()).getFormat().applyPattern("HH:mm");
-
-
-		SimpleDateFormat sdf = new SimpleDateFormat();
-        sdf = (SimpleDateFormat)DateFormat.getDateInstance(DateFormat.SHORT);
-
-        //settings for last date field
-        endDate.setPreferredSize(new Dimension(80, 24));
-        endDate.setEditor(new JSpinner.DateEditor(endDate, sdf.toPattern()));
-
-
-        startDate.setPreferredSize(new Dimension(80, 24));
-        startDate.setEditor(new JSpinner.DateEditor(startDate, sdf.toPattern()));
+        dateSpin.setPreferredSize(new Dimension(80, 20));
+        dateSpin.setLocale(Local.getCurrentLocale());
+        //For date spinner
+        SimpleDateFormat sdf1 = new SimpleDateFormat();
+		sdf1 = (SimpleDateFormat)DateFormat.getDateInstance(DateFormat.SHORT);
+		dateSpin.setEditor(new JSpinner.DateEditor(dateSpin, sdf1.toPattern()));
         
-        startDate.addChangeListener(new ChangeListener() {
+        startTimeSpin.setPreferredSize(new Dimension(80, 20));
+        endTimeSpin.setPreferredSize(new Dimension(80, 20));
+        
+        //settings for the day field
+        dateSpin.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent ce) {
-                CalendarDate d =  new CalendarDate((Date) startDate.getModel().getValue());
+                CalendarDate d =  new CalendarDate((Date) dateSpin.getModel().getValue());
                 int day = d.getCalendar().get(Calendar.DAY_OF_WEEK);
-                System.out.println("Day int is :" + day + "");
-                daysCB.setSelectedItem(Days[(day+12)%7]);
-                System.out.println("Day int is :" + daysCB.getSelectedItem() + "");
-                daysCB.setVisible(true);
-            }
-                
+                dayLabel.setText(Days[(day+5)%7]);
+            }     
         });
-
-        CalendarDate d =  new CalendarDate((Date) startDate.getModel().getValue());
+        
+        CalendarDate d =  new CalendarDate((Date) dateSpin.getModel().getValue());
         int day = d.getCalendar().get(Calendar.DAY_OF_WEEK);
-        daysCB.setSelectedItem(Days[(day+12)%7]);
-        daysCB.setVisible(true);
-
+        dayLabel.setText(Days[(day+5)%7]);
+        
         getContentPane().add(mPanel);
 
         mPanel.add(areaPanel, BorderLayout.CENTER);
@@ -230,56 +189,118 @@ public class LectureDialog extends JDialog {
         buttonsPanel.add(okB, null);
         buttonsPanel.add(cancelB, null);
 
-        this.getContentPane().add(dialogTitlePanel, BorderLayout.NORTH);
-        dialogTitlePanel.add(header, null);
-
         areaPanel.add(jPanel1, BorderLayout.CENTER);
 
-        jPanel1.add(jPanel2, null);
-        jPanel1.add(jPanel3, null);
-        jPanel1.add(jPanel6, null);
-        jPanel1.add(jPanel4, null);
-        jPanel1.add(jPanel5, null); 
+        gbc = new GridBagConstraints();
+        gbc.gridwidth = 5;
+        gbc.gridx = 0; gbc.gridy = 0;
+        gbc.insets = new Insets(5, 10, 5, 10);
+        gbc.anchor = GridBagConstraints.NORTHWEST;
+        jPanel1.add(topicLabel, gbc);
+        
+        gbc = new GridBagConstraints();
+        gbc.gridwidth = 15;
+        gbc.gridx = 0; gbc.gridy = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(0, 10, 5, 0);
+        gbc.anchor = GridBagConstraints.CENTER;
+        jPanel1.add(lecTopicField, gbc);
+        
+        gbc = new GridBagConstraints();
+        gbc.gridwidth = 2;
+        gbc.gridx = 0; gbc.gridy = 2;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(0, 10, 5, 0);
+        gbc.anchor = GridBagConstraints.CENTER;
+        jPanel1.add(dateLabel, gbc);
+        
+        gbc = new GridBagConstraints();
+        gbc.gridwidth = 5;
+        gbc.gridx = 3; gbc.gridy = 2;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(0, 10, 5, 0);
+        gbc.anchor = GridBagConstraints.CENTER;
+        jPanel1.add(dateSpin, gbc);
+        
+        gbc = new GridBagConstraints();
+        gbc.gridwidth = 5;
+        gbc.gridx = 9; gbc.gridy = 2;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(0, 10, 5, 0);
+        gbc.anchor = GridBagConstraints.CENTER;
+        jPanel1.add(startTimeLabel, gbc);
+        
+        gbc = new GridBagConstraints();
+        gbc.gridwidth = 5;
+        gbc.gridx = 15; gbc.gridy = 2;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(0, 10, 5, 0);
+        gbc.anchor = GridBagConstraints.CENTER;
+        jPanel1.add(startTimeSpin, gbc);
+        ((JSpinner.DateEditor) startTimeSpin.getEditor()).getFormat().applyPattern("hh:mm aa");
+        
+        gbc = new GridBagConstraints();
+        gbc.gridwidth = 5;
+        gbc.gridx = 9; gbc.gridy = 3;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(0, 10, 5, 0);
+        gbc.anchor = GridBagConstraints.CENTER;
+        jPanel1.add(endTimeLabel, gbc);
+        
+        gbc = new GridBagConstraints();
+        gbc.gridwidth = 5;
+        gbc.gridx = 15; gbc.gridy = 3;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(0, 10, 5, 0);
+        gbc.anchor = GridBagConstraints.CENTER;
+        jPanel1.add(endTimeSpin, gbc);
+        ((JSpinner.DateEditor) endTimeSpin.getEditor()).getFormat().applyPattern("hh:mm aa");
 
-        jPanel2.add(timeLabel, null);
-        jPanel2.add(timeSpin, null);
+        //For repeat functionality
+        
+        gbc = new GridBagConstraints();
+        gbc.gridwidth = 5;
+        gbc.gridx = 9; gbc.gridy = 4;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(0, 10, 5, 0);
+        gbc.anchor = GridBagConstraints.CENTER;
+        jPanel1.add(repeatCheckBox, gbc);
 
-        jPanel2.add(dayLabel, null);
-        jPanel2.add(daysCB, null);
+        gbc = new GridBagConstraints();
+        gbc.gridwidth = 5;
+        gbc.gridx = 15; gbc.gridy = 4;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(0, 10, 5, 0);
+        gbc.anchor = GridBagConstraints.CENTER;
+        jPanel1.add(dayLabel, gbc);
 
-        jPanel3.add(nameLabel, null);
-        jPanel3.add(nameField);
+    }
 
-        jPanel6.add(startDateLabel, null);
-        jPanel6.add(startDate, null);
-        jPanel6.add(endDateLabel, null);
-        jPanel6.add(endDate, null);
-
-        jPanel4.add(repeatCheckBox, null);
-
-    }	
     void okB_actionPerformed(ActionEvent e) {
+
         CANCELLED = false;
+    
         if(this.repeatCheckBox.getState()) {
             
-            CalendarDate sd = new CalendarDate((Date) startDate.getModel().getValue());
-            CalendarDate ed =  new CalendarDate((Date) endDate.getModel().getValue());
+            CalendarDate sd = new CalendarDate((Date) dateSpin.getModel().getValue());
+            CalendarDate ed = CurrentProject.get().getEndDate();
 
             int rType = EventsManager.REPEAT_WEEKLY;
             int period = sd.getCalendar().get(Calendar.DAY_OF_WEEK);
 
             Calendar calendar = new GregorianCalendar(Local.getCurrentLocale());
-            calendar.setTime(((Date) timeSpin.getModel().getValue()));
+            calendar.setTime(((Date) dateSpin.getModel().getValue()));
+
             int hh = calendar.get(Calendar.HOUR_OF_DAY);
             int mm = calendar.get(Calendar.MINUTE);
 
-            EventsManager.createRepeatableEvent(rType, sd, ed, period, hh, mm, nameField.getText(), false);
+            EventsManager.createRepeatableEvent(rType, sd, ed, period, hh, mm, lecTopicField.getText(), false);
         }
+        
         this.dispose();
     }
 
     void cancelB_actionPerformed(ActionEvent e) {
         this.dispose();
     }
-	   
 }
