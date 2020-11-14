@@ -25,6 +25,7 @@ import main.java.memoranda.util.Storage;
 public class CurrentProject {
 
     private static Project _project = null;
+    private static LectureList _lecturelist = null;
     private static TaskList _tasklist = null;
     private static TaskList _instrTodoList = null;
     private static NoteList _notelist = null;
@@ -66,6 +67,7 @@ public class CurrentProject {
 		// and resources from the project
         _tasklist = CurrentStorage.get().openTaskList(_project);
         _instrTodoList = CurrentStorage.get().openInstrTodoList(_project);
+        _lecturelist = CurrentStorage.get().openLectureList(_project);
         _notelist = CurrentStorage.get().openNoteList(_project);
         _resources = CurrentStorage.get().openResourcesList(_project);
         
@@ -94,7 +96,16 @@ public class CurrentProject {
     		return _tasklist;
     	}
     }
-       
+
+    /**
+     * Get the lectures associated with this project
+     * @return the list of lectures associated with this project
+     */
+    public static LectureList getLectureList() {
+    	return _lecturelist;
+    }
+    
+
     /**
      * Get the notes associated with this project
      * @return the list of notes associated with this project
@@ -121,12 +132,14 @@ public class CurrentProject {
      */
     public static void set(Project project) {
         if (project.getID().equals(_project.getID())) return;
+        LectureList newlecturelist = CurrentStorage.get().openLectureList(project);
         TaskList newtasklist = CurrentStorage.get().openTaskList(project);
         TaskList newinstrtodolist = CurrentStorage.get().openInstrTodoList(project);
         NoteList newnotelist = CurrentStorage.get().openNoteList(project);
         ResourcesList newresources = CurrentStorage.get().openResourcesList(project);
         notifyListenersBefore(project, newnotelist, newtasklist, newinstrtodolist, newresources);
         _project = project;
+        _lecturelist = newlecturelist;
         _tasklist = newtasklist;
         _instrTodoList = newinstrtodolist;
         _notelist = newnotelist;
@@ -182,6 +195,7 @@ public class CurrentProject {
         Storage storage = CurrentStorage.get();
 
         storage.storeNoteList(_notelist, _project);
+        storage.storeLectureList(_lecturelist, _project);
         storage.storeTaskList(_tasklist, _project); 
         storage.storeInstrTodoList(_instrTodoList, _project);
         storage.storeResourcesList(_resources, _project);
@@ -193,6 +207,7 @@ public class CurrentProject {
      */
     public static void free() {
         _project = null;
+        _lecturelist = null;
         _tasklist = null;
         _instrTodoList = null;
         _notelist = null;

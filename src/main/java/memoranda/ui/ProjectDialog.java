@@ -106,7 +106,8 @@ public class ProjectDialog extends JDialog {
     }
 
     void jbInit() throws Exception {
-	this.setResizable(false);
+    	
+    	this.setResizable(false);
         getContentPane().setLayout(new GridBagLayout());
         topPanel.setBorder(new EmptyBorder(new Insets(0, 5, 0, 5)));
         topPanel.setBackground(Color.WHITE);        
@@ -314,30 +315,24 @@ public class ProjectDialog extends JDialog {
         gbc.insets = new Insets(5, 0, 10, 5);
         gbc.anchor = GridBagConstraints.WEST;
         centerPanel.add(feButton, gbc);
+               
         
-        
-        
-        gbc = new GridBagConstraints();
-        setLectureDays.setText(Local.getString("Set Lecture Times"));
-        setLectureDays.setIcon(
-            new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/notify.png")));
-        
-        gbc = new GridBagConstraints();
-        gbc.gridx = 2; 
-        gbc.gridy = 3;
-        gbc.insets = new Insets(5, 0, 10, 5);
-        gbc.anchor = GridBagConstraints.CENTER;
-        setTimesPanel.add(setLectureDays, gbc); 
+//        gbc = new GridBagConstraints();
+//        gbc.gridx = 2; 
+//        gbc.gridy = 3;
+//        gbc.insets = new Insets(5, 0, 10, 5);
+//        gbc.anchor = GridBagConstraints.CENTER;
+//        setTimesPanel.add(setLectureDays, gbc); 
         
         //Call for action - open events window upon pressing 
-        setLectureDays.setText(Local.getString("Set Lecture Times"));
-        setLectureDays.setIcon(
-            new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/notify.png")));
-        setLectureDays.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-            	setLectureDays_actionPerformed(e);
-            }
-        });
+//        setLectureDays.setText(Local.getString("Set Lecture Times"));
+//        setLectureDays.setIcon(
+//            new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/notify.png")));
+//        setLectureDays.addActionListener(new java.awt.event.ActionListener() {
+//            public void actionPerformed(ActionEvent e) {
+//            	setLectureDays_actionPerformed(e);
+//            }
+//        });
         //------------------------------  
         
         setFreeDays.setText(Local.getString("Set Free Days"));
@@ -500,12 +495,12 @@ public class ProjectDialog extends JDialog {
     }
     
     // Perform action for set lecture days
-    void setLectureDays_actionPerformed(ActionEvent e) {
-        LectureTime posTime = ((AppFrame)App.getFrame()).workPanel.dailyItemsPanel.tasksPanel.newLectureTime_actionPerformed();
-        if(posTime != null) {
-            lectureTimes.add(posTime);
-        }
-    }
+//    void setLectureDays_actionPerformed(ActionEvent e) {
+//        LectureTime posTime = ((AppFrame)App.getFrame()).workPanel.dailyItemsPanel.tasksPanel.newLectureTime_actionPerformed();
+//        if(posTime != null) {
+//            lectureTimes.add(posTime);
+//        }
+//    }
     
     // Perform action for set free days
     void setFreeDays_actionPerformed(ActionEvent e) {

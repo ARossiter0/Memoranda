@@ -21,6 +21,8 @@ import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
 
 import main.java.memoranda.EventsManager;
+import main.java.memoranda.LectureList;
+import main.java.memoranda.LectureListImpl;
 import main.java.memoranda.Note;
 import main.java.memoranda.NoteList;
 import main.java.memoranda.NoteListImpl;
@@ -441,6 +443,53 @@ public class FileStorage implements Storage {
 		} catch (Exception ex) {
 			new ExceptionDialog(ex, "Failed to store context to " + JN_DOCPATH + ".context", "");
 		}
+	}
+		
+	@Override
+	public LectureList openLectureList(Project prj) {
+		String fn = JN_DOCPATH + prj.getID() + File.separator + ".lecturelist";
+
+        if (documentExists(fn)) {
+            /*DEBUG*/
+            System.out.println(
+                "[DEBUG] Open lecture list: "
+                    + JN_DOCPATH
+                    + prj.getID()
+                    + File.separator
+                    + ".lecturelist");
+            
+            Document lecturelistDoc = openDocument(fn);
+            /*DocType tasklistDoctype = tasklistDoc.getDocType();
+            String publicId = null;
+            if (tasklistDoctype != null) {
+                publicId = tasklistDoctype.getPublicID();
+            }
+            boolean upgradeOccurred = TaskListVersioning.upgradeTaskList(publicId);
+            if (upgradeOccurred) {
+                // reload from new file
+                tasklistDoc = openDocument(fn);
+            }*/
+            return new LectureListImpl(lecturelistDoc, prj);   
+        }
+        else {
+            /*DEBUG*/
+            System.out.println("[DEBUG] New lecture list created");
+            return new LectureListImpl(prj);
+        }
+	}
+
+	@Override
+	public void storeLectureList(LectureList ll, Project prj) {
+		/*DEBUG*/
+        System.out.println(
+            "[DEBUG] Save lecture list: "
+                + JN_DOCPATH
+                + prj.getID()
+                + File.separator
+                + ".lecturelist");
+        Document lecturelistDoc = ll.getXMLContent();
+        //tasklistDoc.setDocType(TaskListVersioning.getCurrentDocType());
+        saveDocument(lecturelistDoc,JN_DOCPATH + prj.getID() + File.separator + ".lecturelist");
 	}
 
 }
