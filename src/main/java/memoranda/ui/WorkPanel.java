@@ -343,7 +343,8 @@ public class WorkPanel extends JPanel {
 	}
 
 	public void tasksB_actionPerformed(ActionEvent e) {
-	    CurrentProject.currentTaskType = CurrentProject.TaskType.DEFAULT;
+	    CurrentProject.task = CurrentProject.TaskType.TASK;
+	    CurrentProject.getTaskList();
 		cardLayout1.show(panel, "DAILYITEMS");
 		dailyItemsPanel.selectPanel("TASKS");
 		setCurrentButton(assignmentsB);
@@ -365,8 +366,8 @@ public class WorkPanel extends JPanel {
 	}
 	
 	public void studentsB_actionPerformed(ActionEvent e) {
-	    CurrentProject.currentTaskType = CurrentProject.TaskType.STUDENT_TODO;
-	    System.out.println(CurrentProject.currentTaskType);
+	    CurrentProject.task = CurrentProject.TaskType.STUDENT_TODO;
+	    System.out.println(CurrentProject.task);
         cardLayout1.show(panel, "DAILYITEMS");
         dailyItemsPanel.selectPanel("TASKS");
         setCurrentButton(studentsB);

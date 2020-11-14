@@ -32,8 +32,8 @@ public class CurrentProject {
     private static Vector projectListeners = new Vector();
 
         
-    public enum TaskType {DEFAULT, STUDENT_TODO}
-    public static TaskType currentTaskType = TaskType.DEFAULT;
+    public enum TaskType {TASK, STUDENT_TODO}
+    public static TaskType task = TaskType.TASK;
     
     static {
         // Check if there is some project that has been opened last.
@@ -85,8 +85,7 @@ public class CurrentProject {
      * @return the list of tasks associated with this project
      */
     public static TaskList getTaskList() {
-        if (currentTaskType == TaskType.STUDENT_TODO) {
-            final String DEBUG = "\t\t[DEBUG] Returning _instrTodoList";
+        if (task == TaskType.STUDENT_TODO) {
             return _studenttodo;
         } else {
             return _tasklist;
