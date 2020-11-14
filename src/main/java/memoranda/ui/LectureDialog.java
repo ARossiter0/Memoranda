@@ -289,7 +289,7 @@ public class LectureDialog extends JDialog {
             int period = sd.getCalendar().get(Calendar.DAY_OF_WEEK);
 
             Calendar calendar = new GregorianCalendar(Local.getCurrentLocale());
-            calendar.setTime(((Date) dateSpin.getModel().getValue()));
+            calendar.setTime(((Date) startTimeSpin.getModel().getValue()));
 
             int hh = calendar.get(Calendar.HOUR_OF_DAY);
             int mm = calendar.get(Calendar.MINUTE);

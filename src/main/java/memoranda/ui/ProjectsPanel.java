@@ -456,7 +456,7 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 	void ppProperties_actionPerformed_EditCourse(ActionEvent e) {
 		Project prj = prjTablePanel.getSelectedProject();
 
-		ProjectDialog dlg = new ProjectDialog(null, Local.getString("New course"));
+		ProjectDialog dlg = new ProjectDialog(null, Local.getString("Edit course"));
 
 		//set the course name
 		dlg.prTitleField.setText(prj.getTitle());

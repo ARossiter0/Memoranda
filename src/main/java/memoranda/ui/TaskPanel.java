@@ -541,31 +541,52 @@ public class TaskPanel extends JPanel {
 
 
   //New for add lecture times
-//    LectureTime newLectureTime_actionPerformed() {
-//        LectureDialog dlg = new LectureDialog(App.getFrame(), Local.getString("New Lecture Time"));
-//        
-//        Dimension frmSize = App.getFrame().getSize();
-//        Point loc = App.getFrame().getLocation();
-//        
-//        dlg.setLocation((frmSize.width - dlg.getSize().width) / 2 + loc.x, (frmSize.height - dlg.getSize().height) / 2 + loc.y);
-//        dlg.setVisible(true);
-//        
-//        //get the lecture time selected
-//        Calendar calendar = new GregorianCalendar(Local.getCurrentLocale());
-//		calendar.setTime(((Date)dlg.dateSpin.getModel().getValue()));
-//		int hh = calendar.get(Calendar.HOUR_OF_DAY);
-//        int mm = calendar.get(Calendar.MINUTE);
-//
-//        //gets the day selected
-//        String day = (String)dlg.daysCB.getSelectedItem();
-//
-//        LectureTime lecTime = new LectureTime(day, hh, mm);
-//
-//        if (dlg.CANCELLED)
-//            return null;
-//
-//        return lecTime;
-//    }
+    LectureTime newLectureTime_actionPerformed() {
+        LectureDialog dlg = new LectureDialog(App.getFrame(), Local.getString("New Lecture Time"));
+
+        Dimension frmSize = App.getFrame().getSize();
+        Point loc = App.getFrame().getLocation();
+
+        Calendar cdate = CurrentDate.get().getCalendar();
+        cdate.set(Calendar.MINUTE,0);
+
+        dlg.startTimeSpin.getModel().setValue(cdate.getTime());
+        dlg.endTimeSpin.getModel().setValue(cdate.getTime());
+        dlg.setLocation((frmSize.width - dlg.getSize().width) / 2 + loc.x, (frmSize.height - dlg.getSize().height) / 2 + loc.y);
+        dlg.setVisible(true);
+
+        //------------------------------------------
+
+        String topic = dlg.lecTopicField.getText();
+        CalendarDate date = new CalendarDate((Date) dlg.dateSpin.getModel().getValue());
+        
+        Calendar startTime = new GregorianCalendar(Local.getCurrentLocale());
+        startTime.setTime(((Date)dlg.startTimeSpin.getModel().getValue()));
+        
+        Calendar endTime = new GregorianCalendar(Local.getCurrentLocale());
+        endTime.setTime(((Date)dlg.endTimeSpin.getModel().getValue()));
+        
+        CurrentProject.getLectureList().createLecture(date, startTime, endTime, topic);
+        CurrentStorage.get().storeLectureList(CurrentProject.getLectureList(), CurrentProject.get());
+
+        //------------------------------------------
+
+        //get the lecture time selected
+        Calendar calendar = new GregorianCalendar(Local.getCurrentLocale());
+        calendar.setTime(((Date) dlg.startTimeSpin.getModel().getValue()));
+
+        int hh = calendar.get(Calendar.HOUR_OF_DAY);
+        int mm = calendar.get(Calendar.MINUTE);
+        String day = dlg.dayLabel.getText();
+
+        LectureTime lecTime = new LectureTime(day, hh, mm);
+
+        if (dlg.CANCELLED) {
+            return null;
+        }
+        return lecTime;
+    }
+
     //New for freedays
     SpecialCalendarDate newFreeDay_actionPerformed() {
         CourseSpecialDaysDialog dlg = new CourseSpecialDaysDialog(App.getFrame(), Local.getString("New Free Day"));
