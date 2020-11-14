@@ -539,32 +539,32 @@ public class TaskPanel extends JPanel {
     
 
 
-    //New for add lecture times
-    LectureTime newLectureTime_actionPerformed() {
-        LectureDialog dlg = new LectureDialog(App.getFrame(), Local.getString("New Lecture Time"));
-        
-        Dimension frmSize = App.getFrame().getSize();
-        Point loc = App.getFrame().getLocation();
-        
-        dlg.setLocation((frmSize.width - dlg.getSize().width) / 2 + loc.x, (frmSize.height - dlg.getSize().height) / 2 + loc.y);
-        dlg.setVisible(true);
-        
-        //get the lecture time selected
-        Calendar calendar = new GregorianCalendar(Local.getCurrentLocale());
-		calendar.setTime(((Date)dlg.timeSpin.getModel().getValue()));
-		int hh = calendar.get(Calendar.HOUR_OF_DAY);
-        int mm = calendar.get(Calendar.MINUTE);
-
-        //gets the day selected
-        String day = (String)dlg.daysCB.getSelectedItem();
-
-        LectureTime lecTime = new LectureTime(day, hh, mm);
-
-        if (dlg.CANCELLED)
-            return null;
-
-        return lecTime;
-    }
+  //New for add lecture times
+//    LectureTime newLectureTime_actionPerformed() {
+//        LectureDialog dlg = new LectureDialog(App.getFrame(), Local.getString("New Lecture Time"));
+//        
+//        Dimension frmSize = App.getFrame().getSize();
+//        Point loc = App.getFrame().getLocation();
+//        
+//        dlg.setLocation((frmSize.width - dlg.getSize().width) / 2 + loc.x, (frmSize.height - dlg.getSize().height) / 2 + loc.y);
+//        dlg.setVisible(true);
+//        
+//        //get the lecture time selected
+//        Calendar calendar = new GregorianCalendar(Local.getCurrentLocale());
+//		calendar.setTime(((Date)dlg.dateSpin.getModel().getValue()));
+//		int hh = calendar.get(Calendar.HOUR_OF_DAY);
+//        int mm = calendar.get(Calendar.MINUTE);
+//
+//        //gets the day selected
+//        String day = (String)dlg.daysCB.getSelectedItem();
+//
+//        LectureTime lecTime = new LectureTime(day, hh, mm);
+//
+//        if (dlg.CANCELLED)
+//            return null;
+//
+//        return lecTime;
+//    }
     //New for freedays
     SpecialCalendarDate newFreeDay_actionPerformed() {
         CourseSpecialDaysDialog dlg = new CourseSpecialDaysDialog(App.getFrame(), Local.getString("New Free Day"));
