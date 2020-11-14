@@ -126,7 +126,7 @@ public class AgendaPanel extends JPanel {
 							CurrentStorage.get().storeEventsManager();
 						}
 						refresh(CurrentDate.get());
-						System.out.println("agreguÃ© un sticker");
+						System.out.println("agregué un sticker");
 					} else if (d.startsWith("memoranda:expandsubtasks")) {
 						String id = d.split("#")[1];
 						gotoTask = id;
@@ -255,7 +255,7 @@ public class AgendaPanel extends JPanel {
 		});
 		CurrentProject.addProjectListener(new ProjectListener() {
 
-			public void projectChange(Project prj, NoteList nl, TaskList tl, ResourcesList rl, TaskList s1) {
+			public void projectChange(Project prj, NoteList nl, TaskList tl, TaskList s1, ResourcesList rl) {
 			}
 
 			public void projectWasChanged() {

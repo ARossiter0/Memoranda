@@ -289,7 +289,6 @@ public class TaskPanel extends JPanel {
             }
         });
     ppSubTasks.setIcon(new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_new.png")));
-
     ppParentTask.setFont(new java.awt.Font("Dialog", 1, 11));
     ppParentTask.setText(Local.getString("Parent Task"));
     ppParentTask.addActionListener(new java.awt.event.ActionListener() {
@@ -351,7 +350,7 @@ public class TaskPanel extends JPanel {
         });
         //add a new task to the current project
         CurrentProject.addProjectListener(new ProjectListener() {
-            public void projectChange(Project p, NoteList nl, TaskList tl, ResourcesList rl, TaskList s1) {
+            public void projectChange(Project p, NoteList nl, TaskList tl, TaskList s1, ResourcesList rl) {
                 newTaskB.setEnabled(
                     CurrentDate.get().inPeriod(p.getStartDate(), p.getEndDate()));
             }

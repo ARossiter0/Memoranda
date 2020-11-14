@@ -19,7 +19,6 @@ import java.net.URL;
 import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
 
-import main.java.memoranda.CurrentProject;
 import main.java.memoranda.EventsManager;
 import main.java.memoranda.Note;
 import main.java.memoranda.NoteList;
@@ -56,8 +55,8 @@ public class FileStorage implements Storage {
         if (mHome.length() > 0) {
             JN_DOCPATH = mHome;
             /*DEBUG*/
-        	System.out.println("[DEBUG]***Memoranda storage path has set to: " +
-        	 JN_DOCPATH);
+            System.out.println("[DEBUG]***Memoranda storage path has set to: " +
+             JN_DOCPATH);
         }
     }
 
@@ -69,7 +68,7 @@ public class FileStorage implements Storage {
             /*The XOM bug: reserved characters are not escaped*/
             //Serializer serializer = new Serializer(new FileOutputStream(filePath), "UTF-8");
             //serializer.write(doc);
-        	
+            
             OutputStreamWriter fw =
                 new OutputStreamWriter(new FileOutputStream(filePath), "UTF-8");
             fw.write(doc.toXML());
@@ -176,9 +175,9 @@ public class FileStorage implements Storage {
             /*DEBUG*/
 
 //            Util.debug("Open note: " + filename);
-//        	Util.debug("Note Title: " + note.getTitle());
-        	doc.setBase(new URL(getNoteURL(note)));
-        	editorKit.read(
+//          Util.debug("Note Title: " + note.getTitle());
+            doc.setBase(new URL(getNoteURL(note)));
+            editorKit.read(
                 new InputStreamReader(new FileInputStream(filename), "UTF-8"),
                 doc,
                 0);
@@ -218,7 +217,7 @@ public class FileStorage implements Storage {
         String filename = JN_DOCPATH + note.getProject().getID() + File.separator;
 //        CalendarDate d = note.getDate();
         filename += note.getId();//d.getDay() + "-" + d.getMonth() + "-" + d.getYear();
-	return filename;
+    return filename;
    }
 
 
@@ -264,15 +263,7 @@ public class FileStorage implements Storage {
     }
 
     public TaskList openTaskList(Project prj) {
-        String file = null;
-        if (CurrentProject.taskType == CurrentProject.TaskType.TASK) {
-            file = ".tasklist";
-            
-        } else {
-            file = ".studenttodo";
-        }
-        
-        String fn = JN_DOCPATH + prj.getID() + File.separator + file;
+        String fn = JN_DOCPATH + prj.getID() + File.separator + ".tasklist";
 
         if (documentExists(fn)) {
             /*DEBUG*/
@@ -281,9 +272,19 @@ public class FileStorage implements Storage {
                     + JN_DOCPATH
                     + prj.getID()
                     + File.separator
-                    + file);
+                    + ".tasklist");
             
             Document tasklistDoc = openDocument(fn);
+            /*DocType tasklistDoctype = tasklistDoc.getDocType();
+            String publicId = null;
+            if (tasklistDoctype != null) {
+                publicId = tasklistDoctype.getPublicID();
+            }
+            boolean upgradeOccurred = TaskListVersioning.upgradeTaskList(publicId);
+            if (upgradeOccurred) {
+                // reload from new file
+                tasklistDoc = openDocument(fn);
+            }*/
             return new TaskListImpl(tasklistDoc, prj);   
         }
         else {
@@ -291,28 +292,55 @@ public class FileStorage implements Storage {
             System.out.println("[DEBUG] New task list created");
             return new TaskListImpl(prj);
         }
-        
     }
+    public TaskList openStudentTodo(Project prj) {
+        String fn = JN_DOCPATH + prj.getID() + File.separator + ".studenttodo";
 
-    public void storeTaskList(TaskList tasklist, Project prj) {
-        String file;
-        if (CurrentProject.taskType == CurrentProject.TaskType.TASK) {
-            file = ".tasklist";
+        if (documentExists(fn)) {
+            /*DEBUG*/
+            System.out.println(
+                "[DEBUG] Open student to do list: "
+                    + JN_DOCPATH
+                    + prj.getID()
+                    + File.separator
+                    + ".studenttodo");
             
-        } else {
-            file = ".studenttodo";
+            Document tasklistDoc = openDocument(fn);
+            return new TaskListImpl(tasklistDoc, prj);   
         }
+        else {
+            /*DEBUG*/
+            System.out.println("[DEBUG] New student to do list created");
+            return new TaskListImpl(prj);
+        }
+    }
+    
+    public void storeTaskList(TaskList tasklist, Project prj) {
         /*DEBUG*/
         System.out.println(
             "[DEBUG] Save task list: "
                 + JN_DOCPATH
                 + prj.getID()
                 + File.separator
-                + file);
+                + ".tasklist");
         Document tasklistDoc = tasklist.getXMLContent();
         //tasklistDoc.setDocType(TaskListVersioning.getCurrentDocType());
-        saveDocument(tasklistDoc,JN_DOCPATH + prj.getID() + File.separator + file);
+        saveDocument(tasklistDoc,JN_DOCPATH + prj.getID() + File.separator + ".tasklist");
     }
+    
+    public void storeStudentTodo(TaskList tasklist, Project prj) {
+        /*DEBUG*/
+        System.out.println(
+            "[DEBUG] Save student to do list: "
+                + JN_DOCPATH
+                + prj.getID()
+                + File.separator
+                + ".studenttodo");
+        Document tasklistDoc = tasklist.getXMLContent();
+        //tasklistDoc.setDocType(TaskListVersioning.getCurrentDocType());
+        saveDocument(tasklistDoc,JN_DOCPATH + prj.getID() + File.separator + ".studenttodo");
+    }
+    
     /**
      * @see main.java.memoranda.util.Storage#createProjectStorage(main.java.memoranda.Project)
      */

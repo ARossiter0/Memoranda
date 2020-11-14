@@ -22,23 +22,22 @@ import main.java.memoranda.util.Storage;
  *
  */
 /*$Id: CurrentProject.java,v 1.6 2005/12/01 08:12:26 alexeya Exp $*/
-
 public class CurrentProject {
 
     private static Project _project = null;
     private static TaskList _tasklist = null;
-    private static TaskList _studenttodolist = null;
+    private static TaskList _studenttodo = null;
     private static NoteList _notelist = null;
     private static ResourcesList _resources = null;
     private static Vector projectListeners = new Vector();
+
+        
+    public enum TaskType {DEFAULT, STUDENT_TODO}
+    public static TaskType currentTaskType = TaskType.DEFAULT;
     
-    public enum TaskType {TASK, STUDENT_TODO}
-   
-    public static TaskType taskType = TaskType.TASK;
-   
     static {
-    	// Check if there is some project that has been opened last.
-    	// If not, create a default.
+        // Check if there is some project that has been opened last.
+        // If not, create a default.
         String prjId = (String)Context.get("LAST_OPENED_PROJECT_ID");
         if (prjId == null) {
             prjId = "__default";
@@ -51,22 +50,20 @@ public class CurrentProject {
         
         //ProjectManager.init();
         _project = ProjectManager.getProject(prjId);
-		
-		if (_project == null) {
-			// alexeya: Fixed bug with NullPointer when LAST_OPENED_PROJECT_ID
-			// references to missing project
-			_project = ProjectManager.getProject("__default");
-			if (_project == null) 
-				_project = (Project)ProjectManager.getActiveProjects().get(0);						
+        
+        if (_project == null) {
+            // alexeya: Fixed bug with NullPointer when LAST_OPENED_PROJECT_ID
+            // references to missing project
+            _project = ProjectManager.getProject("__default");
+            if (_project == null) 
+                _project = (Project)ProjectManager.getActiveProjects().get(0);                      
             Context.put("LAST_OPENED_PROJECT_ID", _project.getID());
-			
-		}		
-		
-		// Get the tasks, notes, and resources from the project
+            
+        }       
+        
+        // Get the tasks, notes, and resources from the project
         _tasklist = CurrentStorage.get().openTaskList(_project);
-        taskType = TaskType.STUDENT_TODO;
-        _studenttodolist = CurrentStorage.get().openTaskList(_project);
-        taskType = TaskType.TASK;
+        _studenttodo = CurrentStorage.get().openStudentTodo(_project);
         _notelist = CurrentStorage.get().openNoteList(_project);
         _resources = CurrentStorage.get().openResourcesList(_project);
         
@@ -88,13 +85,12 @@ public class CurrentProject {
      * @return the list of tasks associated with this project
      */
     public static TaskList getTaskList() {
-        if (taskType == TaskType.TASK) {
+        if (currentTaskType == TaskType.STUDENT_TODO) {
+            final String DEBUG = "\t\t[DEBUG] Returning _instrTodoList";
+            return _studenttodo;
+        } else {
             return _tasklist;
         }
-        else {
-            return _studenttodolist;
-        }
-            
     }
 
     
@@ -125,15 +121,13 @@ public class CurrentProject {
     public static void set(Project project) {
         if (project.getID().equals(_project.getID())) return;
         TaskList newtasklist = CurrentStorage.get().openTaskList(project);
-        taskType = TaskType.STUDENT_TODO;
-        TaskList newtodolist = CurrentStorage.get().openTaskList(project);
-        taskType = TaskType.TASK;
+        TaskList newstudentodo = CurrentStorage.get().openStudentTodo(project);
         NoteList newnotelist = CurrentStorage.get().openNoteList(project);
         ResourcesList newresources = CurrentStorage.get().openResourcesList(project);
-        notifyListenersBefore(project, newnotelist, newtasklist, newresources, newtodolist);
+        notifyListenersBefore(project, newnotelist, newtasklist,newstudentodo , newresources);
         _project = project;
         _tasklist = newtasklist;
-        _studenttodolist = newtodolist;
+        _studenttodo = newstudentodo;
         _notelist = newnotelist;
         _resources = newresources;
         notifyListenersAfter();
@@ -163,9 +157,9 @@ public class CurrentProject {
      * @param tl the new task list
      * @param rl the new resource list
      */
-    private static void notifyListenersBefore(Project project, NoteList nl, TaskList tl, ResourcesList rl, TaskList s1) {
+    private static void notifyListenersBefore(Project project, NoteList nl, TaskList tl, TaskList s1, ResourcesList rl) {
         for (int i = 0; i < projectListeners.size(); i++) {
-            ((ProjectListener)projectListeners.get(i)).projectChange(project, nl, tl, rl, s1);
+            ((ProjectListener)projectListeners.get(i)).projectChange(project, nl, tl, s1, rl);
             /*DEBUGSystem.out.println(projectListeners.get(i));*/
         }
     }
@@ -186,10 +180,8 @@ public class CurrentProject {
         Storage storage = CurrentStorage.get();
 
         storage.storeNoteList(_notelist, _project);
-        storage.storeTaskList(_tasklist, _project);
-        taskType = TaskType.STUDENT_TODO;
-        storage.storeTaskList(_studenttodolist, _project);
-        taskType = TaskType.TASK;
+        storage.storeTaskList(_tasklist, _project); 
+        storage.storeStudentTodo(_studenttodo, _project); 
         storage.storeResourcesList(_resources, _project);
         storage.storeProjectManager();
     }
@@ -200,7 +192,7 @@ public class CurrentProject {
     public static void free() {
         _project = null;
         _tasklist = null;
-        _studenttodolist = null; 
+        _studenttodo = null;
         _notelist = null;
         _resources = null;
     }

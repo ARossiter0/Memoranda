@@ -15,7 +15,6 @@ import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
-
 import main.java.memoranda.CurrentProject;
 import main.java.memoranda.util.Context;
 import main.java.memoranda.util.Local;
@@ -153,33 +152,6 @@ public class WorkPanel extends JPanel {
 		assignmentsB.setBackground(Color.white);
 		
 		
-		
-		// Students button
-				studentsB.setSelected(true);
-				studentsB.setFont(new java.awt.Font("Dialog", 1, 10));
-				studentsB.setMargin(new Insets(0, 0, 0, 0));	
-				studentsB.setIcon(
-					new ImageIcon(
-						main.java.memoranda.ui.AppFrame.class.getResource(
-							"/ui/icons/tasks.png")));
-				studentsB.setVerticalTextPosition(SwingConstants.BOTTOM);
-				studentsB.addActionListener(new java.awt.event.ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						studentsB_actionPerformed(e);
-					}
-				});
-				studentsB.setVerticalAlignment(SwingConstants.TOP);
-				studentsB.setText(Local.getString("Students")); /***/
-				studentsB.setHorizontalTextPosition(SwingConstants.CENTER);
-				studentsB.setFocusPainted(false);
-				studentsB.setBorderPainted(false);
-				studentsB.setContentAreaFilled(false);
-				studentsB.setPreferredSize(new Dimension(50, 50));
-				studentsB.setMinimumSize(new Dimension(30, 30));
-				studentsB.setOpaque(false);
-				studentsB.setMaximumSize(new Dimension(60, 80));
-				studentsB.setBackground(Color.white);
-		
 		// Instructor Tasks button
 		instructorTasksB.setSelected(true);
 		instructorTasksB.setFont(new java.awt.Font("Dialog", 1, 10));
@@ -232,6 +204,35 @@ public class WorkPanel extends JPanel {
 		tagraderTasksB.setMaximumSize(new Dimension(60, 80));
 		tagraderTasksB.setBackground(Color.white);
 
+		
+		
+		// Student to do button
+        studentsB.setSelected(true);
+        studentsB.setFont(new java.awt.Font("Dialog", 1, 10));
+        studentsB.setMargin(new Insets(0, 0, 0, 0));
+        studentsB.setIcon(
+            new ImageIcon(
+                main.java.memoranda.ui.AppFrame.class.getResource(
+                    "/ui/icons/tasks.png")));
+        studentsB.setVerticalTextPosition(SwingConstants.BOTTOM);
+        studentsB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                studentsB_actionPerformed(e);
+            }
+        });
+        studentsB.setVerticalAlignment(SwingConstants.TOP);
+        studentsB.setText(Local.getString("Students")); /***/
+        studentsB.setHorizontalTextPosition(SwingConstants.CENTER);
+        studentsB.setFocusPainted(false);
+        studentsB.setBorderPainted(false);
+        studentsB.setContentAreaFilled(false);
+        studentsB.setPreferredSize(new Dimension(50, 50));
+        studentsB.setMinimumSize(new Dimension(30, 30));
+        studentsB.setOpaque(false);
+        studentsB.setMaximumSize(new Dimension(60, 80));
+        studentsB.setBackground(Color.white);
+		
+		
 		// Notes button
 		notesB.setFont(new java.awt.Font("Dialog", 1, 10));
 		notesB.setBackground(Color.white);
@@ -313,7 +314,7 @@ public class WorkPanel extends JPanel {
 		filesPanel.setBorder(null);
 
 	}
-
+	
 	public void selectPanel(String pan) {
 		if (pan != null) {
 			if (pan.equals("NOTES"))
@@ -324,8 +325,6 @@ public class WorkPanel extends JPanel {
 				eventsB_actionPerformed(null);
 			else if (pan.equals("FILES"))
 				filesB_actionPerformed(null);
-			else if (pan.contentEquals("STUDENTS"))
-				studentsB_actionPerformed(null);
 		}
 	}
 
@@ -344,22 +343,11 @@ public class WorkPanel extends JPanel {
 	}
 
 	public void tasksB_actionPerformed(ActionEvent e) {
-	    CurrentProject.taskType = CurrentProject.TaskType.TASK;
+	    CurrentProject.currentTaskType = CurrentProject.TaskType.DEFAULT;
 		cardLayout1.show(panel, "DAILYITEMS");
 		dailyItemsPanel.selectPanel("TASKS");
 		setCurrentButton(assignmentsB);
 		Context.put("CURRENT_PANEL", "TASKS");
-	}
-	
-	public void studentsB_actionPerformed(ActionEvent e) {
-	    CurrentProject.taskType = CurrentProject.TaskType.STUDENT_TODO;
-		cardLayout1.show(panel, "DAILYITEMS");
-		dailyItemsPanel.selectPanel("STUDENTS");
-		setCurrentButton(studentsB);
-		Context.put("CURRENT_PANEL", "STUDENTS");
-		
-		final String DEBUG = "[DEBUG] Clicked instructor todo list button";
-        System.out.println(DEBUG);
 	}
 	
 	public void instructorTasksB_actionPerformed(ActionEvent e) {
@@ -370,12 +358,20 @@ public class WorkPanel extends JPanel {
 	}
 	
 	public void tagraderTasksB_actionPerformed(ActionEvent e) {
-	    CurrentProject.taskType = CurrentProject.TaskType.TASK;
 		cardLayout1.show(panel, "DAILYITEMS");
 		dailyItemsPanel.selectPanel("TASKS");
 		setCurrentButton(tagraderTasksB);
 		Context.put("CURRENT_PANEL", "TASKS");
 	}
+	
+	public void studentsB_actionPerformed(ActionEvent e) {
+	    CurrentProject.currentTaskType = CurrentProject.TaskType.STUDENT_TODO;
+	    System.out.println(CurrentProject.currentTaskType);
+        cardLayout1.show(panel, "DAILYITEMS");
+        dailyItemsPanel.selectPanel("TASKS");
+        setCurrentButton(studentsB);
+        Context.put("CURRENT_PANEL", "TASKS");
+    }
 
 	public void eventsB_actionPerformed(ActionEvent e) {
 		cardLayout1.show(panel, "DAILYITEMS");
