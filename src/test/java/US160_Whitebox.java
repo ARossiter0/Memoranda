@@ -224,6 +224,8 @@ public class US160_Whitebox {
         CurrentStorage.get().storeTaskList(taskList, project);
         CurrentStorage.get().storeInstrTodoList(instrTodoList, project);
         CurrentProject.set(project);        
+        
+        Context.put("SHOW_REDUCED_ONLY", false);
                 
         // Check that the task table model has 501 children
         CurrentProject.currentTaskType = CurrentProject.TaskType.DEFAULT;        
