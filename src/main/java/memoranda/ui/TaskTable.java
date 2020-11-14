@@ -86,7 +86,7 @@ public class TaskTable extends JTable {
 
     protected TreeTableCellRenderer tree;
 
-    protected TaskTableModel model;
+    protected TaskTableSorter model;
     
     protected TreeTableModelAdapter modelAdapter;
     
@@ -183,13 +183,15 @@ public class TaskTable extends JTable {
      */
     public void setAsAssignmentTable() {
         model = new TaskTableSorter(this, true);
+        model.refreshHeaderAndContents();
         modelAdapter = new TreeTableModelAdapter(model, tree);
         super.setModel(modelAdapter);
         setShowGrid(false);
 		setIntercellSpacing(new Dimension(0, 0));
 		setRowHeight(18);
 		initColumnWidths();
-		getTableHeader().setReorderingAllowed(false);
+        getTableHeader().setReorderingAllowed(false);
+        
         }
     public void setAsTaskTable() {
         model = new TaskTableSorter(this, false);
@@ -199,7 +201,8 @@ public class TaskTable extends JTable {
 		setIntercellSpacing(new Dimension(0, 0));
 		setRowHeight(18);
 		initColumnWidths();
-		getTableHeader().setReorderingAllowed(false);
+        getTableHeader().setReorderingAllowed(false);
+        model.refreshHeaderAndContents();
     }
 
     void initColumnWidths() {

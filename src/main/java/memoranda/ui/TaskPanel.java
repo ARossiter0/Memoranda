@@ -472,10 +472,16 @@ public class TaskPanel extends JPanel {
     }
     //defines actions to be performed when the edit task button is clicked
     void editTaskB_actionPerformed(ActionEvent e) {
-        Task t =
-            CurrentProject.getTaskList().getTask(
-                taskTable.getModel().getValueAt(taskTable.getSelectedRow(), TaskTable.TASK_ID).toString());
-        TaskDialog dlg = new TaskDialog(App.getFrame(), Local.getString("Edit task"));
+        Task t = CurrentProject.getTaskList().getTask(
+            taskTable.getModel().getValueAt(taskTable.getSelectedRow(), TaskTable.TASK_ID).toString());
+        TaskDialog dlg;
+
+        if (Context.get("CURRENT_PANEL").equals("ASSIGN")) {
+            dlg = new TaskDialog(App.getFrame(), Local.getString("Edit Assignment"));
+        } else {
+            dlg = new TaskDialog(App.getFrame(), Local.getString("Edit task"));
+        }
+
         Dimension frmSize = App.getFrame().getSize();
         Point loc = App.getFrame().getLocation();
         dlg.setLocation((frmSize.width - dlg.getSize().width) / 2 + loc.x, (frmSize.height - dlg.getSize().height) / 2 + loc.y);
@@ -485,22 +491,41 @@ public class TaskPanel extends JPanel {
         dlg.endDate.getModel().setValue(t.getEndDate().getDate());
         dlg.priorityCB.setSelectedIndex(t.getPriority());                
         dlg.effortField.setText(Util.getHoursFromMillis(t.getEffort()));
-	if((t.getStartDate().getDate()).after(t.getEndDate().getDate()))
-		dlg.chkEndDate.setSelected(false);
-	else
-		dlg.chkEndDate.setSelected(true);
-		dlg.progress.setValue(new Integer(t.getProgress()));
- 	dlg.chkEndDate_actionPerformed(null);	
+
+        if((t.getStartDate().getDate()).after(t.getEndDate().getDate())) { //Correct ???
+            dlg.chkEndDate.setSelected(false);
+        } else {
+            dlg.chkEndDate.setSelected(true);
+            dlg.progress.setValue(new Integer(t.getProgress()));
+            dlg.chkEndDate_actionPerformed(null);
+        }
+     
+        if (Context.get("CURRENT_PANEL").equals("ASSIGN")) {
+            dlg.border3.setTitle(Local.getString("Assignment Name"));
+            dlg.jLabel6.setText(Local.getString("Assigned"));
+            dlg.jLabel2.setText(Local.getString("Due Date"));
+
+            dlg.chkEndDate_Augmented();
+            dlg.chkEndDate.setVisible(false);
+            dlg.jPanel4.setVisible(false);
+            dlg.jPanelProgress.setVisible(false);
+        }
+
         dlg.setVisible(true);
-        if (dlg.CANCELLED)
+
+        if (dlg.CANCELLED) {
             return;
+        }
+
         CalendarDate sd = new CalendarDate((Date) dlg.startDate.getModel().getValue());
-//        CalendarDate ed = new CalendarDate((Date) dlg.endDate.getModel().getValue());
-         CalendarDate ed;
- 		if(dlg.chkEndDate.isSelected())
- 			ed = new CalendarDate((Date) dlg.endDate.getModel().getValue());
- 		else
- 			ed = null;
+        CalendarDate ed = null;
+
+        if (Context.get("CURRENT_PANEL").equals("ASSIGN")) {
+            ed = new CalendarDate((Date) dlg.endDate.getModel().getValue());
+        } else if(dlg.chkEndDate.isSelected()) {
+            ed = new CalendarDate((Date) dlg.endDate.getModel().getValue());
+        }
+
         t.setStartDate(sd);
         t.setEndDate(ed);
         t.setText(dlg.todoField.getText());
@@ -509,12 +534,17 @@ public class TaskPanel extends JPanel {
         t.setEffort(Util.getMillisFromHours(dlg.effortField.getText()));
         t.setProgress(((Integer)dlg.progress.getValue()).intValue());
         
-//		CurrentProject.getTaskList().adjustParentTasks(t);
 
-        CurrentStorage.get().storeTaskList(CurrentProject.getTaskList(), CurrentProject.get());
+        if(Context.get("CURRENT_PANEL").equals("ASSIGN")) {
+            CurrentStorage.get().storeAssignList(CurrentProject.getAssignList(), CurrentProject.get());
+        } else {
+            CurrentStorage.get().storeTaskList(CurrentProject.getTaskList(), CurrentProject.get());
+        }
+        
+
         taskTable.tableChanged();
         parentPanel.updateIndicators();
-        //taskTable.updateUI();
+
     }
     //defines actions to be performed when new task is added
     void newTaskB_actionPerformed(ActionEvent e) {
@@ -594,9 +624,6 @@ public class TaskPanel extends JPanel {
         parentPanel.updateIndicators();
         //taskTable.updateUI();
     }
-
-    
-
 
     //New for add lecture times
     LectureTime newLectureTime_actionPerformed() {
@@ -789,25 +816,44 @@ public class TaskPanel extends JPanel {
     void removeTaskB_actionPerformed(ActionEvent e) {
         String msg;
         String thisTaskId = taskTable.getModel().getValueAt(taskTable.getSelectedRow(), TaskTable.TASK_ID).toString();
-        
-        if (taskTable.getSelectedRows().length > 1)
-            msg = Local.getString("Remove")+" "+taskTable.getSelectedRows().length +" "+Local.getString("tasks")+"?"
-             + "\n"+Local.getString("Are you sure?");
-        else {        	
-        	Task t = CurrentProject.getTaskList().getTask(thisTaskId);
-        	// check if there are subtasks
-			if(CurrentProject.getTaskList().hasSubTasks(thisTaskId)) {
-				msg = Local.getString("Remove task")+"\n'" + t.getText() + Local.getString("' and all subtasks") +"\n"+Local.getString("Are you sure?");
-			}
-			else {		            
-				msg = Local.getString("Remove task")+"\n'" + t.getText() + "'\n"+Local.getString("Are you sure?");
-			}
+        if(Context.get("CURRENT_PANEL").equals("ASSIGN")) {
+            if (taskTable.getSelectedRows().length > 1)
+                msg = Local.getString("Remove")+" "+taskTable.getSelectedRows().length +" "+Local.getString("assignments")+"?"
+                + "\n"+Local.getString("Are you sure?");
+            else {        	
+                Task t = CurrentProject.getTaskList().getTask(thisTaskId);
+                // check if there are subtasks
+                if(CurrentProject.getTaskList().hasSubTasks(thisTaskId)) {
+                    msg = Local.getString("Remove assignment")+"\n'" + t.getText() + Local.getString("' and all sub-assignments") +"\n"+Local.getString("Are you sure?");
+                }
+                else {		            
+                    msg = Local.getString("Remove assignment")+"\n'" + t.getText() + "'\n"+Local.getString("Are you sure?");
+                }
+            }
+        } else {
+            if (taskTable.getSelectedRows().length > 1)
+                msg = Local.getString("Remove")+" "+taskTable.getSelectedRows().length +" "+Local.getString("tasks")+"?"
+                + "\n"+Local.getString("Are you sure?");
+            else {        	
+                Task t = CurrentProject.getTaskList().getTask(thisTaskId);
+                // check if there are subtasks
+                if(CurrentProject.getTaskList().hasSubTasks(thisTaskId)) {
+                    msg = Local.getString("Remove task")+"\n'" + t.getText() + Local.getString("' and all subtasks") +"\n"+Local.getString("Are you sure?");
+                }
+                else {		            
+                    msg = Local.getString("Remove task")+"\n'" + t.getText() + "'\n"+Local.getString("Are you sure?");
+                }
+            }
+        }
+        String topBar = "Remove task";
+        if(Context.get("CURRENT_PANEL").equals("ASSIGN")) {
+            topBar = "Remove Assignment";
         }
         int n =
             JOptionPane.showConfirmDialog(
                 App.getFrame(),
                 msg,
-                Local.getString("Remove task"),
+                topBar,
                 JOptionPane.YES_NO_OPTION);
         if (n != JOptionPane.YES_OPTION)
             return;
@@ -823,7 +869,11 @@ public class TaskPanel extends JPanel {
             CurrentProject.getTaskList().removeTask((Task)toremove.get(i));
         }
         taskTable.tableChanged();
-        CurrentStorage.get().storeTaskList(CurrentProject.getTaskList(), CurrentProject.get());
+        if(Context.get("CURRENT_PANEL").equals("ASSIGN")) {
+            CurrentStorage.get().storeAssignList(CurrentProject.getAssignList(), CurrentProject.get());
+        } else {
+            CurrentStorage.get().storeTaskList(CurrentProject.getTaskList(), CurrentProject.get());
+        }
         parentPanel.updateIndicators();
         //taskTable.updateUI();
 
@@ -843,8 +893,12 @@ public class TaskPanel extends JPanel {
 			Task t = (Task)tocomplete.get(i);
 			t.setProgress(100);
 		}
-		taskTable.tableChanged();
-		CurrentStorage.get().storeTaskList(CurrentProject.getTaskList(), CurrentProject.get());
+        taskTable.tableChanged();
+        if(Context.get("CURRENT_PANEL").equals("ASSIGN")) {
+            CurrentStorage.get().storeAssignList(CurrentProject.getAssignList(), CurrentProject.get());
+        } else {
+            CurrentStorage.get().storeTaskList(CurrentProject.getTaskList(), CurrentProject.get());
+        }
 		parentPanel.updateIndicators();
 		//taskTable.updateUI();
 	}
@@ -860,28 +914,24 @@ public class TaskPanel extends JPanel {
     class PopupListener extends MouseAdapter {
 
         public void mouseClicked(MouseEvent e) {
-		if ((e.getClickCount() == 2) && (taskTable.getSelectedRow() > -1)){
-			// ignore "tree" column
-			//if(taskTable.getSelectedColumn() == 1) return;
-			
-			editTaskB_actionPerformed(null);
-		}
+            if ((e.getClickCount() == 2) && (taskTable.getSelectedRow() > -1)){
+                editTaskB_actionPerformed(null);
+            }
         }
 
-                public void mousePressed(MouseEvent e) {
-                    maybeShowPopup(e);
-                }
+        public void mousePressed(MouseEvent e) {
+            maybeShowPopup(e);
+        }
 
-                public void mouseReleased(MouseEvent e) {
-                    maybeShowPopup(e);
-                }
+        public void mouseReleased(MouseEvent e) {
+            maybeShowPopup(e);
+        }
 
-                private void maybeShowPopup(MouseEvent e) {
-                    if (e.isPopupTrigger()) {
-                        taskPPMenu.show(e.getComponent(), e.getX(), e.getY());
-                    }
-                }
-
+        private void maybeShowPopup(MouseEvent e) {
+            if (e.isPopupTrigger()) {
+                taskPPMenu.show(e.getComponent(), e.getX(), e.getY());
+            }
+        }
     }
 
   void ppEditTask_actionPerformed(ActionEvent e) {
@@ -919,20 +969,23 @@ public class TaskPanel extends JPanel {
    */
   public void refresh() {
     if(Context.get("CURRENT_PANEL").equals("ASSIGN")) {
+        subTaskB.setEnabled(false);
         taskTable.setAsAssignmentTable();
         taskTable.repaint();
         newTaskB.setToolTipText(Local.getString("Create new Assignment"));
         removeTaskB.setToolTipText(Local.getString("Remove Assignment"));
         editTaskB.setToolTipText(Local.getString("Edit Assignment"));
         subTaskB.setToolTipText(Local.getString("Add sub-Assignment"));
+        completeTaskB.setToolTipText(Local.getString("Complete Assignment"));
     } else {
+        subTaskB.setEnabled(true);
         taskTable.setAsTaskTable();
         taskTable.repaint();
         newTaskB.setToolTipText(Local.getString("Create new task"));
         subTaskB.setToolTipText(Local.getString("Add subtask"));
         editTaskB.setToolTipText(Local.getString("Edit task"));
         removeTaskB.setToolTipText(Local.getString("Remove task"));
+        completeTaskB.setToolTipText(Local.getString("Complete task"));
     }
   }
-
 }

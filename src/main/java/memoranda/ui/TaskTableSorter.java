@@ -22,6 +22,8 @@ public class TaskTableSorter extends TaskTableModel{
 	
 	// sort opposite direction
 	boolean opposite = false;
+
+	JTableHeader _header = null;
 	
 	Comparator comparator = new Comparator(){
 		public int compare(Object o1, Object o2){
@@ -52,6 +54,7 @@ public class TaskTableSorter extends TaskTableModel{
 		JTableHeader tableHeader = table.getTableHeader();
 		tableHeader.addMouseListener( new MouseHandler() );
 		tableHeader.setDefaultRenderer( new SortableHeaderRenderer());
+		_header = tableHeader;
 	}
 	/**
 	 * This constructor allows for the correct TaskTableModel to be instanciated.
@@ -62,6 +65,7 @@ public class TaskTableSorter extends TaskTableModel{
 		JTableHeader tableHeader = table.getTableHeader();
 		tableHeader.addMouseListener( new MouseHandler() );
 		tableHeader.setDefaultRenderer( new SortableHeaderRenderer());
+		_header = tableHeader;
 	}
 	
 	public Object getChild(Object parent, int index) {
@@ -94,34 +98,39 @@ public class TaskTableSorter extends TaskTableModel{
             int viewColumn = columnModel.getColumnIndexAtX(e.getX());
             int column = columnModel.getColumn(viewColumn).getModelIndex();
             if (column != -1) {
-		sorting_column = column;
-		
-		// 0 == priority icon column
-		// 4 == priority text column
-		if(column == 0) sorting_column = 4;
-		
-		if(e.isControlDown()) sorting_column = -1;
-		else opposite = !opposite;
-		
-		TaskTable treetable = ( (TaskTable) h.getTable());
-		
-		//java.util.Collection expanded = treetable.getExpandedTreeNodes();
-		
-		treetable.tableChanged();
-		//treetable.setExpandedTreeNodes(expanded);
-		//h.updateUI();
-		h.resizeAndRepaint();
+				sorting_column = column;
+				
+				// 0 == priority icon column
+				// 4 == priority text column
+				if(column == 0) sorting_column = 4;
+				
+				if(e.isControlDown()) sorting_column = -1;
+				else opposite = !opposite;
+				
+				TaskTable treetable = ( (TaskTable) h.getTable());
+				
+				//java.util.Collection expanded = treetable.getExpandedTreeNodes();
+				
+				treetable.tableChanged();
+				//treetable.setExpandedTreeNodes(expanded);
+				//h.updateUI();
+				h.resizeAndRepaint();
             }
         }
-    }
+	}
+	public void refreshHeaderAndContents() {
+		JTableHeader h = _header;
+		TableColumnModel columnModel = h.getColumnModel();
+		opposite = !opposite;
+		TaskTable treetable = ( (TaskTable) h.getTable());
+		treetable.tableChanged();
+		h.resizeAndRepaint();
+	}
     
 	/**
 	* Render sorting header differently
 	*/
 	private class SortableHeaderRenderer implements TableCellRenderer {
-	    
-	    
-	    
 		public Component getTableCellRendererComponent(JTable table, 
 							       Object value,
 							       boolean isSelected, 
