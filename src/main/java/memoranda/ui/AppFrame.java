@@ -36,6 +36,7 @@ import javax.swing.text.html.HTMLDocument;
 
 import main.java.memoranda.CurrentProject;
 import main.java.memoranda.History;
+import main.java.memoranda.LectureList;
 import main.java.memoranda.Note;
 import main.java.memoranda.NoteList;
 import main.java.memoranda.Project;
@@ -621,7 +622,7 @@ public class AppFrame extends JFrame {
 
         CurrentProject.addProjectListener(new ProjectListener() {
 
-            public void projectChange(Project prj, NoteList nl, TaskList tl, TaskList t2,
+            public void projectChange(Project prj, NoteList nl, LectureList tl, TaskList t2,
                     ResourcesList rl) {
             }
 

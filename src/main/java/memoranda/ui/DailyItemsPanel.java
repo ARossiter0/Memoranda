@@ -29,6 +29,7 @@ import main.java.memoranda.EventsScheduler;
 import main.java.memoranda.History;
 import main.java.memoranda.HistoryItem;
 import main.java.memoranda.HistoryListener;
+import main.java.memoranda.LectureList;
 import main.java.memoranda.Note;
 import main.java.memoranda.NoteList;
 import main.java.memoranda.NoteListener;
@@ -227,11 +228,11 @@ public class DailyItemsPanel extends JPanel {
         });
 
         CurrentProject.addProjectListener(new ProjectListener() {
-            public void projectChange(Project p, NoteList nl, TaskList tl, TaskList instrTodoList, ResourcesList rl) {
+            public void projectChange(Project p, NoteList nl, LectureList tl, TaskList instrTodoList, ResourcesList rl) {
 //            	Util.debug("DailyItemsPanel Project Listener: Project is going to be changed!");				
 //            	Util.debug("current project is " + CurrentProject.get().getTitle());
 
-            	currentProjectChanged(p, nl, tl, rl);
+            	currentProjectChanged(p, nl, tl, instrTodoList, rl);
             }
             public void projectWasChanged() {
 //            	Util.debug("DailyItemsPanel Project Listener: Project has been changed!");            	
@@ -368,7 +369,7 @@ public class DailyItemsPanel extends JPanel {
 		editorPanel.editor.requestFocus();		
 	}
 	
-    void currentProjectChanged(Project newprj, NoteList nl, TaskList tl, ResourcesList rl) {
+    void currentProjectChanged(Project newprj, NoteList nl, LectureList t1, TaskList t2, ResourcesList rl) {
 //		Util.debug("currentProjectChanged");
 
         Cursor cur = App.getFrame().getCursor();
@@ -389,7 +390,7 @@ public class DailyItemsPanel extends JPanel {
             }
         }*/
         
-        updateIndicators(CurrentDate.get(), tl);
+        updateIndicators(CurrentDate.get(), t2);
         App.getFrame().setCursor(cur);
     }
 

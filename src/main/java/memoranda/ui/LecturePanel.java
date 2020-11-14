@@ -216,18 +216,12 @@ public class LecturePanel extends JPanel {
         });
         // add a new Lecture to the current project
         CurrentProject.addProjectListener(new ProjectListener() {
-            public void projectChange(Project p, NoteList nl, LectureList tl, ResourcesList rl) {
+            public void projectChange(Project p, NoteList nl, LectureList tl, TaskList t2, ResourcesList rl) {
                 newLectureB.setEnabled(CurrentDate.get().inPeriod(p.getStartDate(), p.getEndDate()));
             }
 
             public void projectWasChanged() {
                 // LectureTable.setCurrentRootLecture(null); //XXX
-            }
-
-            @Override
-            public void projectChange(Project prj, NoteList nl, TaskList tl, TaskList t2, ResourcesList rl) {
-                // TODO Auto-generated method stub
-
             }
         });
         // upon selection of a Lecture or a sub Lecture, emable edit and remove Lecture

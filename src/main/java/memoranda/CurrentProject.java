@@ -137,7 +137,7 @@ public class CurrentProject {
         TaskList newinstrtodolist = CurrentStorage.get().openInstrTodoList(project);
         NoteList newnotelist = CurrentStorage.get().openNoteList(project);
         ResourcesList newresources = CurrentStorage.get().openResourcesList(project);
-        notifyListenersBefore(project, newnotelist, newtasklist, newinstrtodolist, newresources);
+        notifyListenersBefore(project, newnotelist, newlecturelist, newinstrtodolist, newresources);
         _project = project;
         _lecturelist = newlecturelist;
         _tasklist = newtasklist;
@@ -172,7 +172,7 @@ public class CurrentProject {
      * @param t2 the new instructor todo list
      * @param rl the new resource list
      */
-    private static void notifyListenersBefore(Project project, NoteList nl, TaskList tl, TaskList t2, ResourcesList rl) {
+    private static void notifyListenersBefore(Project project, NoteList nl, LectureList tl, TaskList t2, ResourcesList rl) {
         for (int i = 0; i < projectListeners.size(); i++) {
             ((ProjectListener)projectListeners.get(i)).projectChange(project, nl, tl, t2, rl);
             /*DEBUGSystem.out.println(projectListeners.get(i));*/

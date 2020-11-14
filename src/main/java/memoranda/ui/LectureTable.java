@@ -22,6 +22,7 @@ import main.java.memoranda.CurrentProject;
 import main.java.memoranda.Event;
 import main.java.memoranda.EventsManager;
 import main.java.memoranda.Lecture;
+import main.java.memoranda.LectureList;
 import main.java.memoranda.NoteList;
 import main.java.memoranda.Project;
 import main.java.memoranda.ProjectImpl;
@@ -60,7 +61,7 @@ public class LectureTable extends JTable {
             }
 
             @Override
-            public void projectChange(Project prj, NoteList nl, TaskList tl, TaskList t2, ResourcesList rl) {
+            public void projectChange(Project prj, NoteList nl, LectureList tl, TaskList t2, ResourcesList rl) {
             }
         });
     }
