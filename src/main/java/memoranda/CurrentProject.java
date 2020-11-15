@@ -34,13 +34,7 @@ public class CurrentProject {
     private static NoteList _notelist = null;
     private static ResourcesList _resources = null;
     private static Vector projectListeners = new Vector();
-    private static String panel = "OTHER";
 
-    
-
-
-
-    
     private static final String PRJ_ID_KEY = "LAST_OPENED_PROJECT_ID";
     public enum TaskType {DEFAULT, INSTR_TODO_LIST, STUDENT_TODO}
     public static TaskType currentTaskType = TaskType.DEFAULT;
@@ -99,7 +93,13 @@ public class CurrentProject {
      * @return the list of tasks associated with this project
      */
     public static TaskList getTaskList() {
-        if(Context.get("CURRENT_PANEL").equals("ASSIGN")) {
+        boolean emptyContext;
+        try {
+            emptyContext = Context.get("CURRENT_PANEL").equals("ASSIGN");
+        } catch (NullPointerException contextFail) {
+            emptyContext = false;
+        }
+        if(emptyContext) {
             return _assignlist;
         } else if (currentTaskType == TaskType.STUDENT_TODO) {
             return _studenttodo;
@@ -115,9 +115,6 @@ public class CurrentProject {
         return _assignlist;
     }
         
-
-    	
-
     /**
      * Get the lectures associated with this project
      * @return the list of lectures associated with this project
