@@ -374,8 +374,10 @@ public class TaskPanel extends JPanel {
         });
         // add a new task to the current project
         CurrentProject.addProjectListener(new ProjectListener() {
-            public void projectChange(Project p, NoteList nl, LectureList tl, TaskList instrTodoList, ResourcesList rl) {
+
+            public void projectChange(Project p, NoteList nl, LectureList tl, TaskList instrTodoList, TaskList s1, ResourcesList rl) {
                 newTaskB.setEnabled(CurrentDate.get().inPeriod(p.getStartDate(), p.getEndDate()));
+
             }
 
             public void projectWasChanged() {

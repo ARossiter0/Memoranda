@@ -10,6 +10,6 @@ public interface ProjectListener {
 	 * @param t2 the instructor todo list associated with the project
 	 * @param rl the resources list associated with the project
 	 */
-  void projectChange(Project prj, NoteList nl, LectureList tl, TaskList t2, ResourcesList rl);
+  void projectChange(Project prj, NoteList nl, LectureList tl, TaskList t2, TaskList s1, ResourcesList rl);
   void projectWasChanged();
 }

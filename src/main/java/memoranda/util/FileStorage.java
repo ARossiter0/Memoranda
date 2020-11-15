@@ -306,6 +306,42 @@ public class FileStorage implements Storage {
         Document instrTodoListDoc = instrTodoList.getXMLContent();
         saveDocument(instrTodoListDoc,JN_DOCPATH + prj.getID() + File.separator + INSTR_TODOLIST_EXT);
     }
+    
+    public TaskList openStudentTodo(Project prj) {
+        String fn = JN_DOCPATH + prj.getID() + File.separator + ".studenttodo";
+
+        if (documentExists(fn)) {
+            /*DEBUG*/
+            System.out.println(
+                "[DEBUG] Open student to do list: "
+                    + JN_DOCPATH
+                    + prj.getID()
+                    + File.separator
+                    + ".studenttodo");
+            
+            Document tasklistDoc = openDocument(fn);
+            return new TaskListImpl(tasklistDoc, prj);   
+        }
+        else {
+            /*DEBUG*/
+            System.out.println("[DEBUG] New student to do list created");
+            return new TaskListImpl(prj);
+        }
+    }
+
+    public void storeStudentTodo(TaskList tasklist, Project prj) {
+        /*DEBUG*/
+        System.out.println(
+            "[DEBUG] Save student to do list: "
+                + JN_DOCPATH
+                + prj.getID()
+                + File.separator
+                + ".studenttodo");
+        Document tasklistDoc = tasklist.getXMLContent();
+        //tasklistDoc.setDocType(TaskListVersioning.getCurrentDocType());
+        saveDocument(tasklistDoc,JN_DOCPATH + prj.getID() + File.separator + ".studenttodo");
+    }
+    
 
 	/**
 	 * @see main.java.memoranda.util.Storage#createProjectStorage(main.java.memoranda.Project)
