@@ -24,6 +24,7 @@ import main.java.memoranda.EventNotificationListener;
 import main.java.memoranda.EventsManager;
 import main.java.memoranda.EventsScheduler;
 import main.java.memoranda.History;
+import main.java.memoranda.LectureList;
 import main.java.memoranda.NoteList;
 import main.java.memoranda.Project;
 import main.java.memoranda.ProjectListener;
@@ -125,7 +126,7 @@ public class AgendaPanel extends JPanel {
 							EventsManager.createSticker(txt, sP);
 							CurrentStorage.get().storeEventsManager();
 						}
-
+						refresh(CurrentDate.get());
 						System.out.println("agregué un sticker");
 					} else if (d.startsWith("memoranda:expandsubtasks")) {
 						String id = d.split("#")[1];
@@ -258,10 +259,7 @@ public class AgendaPanel extends JPanel {
 		});
 		CurrentProject.addProjectListener(new ProjectListener() {
 
-			public void projectChange(Project prj, NoteList nl, TaskList tl, ResourcesList rl) {
-				if (isActive)
-
-					refresh(CurrentDate.get());
+			public void projectChange(Project prj, NoteList nl, LectureList tl, TaskList t2, TaskList s1, ResourcesList rl) {
 			}
 
 			public void projectWasChanged() {
