@@ -45,6 +45,13 @@ import main.java.memoranda.date.CurrentDate;
 import main.java.memoranda.date.DateListener;
 import main.java.memoranda.util.*;
 
+import main.java.memoranda.util.CurrentStorage;
+import main.java.memoranda.util.Local;
+import main.java.memoranda.LectureTime;
+import main.java.memoranda.SpecialCalendarDate;
+import main.java.memoranda.Task;
+import main.java.memoranda.TaskListImpl;
+
 /*$Id: ProjectsPanel.java,v 1.14 2005/01/04 09:59:22 pbielen Exp $*/
 public class ProjectsPanel extends JPanel implements ExpandablePanel {
 	BorderLayout borderLayout1 = new BorderLayout();
@@ -155,7 +162,7 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 		ppProperties.setText(Local.getString("Course properties"));
 		ppProperties.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ppProperties_actionPerformed(e);
+				ppProperties_actionPerformed_EditCourse(e);
 			}
 		});
 		ppProperties.setIcon(
@@ -164,7 +171,7 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 					"/ui/icons/editproject.png")));
 		ppProperties.setEnabled(false);
 		ppDeleteProject.setFont(new java.awt.Font("Dialog", 1, 11));
-		ppDeleteProject.setText(Local.getString("Delete project"));
+		ppDeleteProject.setText(Local.getString("Delete course"));
 		ppDeleteProject.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ppDeleteProject_actionPerformed(e);
@@ -310,9 +317,9 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 	}
 
 	void toggleButton_actionPerformed(ActionEvent e) {
-		for (int i = 0; i < expListeners.size(); i++)
-			((ActionListener) expListeners.get(i)).actionPerformed(
-				new ActionEvent(this, 0, "Panel expanded (collapsed)"));
+		for (int i = 0; i < expListeners.size(); i++) {
+			((ActionListener) expListeners.get(i)).actionPerformed(new ActionEvent(this, 0, "Panel expanded (collapsed)"));
+		}
 		if (expanded) {
 			expanded = false;
 			toggleButton.setIcon(expIcon);
@@ -397,6 +404,7 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 		prjTablePanel.projectsTable.clearSelection();
 		prjTablePanel.updateUI();
 		setMenuEnabled(false);
+		CurrentProject.updateAllListeners();
 	}
 
 	void ppProperties_actionPerformed(ActionEvent e) {
@@ -414,9 +422,9 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 			prj.getStartDate().getCalendar().getTime());
 		if (prj.getEndDate() != null) {
 			dlg.edButton.setEnabled(true);
-//            dlg.endDateChB.setForeground(Color.BLACK);
-//
-//			dlg.endDateChB.setSelected(true);
+		//dlg.endDateChB.setForeground(Color.BLACK);
+		//
+		//dlg.endDateChB.setSelected(true);
 			dlg.endDate.setEnabled(true);
 			dlg.endDate.getModel().setValue(
 				prj.getEndDate().getCalendar().getTime());
@@ -430,15 +438,83 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 		prj.setStartDate(
 			new CalendarDate((Date) dlg.startDate.getModel().getValue()));
 
-//		if (dlg.endDateChB.isSelected())
+		//if (dlg.endDateChB.isSelected())
 			prj.setEndDate(
 				new CalendarDate((Date) dlg.endDate.getModel().getValue()));
-//		else
+		//else
 			prj.setEndDate(null);
 		prjTablePanel.updateUI();
 		/*
 		 * if (dlg.freezeChB.isSelected()) prj.freeze(); else
 		 */
+	}
+	/**
+	 * This method added to facilitate editing an existing course, in order to meed
+	 * requirements for US130. A similar, but not identical method is above, in case a reversion 
+	 * is needed.
+	 */
+	void ppProperties_actionPerformed_EditCourse(ActionEvent e) {
+		Project prj = prjTablePanel.getSelectedProject();
+
+		ProjectDialog dlg = new ProjectDialog(null, Local.getString("Edit course"));
+
+		//set the course name
+		dlg.prTitleField.setText(prj.getTitle());
+
+		//set start date
+		try {
+			dlg.startDate.getModel().setValue(prj.getStartDate().getCalendar().getTime());
+		} catch (NullPointerException ex) {} //up to interpretation
+		
+		//set end date
+		try {
+			dlg.endDate.getModel().setValue(prj.getEndDate().getCalendar().getTime());
+		} catch (NullPointerException ex) {}
+
+		//set final exam date
+		try {
+			dlg.finalExam.getModel().setValue(prj.getFinalDate().getCalendar().getTime());
+		} catch (NullPointerException ex) {}
+
+        Dimension dlgSize = dlg.getSize();
+        Dimension frmSize = App.getFrame().getSize();
+        Point loc = App.getFrame().getLocation();
+        dlg.setLocation((frmSize.width - dlgSize.width) / 2 + loc.x, (frmSize.height - dlgSize.height) / 2 + loc.y);
+        dlg.setVisible(true);
+
+        if (dlg.CANCELLED)
+            return;
+		
+		String title = dlg.prTitleField.getText();
+		CalendarDate startD = new CalendarDate((Date) dlg.startDate.getModel().getValue());
+		CalendarDate endD = new CalendarDate((Date) dlg.endDate.getModel().getValue());
+		CalendarDate finalExamDate = new CalendarDate((Date) dlg.finalExam.getModel().getValue());
+
+        CurrentStorage.get().storeProjectManager(); //does this set the current project? If not set it before setTasks is called
+		CurrentProject.set(prj);
+		
+		prj.setTitle(title);
+		prj.setStartDate(startD);
+		prj.setEndDate(endD);
+		prj.setFinalDate(finalExamDate);
+        
+        for(LectureTime lt : dlg.lectureTimes) {
+            Task newTask = CurrentProject.getTaskList().createLectureTask(lt.day, lt.hour, lt.min, "Lecture");
+        }
+        for(SpecialCalendarDate fd : dlg.freeDays) {
+            Task newTask = CurrentProject.getTaskList().createSingleEventTask(fd.getName(), fd.getDate(), "Free Day");
+        }
+        for(SpecialCalendarDate hd : dlg.holidays) {
+            Task newTask = CurrentProject.getTaskList().createSingleEventTask(hd.getName(), hd.getDate(), "Holiday");
+        }
+       
+		CurrentStorage.get().storeTaskList(CurrentProject.getTaskList(), CurrentProject.get());
+
+		CurrentProject.updateAllListeners(); //??
+
+		prjTablePanel.updateUI();
+		ppDeleteProject.setEnabled(false);
+		ppOpenProject.setEnabled(false);
 	}
 
 	void ppShowActiveOnlyChB_actionPerformed(ActionEvent e) {

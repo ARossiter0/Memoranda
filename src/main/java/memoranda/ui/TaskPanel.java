@@ -470,6 +470,7 @@ public class TaskPanel extends JPanel {
 		});	
 
     }
+
     //defines actions to be performed when the edit task button is clicked
     void editTaskB_actionPerformed(ActionEvent e) {
         Task t = CurrentProject.getTaskList().getTask(
@@ -625,32 +626,53 @@ public class TaskPanel extends JPanel {
         //taskTable.updateUI();
     }
 
-    //New for add lecture times
+  //New for add lecture times
     LectureTime newLectureTime_actionPerformed() {
         LectureDialog dlg = new LectureDialog(App.getFrame(), Local.getString("New Lecture Time"));
-        
+
         Dimension frmSize = App.getFrame().getSize();
         Point loc = App.getFrame().getLocation();
-        
+
+        Calendar cdate = CurrentDate.get().getCalendar();
+        cdate.set(Calendar.MINUTE,0);
+
+        dlg.startTimeSpin.getModel().setValue(cdate.getTime());
+        dlg.endTimeSpin.getModel().setValue(cdate.getTime());
         dlg.setLocation((frmSize.width - dlg.getSize().width) / 2 + loc.x, (frmSize.height - dlg.getSize().height) / 2 + loc.y);
         dlg.setVisible(true);
+
+        //------------------------------------------
+
+        String topic = dlg.lecTopicField.getText();
+        CalendarDate date = new CalendarDate((Date) dlg.dateSpin.getModel().getValue());
         
+        Calendar startTime = new GregorianCalendar(Local.getCurrentLocale());
+        startTime.setTime(((Date)dlg.startTimeSpin.getModel().getValue()));
+        
+        Calendar endTime = new GregorianCalendar(Local.getCurrentLocale());
+        endTime.setTime(((Date)dlg.endTimeSpin.getModel().getValue()));
+        
+        CurrentProject.getLectureList().createLecture(date, startTime, endTime, topic);
+        CurrentStorage.get().storeLectureList(CurrentProject.getLectureList(), CurrentProject.get());
+
+        //------------------------------------------
+
         //get the lecture time selected
         Calendar calendar = new GregorianCalendar(Local.getCurrentLocale());
-		calendar.setTime(((Date)dlg.timeSpin.getModel().getValue()));
-		int hh = calendar.get(Calendar.HOUR_OF_DAY);
-        int mm = calendar.get(Calendar.MINUTE);
+        calendar.setTime(((Date) dlg.startTimeSpin.getModel().getValue()));
 
-        //gets the day selected
-        String day = (String)dlg.daysCB.getSelectedItem();
+        int hh = calendar.get(Calendar.HOUR_OF_DAY);
+        int mm = calendar.get(Calendar.MINUTE);
+        String day = dlg.dayLabel.getText();
 
         LectureTime lecTime = new LectureTime(day, hh, mm);
 
-        if (dlg.CANCELLED)
+        if (dlg.CANCELLED) {
             return null;
-
+        }
         return lecTime;
     }
+
     //New for freedays
     SpecialCalendarDate newFreeDay_actionPerformed() {
         CourseSpecialDaysDialog dlg = new CourseSpecialDaysDialog(App.getFrame(), Local.getString("New Free Day"));
@@ -664,6 +686,7 @@ public class TaskPanel extends JPanel {
         dlg.setVisible(true);
 
         SpecialCalendarDate freeDay = new SpecialCalendarDate(new CalendarDate((Date) dlg.dateOfEvent.getModel().getValue()), dlg.nameField.getText());
+
         /**
          * TODO
          * Get the value for freeday and return it
@@ -691,6 +714,26 @@ public class TaskPanel extends JPanel {
             return null;
 
         return holiday;
+    }
+
+    //New for breaks
+    SpecialCalendarDate newBreak_actionPerformed() {
+        CourseSpecialDaysDialog dlg = new CourseSpecialDaysDialog(App.getFrame(), Local.getString("New Break"));
+
+        Dimension frmSize = App.getFrame().getSize();
+        Point loc = App.getFrame().getLocation();
+
+        dlg.dateOfEvent.getModel().setValue(CurrentDate.get().getDate());
+        
+        dlg.setLocation((frmSize.width - dlg.getSize().width) / 2 + loc.x, (frmSize.height - dlg.getSize().height) / 2 + loc.y);
+        dlg.setVisible(true);
+
+        SpecialCalendarDate courseBreak = new SpecialCalendarDate(new CalendarDate((Date) dlg.dateOfEvent.getModel().getValue()), dlg.nameField.getText());
+
+        if (dlg.CANCELLED)
+            return null;
+
+        return courseBreak;
     }
   
     //defines actions to be performed when a new sub task is added

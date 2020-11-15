@@ -115,7 +115,7 @@ public class WorkPanel extends JPanel {
 		lecturesB.setVerticalTextPosition(SwingConstants.BOTTOM);
 		lecturesB.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				eventsB_actionPerformed(e);
+				lecturesB_actionPerformed(e);
 			}
 		});
 		lecturesB.setIcon(
@@ -178,7 +178,7 @@ public class WorkPanel extends JPanel {
 		studentsB.setOpaque(false);
 		studentsB.setMaximumSize(new Dimension(60, 80));
 		studentsB.setBackground(Color.white);
-
+		
 		// Instructor Tasks button
 		instructorTasksB.setSelected(true);
 		instructorTasksB.setFont(new java.awt.Font("Dialog", 1, 10));
@@ -361,6 +361,13 @@ public class WorkPanel extends JPanel {
 		setCurrentButton(assignmentsB);
 	}
 	
+	public void lecturesB_actionPerformed(ActionEvent e) {
+		cardLayout1.show(panel, "DAILYITEMS");
+		dailyItemsPanel.selectPanel("LECTURES");
+		setCurrentButton(lecturesB);
+		Context.put("CURRENT_PANEL", "LECTURES");
+	}
+		
 	public void studentsB_actionPerformed(ActionEvent e) {
 		Context.put("CURRENT_PANEL", "STUDENTS");
 		cardLayout1.show(panel, "DAILYITEMS");

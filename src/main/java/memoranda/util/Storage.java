@@ -8,6 +8,7 @@
  */
 package main.java.memoranda.util;
 
+import main.java.memoranda.LectureList;
 import main.java.memoranda.Note;
 import main.java.memoranda.NoteList;
 import main.java.memoranda.Project;
@@ -24,6 +25,9 @@ public interface Storage {
 
     TaskList openAssignList(Project prj);    
     void storeAssignList(TaskList tl, Project prj);
+    
+    LectureList openLectureList(Project prj);
+    void storeLectureList(LectureList ll, Project prj);
     
     NoteList openNoteList(Project prj);
     void storeNoteList(NoteList nl, Project prj);
