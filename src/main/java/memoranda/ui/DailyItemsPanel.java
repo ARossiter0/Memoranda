@@ -29,6 +29,7 @@ import main.java.memoranda.EventsScheduler;
 import main.java.memoranda.History;
 import main.java.memoranda.HistoryItem;
 import main.java.memoranda.HistoryListener;
+import main.java.memoranda.LectureList;
 import main.java.memoranda.Note;
 import main.java.memoranda.NoteList;
 import main.java.memoranda.NoteListener;
@@ -227,11 +228,11 @@ public class DailyItemsPanel extends JPanel {
         });
 
         CurrentProject.addProjectListener(new ProjectListener() {
-            public void projectChange(Project p, NoteList nl, TaskList tl, ResourcesList rl) {
+            public void projectChange(Project p, NoteList nl, LectureList tl, TaskList instrTodoList, ResourcesList rl) {
 //            	Util.debug("DailyItemsPanel Project Listener: Project is going to be changed!");				
 //            	Util.debug("current project is " + CurrentProject.get().getTitle());
 
-            	currentProjectChanged(p, nl, tl, rl);
+            	currentProjectChanged(p, nl, tl, instrTodoList, rl);
             }
             public void projectWasChanged() {
 //            	Util.debug("DailyItemsPanel Project Listener: Project has been changed!");            	
@@ -368,7 +369,7 @@ public class DailyItemsPanel extends JPanel {
 		editorPanel.editor.requestFocus();		
 	}
 	
-    void currentProjectChanged(Project newprj, NoteList nl, TaskList tl, ResourcesList rl) {
+    void currentProjectChanged(Project newprj, NoteList nl, LectureList t1, TaskList t2, ResourcesList rl) {
 //		Util.debug("currentProjectChanged");
 
         Cursor cur = App.getFrame().getCursor();
@@ -389,7 +390,7 @@ public class DailyItemsPanel extends JPanel {
             }
         }*/
         
-        updateIndicators(CurrentDate.get(), tl);
+        updateIndicators(CurrentDate.get(), t2);
         App.getFrame().setCursor(cur);
     }
 
@@ -450,12 +451,39 @@ public class DailyItemsPanel extends JPanel {
         updateIndicators(CurrentDate.get(), CurrentProject.getTaskList());
     }
 
+    /**
+     * Select the panel to display based on some string associated with it. 
+     * @param pan the string associated with a panel. 
+     */
     public void selectPanel(String pan) {
+    	final String TASKS_STR = "TASKS";
+    	final String AGENDA_STR = "AGENDA";
+    	final String TAB = "TAB";
+    	
+    	
+    	
         if (calendar.jnCalendar.renderer.getTask() != null) {
             calendar.jnCalendar.renderer.setTask(null);
          //   calendar.jnCalendar.updateUI();
         }
-        if (pan.equals("TASKS") && (tasksPanel.taskTable.getSelectedRow() > -1)) {
+        
+        
+        // Update table of tasks        
+        if (pan.equals(TASKS_STR)) {
+            CurrentStorage.get().storeTaskList(CurrentProject.getTaskList(), CurrentProject.get());
+            tasksPanel.taskTable.tableChanged();  
+            
+            if (CurrentProject.currentTaskType == CurrentProject.TaskType.INSTR_TODO_LIST) {
+                final String DEBUG = "\t[DEBUG] Should be instructor todo list - : " + (CurrentProject.currentTaskType == CurrentProject.TaskType.INSTR_TODO_LIST);
+                System.out.println(DEBUG);
+                tasksPanel.toggleReducedOnlyChB(true);
+            } else {
+                tasksPanel.toggleReducedOnlyChB(false);
+            }
+        }
+        
+        // Reflect selected task
+        if (pan.equals(TASKS_STR)&&(tasksPanel.taskTable.getSelectedRow() > -1)) {
             Task t =
                 CurrentProject.getTaskList().getTask(
                     tasksPanel
@@ -464,14 +492,17 @@ public class DailyItemsPanel extends JPanel {
                         .getValueAt(tasksPanel.taskTable.getSelectedRow(), TaskTable.TASK_ID)
                         .toString());
             calendar.jnCalendar.renderer.setTask(t);
-       //     calendar.jnCalendar.updateUI();
+            //calendar.jnCalendar.updateUI();
+            CurrentStorage.get().storeTaskList(CurrentProject.getTaskList(), CurrentProject.get());
+            tasksPanel.taskTable.tableChanged();                  
+
         }
-        boolean isAg = pan.equals("AGENDA");
+        boolean isAg = pan.equals(AGENDA_STR);
         agendaPanel.setActive(isAg);
         if (isAg)
         	agendaPanel.refresh(CurrentDate.get());
         cardLayout1.show(editorsPanel, pan);
-        cardLayout2.show(mainTabsPanel, pan + "TAB");
+        cardLayout2.show(mainTabsPanel, pan + TAB);
 		calendar.jnCalendar.updateUI();
 		CurrentPanel=pan;
     }

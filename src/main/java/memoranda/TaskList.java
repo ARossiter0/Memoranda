@@ -10,6 +10,7 @@ package main.java.memoranda;
 import java.util.Collection;
 
 import main.java.memoranda.date.CalendarDate;
+import main.java.memoranda.Task;
 /**
  * 
  */
@@ -20,6 +21,7 @@ public interface TaskList {
     Task getTask(String id);
 
     Task createTask(CalendarDate startDate, CalendarDate endDate, String text, int priority, long effort, String description, String parentTaskId);
+    Task createTask(CalendarDate startDate, CalendarDate endDate, String text, int priority, long effort, String description, String parentTaskId, boolean isInReduced);
 
     //New for US90
     Task createLectureTask(String day, int hour, int min, String text);
@@ -35,6 +37,7 @@ public interface TaskList {
 	
     public Collection getAllSubTasks(String taskId);
     public Collection getActiveSubTasks(String taskId,CalendarDate date);
+    public Collection getReducedTasks(Collection c);
     
 //    public void adjustParentTasks(Task t);
     
@@ -44,5 +47,6 @@ public interface TaskList {
     public long[] calculateCompletionFromSubTasks(Task t);
 
     nu.xom.Document getXMLContent();
+    
 
 }
