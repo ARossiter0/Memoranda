@@ -15,6 +15,7 @@ import javax.swing.ListSelectionModel;
 
 import main.java.memoranda.CurrentNote;
 import main.java.memoranda.CurrentProject;
+import main.java.memoranda.LectureList;
 import main.java.memoranda.Note;
 import main.java.memoranda.NoteList;
 import main.java.memoranda.NoteListener;
@@ -60,7 +61,9 @@ public class NotesList extends JList {
         });
 
         CurrentProject.addProjectListener(new ProjectListener() {
-            public void projectChange(Project p, NoteList nl, TaskList tl, TaskList s1, ResourcesList rl) {
+
+            public void projectChange(Project p, NoteList nl, LectureList tl, TaskList t2, TaskList s1, ResourcesList rl) {
+            	
             }
             public void projectWasChanged() {
                 update();

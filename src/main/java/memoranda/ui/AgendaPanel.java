@@ -24,6 +24,7 @@ import main.java.memoranda.EventNotificationListener;
 import main.java.memoranda.EventsManager;
 import main.java.memoranda.EventsScheduler;
 import main.java.memoranda.History;
+import main.java.memoranda.LectureList;
 import main.java.memoranda.NoteList;
 import main.java.memoranda.Project;
 import main.java.memoranda.ProjectListener;
@@ -255,7 +256,7 @@ public class AgendaPanel extends JPanel {
 		});
 		CurrentProject.addProjectListener(new ProjectListener() {
 
-			public void projectChange(Project prj, NoteList nl, TaskList tl, TaskList s1, ResourcesList rl) {
+			public void projectChange(Project prj, NoteList nl, LectureList tl, TaskList t2, TaskList s1, ResourcesList rl) {
 			}
 
 			public void projectWasChanged() {

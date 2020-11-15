@@ -28,6 +28,7 @@ import javax.swing.event.ListSelectionListener;
 
 import main.java.memoranda.CurrentProject;
 import main.java.memoranda.History;
+import main.java.memoranda.LectureList;
 import main.java.memoranda.NoteList;
 import main.java.memoranda.Project;
 import main.java.memoranda.ProjectListener;
@@ -37,6 +38,7 @@ import main.java.memoranda.TaskList;
 import main.java.memoranda.date.CalendarDate;
 import main.java.memoranda.date.CurrentDate;
 import main.java.memoranda.date.DateListener;
+import main.java.memoranda.ui.TaskDialog;
 import main.java.memoranda.util.Context;
 import main.java.memoranda.util.CurrentStorage;
 import main.java.memoranda.util.Local;
@@ -55,35 +57,48 @@ public class TaskPanel extends JPanel {
     JButton editTaskB = new JButton();
     JButton removeTaskB = new JButton();
     JButton completeTaskB = new JButton();
-    
-	JCheckBoxMenuItem ppShowActiveOnlyChB = new JCheckBoxMenuItem();
-		
+
+    JCheckBoxMenuItem ppShowActiveOnlyChB = new JCheckBoxMenuItem();
+    JCheckBoxMenuItem ppShowReducedOnlyChB = new JCheckBoxMenuItem();
+
     JScrollPane scrollPane = new JScrollPane();
     TaskTable taskTable = new TaskTable();
-	JMenuItem ppEditTask = new JMenuItem();
-	JPopupMenu taskPPMenu = new JPopupMenu();
-	JMenuItem ppRemoveTask = new JMenuItem();
-	JMenuItem ppNewTask = new JMenuItem();
-	JMenuItem ppCompleteTask = new JMenuItem();
-	//JMenuItem ppSubTasks = new JMenuItem();
-	//JMenuItem ppParentTask = new JMenuItem();
-	JMenuItem ppAddSubTask = new JMenuItem();
-	JMenuItem ppCalcTask = new JMenuItem();
-	DailyItemsPanel parentPanel = null;
-	
-	//main task panel frame
+    JMenuItem ppEditTask = new JMenuItem();
+    JPopupMenu taskPPMenu = new JPopupMenu();
+    JMenuItem ppRemoveTask = new JMenuItem();
+    JMenuItem ppNewTask = new JMenuItem();
+    JMenuItem ppCompleteTask = new JMenuItem();
+    // JMenuItem ppSubTasks = new JMenuItem();
+    // JMenuItem ppParentTask = new JMenuItem();
+    JMenuItem ppAddSubTask = new JMenuItem();
+    JMenuItem ppCalcTask = new JMenuItem();
+    DailyItemsPanel parentPanel = null;
+
+    // main task panel frame
     public TaskPanel(DailyItemsPanel _parentPanel) {
         try {
             parentPanel = _parentPanel;
             jbInit();
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
+    
+    public void toggleReducedOnlyChB(boolean on) {
+        if (on) {
+            taskPPMenu.add(ppShowReducedOnlyChB);
+            
+            toggleShowReducedOnly_actionPerformed(null);
+        } else {
+            Context.put("SHOW_REDUCED_ONLY", false);
+            taskTable.tableChanged();
+            taskPPMenu.remove(ppShowReducedOnlyChB);
+        }
+    }
+
     void jbInit() throws Exception {
         tasksToolBar.setFloatable(false);
-        //history back button size and preferences
+        // history back button size and preferences
         historyBackB.setAction(History.historyBackAction);
         historyBackB.setFocusable(false);
         historyBackB.setBorderPainted(false);
@@ -93,7 +108,7 @@ public class TaskPanel extends JPanel {
         historyBackB.setMinimumSize(new Dimension(24, 24));
         historyBackB.setMaximumSize(new Dimension(24, 24));
         historyBackB.setText("");
-        //history forward button size and prefrences
+        // history forward button size and prefrences
         historyForwardB.setAction(History.historyForwardAction);
         historyForwardB.setBorderPainted(false);
         historyForwardB.setFocusable(false);
@@ -103,9 +118,8 @@ public class TaskPanel extends JPanel {
         historyForwardB.setMinimumSize(new Dimension(24, 24));
         historyForwardB.setMaximumSize(new Dimension(24, 24));
         historyForwardB.setText("");
-        //add new task and a call to the method newTaskB_actionPerformed(e)
-        newTaskB.setIcon(
-            new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_new.png")));
+        // add new task and a call to the method newTaskB_actionPerformed(e)
+        newTaskB.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_new.png")));
         newTaskB.setEnabled(true);
         newTaskB.setMaximumSize(new Dimension(24, 24));
         newTaskB.setMinimumSize(new Dimension(24, 24));
@@ -119,10 +133,10 @@ public class TaskPanel extends JPanel {
             }
         });
         newTaskB.setBorderPainted(false);
-        
-        //add new sub task button and a call to method addSubTask_actionPerformed(e); 
+
+        // add new sub task button and a call to method addSubTask_actionPerformed(e);
         subTaskB.setIcon(
-            new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_new_sub.png")));
+                new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_new_sub.png")));
         subTaskB.setEnabled(true);
         subTaskB.setMaximumSize(new Dimension(24, 24));
         subTaskB.setMinimumSize(new Dimension(24, 24));
@@ -149,11 +163,10 @@ public class TaskPanel extends JPanel {
         editTaskB.setToolTipText(Local.getString("Edit task"));
         editTaskB.setMinimumSize(new Dimension(24, 24));
         editTaskB.setMaximumSize(new Dimension(24, 24));
-        //        editTaskB.setEnabled(true);
-        editTaskB.setIcon(
-            new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_edit.png")));
-        
-        //remove task button setup and action
+        // editTaskB.setEnabled(true);
+        editTaskB.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_edit.png")));
+
+        // remove task button setup and action
         removeTaskB.setBorderPainted(false);
         removeTaskB.setFocusable(false);
         removeTaskB.addActionListener(new java.awt.event.ActionListener() {
@@ -166,9 +179,9 @@ public class TaskPanel extends JPanel {
         removeTaskB.setToolTipText(Local.getString("Remove task"));
         removeTaskB.setMinimumSize(new Dimension(24, 24));
         removeTaskB.setMaximumSize(new Dimension(24, 24));
-        removeTaskB.setIcon(
-            new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_remove.png")));
-        //mark task a complete button and action
+        removeTaskB
+                .setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_remove.png")));
+        // mark task a complete button and action
         completeTaskB.setBorderPainted(false);
         completeTaskB.setFocusable(false);
         completeTaskB.addActionListener(new java.awt.event.ActionListener() {
@@ -182,9 +195,9 @@ public class TaskPanel extends JPanel {
         completeTaskB.setMinimumSize(new Dimension(24, 24));
         completeTaskB.setMaximumSize(new Dimension(24, 24));
         completeTaskB.setIcon(
-            new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_complete.png")));
+                new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_complete.png")));
 
-		// added by rawsushi
+        // added by rawsushi
 //		showActiveOnly.setBorderPainted(false);
 //		showActiveOnly.setFocusable(false);
 //		showActiveOnly.addActionListener(new java.awt.event.ActionListener() {
@@ -204,122 +217,135 @@ public class TaskPanel extends JPanel {
 //		showActiveOnly.setMaximumSize(new Dimension(24, 24));
 //		showActiveOnly.setIcon(
 //			new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_remove.png")));
-		// added by rawsushi
-		
+        // added by rawsushi
+
         // show active tasks only method
         ppShowActiveOnlyChB.setFont(new java.awt.Font("Dialog", 1, 11));
-		ppShowActiveOnlyChB.setText(
-			Local.getString("Show Active only"));
-		ppShowActiveOnlyChB
-			.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				toggleShowActiveOnly_actionPerformed(e);
-			}
-		});		
-		boolean isShao =
-			(Context.get("SHOW_ACTIVE_TASKS_ONLY") != null)
-				&& (Context.get("SHOW_ACTIVE_TASKS_ONLY").equals("true"));
-		ppShowActiveOnlyChB.setSelected(isShao);
-		toggleShowActiveOnly_actionPerformed(null);
+        ppShowActiveOnlyChB.setText(Local.getString("Show Active only"));
+        ppShowActiveOnlyChB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                toggleShowActiveOnly_actionPerformed(e);
+            }
+        });
+        boolean isShao = (Context.get("SHOW_ACTIVE_TASKS_ONLY") != null)
+                && (Context.get("SHOW_ACTIVE_TASKS_ONLY").equals("true"));
+        ppShowActiveOnlyChB.setSelected(isShao);
+        toggleShowActiveOnly_actionPerformed(null);
 
-		/*showActiveOnly.setPreferredSize(new Dimension(24, 24));
-		showActiveOnly.setRequestFocusEnabled(false);
-		if (taskTable.isShowActiveOnly()) {
-			showActiveOnly.setToolTipText(Local.getString("Show All"));			
-		}
-		else {
-			showActiveOnly.setToolTipText(Local.getString("Show Active Only"));			
-		}
-		showActiveOnly.setMinimumSize(new Dimension(24, 24));
-		showActiveOnly.setMaximumSize(new Dimension(24, 24));
-		showActiveOnly.setIcon(
-			new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_active.png")));*/
-		// added by rawsushi
+        // For instructor todo list
+        ppShowReducedOnlyChB.setFont(new java.awt.Font("Dialog", 1, 11));
+        ppShowReducedOnlyChB.setText(Local.getString("Show only todo items visible to students"));
+        ppShowReducedOnlyChB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                toggleShowReducedOnly_actionPerformed(e);
+            }
+        });
+        boolean isShro = (Context.get("SHOW_REDUCED_ONLY") != null)
+                && (Context.get("SHOW_REDUCED_ONLY").equals("true"));
+        ppShowReducedOnlyChB.setSelected(isShro);
+        toggleShowReducedOnly_actionPerformed(null);
 
+        /*
+         * showActiveOnly.setPreferredSize(new Dimension(24, 24));
+         * showActiveOnly.setRequestFocusEnabled(false); if
+         * (taskTable.isShowActiveOnly()) {
+         * showActiveOnly.setToolTipText(Local.getString("Show All")); } else {
+         * showActiveOnly.setToolTipText(Local.getString("Show Active Only")); }
+         * showActiveOnly.setMinimumSize(new Dimension(24, 24));
+         * showActiveOnly.setMaximumSize(new Dimension(24, 24)); showActiveOnly.setIcon(
+         * new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource(
+         * "/ui/icons/todo_active.png")));
+         */
+        // added by rawsushi
 
         this.setLayout(borderLayout1);
         scrollPane.getViewport().setBackground(Color.white);
-        /*taskTable.setMaximumSize(new Dimension(32767, 32767));
-        taskTable.setRowHeight(24);*/
+        /*
+         * taskTable.setMaximumSize(new Dimension(32767, 32767));
+         * taskTable.setRowHeight(24);
+         */
         ppEditTask.setFont(new java.awt.Font("Dialog", 1, 11));
-    ppEditTask.setText(Local.getString("Edit task")+"...");
-    ppEditTask.addActionListener(new java.awt.event.ActionListener() {
+        ppEditTask.setText(Local.getString("Edit task") + "...");
+        ppEditTask.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 ppEditTask_actionPerformed(e);
             }
         });
-    //edit task button 
-    ppEditTask.setEnabled(false);
-    ppEditTask.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_edit.png")));
-    taskPPMenu.setFont(new java.awt.Font("Dialog", 1, 10));
-    // remove task button and action to be called upon clicking
-    ppRemoveTask.setFont(new java.awt.Font("Dialog", 1, 11));
-    ppRemoveTask.setText(Local.getString("Remove task"));
-    ppRemoveTask.addActionListener(new java.awt.event.ActionListener() {
+        // edit task button
+        ppEditTask.setEnabled(false);
+        ppEditTask.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_edit.png")));
+        taskPPMenu.setFont(new java.awt.Font("Dialog", 1, 10));
+        // remove task button and action to be called upon clicking
+        ppRemoveTask.setFont(new java.awt.Font("Dialog", 1, 11));
+        ppRemoveTask.setText(Local.getString("Remove task"));
+        ppRemoveTask.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 ppRemoveTask_actionPerformed(e);
             }
         });
-    ppRemoveTask.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_remove.png")));
-    ppRemoveTask.setEnabled(false);
-    ppNewTask.setFont(new java.awt.Font("Dialog", 1, 11));
-    ppNewTask.setText(Local.getString("New task")+"...");
-    ppNewTask.addActionListener(new java.awt.event.ActionListener() {
+        ppRemoveTask
+                .setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_remove.png")));
+        ppRemoveTask.setEnabled(false);
+        ppNewTask.setFont(new java.awt.Font("Dialog", 1, 11));
+        ppNewTask.setText(Local.getString("New task") + "...");
+        ppNewTask.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 ppNewTask_actionPerformed(e);
             }
         });
-    ppNewTask.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_new.png")));
-    //add sub task action performed
-    ppAddSubTask.setFont(new java.awt.Font("Dialog", 1, 11));
-    ppAddSubTask.setText(Local.getString("Add subtask"));
-    ppAddSubTask.addActionListener(new java.awt.event.ActionListener() {
+        ppNewTask.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_new.png")));
+        // add sub task action performed
+        ppAddSubTask.setFont(new java.awt.Font("Dialog", 1, 11));
+        ppAddSubTask.setText(Local.getString("Add subtask"));
+        ppAddSubTask.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 ppAddSubTask_actionPerformed(e);
             }
         });
-    ppAddSubTask.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_new_sub.png")));
+        ppAddSubTask.setIcon(
+                new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_new_sub.png")));
 
-    /*
-    ppSubTasks.setFont(new java.awt.Font("Dialog", 1, 11));
-    ppSubTasks.setText(Local.getString("List sub tasks"));
-    ppSubTasks.addActionListener(new java.awt.event.ActionListener() {
+        /*
+         * ppSubTasks.setFont(new java.awt.Font("Dialog", 1, 11));
+         * ppSubTasks.setText(Local.getString("List sub tasks"));
+         * ppSubTasks.addActionListener(new java.awt.event.ActionListener() { public
+         * void actionPerformed(ActionEvent e) { ppListSubTasks_actionPerformed(e); }
+         * }); ppSubTasks.setIcon(new
+         * ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource(
+         * "/ui/icons/todo_new.png")));
+         * 
+         * ppParentTask.setFont(new java.awt.Font("Dialog", 1, 11));
+         * ppParentTask.setText(Local.getString("Parent Task"));
+         * ppParentTask.addActionListener(new java.awt.event.ActionListener() { public
+         * void actionPerformed(ActionEvent e) { ppParentTask_actionPerformed(e); } });
+         * ppParentTask.setIcon(new
+         * ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource(
+         * "/ui/icons/todo_new.png")));
+         */
+        // complete task button and action performed
+        ppCompleteTask.setFont(new java.awt.Font("Dialog", 1, 11));
+        ppCompleteTask.setText(Local.getString("Complete task"));
+        ppCompleteTask.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                ppListSubTasks_actionPerformed(e);
+                ppCompleteTask_actionPerformed(e);
             }
         });
-    ppSubTasks.setIcon(new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_new.png")));
-    ppParentTask.setFont(new java.awt.Font("Dialog", 1, 11));
-    ppParentTask.setText(Local.getString("Parent Task"));
-    ppParentTask.addActionListener(new java.awt.event.ActionListener() {
+        ppCompleteTask.setIcon(
+                new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_complete.png")));
+        ppCompleteTask.setEnabled(false);
+        // calculate task button and action performed
+        ppCalcTask.setFont(new java.awt.Font("Dialog", 1, 11));
+        ppCalcTask.setText(Local.getString("Calculate task data"));
+        ppCalcTask.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                ppParentTask_actionPerformed(e);
+                ppCalcTask_actionPerformed(e);
             }
         });
-    ppParentTask.setIcon(new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_new.png")));
-    */
-    //complete task button and action performed
-	ppCompleteTask.setFont(new java.awt.Font("Dialog", 1, 11));
-	ppCompleteTask.setText(Local.getString("Complete task"));
-	ppCompleteTask.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				ppCompleteTask_actionPerformed(e);
-			}
-		});
-	ppCompleteTask.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_complete.png")));
-	ppCompleteTask.setEnabled(false);
-	// calculate task button and action performed 
-	ppCalcTask.setFont(new java.awt.Font("Dialog", 1, 11));
-	ppCalcTask.setText(Local.getString("Calculate task data"));
-	ppCalcTask.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				ppCalcTask_actionPerformed(e);
-			}
-		});
-	ppCalcTask.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_complete.png")));
-	ppCalcTask.setEnabled(false);
-	//add buttons to task tool bar
-    scrollPane.getViewport().add(taskTable, null);
+        ppCalcTask.setIcon(
+                new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_complete.png")));
+        ppCalcTask.setEnabled(false);
+        // add buttons to task tool bar
+        scrollPane.getViewport().add(taskTable, null);
         this.add(scrollPane, BorderLayout.CENTER);
         tasksToolBar.add(historyBackB, null);
         tasksToolBar.add(historyForwardB, null);
@@ -332,8 +358,7 @@ public class TaskPanel extends JPanel {
         tasksToolBar.add(editTaskB, null);
         tasksToolBar.add(completeTaskB, null);
 
-		//tasksToolBar.add(showActiveOnly, null);
-        
+        // tasksToolBar.add(showActiveOnly, null);
 
         this.add(tasksToolBar, BorderLayout.NORTH);
 
@@ -341,221 +366,237 @@ public class TaskPanel extends JPanel {
         scrollPane.addMouseListener(ppListener);
         taskTable.addMouseListener(ppListener);
 
-
-        //show current date 
+        // show current date
         CurrentDate.addDateListener(new DateListener() {
             public void dateChange(CalendarDate d) {
                 newTaskB.setEnabled(d.inPeriod(CurrentProject.get().getStartDate(), CurrentProject.get().getEndDate()));
             }
         });
-        //add a new task to the current project
+        // add a new task to the current project
         CurrentProject.addProjectListener(new ProjectListener() {
-            public void projectChange(Project p, NoteList nl, TaskList tl, TaskList s1, ResourcesList rl) {
-                newTaskB.setEnabled(
-                    CurrentDate.get().inPeriod(p.getStartDate(), p.getEndDate()));
+
+            public void projectChange(Project p, NoteList nl, LectureList tl, TaskList instrTodoList, TaskList s1, ResourcesList rl) {
+                newTaskB.setEnabled(CurrentDate.get().inPeriod(p.getStartDate(), p.getEndDate()));
+
             }
+
             public void projectWasChanged() {
-            	//taskTable.setCurrentRootTask(null); //XXX
+                // taskTable.setCurrentRootTask(null); //XXX
             }
         });
-        //upon selection of a task or a sub task, emable edit and remove task buttons
+        // upon selection of a task or a sub task, emable edit and remove task buttons
         taskTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent e) {
-                boolean enbl = (taskTable.getRowCount() > 0)&&(taskTable.getSelectedRow() > -1);
-                editTaskB.setEnabled(enbl);ppEditTask.setEnabled(enbl);
-                removeTaskB.setEnabled(enbl);ppRemoveTask.setEnabled(enbl);
-				
-				ppCompleteTask.setEnabled(enbl);
-				completeTaskB.setEnabled(enbl);
-				ppAddSubTask.setEnabled(enbl);
-				//ppSubTasks.setEnabled(enbl); // default value to be over-written later depending on whether it has sub tasks
-				ppCalcTask.setEnabled(enbl); // default value to be over-written later depending on whether it has sub tasks
-				
-				/*if (taskTable.getCurrentRootTask() == null) {
-					ppParentTask.setEnabled(false);
-				}
-				else {
-					ppParentTask.setEnabled(true);
-				}XXX*/
-				
-                if (enbl) {   
-    				String thisTaskId = taskTable.getModel().getValueAt(taskTable.getSelectedRow(), TaskTable.TASK_ID).toString();
-    				
-    				boolean hasSubTasks = CurrentProject.getTaskList().hasSubTasks(thisTaskId);
-    				//ppSubTasks.setEnabled(hasSubTasks);
-    				ppCalcTask.setEnabled(hasSubTasks);
-    				Task t = CurrentProject.getTaskList().getTask(thisTaskId);
+                boolean enbl = (taskTable.getRowCount() > 0) && (taskTable.getSelectedRow() > -1);
+                editTaskB.setEnabled(enbl);
+                ppEditTask.setEnabled(enbl);
+                removeTaskB.setEnabled(enbl);
+                ppRemoveTask.setEnabled(enbl);
+
+                ppCompleteTask.setEnabled(enbl);
+                completeTaskB.setEnabled(enbl);
+                ppAddSubTask.setEnabled(enbl);
+                // ppSubTasks.setEnabled(enbl); // default value to be over-written later
+                // depending on whether it has sub tasks
+                ppCalcTask.setEnabled(enbl); // default value to be over-written later depending on whether it has sub
+                                             // tasks
+
+                /*
+                 * if (taskTable.getCurrentRootTask() == null) { ppParentTask.setEnabled(false);
+                 * } else { ppParentTask.setEnabled(true); }XXX
+                 */
+
+                if (enbl) {
+                    String thisTaskId = taskTable.getModel().getValueAt(taskTable.getSelectedRow(), TaskTable.TASK_ID)
+                            .toString();
+
+                    boolean hasSubTasks = CurrentProject.getTaskList().hasSubTasks(thisTaskId);
+                    // ppSubTasks.setEnabled(hasSubTasks);
+                    ppCalcTask.setEnabled(hasSubTasks);
+                    Task t = CurrentProject.getTaskList().getTask(thisTaskId);
                     parentPanel.calendar.jnCalendar.renderer.setTask(t);
                     parentPanel.calendar.jnCalendar.updateUI();
-                }    
-                else {
+                } else {
                     parentPanel.calendar.jnCalendar.renderer.setTask(null);
                     parentPanel.calendar.jnCalendar.updateUI();
                 }
             }
         });
-        
-        //set enables for options that are not valud when there are no tasks or no tasks are selected
+
+        // set enables for options that are not valud when there are no tasks or no
+        // tasks are selected
         editTaskB.setEnabled(false);
         removeTaskB.setEnabled(false);
-		completeTaskB.setEnabled(false);
-		ppAddSubTask.setEnabled(false);
-		//ppSubTasks.setEnabled(false);
-		//ppParentTask.setEnabled(false);
-    taskPPMenu.add(ppEditTask);
-    
-    taskPPMenu.addSeparator();
-    taskPPMenu.add(ppNewTask);
-    taskPPMenu.add(ppAddSubTask);
-    taskPPMenu.add(ppRemoveTask);
-    
-    taskPPMenu.addSeparator();
-	taskPPMenu.add(ppCompleteTask);
-	taskPPMenu.add(ppCalcTask);
-	
-    //taskPPMenu.addSeparator();
-    
-    //taskPPMenu.add(ppSubTasks);
-    
-    //taskPPMenu.addSeparator();
-    //taskPPMenu.add(ppParentTask);
-    
-    taskPPMenu.addSeparator();
-	taskPPMenu.add(ppShowActiveOnlyChB);
+        completeTaskB.setEnabled(false);
+        ppAddSubTask.setEnabled(false);
+        // ppSubTasks.setEnabled(false);
+        // ppParentTask.setEnabled(false);
+        taskPPMenu.add(ppEditTask);
 
-	
-		// define key actions in TaskPanel:
-		// - KEY:DELETE => delete tasks (recursivly).
-		// - KEY:INTERT => insert new Subtask if another is selected.
-		// - KEY:INSERT => insert new Task if nothing is selected.
-		// - KEY:SPACE => finish Task.
-		taskTable.addKeyListener(new KeyListener() {
-			public void keyPressed(KeyEvent e){
-				if(taskTable.getSelectedRows().length>0 
-					&& e.getKeyCode()==KeyEvent.VK_DELETE)
-					ppRemoveTask_actionPerformed(null);
-				
-				else if(e.getKeyCode()==KeyEvent.VK_INSERT) {
-					if(taskTable.getSelectedRows().length>0) {
-						ppAddSubTask_actionPerformed(null);
-					}
-					else {
-						ppNewTask_actionPerformed(null);						
-					}
-				}
-				
-				else if(e.getKeyCode()==KeyEvent.VK_SPACE
-						&& taskTable.getSelectedRows().length>0) {
-					ppCompleteTask_actionPerformed(null);
-				}
-			}
-			public void	keyReleased(KeyEvent e){}
-			public void keyTyped(KeyEvent e){} 
-		});	
+        taskPPMenu.addSeparator();
+        taskPPMenu.add(ppNewTask);
+        taskPPMenu.add(ppAddSubTask);
+        taskPPMenu.add(ppRemoveTask);
+
+        taskPPMenu.addSeparator();
+        taskPPMenu.add(ppCompleteTask);
+        taskPPMenu.add(ppCalcTask);
+
+        // taskPPMenu.addSeparator();
+
+        // taskPPMenu.add(ppSubTasks);
+
+        // taskPPMenu.addSeparator();
+        // taskPPMenu.add(ppParentTask);
+
+        taskPPMenu.addSeparator();
+        taskPPMenu.add(ppShowActiveOnlyChB);
+        
+        // For instructor todo list
+        
+
+        // define key actions in TaskPanel:
+        // - KEY:DELETE => delete tasks (recursivly).
+        // - KEY:INTERT => insert new Subtask if another is selected.
+        // - KEY:INSERT => insert new Task if nothing is selected.
+        // - KEY:SPACE => finish Task.
+        taskTable.addKeyListener(new KeyListener() {
+            public void keyPressed(KeyEvent e) {
+                if (taskTable.getSelectedRows().length > 0 && e.getKeyCode() == KeyEvent.VK_DELETE)
+                    ppRemoveTask_actionPerformed(null);
+
+                else if (e.getKeyCode() == KeyEvent.VK_INSERT) {
+                    if (taskTable.getSelectedRows().length > 0) {
+                        ppAddSubTask_actionPerformed(null);
+                    } else {
+                        ppNewTask_actionPerformed(null);
+                    }
+                }
+
+                else if (e.getKeyCode() == KeyEvent.VK_SPACE && taskTable.getSelectedRows().length > 0) {
+                    ppCompleteTask_actionPerformed(null);
+                }
+            }
+
+            public void keyReleased(KeyEvent e) {
+            }
+
+            public void keyTyped(KeyEvent e) {
+            }
+        });
 
     }
-    //defines actions to be performed when the edit task button is clicked
+    
+
+    // defines actions to be performed when the edit task button is clicked
     void editTaskB_actionPerformed(ActionEvent e) {
-        Task t =
-            CurrentProject.getTaskList().getTask(
-                taskTable.getModel().getValueAt(taskTable.getSelectedRow(), TaskTable.TASK_ID).toString());
+        Task t = CurrentProject.getTaskList()
+                .getTask(taskTable.getModel().getValueAt(taskTable.getSelectedRow(), TaskTable.TASK_ID).toString());
         TaskDialog dlg = new TaskDialog(App.getFrame(), Local.getString("Edit task"));
         Dimension frmSize = App.getFrame().getSize();
         Point loc = App.getFrame().getLocation();
-        dlg.setLocation((frmSize.width - dlg.getSize().width) / 2 + loc.x, (frmSize.height - dlg.getSize().height) / 2 + loc.y);
+        dlg.setLocation((frmSize.width - dlg.getSize().width) / 2 + loc.x,
+                (frmSize.height - dlg.getSize().height) / 2 + loc.y);
         dlg.todoField.setText(t.getText());
         dlg.descriptionField.setText(t.getDescription());
         dlg.startDate.getModel().setValue(t.getStartDate().getDate());
         dlg.endDate.getModel().setValue(t.getEndDate().getDate());
-        dlg.priorityCB.setSelectedIndex(t.getPriority());                
+        dlg.priorityCB.setSelectedIndex(t.getPriority());
+        dlg.setChkIsInReduced(t.getIsInReduced());
         dlg.effortField.setText(Util.getHoursFromMillis(t.getEffort()));
-	if((t.getStartDate().getDate()).after(t.getEndDate().getDate()))
-		dlg.chkEndDate.setSelected(false);
-	else
-		dlg.chkEndDate.setSelected(true);
-		dlg.progress.setValue(new Integer(t.getProgress()));
- 	dlg.chkEndDate_actionPerformed(null);	
+        if ((t.getStartDate().getDate()).after(t.getEndDate().getDate()))
+            dlg.chkEndDate.setSelected(false);
+        else
+            dlg.chkEndDate.setSelected(true);
+        dlg.progress.setValue(new Integer(t.getProgress()));
+        dlg.chkEndDate_actionPerformed(null);
         dlg.setVisible(true);
         if (dlg.CANCELLED)
             return;
         CalendarDate sd = new CalendarDate((Date) dlg.startDate.getModel().getValue());
 //        CalendarDate ed = new CalendarDate((Date) dlg.endDate.getModel().getValue());
-         CalendarDate ed;
- 		if(dlg.chkEndDate.isSelected())
- 			ed = new CalendarDate((Date) dlg.endDate.getModel().getValue());
- 		else
- 			ed = null;
+        CalendarDate ed;
+        if (dlg.chkEndDate.isSelected())
+            ed = new CalendarDate((Date) dlg.endDate.getModel().getValue());
+        else
+            ed = null;
         t.setStartDate(sd);
         t.setEndDate(ed);
         t.setText(dlg.todoField.getText());
         t.setDescription(dlg.descriptionField.getText());
         t.setPriority(dlg.priorityCB.getSelectedIndex());
+        t.setIsInReduced(dlg.getIsInReduced());
         t.setEffort(Util.getMillisFromHours(dlg.effortField.getText()));
-        t.setProgress(((Integer)dlg.progress.getValue()).intValue());
-        
+        t.setProgress(((Integer) dlg.progress.getValue()).intValue());
+
 //		CurrentProject.getTaskList().adjustParentTasks(t);
 
         CurrentStorage.get().storeTaskList(CurrentProject.getTaskList(), CurrentProject.get());
         taskTable.tableChanged();
         parentPanel.updateIndicators();
-        //taskTable.updateUI();
+        // taskTable.updateUI();
     }
-    //defines actions to be performed when new task is added
+
+    // defines actions to be performed when new task is added
     void newTaskB_actionPerformed(ActionEvent e) {
         TaskDialog dlg = new TaskDialog(App.getFrame(), Local.getString("New task"));
-        
-        //XXX String parentTaskId = taskTable.getCurrentRootTask();
-        
+
+        // XXX String parentTaskId = taskTable.getCurrentRootTask();
+
         Dimension frmSize = App.getFrame().getSize();
         Point loc = App.getFrame().getLocation();
 
         dlg.startDate.getModel().setValue(CurrentDate.get().getDate());
         dlg.endDate.getModel().setValue(CurrentDate.get().getDate());
-        dlg.setLocation((frmSize.width - dlg.getSize().width) / 2 + loc.x, (frmSize.height - dlg.getSize().height) / 2 + loc.y);
+        dlg.setLocation((frmSize.width - dlg.getSize().width) / 2 + loc.x,
+                (frmSize.height - dlg.getSize().height) / 2 + loc.y);
         dlg.setVisible(true);
 
         if (dlg.CANCELLED)
             return;
 
         CalendarDate sd = new CalendarDate((Date) dlg.startDate.getModel().getValue());
-        //CalendarDate ed = new CalendarDate((Date) dlg.endDate.getModel().getValue());
+        // CalendarDate ed = new CalendarDate((Date) dlg.endDate.getModel().getValue());
         CalendarDate ed;
- 		if(dlg.chkEndDate.isSelected())
- 			ed = new CalendarDate((Date) dlg.endDate.getModel().getValue());
- 		else
- 			ed = null;
+        if (dlg.chkEndDate.isSelected())
+            ed = new CalendarDate((Date) dlg.endDate.getModel().getValue());
+        else
+            ed = null;
         long effort = Util.getMillisFromHours(dlg.effortField.getText());
-		//XXX Task newTask = CurrentProject.getTaskList().createTask(sd, ed, dlg.todoField.getText(), dlg.priorityCB.getSelectedIndex(),effort, dlg.descriptionField.getText(),parentTaskId);
-		Task newTask = CurrentProject.getTaskList().createTask(sd, ed, dlg.todoField.getText(), dlg.priorityCB.getSelectedIndex(),effort, dlg.descriptionField.getText(),null);
-        //CurrentProject.getTaskList().adjustParentTasks(newTask);
-		newTask.setProgress(((Integer)dlg.progress.getValue()).intValue());
+        // XXX Task newTask = CurrentProject.getTaskList().createTask(sd, ed,
+        // dlg.todoField.getText(), dlg.priorityCB.getSelectedIndex(),effort,
+        // dlg.descriptionField.getText(),parentTaskId);
+        Task newTask = CurrentProject.getTaskList().createTask(sd, ed, dlg.todoField.getText(),
+                dlg.priorityCB.getSelectedIndex(), effort, dlg.descriptionField.getText(), null, dlg.getIsInReduced());
+        // CurrentProject.getTaskList().adjustParentTasks(newTask);
+        newTask.setProgress(((Integer) dlg.progress.getValue()).intValue());
         CurrentStorage.get().storeTaskList(CurrentProject.getTaskList(), CurrentProject.get());
         taskTable.tableChanged();
         parentPanel.updateIndicators();
-        //taskTable.updateUI();
+        // taskTable.updateUI();
     }
 
-    
 
-
-    //New for add lecture times
+    // New for add lecture times
+    /*
     LectureTime newLectureTime_actionPerformed() {
         LectureDialog dlg = new LectureDialog(App.getFrame(), Local.getString("New Lecture Time"));
-        
+
         Dimension frmSize = App.getFrame().getSize();
         Point loc = App.getFrame().getLocation();
-        
-        dlg.setLocation((frmSize.width - dlg.getSize().width) / 2 + loc.x, (frmSize.height - dlg.getSize().height) / 2 + loc.y);
+
+        dlg.setLocation((frmSize.width - dlg.getSize().width) / 2 + loc.x,
+                (frmSize.height - dlg.getSize().height) / 2 + loc.y);
         dlg.setVisible(true);
-        
-        //get the lecture time selected
+
+        // get the lecture time selected
         Calendar calendar = new GregorianCalendar(Local.getCurrentLocale());
-		calendar.setTime(((Date)dlg.timeSpin.getModel().getValue()));
-		int hh = calendar.get(Calendar.HOUR_OF_DAY);
+        calendar.setTime(((Date) dlg.timeSpin.getModel().getValue()));
+        int hh = calendar.get(Calendar.HOUR_OF_DAY);
         int mm = calendar.get(Calendar.MINUTE);
 
-        //gets the day selected
-        String day = (String)dlg.daysCB.getSelectedItem();
+        // gets the day selected
+        String day = (String) dlg.daysCB.getSelectedItem();
 
         LectureTime lecTime = new LectureTime(day, hh, mm);
 
@@ -564,7 +605,41 @@ public class TaskPanel extends JPanel {
 
         return lecTime;
     }
+    */
+
+    // New for freedays
+
+    
+
+
+  //New for add lecture times
+//    LectureTime newLectureTime_actionPerformed() {
+//        LectureDialog dlg = new LectureDialog(App.getFrame(), Local.getString("New Lecture Time"));
+//        
+//        Dimension frmSize = App.getFrame().getSize();
+//        Point loc = App.getFrame().getLocation();
+//        
+//        dlg.setLocation((frmSize.width - dlg.getSize().width) / 2 + loc.x, (frmSize.height - dlg.getSize().height) / 2 + loc.y);
+//        dlg.setVisible(true);
+//        
+//        //get the lecture time selected
+//        Calendar calendar = new GregorianCalendar(Local.getCurrentLocale());
+//		calendar.setTime(((Date)dlg.dateSpin.getModel().getValue()));
+//		int hh = calendar.get(Calendar.HOUR_OF_DAY);
+//        int mm = calendar.get(Calendar.MINUTE);
+//
+//        //gets the day selected
+//        String day = (String)dlg.daysCB.getSelectedItem();
+//
+//        LectureTime lecTime = new LectureTime(day, hh, mm);
+//
+//        if (dlg.CANCELLED)
+//            return null;
+//
+//        return lecTime;
+//    }
     //New for freedays
+
     SpecialCalendarDate newFreeDay_actionPerformed() {
         CourseSpecialDaysDialog dlg = new CourseSpecialDaysDialog(App.getFrame(), Local.getString("New Free Day"));
 
@@ -572,21 +647,23 @@ public class TaskPanel extends JPanel {
         Point loc = App.getFrame().getLocation();
 
         dlg.dateOfEvent.getModel().setValue(CurrentDate.get().getDate());
-        
-        dlg.setLocation((frmSize.width - dlg.getSize().width) / 2 + loc.x, (frmSize.height - dlg.getSize().height) / 2 + loc.y);
+
+        dlg.setLocation((frmSize.width - dlg.getSize().width) / 2 + loc.x,
+                (frmSize.height - dlg.getSize().height) / 2 + loc.y);
         dlg.setVisible(true);
 
-        SpecialCalendarDate freeDay = new SpecialCalendarDate(new CalendarDate((Date) dlg.dateOfEvent.getModel().getValue()), dlg.nameField.getText());
+        SpecialCalendarDate freeDay = new SpecialCalendarDate(
+                new CalendarDate((Date) dlg.dateOfEvent.getModel().getValue()), dlg.nameField.getText());
         /**
-         * TODO
-         * Get the value for freeday and return it
+         * TODO Get the value for freeday and return it
          */
         if (dlg.CANCELLED)
             return null;
 
         return freeDay;
     }
-    //New for holidays
+
+    // New for holidays
     SpecialCalendarDate newHoliday_actionPerformed() {
         CourseSpecialDaysDialog dlg = new CourseSpecialDaysDialog(App.getFrame(), Local.getString("New Holiday"));
 
@@ -594,92 +671,98 @@ public class TaskPanel extends JPanel {
         Point loc = App.getFrame().getLocation();
 
         dlg.dateOfEvent.getModel().setValue(CurrentDate.get().getDate());
-        
-        dlg.setLocation((frmSize.width - dlg.getSize().width) / 2 + loc.x, (frmSize.height - dlg.getSize().height) / 2 + loc.y);
+
+        dlg.setLocation((frmSize.width - dlg.getSize().width) / 2 + loc.x,
+                (frmSize.height - dlg.getSize().height) / 2 + loc.y);
         dlg.setVisible(true);
 
-        SpecialCalendarDate holiday = new SpecialCalendarDate(new CalendarDate((Date) dlg.dateOfEvent.getModel().getValue()), dlg.nameField.getText());
+        SpecialCalendarDate holiday = new SpecialCalendarDate(
+                new CalendarDate((Date) dlg.dateOfEvent.getModel().getValue()), dlg.nameField.getText());
 
         if (dlg.CANCELLED)
             return null;
 
         return holiday;
     }
-  
-    //defines actions to be performed when a new sub task is added
+
+    // defines actions to be performed when a new sub task is added
     void addSubTask_actionPerformed(ActionEvent e) {
         TaskDialog dlg = new TaskDialog(App.getFrame(), Local.getString("New Task"));
         String parentTaskId = taskTable.getModel().getValueAt(taskTable.getSelectedRow(), TaskTable.TASK_ID).toString();
-        
-        //        Util.debug("Adding sub task under " + parentTaskId);
-        
+
+        // Util.debug("Adding sub task under " + parentTaskId);
+
         Dimension frmSize = App.getFrame().getSize();
         Point loc = App.getFrame().getLocation();
-		Task parent = CurrentProject.getTaskList().getTask(parentTaskId);
-		CalendarDate todayD = CurrentDate.get();
-		if (todayD.after(parent.getStartDate()))
-			dlg.setStartDate(todayD);
-		else
-			dlg.setStartDate(parent.getStartDate());
-		if (parent.getEndDate() != null) 
-			dlg.setEndDate(parent.getEndDate());
-		else 
-			dlg.setEndDate(CurrentProject.get().getEndDate());
-		dlg.setStartDateLimit(parent.getStartDate(), parent.getEndDate());
-		dlg.setEndDateLimit(parent.getStartDate(), parent.getEndDate());
-        dlg.setLocation((frmSize.width - dlg.getSize().width) / 2 + loc.x, (frmSize.height - dlg.getSize().height) / 2 + loc.y);
+        Task parent = CurrentProject.getTaskList().getTask(parentTaskId);
+        CalendarDate todayD = CurrentDate.get();
+        if (todayD.after(parent.getStartDate()))
+            dlg.setStartDate(todayD);
+        else
+            dlg.setStartDate(parent.getStartDate());
+        if (parent.getEndDate() != null)
+            dlg.setEndDate(parent.getEndDate());
+        else
+            dlg.setEndDate(CurrentProject.get().getEndDate());
+        dlg.setStartDateLimit(parent.getStartDate(), parent.getEndDate());
+        dlg.setEndDateLimit(parent.getStartDate(), parent.getEndDate());
+        dlg.setLocation((frmSize.width - dlg.getSize().width) / 2 + loc.x,
+                (frmSize.height - dlg.getSize().height) / 2 + loc.y);
         dlg.setVisible(true);
         if (dlg.CANCELLED)
             return;
         CalendarDate sd = new CalendarDate((Date) dlg.startDate.getModel().getValue());
-        //        CalendarDate ed = new CalendarDate((Date) dlg.endDate.getModel().getValue());
-          CalendarDate ed;
- 		if(dlg.chkEndDate.isSelected())
- 			ed = new CalendarDate((Date) dlg.endDate.getModel().getValue());
- 		else
- 			ed = null;
+        // CalendarDate ed = new CalendarDate((Date) dlg.endDate.getModel().getValue());
+        CalendarDate ed;
+        if (dlg.chkEndDate.isSelected())
+            ed = new CalendarDate((Date) dlg.endDate.getModel().getValue());
+        else
+            ed = null;
         long effort = Util.getMillisFromHours(dlg.effortField.getText());
-		Task newTask = CurrentProject.getTaskList().createTask(sd, ed, dlg.todoField.getText(), dlg.priorityCB.getSelectedIndex(),effort, dlg.descriptionField.getText(),parentTaskId);
-        newTask.setProgress(((Integer)dlg.progress.getValue()).intValue());
-        //		CurrentProject.getTaskList().adjustParentTasks(newTask);
+        Task newTask = CurrentProject.getTaskList().createTask(sd, ed, dlg.todoField.getText(),
+                dlg.priorityCB.getSelectedIndex(), effort, dlg.descriptionField.getText(), parentTaskId);
+        newTask.setProgress(((Integer) dlg.progress.getValue()).intValue());
+        // CurrentProject.getTaskList().adjustParentTasks(newTask);
 
-		CurrentStorage.get().storeTaskList(CurrentProject.getTaskList(), CurrentProject.get());
+        CurrentStorage.get().storeTaskList(CurrentProject.getTaskList(), CurrentProject.get());
         taskTable.tableChanged();
         parentPanel.updateIndicators();
-        //taskTable.updateUI();
+        // taskTable.updateUI();
     }
-    
-    //method to calculate the effort of tasks
+
+    // method to calculate the effort of tasks
     void calcTask_actionPerformed(ActionEvent e) {
         TaskCalcDialog dlg = new TaskCalcDialog(App.getFrame());
         dlg.pack();
-        Task t = CurrentProject.getTaskList().getTask(taskTable.getModel().getValueAt(taskTable.getSelectedRow(), TaskTable.TASK_ID).toString());
-        
+        Task t = CurrentProject.getTaskList()
+                .getTask(taskTable.getModel().getValueAt(taskTable.getSelectedRow(), TaskTable.TASK_ID).toString());
+
         Dimension frmSize = App.getFrame().getSize();
         Point loc = App.getFrame().getLocation();
-        
-        dlg.setLocation((frmSize.width - dlg.getSize().width) / 2 + loc.x, (frmSize.height - dlg.getSize().height) / 2 + loc.y);
+
+        dlg.setLocation((frmSize.width - dlg.getSize().width) / 2 + loc.x,
+                (frmSize.height - dlg.getSize().height) / 2 + loc.y);
         dlg.setVisible(true);
         if (dlg.CANCELLED) {
-            return;            
+            return;
         }
-        
+
         TaskList tl = CurrentProject.getTaskList();
-        if(dlg.calcEffortChB.isSelected()) {
+        if (dlg.calcEffortChB.isSelected()) {
             t.setEffort(tl.calculateTotalEffortFromSubTasks(t));
         }
-        
-        if(dlg.compactDatesChB.isSelected()) {
+
+        if (dlg.compactDatesChB.isSelected()) {
             t.setStartDate(tl.getEarliestStartDateFromSubTasks(t));
             t.setEndDate(tl.getLatestEndDateFromSubTasks(t));
         }
-        
-        if(dlg.calcCompletionChB.isSelected()) {
+
+        if (dlg.calcCompletionChB.isSelected()) {
             long[] res = tl.calculateCompletionFromSubTasks(t);
-            int thisProgress = (int) Math.round((((double)res[0] / (double)res[1]) * 100));
+            int thisProgress = (int) Math.round((((double) res[0] / (double) res[1]) * 100));
             t.setProgress(thisProgress);
         }
-        
+
 //        CalendarDate sd = new CalendarDate((Date) dlg.startDate.getModel().getValue());
 ////        CalendarDate ed = new CalendarDate((Date) dlg.endDate.getModel().getValue());
 //          CalendarDate ed;
@@ -690,19 +773,19 @@ public class TaskPanel extends JPanel {
 //        long effort = Util.getMillisFromHours(dlg.effortField.getText());
 //		Task newTask = CurrentProject.getTaskList().createTask(sd, ed, dlg.todoField.getText(), dlg.priorityCB.getSelectedIndex(),effort, dlg.descriptionField.getText(),parentTaskId);
 //		
-		
+
         CurrentStorage.get().storeTaskList(CurrentProject.getTaskList(), CurrentProject.get());
         taskTable.tableChanged();
 //        parentPanel.updateIndicators();
-        //taskTable.updateUI();
+        // taskTable.updateUI();
     }
 
-    //present sub tasks for a specific 
+    // present sub tasks for a specific
     void listSubTasks_actionPerformed(ActionEvent e) {
         String parentTaskId = taskTable.getModel().getValueAt(taskTable.getSelectedRow(), TaskTable.TASK_ID).toString();
-        
-        //XXX taskTable.setCurrentRootTask(parentTaskId); 
-		taskTable.tableChanged();
+
+        // XXX taskTable.setCurrentRootTask(parentTaskId);
+        taskTable.tableChanged();
 
 //        parentPanel.updateIndicators();
 //        //taskTable.updateUI();
@@ -712,142 +795,143 @@ public class TaskPanel extends JPanel {
 //    	String taskId = taskTable.getModel().getValueAt(taskTable.getSelectedRow(), TaskTable.TASK_ID).toString();
 //      
 //    	Task t = CurrentProject.getTaskList().getTask(taskId);
-    	/*XXX Task t2 = CurrentProject.getTaskList().getTask(taskTable.getCurrentRootTask());
-    	
-    	String parentTaskId = t2.getParent();
-    	if((parentTaskId == null) || (parentTaskId.equals(""))) {
-    		parentTaskId = null;
-    	}
-    	taskTable.setCurrentRootTask(parentTaskId); 
-    	taskTable.tableChanged();*/
+        /*
+         * XXX Task t2 =
+         * CurrentProject.getTaskList().getTask(taskTable.getCurrentRootTask());
+         * 
+         * String parentTaskId = t2.getParent(); if((parentTaskId == null) ||
+         * (parentTaskId.equals(""))) { parentTaskId = null; }
+         * taskTable.setCurrentRootTask(parentTaskId); taskTable.tableChanged();
+         */
 
 //      parentPanel.updateIndicators();
 //      //taskTable.updateUI();
-  }
-    
-    //actions to be performed when removing a task
+    }
+
+    // actions to be performed when removing a task
     void removeTaskB_actionPerformed(ActionEvent e) {
         String msg;
         String thisTaskId = taskTable.getModel().getValueAt(taskTable.getSelectedRow(), TaskTable.TASK_ID).toString();
-        
+
         if (taskTable.getSelectedRows().length > 1)
-            msg = Local.getString("Remove")+" "+taskTable.getSelectedRows().length +" "+Local.getString("tasks")+"?"
-             + "\n"+Local.getString("Are you sure?");
-        else {        	
-        	Task t = CurrentProject.getTaskList().getTask(thisTaskId);
-        	// check if there are subtasks
-			if(CurrentProject.getTaskList().hasSubTasks(thisTaskId)) {
-				msg = Local.getString("Remove task")+"\n'" + t.getText() + Local.getString("' and all subtasks") +"\n"+Local.getString("Are you sure?");
-			}
-			else {		            
-				msg = Local.getString("Remove task")+"\n'" + t.getText() + "'\n"+Local.getString("Are you sure?");
-			}
+            msg = Local.getString("Remove") + " " + taskTable.getSelectedRows().length + " " + Local.getString("tasks")
+                    + "?" + "\n" + Local.getString("Are you sure?");
+        else {
+            Task t = CurrentProject.getTaskList().getTask(thisTaskId);
+            // check if there are subtasks
+            if (CurrentProject.getTaskList().hasSubTasks(thisTaskId)) {
+                msg = Local.getString("Remove task") + "\n'" + t.getText() + Local.getString("' and all subtasks")
+                        + "\n" + Local.getString("Are you sure?");
+            } else {
+                msg = Local.getString("Remove task") + "\n'" + t.getText() + "'\n" + Local.getString("Are you sure?");
+            }
         }
-        int n =
-            JOptionPane.showConfirmDialog(
-                App.getFrame(),
-                msg,
-                Local.getString("Remove task"),
+        int n = JOptionPane.showConfirmDialog(App.getFrame(), msg, Local.getString("Remove task"),
                 JOptionPane.YES_NO_OPTION);
         if (n != JOptionPane.YES_OPTION)
             return;
         Vector toremove = new Vector();
         for (int i = 0; i < taskTable.getSelectedRows().length; i++) {
-            Task t =
-            CurrentProject.getTaskList().getTask(
-                taskTable.getModel().getValueAt(taskTable.getSelectedRows()[i], TaskTable.TASK_ID).toString());
+            Task t = CurrentProject.getTaskList().getTask(
+                    taskTable.getModel().getValueAt(taskTable.getSelectedRows()[i], TaskTable.TASK_ID).toString());
             if (t != null)
                 toremove.add(t);
         }
         for (int i = 0; i < toremove.size(); i++) {
-            CurrentProject.getTaskList().removeTask((Task)toremove.get(i));
+            CurrentProject.getTaskList().removeTask((Task) toremove.get(i));
         }
         taskTable.tableChanged();
         CurrentStorage.get().storeTaskList(CurrentProject.getTaskList(), CurrentProject.get());
         parentPanel.updateIndicators();
-        //taskTable.updateUI();
+        // taskTable.updateUI();
 
     }
-    //action so be performed when pressing complete task button
-	void ppCompleteTask_actionPerformed(ActionEvent e) {
-		String msg;
-		Vector tocomplete = new Vector();
-		for (int i = 0; i < taskTable.getSelectedRows().length; i++) {
-			Task t =
-			CurrentProject.getTaskList().getTask(
-				taskTable.getModel().getValueAt(taskTable.getSelectedRows()[i], TaskTable.TASK_ID).toString());
-			if (t != null)
-				tocomplete.add(t);
-		}
-		for (int i = 0; i < tocomplete.size(); i++) {
-			Task t = (Task)tocomplete.get(i);
-			t.setProgress(100);
-		}
-		taskTable.tableChanged();
-		CurrentStorage.get().storeTaskList(CurrentProject.getTaskList(), CurrentProject.get());
-		parentPanel.updateIndicators();
-		//taskTable.updateUI();
-	}
 
-	// toggle "show active only"
-	void toggleShowActiveOnly_actionPerformed(ActionEvent e) {
-		Context.put(
-			"SHOW_ACTIVE_TASKS_ONLY",
-			new Boolean(ppShowActiveOnlyChB.isSelected()));
-		taskTable.tableChanged();
-	}
+    // action so be performed when pressing complete task button
+    void ppCompleteTask_actionPerformed(ActionEvent e) {
+        String msg;
+        Vector tocomplete = new Vector();
+        for (int i = 0; i < taskTable.getSelectedRows().length; i++) {
+            Task t = CurrentProject.getTaskList().getTask(
+                    taskTable.getModel().getValueAt(taskTable.getSelectedRows()[i], TaskTable.TASK_ID).toString());
+            if (t != null)
+                tocomplete.add(t);
+        }
+        for (int i = 0; i < tocomplete.size(); i++) {
+            Task t = (Task) tocomplete.get(i);
+            t.setProgress(100);
+        }
+        taskTable.tableChanged();
+        CurrentStorage.get().storeTaskList(CurrentProject.getTaskList(), CurrentProject.get());
+        parentPanel.updateIndicators();
+        // taskTable.updateUI();
+    }
+
+    // toggle "show active only"
+    void toggleShowActiveOnly_actionPerformed(ActionEvent e) {
+        Context.put("SHOW_ACTIVE_TASKS_ONLY", new Boolean(ppShowActiveOnlyChB.isSelected()));
+        taskTable.tableChanged();
+    }
+
+    // toggle "show is in reduced only"
+    void toggleShowReducedOnly_actionPerformed(ActionEvent e) {
+        Context.put("SHOW_REDUCED_ONLY", new Boolean(ppShowReducedOnlyChB.isSelected()));
+        taskTable.tableChanged();
+    }
 
     class PopupListener extends MouseAdapter {
 
         public void mouseClicked(MouseEvent e) {
-		if ((e.getClickCount() == 2) && (taskTable.getSelectedRow() > -1)){
-			// ignore "tree" column
-			//if(taskTable.getSelectedColumn() == 1) return;
-			
-			editTaskB_actionPerformed(null);
-		}
+            if ((e.getClickCount() == 2) && (taskTable.getSelectedRow() > -1)) {
+                // ignore "tree" column
+                // if(taskTable.getSelectedColumn() == 1) return;
+
+                editTaskB_actionPerformed(null);
+            }
         }
 
-                public void mousePressed(MouseEvent e) {
-                    maybeShowPopup(e);
-                }
+        public void mousePressed(MouseEvent e) {
+            maybeShowPopup(e);
+        }
 
-                public void mouseReleased(MouseEvent e) {
-                    maybeShowPopup(e);
-                }
+        public void mouseReleased(MouseEvent e) {
+            maybeShowPopup(e);
+        }
 
-                private void maybeShowPopup(MouseEvent e) {
-                    if (e.isPopupTrigger()) {
-                        taskPPMenu.show(e.getComponent(), e.getX(), e.getY());
-                    }
-                }
+        private void maybeShowPopup(MouseEvent e) {
+            if (e.isPopupTrigger()) {
+                taskPPMenu.show(e.getComponent(), e.getX(), e.getY());
+            }
+        }
 
     }
 
-  void ppEditTask_actionPerformed(ActionEvent e) {
-    editTaskB_actionPerformed(e);
-  }
-  void ppRemoveTask_actionPerformed(ActionEvent e) {
-    removeTaskB_actionPerformed(e);
-  }
-  void ppNewTask_actionPerformed(ActionEvent e) {
-    newTaskB_actionPerformed(e);
-  }
+    void ppEditTask_actionPerformed(ActionEvent e) {
+        editTaskB_actionPerformed(e);
+    }
 
-  void ppAddSubTask_actionPerformed(ActionEvent e) {
-  	addSubTask_actionPerformed(e);
-  }
+    void ppRemoveTask_actionPerformed(ActionEvent e) {
+        removeTaskB_actionPerformed(e);
+    }
 
-  void ppListSubTasks_actionPerformed(ActionEvent e) {
-  	listSubTasks_actionPerformed(e);
-  }
+    void ppNewTask_actionPerformed(ActionEvent e) {
+        newTaskB_actionPerformed(e);
+    }
 
-  void ppParentTask_actionPerformed(ActionEvent e) {
-  	parentTask_actionPerformed(e);
-  }
+    void ppAddSubTask_actionPerformed(ActionEvent e) {
+        addSubTask_actionPerformed(e);
+    }
 
-  void ppCalcTask_actionPerformed(ActionEvent e) {
-      calcTask_actionPerformed(e);
-  }
+    void ppListSubTasks_actionPerformed(ActionEvent e) {
+        listSubTasks_actionPerformed(e);
+    }
+
+    void ppParentTask_actionPerformed(ActionEvent e) {
+        parentTask_actionPerformed(e);
+    }
+
+    void ppCalcTask_actionPerformed(ActionEvent e) {
+        calcTask_actionPerformed(e);
+    }
 
 }

@@ -319,11 +319,36 @@ public class TaskImpl implements Task, Comparable {
             return Task.PRIORITY_NORMAL;
         return new Integer(pa.getValue()).intValue();
     }
+    
+    /**
+     * Check if the task is in the reduced set. 
+     */
+    public boolean getIsInReduced() {
+        Attribute inReduced = _element.getAttribute("inReduced");
+        if(inReduced == null) {
+            return false;
+        } else {            
+            return Boolean.parseBoolean(inReduced.getValue());
+        }
+    }
+    
+
+    
     /**
      * @see main.java.memoranda.Task#setPriority(int)
      */
     public void setPriority(int p) {
         setAttr("priority", String.valueOf(p));
+    }
+    
+    
+    /**
+     * Set the task to being or not being in the reduced
+     * set. 
+     * @param isInReduced true if the task should be in the reduced set. 
+     */
+    public void setIsInReduced(boolean isInReduced) {
+        setAttr("inReduced", String.valueOf(isInReduced));
     }
 
     private void setAttr(String a, String value) {

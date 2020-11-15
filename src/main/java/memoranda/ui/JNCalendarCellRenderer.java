@@ -91,6 +91,10 @@ public class JNCalendarCellRenderer extends javax.swing.table.DefaultTableCellRe
 			(d.inPeriod(t.getStartDate(), t.getEndDate()))) 
 				label.setBackground( new Color(230, 255, 230));
 		
+		else if (currentPanel.equals("LECTURES") && (t != null) && 
+				(d.inPeriod(t.getStartDate(), t.getEndDate()))) 
+					label.setBackground( new Color(230, 255, 230));
+		
 		else if(currentPanel.equals("NOTES") && 
 		CurrentProject.getNoteList().getNoteForDate(d) != null) 
 					label.setBackground(new Color(255,245,200));

@@ -18,6 +18,7 @@ import javax.swing.border.Border;
 import main.java.memoranda.CurrentProject;
 import main.java.memoranda.util.Context;
 import main.java.memoranda.util.Local;
+import main.java.memoranda.CurrentProject;
 
 /**
  * 
@@ -114,7 +115,7 @@ public class WorkPanel extends JPanel {
 		lecturesB.setVerticalTextPosition(SwingConstants.BOTTOM);
 		lecturesB.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				eventsB_actionPerformed(e);
+				lecturesB_actionPerformed(e);
 			}
 		});
 		lecturesB.setIcon(
@@ -343,19 +344,29 @@ public class WorkPanel extends JPanel {
 	}
 
 	public void tasksB_actionPerformed(ActionEvent e) {
-	    CurrentProject.task = CurrentProject.TaskType.TASK;
-	    CurrentProject.getTaskList();
+		CurrentProject.currentTaskType = CurrentProject.TaskType.DEFAULT;
 		cardLayout1.show(panel, "DAILYITEMS");
 		dailyItemsPanel.selectPanel("TASKS");
-		setCurrentButton(assignmentsB);
+		setCurrentButton(assignmentsB);		
 		Context.put("CURRENT_PANEL", "TASKS");
 	}
 	
+	public void lecturesB_actionPerformed(ActionEvent e) {
+		cardLayout1.show(panel, "DAILYITEMS");
+		dailyItemsPanel.selectPanel("LECTURES");
+		setCurrentButton(lecturesB);
+		Context.put("CURRENT_PANEL", "LECTURES");
+	}
+	
 	public void instructorTasksB_actionPerformed(ActionEvent e) {
+		CurrentProject.currentTaskType = CurrentProject.TaskType.INSTR_TODO_LIST;
 		cardLayout1.show(panel, "DAILYITEMS");
 		dailyItemsPanel.selectPanel("TASKS");
-		setCurrentButton(instructorTasksB);
+		setCurrentButton(instructorTasksB);		
 		Context.put("CURRENT_PANEL", "TASKS");
+		
+		final String DEBUG = "[DEBUG] Clicked instructor todo list button";
+		System.out.println(DEBUG);
 	}
 	
 	public void tagraderTasksB_actionPerformed(ActionEvent e) {
@@ -366,8 +377,8 @@ public class WorkPanel extends JPanel {
 	}
 	
 	public void studentsB_actionPerformed(ActionEvent e) {
-	    CurrentProject.task = CurrentProject.TaskType.STUDENT_TODO;
-	    System.out.println(CurrentProject.task);
+	    CurrentProject.currentTaskType = CurrentProject.TaskType.STUDENT_TODO;
+	    System.out.println(CurrentProject.currentTaskType);
         cardLayout1.show(panel, "DAILYITEMS");
         dailyItemsPanel.selectPanel("TASKS");
         setCurrentButton(studentsB);

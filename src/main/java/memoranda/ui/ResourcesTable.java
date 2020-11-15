@@ -14,6 +14,7 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
 import main.java.memoranda.CurrentProject;
+import main.java.memoranda.LectureList;
 import main.java.memoranda.NoteList;
 import main.java.memoranda.Project;
 import main.java.memoranda.ProjectListener;
@@ -47,7 +48,8 @@ public class ResourcesTable extends JTable {
         initColumsWidth();
         //this.setModel(new ResourcesTableModel());
         CurrentProject.addProjectListener(new ProjectListener() {
-            public void projectChange(Project p, NoteList nl, TaskList tl, TaskList s1, ResourcesList rl) {                
+
+            public void projectChange(Project p, NoteList nl, LectureList tl, TaskList t2,TaskList s1, ResourcesList rl) {                
                
             }
             public void projectWasChanged() {
