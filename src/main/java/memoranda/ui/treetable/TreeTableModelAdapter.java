@@ -121,6 +121,6 @@ public class TreeTableModelAdapter extends AbstractTableModel
 		fireTableDataChanged();
 	    }
 	});
-    }
+	}
 }
 

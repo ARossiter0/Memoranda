@@ -74,12 +74,11 @@ public class ProjectDialog extends JDialog {
     public JSpinner finalExam = new JSpinner(new SpinnerDateModel());
     JButton feButton = new JButton();
     
-    //test
     JButton setLectureDays = new JButton();
     JButton setFreeDays = new JButton();
     JButton setHolidays = new JButton();
+    JButton setBreaks = new JButton();
     JTextField todoField = new JTextField();
-    //test
     
     //public JCheckBox freezeChB = new JCheckBox();
     //JPanel setTimesPanel = new JPanel();
@@ -93,6 +92,7 @@ public class ProjectDialog extends JDialog {
     public ArrayList<SpecialCalendarDate> freeDays = new ArrayList<SpecialCalendarDate>();
     public ArrayList<SpecialCalendarDate> breakDays = new ArrayList<SpecialCalendarDate>();
     public ArrayList<SpecialCalendarDate> holidays = new ArrayList<SpecialCalendarDate>();
+    public ArrayList<SpecialCalendarDate> breaks = new ArrayList<SpecialCalendarDate>();
 
     public ProjectDialog(Frame frame, String title) {
         super(frame, title, true);
@@ -106,7 +106,8 @@ public class ProjectDialog extends JDialog {
     }
 
     void jbInit() throws Exception {
-	this.setResizable(false);
+    	
+    	this.setResizable(false);
         getContentPane().setLayout(new GridBagLayout());
         topPanel.setBorder(new EmptyBorder(new Insets(0, 5, 0, 5)));
         topPanel.setBackground(Color.WHITE);        
@@ -310,20 +311,15 @@ public class ProjectDialog extends JDialog {
             }
         });
         gbc = new GridBagConstraints();
-        gbc.gridx = 8; gbc.gridy = 2;
+        gbc.gridx = 8; 
+        gbc.gridy = 2;
         gbc.insets = new Insets(5, 0, 10, 5);
         gbc.anchor = GridBagConstraints.WEST;
         centerPanel.add(feButton, gbc);
-        
-        
-        
-        gbc = new GridBagConstraints();
-        setLectureDays.setText(Local.getString("Set Lecture Times"));
-        setLectureDays.setIcon(
-            new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/notify.png")));
+               
         
         gbc = new GridBagConstraints();
-        gbc.gridx = 2; 
+        gbc.gridx = 4; 
         gbc.gridy = 3;
         gbc.insets = new Insets(5, 0, 10, 5);
         gbc.anchor = GridBagConstraints.CENTER;
@@ -386,11 +382,30 @@ public class ProjectDialog extends JDialog {
             	setHolidays_actionPerformed(e);
             }
         });
+
+        //-----------------------------
         
-        //This is a panel I set for the Set Lecture Times and 
+        setBreaks.setText(Local.getString("Add Breaks"));
+        setBreaks.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/notify.png")));
+
+        gbc = new GridBagConstraints();
+        gbc.gridx = 4; 
+        gbc.gridy = 3;
+        gbc.insets = new Insets(5, 0, 10, 10);
+        gbc.anchor = GridBagConstraints.CENTER;
+        setTimesPanel.add(setBreaks, gbc); // UNKNOWN LAYOUT BEHAVIOR
+        
+        //Call for action - open events window upon pressing 
+        setBreaks.setText(Local.getString("Add Breaks"));
+        setBreaks.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/notify.png")));
+        setBreaks.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	setBreaks_actionPerformed(e);
+            }
+        });
+
+        //Sets the layout of the buttons
         setTimesPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-        
-        
         
         bottomPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
         okButton.setMaximumSize(new Dimension(100, 25));
@@ -523,7 +538,14 @@ public class ProjectDialog extends JDialog {
             holidays.add(holiday);
         }
     }
-    
+
+    // Perform action for set breaks
+    void setBreaks_actionPerformed(ActionEvent e) {
+        SpecialCalendarDate courseBreak = ((AppFrame)App.getFrame()).workPanel.dailyItemsPanel.tasksPanel.newBreak_actionPerformed();
+        if(courseBreak != null) {
+            breaks.add(courseBreak);
+        }
+    }
     
     public static void newProject() {
         ProjectDialog dlg = new ProjectDialog(null, Local.getString("New course"));
@@ -558,10 +580,13 @@ public class ProjectDialog extends JDialog {
         for(SpecialCalendarDate hd : dlg.holidays) {
             Task newTask = CurrentProject.getTaskList().createSingleEventTask(hd.getName(), hd.getDate(), "Holiday");
         }
+        for(SpecialCalendarDate br : dlg.breaks) {
+            Task newTask = CurrentProject.getTaskList().createSingleEventTask(br.getName(), br.getDate(), "Break");
+        }
        
         CurrentStorage.get().storeTaskList(CurrentProject.getTaskList(), CurrentProject.get());
-        //taskTable.tableChanged();
-        //parentPanel.updateIndicators();
+        
+        CurrentProject.updateAllListeners();
 
     }    
 }

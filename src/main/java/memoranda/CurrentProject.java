@@ -25,19 +25,28 @@ import main.java.memoranda.util.Storage;
 public class CurrentProject {
 
     private static Project _project = null;
+    private static LectureList _lecturelist = null;
     private static TaskList _tasklist = null;
+    private static TaskList _assignlist = null;
+    private static TaskList _studenttodo = null;
+    private static TaskList _instrTodoList = null;
+
     private static NoteList _notelist = null;
     private static ResourcesList _resources = null;
     private static Vector projectListeners = new Vector();
 
-        
+    private static final String PRJ_ID_KEY = "LAST_OPENED_PROJECT_ID";
+    public enum TaskType {DEFAULT, INSTR_TODO_LIST, STUDENT_TODO}
+    public static TaskType currentTaskType = TaskType.DEFAULT;
+
+    
     static {
     	// Check if there is some project that has been opened last.
     	// If not, create a default.
-        String prjId = (String)Context.get("LAST_OPENED_PROJECT_ID");
+        String prjId = (String)Context.get(PRJ_ID_KEY);
         if (prjId == null) {
             prjId = "__default";
-            Context.put("LAST_OPENED_PROJECT_ID", prjId);
+            Context.put(PRJ_ID_KEY, prjId);
         }
         
         
@@ -53,14 +62,19 @@ public class CurrentProject {
 			_project = ProjectManager.getProject("__default");
 			if (_project == null) 
 				_project = (Project)ProjectManager.getActiveProjects().get(0);						
-            Context.put("LAST_OPENED_PROJECT_ID", _project.getID());
+            Context.put(PRJ_ID_KEY, _project.getID());
 			
 		}		
 		
-		// Get the tasks, notes, and resources from the project
+		// Get the tasks, instructor todo lists, notes, 
+		// and resources from the project
         _tasklist = CurrentStorage.get().openTaskList(_project);
+        _instrTodoList = CurrentStorage.get().openInstrTodoList(_project);
+        _studenttodo = CurrentStorage.get().openStudentTodo(_project);
+        _lecturelist = CurrentStorage.get().openLectureList(_project);
         _notelist = CurrentStorage.get().openNoteList(_project);
         _resources = CurrentStorage.get().openResourcesList(_project);
+        _assignlist = CurrentStorage.get().openAssignList(_project);
         
         // When exiting the application, save the current project
         AppFrame.addExitListener(new ActionListener() {
@@ -70,7 +84,6 @@ public class CurrentProject {
         });
     }
         
-
     public static Project get() {
         return _project;
     }
@@ -80,10 +93,37 @@ public class CurrentProject {
      * @return the list of tasks associated with this project
      */
     public static TaskList getTaskList() {
+        boolean emptyContext;
+        try {
+            emptyContext = Context.get("CURRENT_PANEL").equals("ASSIGN");
+        } catch (NullPointerException contextFail) {
+            emptyContext = false;
+        }
+        if(emptyContext) {
+            return _assignlist;
+        } else if (currentTaskType == TaskType.STUDENT_TODO) {
+            return _studenttodo;
+        } else if (currentTaskType == TaskType.INSTR_TODO_LIST) {
+    		final String DEBUG = "\t\t[DEBUG] Returning _instrTodoList";
+    		return _instrTodoList; 
+        } else {
             return _tasklist;
+        }
     }
 
+    public static TaskList getAssignList() {
+        return _assignlist;
+    }
+        
+    /**
+     * Get the lectures associated with this project
+     * @return the list of lectures associated with this project
+     */
+    public static LectureList getLectureList() {
+    	return _lecturelist;
+    }
     
+
     /**
      * Get the notes associated with this project
      * @return the list of notes associated with this project
@@ -110,16 +150,27 @@ public class CurrentProject {
      */
     public static void set(Project project) {
         if (project.getID().equals(_project.getID())) return;
+        
+        LectureList newlecturelist = CurrentStorage.get().openLectureList(project);
         TaskList newtasklist = CurrentStorage.get().openTaskList(project);
+        TaskList newstudentodo = CurrentStorage.get().openStudentTodo(project);
+        TaskList newinstrtodolist = CurrentStorage.get().openInstrTodoList(project);
         NoteList newnotelist = CurrentStorage.get().openNoteList(project);
         ResourcesList newresources = CurrentStorage.get().openResourcesList(project);
-        notifyListenersBefore(project, newnotelist, newtasklist, newresources);
+        TaskList newassignlist = CurrentStorage.get().openAssignList(project);
+        //notifyListenersBefore(project, newnotelist, newtasklist, newresources); //Old style change extent unknown
+        notifyListenersBefore(project, newnotelist, newlecturelist, newinstrtodolist, newstudentodo, newresources);
+
         _project = project;
+        _lecturelist = newlecturelist;
         _tasklist = newtasklist;
+        _studenttodo = newstudentodo;
+        _instrTodoList = newinstrtodolist;
         _notelist = newnotelist;
         _resources = newresources;
+        _assignlist = newassignlist;
         notifyListenersAfter();
-        Context.put("LAST_OPENED_PROJECT_ID", project.getID());
+        Context.put(PRJ_ID_KEY, project.getID());
     }
 
     /**
@@ -143,11 +194,13 @@ public class CurrentProject {
      * @param project the new project
      * @param nl the new note list
      * @param tl the new task list
+     * @param t2 the new instructor todo list
      * @param rl the new resource list
      */
-    private static void notifyListenersBefore(Project project, NoteList nl, TaskList tl, ResourcesList rl) {
+
+    private static void notifyListenersBefore(Project project, NoteList nl, LectureList tl, TaskList t2, TaskList s1, ResourcesList rl) {
         for (int i = 0; i < projectListeners.size(); i++) {
-            ((ProjectListener)projectListeners.get(i)).projectChange(project, nl, tl, rl);
+            ((ProjectListener)projectListeners.get(i)).projectChange(project, nl, tl, t2, s1, rl);
             /*DEBUGSystem.out.println(projectListeners.get(i));*/
         }
     }
@@ -168,7 +221,11 @@ public class CurrentProject {
         Storage storage = CurrentStorage.get();
 
         storage.storeNoteList(_notelist, _project);
+        storage.storeAssignList(_assignlist, _project);
+        storage.storeLectureList(_lecturelist, _project);
         storage.storeTaskList(_tasklist, _project); 
+        storage.storeStudentTodo(_studenttodo, _project); 
+        storage.storeInstrTodoList(_instrTodoList, _project);
         storage.storeResourcesList(_resources, _project);
         storage.storeProjectManager();
     }
@@ -178,8 +235,24 @@ public class CurrentProject {
      */
     public static void free() {
         _project = null;
+        _lecturelist = null;
         _tasklist = null;
+        _assignlist = null;
         _notelist = null;
         _resources = null;
+        _studenttodo = null;
+        _instrTodoList = null;
+    }
+
+    /**
+     * A way to update all listeners without calling set.
+     * Calling this will make the main adgenda page respond to changes, given they
+     * are exposed properly to some listener.
+     * A hack, but a useful hack.
+     */
+    public static void updateAllListeners() {
+        System.out.println("[DEBUG] - update all listeners called. CurrentProject.java - Line 192.\n");
+        notifyListenersAfter();
     }
 }
+        

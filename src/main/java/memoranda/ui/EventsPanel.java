@@ -410,6 +410,7 @@ public class EventsPanel extends JPanel {
         else {
             rtype = EventsManager.REPEAT_MONTHLY;
             period = ((Integer) dlg.dayOfMonthSpin.getModel().getValue()).intValue();
+            System.out.println("monthly period value : " + period);
         }
         EventsManager.createRepeatableEvent(rtype, sd, ed, period, hh, mm, text, dlg.workingDaysOnlyCB.isSelected());
     }

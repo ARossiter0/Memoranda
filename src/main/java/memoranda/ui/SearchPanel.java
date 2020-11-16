@@ -22,6 +22,7 @@ import javax.swing.event.CaretEvent;
 import javax.swing.text.Document;
 
 import main.java.memoranda.CurrentProject;
+import main.java.memoranda.LectureList;
 import main.java.memoranda.Note;
 import main.java.memoranda.NoteList;
 import main.java.memoranda.Project;
@@ -114,7 +115,8 @@ public class SearchPanel extends JPanel {
         jPanel4.add(regexpCB, BorderLayout.CENTER);
         jPanel3.add(searchB, BorderLayout.SOUTH);
         CurrentProject.addProjectListener(new ProjectListener() {
-            public void projectChange(Project p, NoteList nl, TaskList tl, ResourcesList rl) {
+
+            public void projectChange(Project p, NoteList nl, LectureList tl, TaskList t2, TaskList s1, ResourcesList rl) {
                 notesList.update(new Vector());
             }
             public void projectWasChanged() {}

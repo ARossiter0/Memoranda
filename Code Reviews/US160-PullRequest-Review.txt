@@ -1,0 +1,21 @@
+Coding Standards (CG)
+- [x] All methods that have been created/changed have a Javadoc comment present and filled in with a description, explanations for parameters, and explanations for return values. 
+- [x] New constants and Enums are in all CAPS
+- [x] New class names are upper CamelCase
+- [x]New variables, parameters, and method names are lower camelCase. 
+- [x] New attributes are private
+- [x] New literal values, except loop indices starting at 0 or 1 are declared as constants
+- [x] All new code with {} appear with { at the end of a line, and } on its own line
+- [x] Indentation for all new statements is tabbed. 
+- [x] All new complex statements use explicit {} even if the body is a single line. 
+
+Code Smells
+- [x] There is no significant duplicate code. 
+- [x] There are no new large classes.
+- [x] There are no new lazy classes. 
+- [x] There are no new switch statements. 
+- [x] There are no data clumps.
+- [x] New methods have 3 or fewer parameters. 
+- [x] New methods are not longer than 100 lines (with whitespace included).
+- [x] Identifiers are shorter than 20 characters. 
+- [x] Identifiers are longer than 3 characters. 

@@ -48,18 +48,24 @@ public class AgendaGenerator {
 
 	static String generateTasksInfo(Project p, CalendarDate date, Collection expandedTasks) {    	    	
 		TaskList tl;
+		TaskList a1;
 		if (p.getID().equals(CurrentProject.get().getID())) {
-			tl = CurrentProject.getTaskList();        	
+			tl = CurrentProject.getTaskList();
+			a1 = CurrentProject.getAssignList();   	
 		}
 		else {
-			tl = CurrentStorage.get().openTaskList(p);        	
+			tl = CurrentStorage.get().openTaskList(p);
+			a1 = CurrentStorage.get().openAssignList(p);  	
 		}
 		String s = "";
 
 
 		s += "</td></tr></table>\n";
 
-		Vector tasks = (Vector) tl.getActiveSubTasks(null,date);        
+		Vector tasks = (Vector) tl.getActiveSubTasks(null, date);
+		Vector assigns = (Vector) a1.getActiveSubTasks(null, date);
+		s += "<p>" + Local.getString("Number of assignments for this course : ") + assigns.size() + "</p>\n";
+
 		if (tasks.size() == 0) {
 			s += "<p>" + Local.getString("No course dates or Lecture Hours set.") + ".</p>\n";        	
 		}
