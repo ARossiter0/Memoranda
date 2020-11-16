@@ -71,14 +71,11 @@ public class LectureListImpl implements LectureList {
 		return _project;
 	}
 
-<<<<<<< HEAD
-=======
 	/**
 	 * Called from LecturePanel.java, creates a lecture element from information entered by the user
 	 * in the Lecture Dialog and adds it to the lecture list root as well as returning a new lecture
 	 * object.
 	 */
->>>>>>> US140-Lectures
     public Lecture createLecture(CalendarDate date, Calendar startTime, Calendar endTime, String topic) {
         Element el = new Element("lecture");
         el.addAttribute(new Attribute("date", date.toString()));
