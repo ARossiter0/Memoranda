@@ -329,6 +329,57 @@ public class FileStorage implements Storage {
         }
     }
 
+    /**
+     * Store and open assignment lists, functions identical to a task list, just
+     * different name. Is a task list.
+     * Added for US149.
+     */
+    public void storeAssignList(TaskList assignlist, Project prj) {
+        /*DEBUG*/
+        System.out.println(
+            "[DEBUG] Save task list: "
+                + JN_DOCPATH
+                + prj.getID()
+                + File.separator
+                + ".assignlist");
+        Document assignlistDoc = assignlist.getXMLContent();
+        saveDocument(assignlistDoc,JN_DOCPATH + prj.getID() + File.separator + ".assignlist");
+    }
+    public TaskList openAssignList(Project prj) {
+        String fn = JN_DOCPATH + prj.getID() + File.separator + ".assignlist";
+
+        if (documentExists(fn)) {
+            /*DEBUG*/
+            System.out.println(
+                "[DEBUG] Open assignment list: "
+                    + JN_DOCPATH
+                    + prj.getID()
+                    + File.separator
+                    + ".assignlist");
+            
+            Document assignlistDoc = openDocument(fn);
+            return new TaskListImpl(assignlistDoc, prj);   
+        }
+        else {
+            /*DEBUG*/
+            System.out.println("[DEBUG] New assignment list created");
+            return new TaskListImpl(prj);
+        }
+    }
+	/*
+    public void storeTaskList(TaskList tasklist, Project prj) {
+        System.out.println(
+            "[DEBUG] Save student to do list: "
+                + JN_DOCPATH
+                + prj.getID()
+                + File.separator
+                + ".studenttodo");
+        Document tasklistDoc = tasklist.getXMLContent();
+        //tasklistDoc.setDocType(TaskListVersioning.getCurrentDocType());
+        saveDocument(tasklistDoc,JN_DOCPATH + prj.getID() + File.separator + ".studenttodo");
+	}
+	*/
+	
     public void storeStudentTodo(TaskList tasklist, Project prj) {
         /*DEBUG*/
         System.out.println(

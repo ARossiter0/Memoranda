@@ -22,6 +22,9 @@ public interface Storage {
             
     TaskList openTaskList(Project prj);    
     void storeTaskList(TaskList tl, Project prj);
+
+    TaskList openAssignList(Project prj);    
+    void storeAssignList(TaskList tl, Project prj);
     
     TaskList openStudentTodo(Project prj);    
     void storeStudentTodo(TaskList tl, Project prj);

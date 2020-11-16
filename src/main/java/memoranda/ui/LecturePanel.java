@@ -273,10 +273,10 @@ public class LecturePanel extends JPanel {
 
     // defines actions to be performed when the edit Lecture button is clicked
     void editLectureB_actionPerformed(ActionEvent e) {
-        Lecture le = (Lecture) LectureTable.getModel().getValueAt(LectureTable.getSelectedRow(), LectureTable.LECTURE);
-        LectureDialog dlg = new LectureDialog(App.getFrame(), Local.getString("New lecture"));
-
-        Dimension frmSize = App.getFrame().getSize();
+    	Lecture le = (Lecture) LectureTable.getModel().getValueAt(LectureTable.getSelectedRow(), LectureTable.LECTURE);
+		LectureDialog dlg = new LectureDialog(App.getFrame(), Local.getString("Edit lecture"));
+		
+		Dimension frmSize = App.getFrame().getSize();
         Point loc = App.getFrame().getLocation();
 
         dlg.lecTopicField.setText(le.getTopic());
@@ -323,9 +323,7 @@ public class LecturePanel extends JPanel {
     // defines actions to be performed when new Lecture is added
     void newLectureB_actionPerformed(ActionEvent e) {
         LectureDialog dlg = new LectureDialog(App.getFrame(), Local.getString("New lecture"));
-
-        // XXX String parentLectureId = LectureTable.getCurrentRootLecture();
-
+        
         Dimension frmSize = App.getFrame().getSize();
         Point loc = App.getFrame().getLocation();
 
@@ -352,9 +350,18 @@ public class LecturePanel extends JPanel {
 
         CurrentProject.getLectureList().createLecture(date, startTime, endTime, topic);
         CurrentStorage.get().storeLectureList(CurrentProject.getLectureList(), CurrentProject.get());
-//        LectureTable.tableChanged();
-//        parentPanel.updateIndicators();
         LectureTable.refresh();
+
+        //Added to update courses panel
+
+        Calendar calendar = new GregorianCalendar(Local.getCurrentLocale());
+        calendar.setTime(((Date) dlg.startTimeSpin.getModel().getValue()));
+
+        int hh = calendar.get(Calendar.HOUR_OF_DAY);
+        int mm = calendar.get(Calendar.MINUTE);
+        String day = dlg.dayLabel.getText();
+
+        CurrentProject.getTaskList().createLectureTask(day, hh, mm, "Lecture");
     }
 
     // actions to be performed when removing a Lecture

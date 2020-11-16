@@ -54,7 +54,7 @@ public class TaskDialog extends JDialog {
     JLabel header = new JLabel();
     public boolean CANCELLED = true;
     JPanel jPanel8 = new JPanel(new GridBagLayout());
-    Border border3;
+    public TitledBorder border3;
     Border border4;
 //    Border border5;
 //    Border border6;
@@ -480,6 +480,21 @@ public class TaskDialog extends JDialog {
 				endDate.getModel().setValue(currentStartDate);
 			}
 		}
+    }
+    /**
+     * Alows for the end date field to be set as enabled
+     * upon opening.
+     * Added for US149.
+     */
+    void chkEndDate_Augmented() {
+		endDate.setEnabled(true);
+		setEndDateB.setEnabled(true);
+		jLabel2.setEnabled(true);
+        Date currentEndDate = (Date) endDate.getModel().getValue();
+        Date currentStartDate = (Date) startDate.getModel().getValue();
+        if(currentEndDate.getTime() < currentStartDate.getTime()) {
+            endDate.getModel().setValue(currentStartDate);
+		}
 	}
 	
 	//action to be performed upon entering start date
@@ -497,6 +512,7 @@ public class TaskDialog extends JDialog {
         this.getLayeredPane().add(endCalFrame);
         endCalFrame.show();
     }
+
     //action to be performed upon clicking set notification button
     void setNotifB_actionPerformed(ActionEvent e) {
     	((AppFrame)App.getFrame()).workPanel.dailyItemsPanel.eventsPanel.newEventB_actionPerformed(e, 

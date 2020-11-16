@@ -127,19 +127,8 @@ public class WorkPanel extends JPanel {
 		
 		
 		// Assignments button
-		assignmentsB.setSelected(true);
 		assignmentsB.setFont(new java.awt.Font("Dialog", 1, 10));
 		assignmentsB.setMargin(new Insets(0, 0, 0, 0));
-		assignmentsB.setIcon(
-			new ImageIcon(
-				main.java.memoranda.ui.AppFrame.class.getResource(
-					"/ui/icons/tasks.png")));
-		assignmentsB.setVerticalTextPosition(SwingConstants.BOTTOM);
-		assignmentsB.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				tasksB_actionPerformed(e);
-			}
-		});
 		assignmentsB.setVerticalAlignment(SwingConstants.TOP);
 		assignmentsB.setText(Local.getString("Assignments")); /***/
 		assignmentsB.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -151,6 +140,16 @@ public class WorkPanel extends JPanel {
 		assignmentsB.setOpaque(false);
 		assignmentsB.setMaximumSize(new Dimension(60, 80));
 		assignmentsB.setBackground(Color.white);
+		assignmentsB.setIcon(
+			new ImageIcon(
+				main.java.memoranda.ui.AppFrame.class.getResource(
+					"/ui/icons/tasks.png")));
+		assignmentsB.setVerticalTextPosition(SwingConstants.BOTTOM);
+		assignmentsB.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				assignB_actionPerformed(e);
+			}
+		});
 		
 		
 		// Instructor Tasks button
@@ -326,76 +325,93 @@ public class WorkPanel extends JPanel {
 				eventsB_actionPerformed(null);
 			else if (pan.equals("FILES"))
 				filesB_actionPerformed(null);
+			else if (pan.contentEquals("STUDENTS"))
+				studentsB_actionPerformed(null);
+			else if (pan.contentEquals("ASSIGN"))
+				assignB_actionPerformed(null);
 		}
 	}
 
 	public void agendaB_actionPerformed(ActionEvent e) {
+		Context.put("CURRENT_PANEL", "AGENDA");	
 		cardLayout1.show(panel, "DAILYITEMS");
 		dailyItemsPanel.selectPanel("AGENDA");
 		setCurrentButton(coursesB);
-		Context.put("CURRENT_PANEL", "AGENDA");
+		
 	}
 
 	public void notesB_actionPerformed(ActionEvent e) {
+		Context.put("CURRENT_PANEL", "NOTES");
 		cardLayout1.show(panel, "DAILYITEMS");
 		dailyItemsPanel.selectPanel("NOTES");
 		setCurrentButton(notesB);
-		Context.put("CURRENT_PANEL", "NOTES");
+		
 	}
-
+	
 	public void tasksB_actionPerformed(ActionEvent e) {
+		Context.put("CURRENT_PANEL", "TASKS");
 		CurrentProject.currentTaskType = CurrentProject.TaskType.DEFAULT;
 		cardLayout1.show(panel, "DAILYITEMS");
 		dailyItemsPanel.selectPanel("TASKS");
-		setCurrentButton(assignmentsB);		
-		Context.put("CURRENT_PANEL", "TASKS");
+		setCurrentButton(assignmentsB);	
+	}
+	
+	public void assignB_actionPerformed(ActionEvent e) {
+		tasksB_actionPerformed(e);
+		Context.put("CURRENT_PANEL", "ASSIGN");
+		cardLayout1.show(panel, "DAILYITEMS");
+		dailyItemsPanel.selectPanel("ASSIGN");
+		setCurrentButton(assignmentsB);
 	}
 	
 	public void lecturesB_actionPerformed(ActionEvent e) {
+		Context.put("CURRENT_PANEL", "LECTURES");
 		cardLayout1.show(panel, "DAILYITEMS");
 		dailyItemsPanel.selectPanel("LECTURES");
 		setCurrentButton(lecturesB);
-		Context.put("CURRENT_PANEL", "LECTURES");
+		
 	}
 	
 	public void instructorTasksB_actionPerformed(ActionEvent e) {
+		Context.put("CURRENT_PANEL", "TASKS");
 		CurrentProject.currentTaskType = CurrentProject.TaskType.INSTR_TODO_LIST;
+
 		cardLayout1.show(panel, "DAILYITEMS");
 		dailyItemsPanel.selectPanel("TASKS");
 		setCurrentButton(instructorTasksB);		
-		Context.put("CURRENT_PANEL", "TASKS");
 		
 		final String DEBUG = "[DEBUG] Clicked instructor todo list button";
 		System.out.println(DEBUG);
 	}
 	
 	public void tagraderTasksB_actionPerformed(ActionEvent e) {
+		Context.put("CURRENT_PANEL", "TA");
 		cardLayout1.show(panel, "DAILYITEMS");
-		dailyItemsPanel.selectPanel("TASKS");
+		dailyItemsPanel.selectPanel("TA");
 		setCurrentButton(tagraderTasksB);
-		Context.put("CURRENT_PANEL", "TASKS");
+		
 	}
 	
 	public void studentsB_actionPerformed(ActionEvent e) {
+		Context.put("CURRENT_PANEL", "TASKS");
 	    CurrentProject.currentTaskType = CurrentProject.TaskType.STUDENT_TODO;
 	    System.out.println(CurrentProject.currentTaskType);
         cardLayout1.show(panel, "DAILYITEMS");
         dailyItemsPanel.selectPanel("TASKS");
         setCurrentButton(studentsB);
-        Context.put("CURRENT_PANEL", "TASKS");
     }
 
 	public void eventsB_actionPerformed(ActionEvent e) {
+		Context.put("CURRENT_PANEL", "EVENTS");
 		cardLayout1.show(panel, "DAILYITEMS");
 		dailyItemsPanel.selectPanel("EVENTS");
 		setCurrentButton(lecturesB);
-		Context.put("CURRENT_PANEL", "EVENTS");
 	}
 
 	public void filesB_actionPerformed(ActionEvent e) {
+		Context.put("CURRENT_PANEL", "FILES");
 		cardLayout1.show(panel, "FILES");
 		setCurrentButton(filesB);
-		Context.put("CURRENT_PANEL", "FILES");
 	}
 
 	void setCurrentButton(JButton cb) {

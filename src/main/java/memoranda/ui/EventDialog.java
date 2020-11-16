@@ -413,7 +413,7 @@ public class EventDialog extends JDialog implements WindowListener {
         enableEndDateCB_actionPerformed(null);
         
     }
-
+// ---------
     void disableElements() {
         dayOfMonthSpin.setEnabled(false);
         daySpin.setEnabled(false);

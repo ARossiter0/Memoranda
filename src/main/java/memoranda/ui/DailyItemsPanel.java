@@ -208,6 +208,10 @@ public class DailyItemsPanel extends JPanel {
         editorsPanel.add(agendaPanel, "AGENDA");
         editorsPanel.add(lecturesPanel, "LECTURES");
         editorsPanel.add(eventsPanel, "EVENTS");
+        editorsPanel.add(tasksPanel, "ASSIGN");
+        //editorsPanel.add(studentsPanel, "STUDENTS");
+        //editorsPanel.add(studentsPanel, "TA"); //new
+        //editorsPanel.add(studentsPanel, "INSTRUCT"); //new
         editorsPanel.add(tasksPanel, "TASKS");
         editorsPanel.add(editorPanel, "NOTES");
         
@@ -304,10 +308,15 @@ public class DailyItemsPanel extends JPanel {
         History.add(new HistoryItem(CurrentDate.get(), CurrentProject.get()));
         cmainPanel.add(mainTabsPanel, BorderLayout.CENTER);
         mainTabsPanel.add(eventsTabbedPane, "EVENTSTAB");
+        mainTabsPanel.add(tasksTabbedPane, "ASSIGNTAB");
         mainTabsPanel.add(lecturesTabbedPane, "LECTURESTAB");
-        mainTabsPanel.add(tasksTabbedPane, "TASKSTAB");
         mainTabsPanel.add(notesControlPane, "NOTESTAB");
-		mainTabsPanel.add(agendaTabbedPane, "AGENDATAB");
+        mainTabsPanel.add(agendaTabbedPane, "AGENDATAB");
+
+        mainTabsPanel.add(tasksTabbedPane, "TATAB"); //added
+        mainTabsPanel.add(tasksTabbedPane, "INSTRUCTTAB"); //added
+        mainTabsPanel.add(tasksTabbedPane, "STUDENTSTAB"); //added
+
         updateIndicators(CurrentDate.get(), CurrentProject.getTaskList());
         mainPanel.setBorder(null);
     }
@@ -470,7 +479,8 @@ public class DailyItemsPanel extends JPanel {
          //   calendar.jnCalendar.updateUI();
         }
         
-        
+        tasksPanel.refresh(); 
+
         // Update table of tasks        
         if (pan.equals(TASKS_STR)) {
             CurrentStorage.get().storeTaskList(CurrentProject.getTaskList(), CurrentProject.get());
@@ -495,15 +505,24 @@ public class DailyItemsPanel extends JPanel {
                         .getValueAt(tasksPanel.taskTable.getSelectedRow(), TaskTable.TASK_ID)
                         .toString());
             calendar.jnCalendar.renderer.setTask(t);
-            //calendar.jnCalendar.updateUI();
             CurrentStorage.get().storeTaskList(CurrentProject.getTaskList(), CurrentProject.get());
-            tasksPanel.taskTable.tableChanged();                  
-
+            tasksPanel.taskTable.tableChanged();  
+        }
+        if (pan.equals("ASSIGN") && (tasksPanel.taskTable.getSelectedRow() > -1)) {
+            Task t =
+                CurrentProject.getAssignList().getTask(
+                    tasksPanel
+                        .taskTable
+                        .getModel()
+                        .getValueAt(tasksPanel.taskTable.getSelectedRow(), TaskTable.TASK_ID)
+                        .toString());
+            calendar.jnCalendar.renderer.setTask(t);
         }
         boolean isAg = pan.equals(AGENDA_STR);
         agendaPanel.setActive(isAg);
-        if (isAg)
-        	agendaPanel.refresh(CurrentDate.get());
+        if (isAg) {
+            agendaPanel.refresh(CurrentDate.get());
+        }
         cardLayout1.show(editorsPanel, pan);
         cardLayout2.show(mainTabsPanel, pan + TAB);
 		calendar.jnCalendar.updateUI();

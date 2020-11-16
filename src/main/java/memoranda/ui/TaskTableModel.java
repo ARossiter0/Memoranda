@@ -42,8 +42,7 @@ import java.util.Hashtable;
  */
 public class TaskTableModel extends AbstractTreeTableModel implements TreeTableModel {
 
-    String[] columnNames = { "", Local.getString("To-do"), Local.getString("Start date"), Local.getString("End date"),
-            Local.getString("Priority"), Local.getString("Status"), "% " + Local.getString("done") };
+    public String[] columnNames;
 
     protected EventListenerList listenerList = new EventListenerList();
 
@@ -56,6 +55,31 @@ public class TaskTableModel extends AbstractTreeTableModel implements TreeTableM
      */
     public TaskTableModel() {
         super(CurrentProject.get());
+        String[] taskCol = {"", Local.getString("To-do"),
+            Local.getString("Start date"), Local.getString("End date"),
+            Local.getString("Priority"), Local.getString("Status"),
+            "% " + Local.getString("done") };
+        columnNames = taskCol;
+    }
+
+    /**
+     * This constructor is used to make a table model for assignments.
+     * Added for US149_CourseAssignments
+     */
+    public TaskTableModel(boolean isAssign) {
+        super(CurrentProject.get());
+        if (isAssign) {
+            String[] assignCol = {"", Local.getString("Assignments"),
+            Local.getString("Assigned"), Local.getString("Due date"), 
+            Local.getString("Status") };
+            columnNames = assignCol;
+        } else {
+            String[] taskCol = {"", Local.getString("To-do"),
+            Local.getString("Start date"), Local.getString("End date"),
+            Local.getString("Priority"), Local.getString("Status"),
+            "% " + Local.getString("done") };
+            columnNames = taskCol;
+        }
     }
 
     /**
@@ -293,5 +317,4 @@ public class TaskTableModel extends AbstractTreeTableModel implements TreeTableM
             return true;
         return super.isCellEditable(node, column);
     }
-
 }

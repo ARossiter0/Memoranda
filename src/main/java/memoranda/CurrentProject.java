@@ -27,12 +27,14 @@ public class CurrentProject {
     private static Project _project = null;
     private static LectureList _lecturelist = null;
     private static TaskList _tasklist = null;
+    private static TaskList _assignlist = null;
     private static TaskList _studenttodo = null;
     private static TaskList _instrTodoList = null;
+
     private static NoteList _notelist = null;
     private static ResourcesList _resources = null;
     private static Vector projectListeners = new Vector();
-    
+
     private static final String PRJ_ID_KEY = "LAST_OPENED_PROJECT_ID";
     public enum TaskType {DEFAULT, INSTR_TODO_LIST, STUDENT_TODO}
     public static TaskType currentTaskType = TaskType.DEFAULT;
@@ -72,6 +74,7 @@ public class CurrentProject {
         _lecturelist = CurrentStorage.get().openLectureList(_project);
         _notelist = CurrentStorage.get().openNoteList(_project);
         _resources = CurrentStorage.get().openResourcesList(_project);
+        _assignlist = CurrentStorage.get().openAssignList(_project);
         
         // When exiting the application, save the current project
         AppFrame.addExitListener(new ActionListener() {
@@ -81,7 +84,6 @@ public class CurrentProject {
         });
     }
         
-
     public static Project get() {
         return _project;
     }
@@ -91,19 +93,28 @@ public class CurrentProject {
      * @return the list of tasks associated with this project
      */
     public static TaskList getTaskList() {
-        if (currentTaskType == TaskType.STUDENT_TODO) {
+        boolean emptyContext;
+        try {
+            emptyContext = Context.get("CURRENT_PANEL").equals("ASSIGN");
+        } catch (NullPointerException contextFail) {
+            emptyContext = false;
+        }
+        if(emptyContext) {
+            return _assignlist;
+        } else if (currentTaskType == TaskType.STUDENT_TODO) {
             return _studenttodo;
         } else if (currentTaskType == TaskType.INSTR_TODO_LIST) {
     		final String DEBUG = "\t\t[DEBUG] Returning _instrTodoList";
     		return _instrTodoList; 
-        }
-        else {
+        } else {
             return _tasklist;
         }
     }
 
-    	
-
+    public static TaskList getAssignList() {
+        return _assignlist;
+    }
+        
     /**
      * Get the lectures associated with this project
      * @return the list of lectures associated with this project
@@ -146,6 +157,8 @@ public class CurrentProject {
         TaskList newinstrtodolist = CurrentStorage.get().openInstrTodoList(project);
         NoteList newnotelist = CurrentStorage.get().openNoteList(project);
         ResourcesList newresources = CurrentStorage.get().openResourcesList(project);
+        TaskList newassignlist = CurrentStorage.get().openAssignList(project);
+        //notifyListenersBefore(project, newnotelist, newtasklist, newresources); //Old style change extent unknown
         notifyListenersBefore(project, newnotelist, newlecturelist, newinstrtodolist, newstudentodo, newresources);
 
         _project = project;
@@ -155,6 +168,7 @@ public class CurrentProject {
         _instrTodoList = newinstrtodolist;
         _notelist = newnotelist;
         _resources = newresources;
+        _assignlist = newassignlist;
         notifyListenersAfter();
         Context.put(PRJ_ID_KEY, project.getID());
     }
@@ -207,6 +221,7 @@ public class CurrentProject {
         Storage storage = CurrentStorage.get();
 
         storage.storeNoteList(_notelist, _project);
+        storage.storeAssignList(_assignlist, _project);
         storage.storeLectureList(_lecturelist, _project);
         storage.storeTaskList(_tasklist, _project); 
         storage.storeStudentTodo(_studenttodo, _project); 
@@ -222,9 +237,22 @@ public class CurrentProject {
         _project = null;
         _lecturelist = null;
         _tasklist = null;
-        _studenttodo = null;
-        _instrTodoList = null;
+        _assignlist = null;
         _notelist = null;
         _resources = null;
+        _studenttodo = null;
+        _instrTodoList = null;
+    }
+
+    /**
+     * A way to update all listeners without calling set.
+     * Calling this will make the main adgenda page respond to changes, given they
+     * are exposed properly to some listener.
+     * A hack, but a useful hack.
+     */
+    public static void updateAllListeners() {
+        System.out.println("[DEBUG] - update all listeners called. CurrentProject.java - Line 192.\n");
+        notifyListenersAfter();
     }
 }
+        

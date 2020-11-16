@@ -138,6 +138,7 @@ public class EventsManager {
 		int mm,
 		String text,
 		boolean workDays) {
+			
 		Element el = new Element("event");
 		Element rep = _root.getFirstChildElement("repeatable");
 		if (rep == null) {

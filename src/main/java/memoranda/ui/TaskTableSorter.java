@@ -23,6 +23,8 @@ public class TaskTableSorter extends TaskTableModel {
     // sort opposite direction
     boolean opposite = false;
 
+    JTableHeader _header = null;
+
     Comparator comparator = new Comparator() {
         public int compare(Object o1, Object o2) {
             if (sorting_column == -1)
@@ -56,11 +58,24 @@ public class TaskTableSorter extends TaskTableModel {
         }
     };
 
-    public TaskTableSorter(TaskTable table) {
-        JTableHeader tableHeader = table.getTableHeader();
-        tableHeader.addMouseListener(new MouseHandler());
-        tableHeader.setDefaultRenderer(new SortableHeaderRenderer());
-    }
+    public TaskTableSorter( TaskTable table ){
+		JTableHeader tableHeader = table.getTableHeader();
+		tableHeader.addMouseListener( new MouseHandler() );
+		tableHeader.setDefaultRenderer( new SortableHeaderRenderer());
+		_header = tableHeader;
+	}
+	/**
+	 * This constructor allows for the correct TaskTableModel to be instanciated.
+	 * Added for US149.
+	 */
+	public TaskTableSorter(TaskTable table, boolean isAssign){
+		super(isAssign);
+		JTableHeader tableHeader = table.getTableHeader();
+		tableHeader.addMouseListener( new MouseHandler() );
+		tableHeader.setDefaultRenderer( new SortableHeaderRenderer());
+		_header = tableHeader;
+	}
+
 
     /**
      * Get the child object of a parent at a given index.
@@ -106,45 +121,53 @@ public class TaskTableSorter extends TaskTableModel {
             int viewColumn = columnModel.getColumnIndexAtX(e.getX());
             int column = columnModel.getColumn(viewColumn).getModelIndex();
             if (column != -1) {
-                sorting_column = column;
-
-                // 0 == priority icon column
-                // 4 == priority text column
-                if (column == 0)
-                    sorting_column = 4;
-
-                if (e.isControlDown())
-                    sorting_column = -1;
-                else
-                    opposite = !opposite;
-
-                TaskTable treetable = ((TaskTable) h.getTable());
-
-                // java.util.Collection expanded = treetable.getExpandedTreeNodes();
-
-                treetable.tableChanged();
-                // treetable.setExpandedTreeNodes(expanded);
-                // h.updateUI();
-                h.resizeAndRepaint();
+				sorting_column = column;
+				
+				// 0 == priority icon column
+				// 4 == priority text column
+				if(column == 0) sorting_column = 4;
+				
+				if(e.isControlDown()) sorting_column = -1;
+				else opposite = !opposite;
+				
+				TaskTable treetable = ( (TaskTable) h.getTable());
+				
+				//java.util.Collection expanded = treetable.getExpandedTreeNodes();
+				
+				treetable.tableChanged();
+				//treetable.setExpandedTreeNodes(expanded);
+				//h.updateUI();
+				h.resizeAndRepaint();
             }
         }
-    }
-
-    /**
-     * Render sorting header differently
-     */
-    private class SortableHeaderRenderer implements TableCellRenderer {
-
-        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
-                int row, int column) {
-            JComponent c = new JLabel(value.toString());
-            if (column == sorting_column) {
-                c.setFont(c.getFont().deriveFont(Font.BOLD));
-                // c.setBorder(BorderFactory.createMatteBorder(1,1,1,1,Color.BLACK));
-            } else
+	}
+	public void refreshHeaderAndContents() {
+		JTableHeader h = _header;
+		TableColumnModel columnModel = h.getColumnModel();
+		opposite = !opposite;
+		TaskTable treetable = ( (TaskTable) h.getTable());
+		treetable.tableChanged();
+		h.resizeAndRepaint();
+	}
+    
+	/**
+	* Render sorting header differently
+	*/
+	private class SortableHeaderRenderer implements TableCellRenderer {
+		public Component getTableCellRendererComponent(JTable table, 
+							       Object value,
+							       boolean isSelected, 
+							       boolean hasFocus,
+							       int row, 
+							       int column) {
+			JComponent c = new JLabel(value.toString());
+			if (column == sorting_column) {
+				c.setFont(c.getFont().deriveFont(Font.BOLD));
+				//c.setBorder(BorderFactory.createMatteBorder(1,1,1,1,Color.BLACK));
+			} else {
                 c.setFont(c.getFont().deriveFont(Font.PLAIN));
-            return c;
-        }
-    }
-
+            }
+			return c;
+		}
+	}	
 }

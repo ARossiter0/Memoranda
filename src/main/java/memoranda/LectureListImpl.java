@@ -39,7 +39,6 @@ public class LectureListImpl implements LectureList {
     
     private Hashtable elements = new Hashtable();
 	
-    
     /**
      * Constructor for TaskListImpl.
      */
@@ -71,7 +70,6 @@ public class LectureListImpl implements LectureList {
 	public Project getProject() {
 		return _project;
 	}
-
 
     public Lecture createLecture(CalendarDate date, Calendar startTime, Calendar endTime, String topic) {
         Element el = new Element("lecture");
