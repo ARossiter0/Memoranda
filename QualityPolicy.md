@@ -132,7 +132,49 @@ NOTE: For a cleaner version, check the docx in the leipzig2_git slack channel
 	- [ ] Identifiers are longer than 3 characters.
 
 **Static Analysis**  (due start Sprint 3)
-  > Your Static Analysis policy   
+
+One Time-------------------------------------
+  -Create a StaticAnalyis branch off of development
+    git checkout development
+    git branch StaticAnalysis
+  -Add the checkstyle and spotbugs info to build.gradle. Copy and paste from Assignment 4. 
+  -Run the program to make sure that checkstyle and spotbugs reports are correctly generated. 
+  -Then push the program to github
+    git push origin StaticAnalysis
+  -IF travis CI has already been added, go to https://travis-ci.com/ and make sure that the newest build on the StaticAnalysis branch passes. 
+  -Create a pull request of StaticAnalysis into development. Someone should then review that Travis CI does work on the StaticAnalysis branch (if travis ci is already enabled in it), and accept the request. 
+
+Before Every Commit----------------------
+  -Run gradle build before every commit. Make sure that there are no checkstyle violations or spotbug violations in files that you have added.
+     gradle build
+     Check spotbug and checkstyle reports
+  -If there are ckeckstyle or spotbug violations in any files that you have added, conduct a code review (following the QualityPolicy.md guidelines) of the offending methods. If, upon review, the violation causes some runtime error to occur, create a blackbox unit test that will return true only if the violation is not present, and false if it is. 
+
+After Every Merge/Pull--------------------
+  -Also run gradle build after every merge/pull. Make sure that there are no checkstyle violations or spotbug violations in files that you have added. 
+     gradle build
+     Check spotbug and checkstyle reports
+  -If there are ckeckstyle or spotbug violations in any files that you have added, conduct a code review (following the QualityPolicy.md guidelines) of the offending methods. If, upon review, the violation causes some runtime error to occur, create a blackbox unit test that will return true only if the violation is not present, and false if it is. 
+
 
 **Continuous Integration**  (due start Sprint 3)
-  > Your Continuous Integration policy
+
+One Time--------------------------------------
+  -Create a  TravisCI branch off of development
+     git checkout development
+     git branch TravisCI
+  -Setup Travis CI on a local version of the TravisCI branch of the project. 
+     Add .travis.yml to root of the project
+     gradle wrapper
+  -Then push the branch to github 
+     git push origin TravisCI
+  -Ensure that it works. Go to https://travis-ci.com/, and make sure that the TravisCI build passes. 
+     Create a pull request of TravisCI into development. Someone should then review that Travis CI does work on the TravisCI branch, and accept the request. 
+
+After every push------------------------------
+  -Go to https://travis-ci.com/, and make sure that the most recent build of the branch that you pushed passes. 
+  -If not, do a code review of the files that were changed since the last push, and any failing unit tests. 
+
+After every pull request accept-----------
+  -Go to https://travis-ci.com/, and make sure that the most recent build of the branch that you pulled changes into passes.
+  -If not, do a code review of the files that were changed in the branch pulled in, and any failing unit tests. 
