@@ -52,17 +52,24 @@ I would also advise you to already fill out the Contributions section (End of sp
 
 | Date  | Attendees  |Meeting notes (very brief)   | Burndown Info (on track, ahead behind is enough) | TravisCI info (does the master pass) | Additional Info  |
 |---|---|---|---|--|--|
-|   |   |   |   |  |  |
-|   |   |   |   |  |  |
-|   |   |   |   |  |  |
+| 11/10/2020  |  Maayan, Tristan, Alexander, Ian | group memebers gave their first updates |   |  |  |
+| 11/11/2020  |  Maayan, Tristan, Alexander, Ian | group discussed isses they have encountered |   |  |  |
+| 11/12/2020  |  Maayan, Tristan, Alexander, Ian | group discussed accomplishments and some issues they encountered  |   |  |  |
+| 11/13/2020  |  Maayan, Tristan, Alexander, Ian | discussing a couple of implementation issues and wrapping up before submission  |   |  |  |
+| 11/14/2020  |  Maayan, Tristan | discussing a couple of implementation issues and wrapping up before submission  |   |  |  |
 
 ### Meeting Summary:
 
 > Add rows as needed and add the number how many meetings for each team member:
 
-   Name1 : Num Meetings
+   Maayan : 5
 
-   Name2 : Num Meetings
+   Tristan : 5
+
+   Alexander : 4
+
+   Ian : 4
+
 
 
 ## 3: After the Sprint
@@ -70,7 +77,8 @@ I would also advise you to already fill out the Contributions section (End of sp
 ### Sprint Review
 Answer as a team!
 
-**Screen Cast link**: Your link
+**Screen Cast link**: https://www.youtube.com/watch?v=S28EkFZ3Fxw
+
 
 > Answer the following questions as a team. 
 
@@ -161,6 +169,22 @@ Answer as a team!
   **GitHub links to your Code Reviews (up to 3 links) -- Sprint 2 and 3:
 
     - https://github.com/amehlhase316/Leipzig-2/pull/16
+
+#### Team member C -- Maayan Janow:
+  **Links to GitHub commits with main code contribution (up to 5 links) - all Sprints:
+
+    - https://github.com/amehlhase316/Leipzig-2/commit/58c10022fd71738c1043e75e0edc4d88400122d3
+    - https://github.com/amehlhase316/Leipzig-2/commit/bd3eb61e4cc4c74d788c182f11edaeffdda60c6a
+    - https://github.com/amehlhase316/Leipzig-2/commit/210a25cbe8d5274d50af63ff033ab5b6428bea63
+    - https://github.com/amehlhase316/Leipzig-2/commit/8830a18d3d809c1b9db32511c66729d05b9ded45
+
+  
+  **GitHub links to your Code Reviews (up to 3 links) -- Sprint 2 and 3:
+    - https://github.com/amehlhase316/Leipzig-2/commit/3f0c59aeb970435363908258fbe72a60a309a049
+
+
+    
+
  
  **What was your main contribution to the Quality Policy documentation?:
 
