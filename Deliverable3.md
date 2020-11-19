@@ -17,7 +17,7 @@ Document your Sprint Planning here. Also check the kickoff document for more det
 **Sprint Goal:** 
 Our goal is to complete the course management tool by implementing the missing functionality for TA/grader tasks and sprints. We also intend to create functionality for uploading JSON data for each type of course element (todo items, lectures, assignments, and sprints). Finally, we want to refine some of the features for viewing daily agendas. 
 
-**How many User Stories did you add to the Product Backlog:**  Number
+**How many User Stories did you add to the Product Backlog:**  6
 
 **How many User Stories did you add to this Sprint:** 
 > Answer the questions below about your Sprint Planning?

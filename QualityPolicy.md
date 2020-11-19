@@ -160,7 +160,7 @@ After Every Merge/Pull--------------------
 **Continuous Integration**  (due start Sprint 3)
 
 One Time--------------------------------------
-  -Create a  TravisCI branch off of development
+  -Create a TravisCI branch off of development
      git checkout development
      git branch TravisCI
   -Setup Travis CI on a local version of the TravisCI branch of the project. 

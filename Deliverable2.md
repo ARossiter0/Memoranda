@@ -19,7 +19,7 @@ Attendees: Maayan Janow, Tristan Johnson, Alexander Roisster
 We discussed the last sprint, answered the sprint review questions and discussed our conclusions from the last sprint and what can be done better.
 We decided that we should change our workflow policy to commit push and merge more often and that we should come up with User Stories and tasks together as group instead of dividing it 
 Another 2 hours meeting on 11/04/2020
-Attendees: Maayan Janow, Tristan Johnson, Alexander Roisster, Ian Swanslund
+Attendees: Maayan Janow, Tristan Johnson, Alexander Roisster, Ian Swanlund
  
 
 **Sprint Goal:** Our sprint goal is to achive most software functionalities and allow a user to fully manage courses, assignments, lectures and todo lists
@@ -41,7 +41,6 @@ are going to be reused
 **Do you have a rough idea what you need to do? (if the answer is no then please let me know on Slack)**
 
 > Yes
-
 
 
 ## 2: During the Sprint
@@ -148,17 +147,37 @@ Answer as a team!
  **What was your main contribution to the Quality Policy documentation?:
 
     - I created the first rought draft for the blackbox testing, whitebox testing, and code-review guidelines. 
+
+#### Team member B -- Ian Swanlund:
+  **Links to GitHub commits with main code contribution (up to 5 links) - all Sprints:
+
+    - https://github.com/amehlhase316/Leipzig-2/commit/267cb06d3f2e9a5299c305136e91d1e73fd6dbb5
+    - https://github.com/amehlhase316/Leipzig-2/commit/72fc641b8fdb7c61519a5b0ecb3ebe6434de84fc
+    - https://github.com/amehlhase316/Leipzig-2/commit/256fdd88889a80daef353b77ad99a5bf2b9f6ef1
+    - https://github.com/amehlhase316/Leipzig-2/commit/503523a38cd8743d9a8a9b88d4266a15df15de13
+    - https://github.com/amehlhase316/Leipzig-2/commit/11601e6337a028c2a072a7db38f1785bd1e53f66
+    
+
+  **GitHub links to your Code Reviews (up to 3 links) -- Sprint 2 and 3:
+
+    - https://github.com/amehlhase316/Leipzig-2/pull/16
+ 
+ **What was your main contribution to the Quality Policy documentation?:
+
+    - Updates to testing policy draft
   
 ## 4: Checklist for you to see if you are done
 - [x] Filled out the complete form from above, all fields are filled and written in full sentences
 - [x] Read the kickoff again to make sure you have all the details
-- [ ] User Stories that were not completed, were left in the Sprint and a copy created
+- [x] User Stories that were not completed, were left in the Sprint and a copy created
 - [x] Your Quality Policies are accurate and up to date
-- [ ] **Individual** Survey was submitted **individually** (create checkboxes below -- see Canvas to get link)
-  - [ ] Team member 1
-  - [ ] Team member 2
+- [x] **Individual** Survey was submitted **individually** (create checkboxes below -- see Canvas to get link)
+  - [x] Team member 1
+  - [x] Team member 2
+  - [x] Team member 2
+  - [x] Team member 2
 - [x] The original of this file was copied for the next Sprint (needed for all but last Sprint where you do not need to copy it anymore)
-  - [ ] Basic information (part 1) for next Sprint was included (meaning Spring Planning is complete)
+  - [x ] Basic information (part 1) for next Sprint was included (meaning Spring Planning is complete)
   - [x] All User Stories have acceptance tests
-  - [ ] User Stories in your new Sprint Backlog have initial tasks which are in New
-  - [ ] You know how to proceed
+  - [x] User Stories in your new Sprint Backlog have initial tasks which are in New
+  - [x] You know how to proceed
