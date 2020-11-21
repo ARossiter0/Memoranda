@@ -486,8 +486,9 @@ public class DailyItemsPanel extends JPanel {
             CurrentStorage.get().storeTaskList(CurrentProject.getTaskList(), CurrentProject.get());
             tasksPanel.taskTable.tableChanged();  
             
-            if (CurrentProject.currentTaskType == CurrentProject.TaskType.INSTR_TODO_LIST) {
-                final String DEBUG = "\t[DEBUG] Should be instructor todo list - : " + (CurrentProject.currentTaskType == CurrentProject.TaskType.INSTR_TODO_LIST);
+            if (CurrentProject.currentTaskType == CurrentProject.TaskType.INSTR_TODO_LIST
+                || CurrentProject.currentTaskType == CurrentProject.TaskType.STUDENT_TODO) {
+                final String DEBUG = "\t[DEBUG] Should be instructor/student todo list";
                 System.out.println(DEBUG);
                 tasksPanel.toggleReducedOnlyChB(true);
             } else {
