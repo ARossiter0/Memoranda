@@ -19,7 +19,7 @@ Our goal is to complete the course management tool by implementing the missing f
 
 **How many User Stories did you add to the Product Backlog:**  6
 
-**How many User Stories did you add to this Sprint:** 
+**How many User Stories did you add to this Sprint:** 6
 > Answer the questions below about your Sprint Planning?
 
 **Why did you add these US, why do you think you can get them done in the next Sprint?**
