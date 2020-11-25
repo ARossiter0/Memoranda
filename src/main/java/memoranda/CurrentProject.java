@@ -41,6 +41,8 @@ public class CurrentProject {
 
     
     static {
+        System.out.println("[DEBUG] Opening Everything !!!");
+
     	// Check if there is some project that has been opened last.
     	// If not, create a default.
         String prjId = (String)Context.get(PRJ_ID_KEY);

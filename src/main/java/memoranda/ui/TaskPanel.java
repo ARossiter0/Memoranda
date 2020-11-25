@@ -595,8 +595,9 @@ public class TaskPanel extends JPanel {
                 (frmSize.height - dlg.getSize().height) / 2 + loc.y);
         dlg.setVisible(true);
 
-        if (dlg.CANCELLED)
+        if (dlg.CANCELLED) {
             return;
+        }
 
         CalendarDate sd = new CalendarDate((Date) dlg.startDate.getModel().getValue());
         // CalendarDate ed = new CalendarDate((Date) dlg.endDate.getModel().getValue());
@@ -605,16 +606,33 @@ public class TaskPanel extends JPanel {
             ed = new CalendarDate((Date) dlg.endDate.getModel().getValue());
         else
             ed = null;
+
+
+
         long effort = Util.getMillisFromHours(dlg.effortField.getText());
         // XXX Task newTask = CurrentProject.getTaskList().createTask(sd, ed,
         // dlg.todoField.getText(), dlg.priorityCB.getSelectedIndex(),effort,
         // dlg.descriptionField.getText(),parentTaskId);
+
+
         Task newTask = CurrentProject.getTaskList().createTask(sd, ed, dlg.todoField.getText(),
                 dlg.priorityCB.getSelectedIndex(), effort, dlg.descriptionField.getText(), null, dlg.getIsInReduced());
         // CurrentProject.getTaskList().adjustParentTasks(newTask);
         newTask.setProgress(((Integer) dlg.progress.getValue()).intValue());
-        CurrentStorage.get().storeTaskList(CurrentProject.getTaskList(), CurrentProject.get());
+
+
+        if (CurrentProject.currentTaskType == CurrentProject.TaskType.INSTR_TODO_LIST){
+            CurrentStorage.get().storeInstrTodoList(CurrentProject.getTaskList(), CurrentProject.get());
+        } else if (CurrentProject.currentTaskType == CurrentProject.TaskType.STUDENT_TODO){
+            CurrentStorage.get().storeStudentTodo(CurrentProject.getTaskList(), CurrentProject.get());
+        } else {
+            CurrentStorage.get().storeTaskList(CurrentProject.getTaskList(), CurrentProject.get());
+        }
+
+
         taskTable.tableChanged();
+
+
         parentPanel.updateIndicators();
         // taskTable.updateUI();
     }
@@ -648,8 +666,9 @@ public class TaskPanel extends JPanel {
         
         dlg.setVisible(true);
 
-        if (dlg.CANCELLED)
+        if (dlg.CANCELLED) {
             return;
+        }
 
         CalendarDate sd = new CalendarDate((Date) dlg.startDate.getModel().getValue());
         //CalendarDate ed = new CalendarDate((Date) dlg.endDate.getModel().getValue());
@@ -994,7 +1013,7 @@ public class TaskPanel extends JPanel {
 	void toggleShowActiveOnly_actionPerformed(ActionEvent e) {
 		Context.put(
 			"SHOW_ACTIVE_TASKS_ONLY",
-			new Boolean(ppShowActiveOnlyChB.isSelected()));
+                ppShowActiveOnlyChB.isSelected());
 		taskTable.tableChanged();
     }
 

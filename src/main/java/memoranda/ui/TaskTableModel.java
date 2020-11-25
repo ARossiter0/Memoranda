@@ -20,6 +20,7 @@
 
 package main.java.memoranda.ui;
 
+import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.tree.TreePath;
 
@@ -171,10 +172,13 @@ public class TaskTableModel extends AbstractTreeTableModel implements TreeTableM
      * @see javax.swing.tree.TreeModel#getChildCount(java.lang.Object)
      */
     public int getChildCount(Object parent) {
+
+
+        // TODO make active only work
         if (parent instanceof Project) {
             TaskList taskList = CurrentProject.getTaskList();
             Collection collection = null;
-            if (activeOnly()) {
+            if (check_activeOnly()) {
                 collection = taskList.getActiveSubTasks(null, CurrentDate.get());
                 //return CurrentProject.getTaskList().getActiveSubTasks(null, CurrentDate.get()).size();
             } else {
@@ -185,14 +189,15 @@ public class TaskTableModel extends AbstractTreeTableModel implements TreeTableM
             if (check_isInReducedOnly()) {
                 collection = taskList.getReducedTasks(collection);
             }
-            
+
+            System.out.println("[DEBUG] Root Collection Size: " + collection.size());
             return collection.size();
         }
         
         Task task = (Task) parent;
         TaskList taskList = CurrentProject.getTaskList();
         Collection collection = null;
-        if (activeOnly()) {
+        if (check_activeOnly()) {
             collection = taskList.getActiveSubTasks(task.getID(), CurrentDate.get());
             //return CurrentProject.getTaskList().getActiveSubTasks(t.getID(), CurrentDate.get()).size();
         }
@@ -215,7 +220,7 @@ public class TaskTableModel extends AbstractTreeTableModel implements TreeTableM
         if (parent instanceof Project) {
             TaskList taskList = CurrentProject.getTaskList();
             Collection collection = null;
-            if (activeOnly()) {
+            if (check_activeOnly()) {
                 collection = taskList.getActiveSubTasks(null, CurrentDate.get());
                 //return CurrentProject.getTaskList().getActiveSubTasks(null, CurrentDate.get()).size();
             } else {
@@ -229,12 +234,15 @@ public class TaskTableModel extends AbstractTreeTableModel implements TreeTableM
             
             return collection.toArray()[index];
         }
+
+
+        System.out.println("[DEBUG] Parent is task");
         
         Task task = (Task) parent;
         TaskList taskList = CurrentProject.getTaskList();
         Collection collection = null;
         
-        if (activeOnly()) {
+        if (check_activeOnly()) {
             collection = taskList.getActiveSubTasks(task.getID(), CurrentDate.get());
             //return CurrentProject.getTaskList().getActiveSubTasks(t.getID(), CurrentDate.get()).size();
         }
@@ -277,6 +285,7 @@ public class TaskTableModel extends AbstractTreeTableModel implements TreeTableM
 
     public void fireTreeStructureChanged() {
         fireTreeStructureChanged(this, new Object[] { getRoot() }, new int[0], new Object[0]);
+        System.out.println("[Debug] FireTreeStructureChanged");
     }
 
     /**
@@ -284,6 +293,7 @@ public class TaskTableModel extends AbstractTreeTableModel implements TreeTableM
      */
     public void fireUpdateCache() {
         activeOnly = check_activeOnly();
+        System.out.println("[DEBUG] Active Only: " + activeOnly);
     }
 
     public static boolean check_activeOnly() {
