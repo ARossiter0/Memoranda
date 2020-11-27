@@ -163,7 +163,7 @@ public class TaskImpl implements Task, Comparable {
 
 		// TODO if start...
 		if(date.after(end)) {
-			return Task.ACTIVE;
+			return Task.FAILED;
 		}
 
         return Task.FAILED;
