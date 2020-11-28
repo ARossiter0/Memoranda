@@ -35,6 +35,7 @@ import main.java.memoranda.TaskListImpl;
 import main.java.memoranda.date.CalendarDate;
 import main.java.memoranda.ui.ExceptionDialog;
 import main.java.memoranda.ui.htmleditor.AltHTMLWriter;
+import memoranda.util.JsonLoader;
 import nu.xom.Builder;
 import nu.xom.DocType;
 import nu.xom.Document;

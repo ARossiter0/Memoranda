@@ -174,6 +174,17 @@ public class TaskListImpl implements TaskList {
         return new TaskImpl(el, this);
     }
 
+    public void setTaskId(Task task, String id){
+        Element element = task.getContent();
+        Attribute attr = element.getAttribute("id");
+        if (attr == null)
+            element.addAttribute(new Attribute("id", id));
+        else
+            attr.setValue(id);
+
+        elements.put(id, element);
+    }
+
     //-------------------------------
     public Task createLectureTask(String day, int hour, int min, String text) {
         Element el = new Element("task");

@@ -47,6 +47,7 @@ public interface TaskList {
     public long[] calculateCompletionFromSubTasks(Task t);
 
     nu.xom.Document getXMLContent();
-    
 
+
+    void setTaskId(Task task, String id);
 }

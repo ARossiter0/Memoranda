@@ -52,6 +52,7 @@ import main.java.memoranda.LectureTime;
 import main.java.memoranda.SpecialCalendarDate;
 import main.java.memoranda.Task;
 import main.java.memoranda.TaskListImpl;
+import memoranda.util.JsonLoader;
 
 /*$Id: ProjectsPanel.java,v 1.14 2005/01/04 09:59:22 pbielen Exp $*/
 public class ProjectsPanel extends JPanel implements ExpandablePanel {
@@ -295,6 +296,11 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 				public void	keyReleased(KeyEvent e){}
 				public void keyTyped(KeyEvent e){} 
 			});
+
+
+		// Add projects from JSON - TODO May need to remove this.
+		JsonLoader jsonLoader = new JsonLoader();
+		jsonLoader.loadFromJSON();
 	}
 
 	class PopupListener extends MouseAdapter {

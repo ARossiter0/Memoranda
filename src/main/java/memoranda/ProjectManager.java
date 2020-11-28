@@ -14,6 +14,7 @@ import main.java.memoranda.date.CalendarDate;
 import main.java.memoranda.util.CurrentStorage;
 import main.java.memoranda.util.Local;
 import main.java.memoranda.util.Util;
+import memoranda.util.JsonLoader;
 import nu.xom.Attribute;
 import nu.xom.Document;
 import nu.xom.Element;
@@ -58,10 +59,14 @@ public class ProjectManager {
     }
 
     public static Vector getAllProjects() {
+
+
+        // Add projects from xml
         Elements prjs = _root.getChildElements("project");
         Vector v = new Vector();
         for (int i = 0; i < prjs.size(); i++)
             v.add(new ProjectImpl((Element) prjs.get(i)));
+
         return v;
     }
 
