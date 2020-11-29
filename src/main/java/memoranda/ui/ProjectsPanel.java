@@ -250,6 +250,7 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 				LectureList tl,
 				TaskList t2,
 				TaskList s1,
+				TaskList s2,
 				ResourcesList rl) {
 			}
 			public void projectWasChanged() {

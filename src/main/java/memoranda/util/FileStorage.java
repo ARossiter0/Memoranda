@@ -307,6 +307,51 @@ public class FileStorage implements Storage {
         saveDocument(instrTodoListDoc,JN_DOCPATH + prj.getID() + File.separator + INSTR_TODOLIST_EXT);
     }
     
+    /**
+	 * Open the TA/Graders todo list associated with a project
+	 * 
+	 * @param prj the project
+	 * @return the TA/Graders todo list
+	 */
+	public TaskList openTaTodoList(Project prj) {
+		final String TA_TODOLIST_EXT = ".taTodoList";
+
+		String fn = JN_DOCPATH + prj.getID() + File.separator + TA_TODOLIST_EXT;
+
+		if (documentExists(fn)) {
+			/* DEBUG */
+			final String OPEN_TA_TODOLIST = "[DEBUG] Open ta/graders todo list: ";
+			System.out.println(OPEN_TA_TODOLIST + JN_DOCPATH + prj.getID() + File.separator + TA_TODOLIST_EXT);
+
+			Document taTodoListDoc = openDocument(fn);
+			return new TaskListImpl(taTodoListDoc, prj);
+		} else {
+			/* DEBUG */
+			final String NEW_TA_TODOLIST = "[DEBUG] New instructor todo list created";
+			System.out.println(NEW_TA_TODOLIST);
+
+			return new TaskListImpl(prj);
+		}
+	}
+
+	/**
+     * Store the Ta/Graders todo list. 
+     * @param instrTodoList the instructor todo list
+     * @param prj the project with which the instructor todo list is associated
+     */
+    public void storeTaTodoList(TaskList taTodoList, Project prj) {
+    	final String TA_TODOLIST_EXT = ".taTodoList";
+    	
+        /*DEBUG*/    	
+    	final String SAVE_TA_TODOLIST = "[DEBUG] Save instructor todo list: ";
+        System.out.println(SAVE_TA_TODOLIST + JN_DOCPATH + prj.getID() + File.separator + TA_TODOLIST_EXT);
+        
+        
+        Document taTodoListDoc = taTodoList.getXMLContent();
+        saveDocument(taTodoListDoc,JN_DOCPATH + prj.getID() + File.separator + TA_TODOLIST_EXT);
+    }
+    
+    
     public TaskList openStudentTodo(Project prj) {
         String fn = JN_DOCPATH + prj.getID() + File.separator + ".studenttodo";
 

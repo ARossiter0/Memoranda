@@ -216,7 +216,7 @@ public class LecturePanel extends JPanel {
         });
         // add a new Lecture to the current project
         CurrentProject.addProjectListener(new ProjectListener() {
-            public void projectChange(Project p, NoteList nl, LectureList tl, TaskList t2, TaskList s1, ResourcesList rl) {
+            public void projectChange(Project p, NoteList nl, LectureList tl, TaskList t2, TaskList s1, TaskList s2, ResourcesList rl) {
                 newLectureB.setEnabled(CurrentDate.get().inPeriod(p.getStartDate(), p.getEndDate()));
             }
 
