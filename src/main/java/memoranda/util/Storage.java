@@ -59,6 +59,6 @@ public interface Storage {
     void storeResourcesList(ResourcesList rl, Project prj);
     
     void restoreContext();
-    void storeContext(); 
-       
+    void storeContext();
+
 }

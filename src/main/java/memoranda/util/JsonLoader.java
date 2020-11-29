@@ -12,13 +12,18 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Locale;
 
+import main.java.memoranda.LectureList;
+import main.java.memoranda.LectureListImpl;
 import main.java.memoranda.Project;
 import main.java.memoranda.ProjectManager;
 import main.java.memoranda.ResourcesList;
 import main.java.memoranda.ResourcesListImpl;
+import main.java.memoranda.Task;
 import main.java.memoranda.TaskList;
 import main.java.memoranda.TaskListImpl;
 
@@ -58,15 +63,18 @@ public class JsonLoader {
     }
 
     private void loadCourse(JSONObject course){
+
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX", Locale.ENGLISH);
 
         String id = (String) course.get("courseId");
 
         if(ProjectManager.getProject(id) != null){
+            System.out.println("[DEBUG] Project " + id + " already exists!");
             return;
         }
 
         String title = (String) course.get("title");
+        System.out.println("[DEBUG] Load course " + title + " from Data.json");
         CalendarDate startDate = null;
         CalendarDate endDate = null;
         CalendarDate finalDate = null;
@@ -89,7 +97,27 @@ public class JsonLoader {
 
         // TODO: Load Breaks
 
+        // Load Default Tasks (Free Days, Holidays, Breaks)
+        JSONArray defaultTasks = (JSONArray) course.get("defaultTasks");
+        TaskList defaultTasksList = new TaskListImpl(courseProject);
+
+        if (defaultTasks != null) {
+            for (Object assignment : defaultTasks) {
+                loadDefaultTask((JSONObject) assignment, defaultTasksList);
+            }
+            storage.storeTaskList(defaultTasksList, courseProject);
+        }
+
         // Load Lectures
+        JSONArray lectures = (JSONArray) course.get("lectures");
+        LectureList lectureList = new LectureListImpl(courseProject);
+
+        if (lectures != null){
+            for(Object lecture : lectures){
+                loadLecture((JSONObject) lecture, lectureList);
+            }
+            storage.storeLectureList(lectureList, courseProject);
+        }
 
         // Load Assignments
         JSONArray assignments = (JSONArray) course.get("assignments");
@@ -143,21 +171,52 @@ public class JsonLoader {
 
         if(resources != null) {
             for (Object resource : resources) {
-                loadResource((JSONObject) resource, courseProject);
+                loadResource((JSONObject) resource, resourcesList, courseProject);
             }
             storage.storeResourcesList(resourcesList, courseProject);
         }
 
     }
 
-    private void loadResource(JSONObject resource, main.java.memoranda.Project courseProject) {
+    private void loadLecture(JSONObject lectureJSON, LectureList lectureList){
+        System.out.println("[DEBUG] Load lecture " + lectureJSON + " from Data.json");
+
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX", Locale.ENGLISH);
+
+        // Pull vars from JSON
+        String topic = (String) lectureJSON.get("topic");
+        boolean repeat = (Boolean) lectureJSON.get("repeat");
+        CalendarDate date = null;
+        Date startTime = null;
+        Date endTime = null;
+
+        try {
+            date = new CalendarDate(df.parse((String) lectureJSON.get("startDate")));
+            startTime = df.parse((String) lectureJSON.get("startDate"));
+            endTime = df.parse((String) lectureJSON.get("endDate"));
+        } catch (java.text.ParseException e) {
+            e.printStackTrace();
+        }
+
+        Calendar sTime = new GregorianCalendar();
+        sTime.set(startTime.getYear(), startTime.getMonth(), startTime.getDay(), startTime.getHours(), startTime.getMinutes(), startTime.getSeconds());
+
+        Calendar eTime = new GregorianCalendar();
+        sTime.set(endTime.getYear(), endTime.getMonth(), endTime.getDay(), endTime.getHours(), endTime.getMinutes(), endTime.getSeconds());
+
+        // Create the new lecture in the lecture list
+        lectureList.createLecture(date, sTime, eTime, topic);
+
+
+        // Set the id of the lecture
+    }
+
+    private void loadResource(JSONObject resource, ResourcesList resourcesList, main.java.memoranda.Project courseProject) {
         // Pull vars from JSON
         String path = (String) resource.get("path");
+        System.out.println("Load resource " + path + " from Data.json");
         boolean isInternetShortcut = (Boolean) resource.get("isInternetShortcut");
         boolean isProjectFile = (Boolean) resource.get("isProjectFile");
-
-        // Get resources list for project
-        ResourcesList resourcesList = CurrentStorage.get().openResourcesList(courseProject);
 
         // Add resource to resource list
         resourcesList.addResource(path, isInternetShortcut, isProjectFile);
@@ -188,7 +247,7 @@ public class JsonLoader {
         boolean isInReduced = (Boolean) taskJSON.get("isInReduced");
 
         // Create the new task in the tasklist
-        main.java.memoranda.Task task = taskList.createTask(startDate, endDate, text, priority, effort, description, parentTaskId, isInReduced);
+        Task task = taskList.createTask(startDate, endDate, text, priority, effort, description, parentTaskId, isInReduced);
 
         // TODO: Create a public verifyId method in Util, if returns false, throw exception?
 
@@ -196,6 +255,25 @@ public class JsonLoader {
         taskList.setTaskId(task, id);
     }
 
+    private void loadDefaultTask(JSONObject taskJSON, TaskList taskList){
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX", Locale.ENGLISH);
+
+        // Pull vars from JSON
+        String id = main.java.memoranda.util.Util.generateId();
+        String name = (String) taskJSON.get("text");
+        String type = (String) taskJSON.get("type");
+        CalendarDate date = null;
+
+
+        try {
+            date = new CalendarDate(df.parse((String) taskJSON.get("date")));
+        } catch (java.text.ParseException e) {
+            e.printStackTrace();
+        }
+
+        // Create the new task in the tasklist
+        Task task = taskList.createSingleEventTask(name, date, type);
+    }
 
 
 

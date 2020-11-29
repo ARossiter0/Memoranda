@@ -506,7 +506,10 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 		prj.setStartDate(startD);
 		prj.setEndDate(endD);
 		prj.setFinalDate(finalExamDate);
-        
+
+		CurrentProject.TaskType previousTaskType = CurrentProject.currentTaskType;
+		CurrentProject.currentTaskType = CurrentProject.TaskType.DEFAULT;
+
         for(LectureTime lt : dlg.lectureTimes) {
             Task newTask = CurrentProject.getTaskList().createLectureTask(lt.day, lt.hour, lt.min, "Lecture");
         }
@@ -524,6 +527,8 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 		prjTablePanel.updateUI();
 		ppDeleteProject.setEnabled(false);
 		ppOpenProject.setEnabled(false);
+
+		CurrentProject.currentTaskType = previousTaskType;
 	}
 
 	void ppShowActiveOnlyChB_actionPerformed(ActionEvent e) {

@@ -393,7 +393,8 @@ public class FileStorage implements Storage {
         //tasklistDoc.setDocType(TaskListVersioning.getCurrentDocType());
         saveDocument(tasklistDoc,JN_DOCPATH + prj.getID() + File.separator + ".studenttodo");
     }
-    
+
+	//public
 
 	/**
 	 * @see main.java.memoranda.util.Storage#createProjectStorage(main.java.memoranda.Project)
