@@ -259,7 +259,7 @@ public class AgendaPanel extends JPanel {
 		});
 		CurrentProject.addProjectListener(new ProjectListener() {
 
-			public void projectChange(Project prj, NoteList nl, LectureList tl, TaskList t2, TaskList s1, ResourcesList rl) {
+			public void projectChange(Project prj, NoteList nl, LectureList tl, TaskList t2, TaskList s1, TaskList s2, ResourcesList rl) {
 			}
 
 			public void projectWasChanged() {
