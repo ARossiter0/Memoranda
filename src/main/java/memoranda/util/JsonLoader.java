@@ -192,8 +192,8 @@ public class JsonLoader {
 
         try {
             date = new CalendarDate(df.parse((String) lectureJSON.get("startDate")));
-            startTime = df.parse((String) lectureJSON.get("startDate"));
-            endTime = df.parse((String) lectureJSON.get("endDate"));
+            startTime = df.parse((String) lectureJSON.get("startTime"));
+            endTime = df.parse((String) lectureJSON.get("endTime"));
         } catch (java.text.ParseException e) {
             e.printStackTrace();
         }

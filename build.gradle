@@ -14,18 +14,10 @@ apply plugin: 'jacoco'
 apply plugin: 'application'
 
 dependencies {
-<<<<<<< HEAD
-  compile 'com.io7m.xom:xom:1.2.+'
-  compile 'net.sourceforge.nekohtml:nekohtml:1.9.+'
-  compile "junit:junit:4.12"
-  compile group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
-=======
     compile 'com.io7m.xom:xom:1.2.+'
     compile 'net.sourceforge.nekohtml:nekohtml:1.9.+'
     compile "junit:junit:4.12"
     compile group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
-
->>>>>>> US187-LoadFromJSON
 }
 
 
