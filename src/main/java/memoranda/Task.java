@@ -71,15 +71,7 @@ public interface Task {
     
     String getText();
     void setText(String s);
-    
-    
-    
-    /*Collection getDependsFrom();
-    
-    void addDependsFrom(Task task);
-    
-    void removeDependsFrom(Task task);*/
-            
+ 
     Collection getSubTasks();    
     Task getSubTask(String id);
     
@@ -99,4 +91,10 @@ public interface Task {
 	long getRate();
     
     nu.xom.Element getContent();
+
+    /*Collection getDependsFrom();
+    
+    void addDependsFrom(Task task);
+    
+    void removeDependsFrom(Task task);*/
 }
