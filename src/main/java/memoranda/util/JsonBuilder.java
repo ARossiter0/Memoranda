@@ -1,13 +1,20 @@
 package main.java.memoranda.util;
 
-
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import main.java.memoranda.ProjectManager; 
-import java.util.Vector;
+import java.util.Collection;
+import java.io.FileWriter;
+import java.io.IOException;
+import main.java.memoranda.Lecture;
+import main.java.memoranda.LectureList;
 import main.java.memoranda.Project;
+import main.java.memoranda.ProjectManager; 
 import main.java.memoranda.ResourcesList;
 import main.java.memoranda.Resource;
+import main.java.memoranda.Task;
+import main.java.memoranda.TaskList;
+import main.java.memoranda.ui.ExceptionDialog;
+import main.java.memoranda.util.Util;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 public class JsonBuilder {
 
@@ -16,15 +23,23 @@ public class JsonBuilder {
     }
 
     public void exportMemoranda() {
+
         JSONObject root = new JSONObject();
         addCourses(root);
 
+        try {
+            FileWriter file = new FileWriter(Util.getEnvDir() + "/Data.json");
+            file.write(root.toJSONString());
+            file.close();
+            System.out.println("[DEBUG] JSON file written");
+        } catch (IOException io) {
+            new ExceptionDialog(io, "Could not export memoranda to JSON file.", "");
+        }
     }
-    
 
     private void addCourses(JSONObject root) {
 
-        Vector<Project> allCourses = ProjectManager.getAllProjects();
+        Collection<Project> allCourses = ProjectManager.getAllProjects();
 
         JSONArray courses = new JSONArray();
         
@@ -35,8 +50,8 @@ public class JsonBuilder {
             addCourseData(courseObject, course);
             addDefaultTaskArray(courseObject, course); 
             addLecturesArray(courseObject, course); 
-            addLAssignmentsArray(courseObject, course);
-            ddInstructorTodoArray(courseObject, course);
+            addAssignmentsArray(courseObject, course);
+            addInstructorTodoArray(courseObject, course);
             addTaGraderTodoArray(courseObject, course); 
             addStudentTodoArray(courseObject, course); 
             addResourcesArray(courseObject, course);
@@ -63,7 +78,7 @@ public class JsonBuilder {
 
         TaskList taskList = CurrentStorage.get().openTaskList(course);
 
-        Vector<Task> tasks = taskList.getTopLevelTasks();
+        Collection<Task> tasks = taskList.getTopLevelTasks();
 
         for (Task t : tasks) {
             addDefaultTask(taskArray, t);
@@ -92,7 +107,7 @@ public class JsonBuilder {
 
         LectureList lectureList = CurrentStorage.get().openLectureList(course);
 
-        Vector lectures = lectureList.getAllLectures();
+        Collection<Lecture> lectures = lectureList.getAllLectures();
 
         for (Lecture l : lectures) {
             addLectures(lectureArray, l);
@@ -118,9 +133,9 @@ public class JsonBuilder {
 
         JSONArray assignmentsArray = new JSONArray();
 
-        TaskList assignList = CurrentStorage.get().openAssignList()
+        TaskList assignList = CurrentStorage.get().openAssignList(course);
 
-        Vector<Task> assignments = assignList.getTopLevelTasks();
+        Collection<Task> assignments = assignList.getTopLevelTasks();
 
         for (Task a : assignments) {
             addTask(assignmentsArray, a);
@@ -134,9 +149,9 @@ public class JsonBuilder {
         
         JSONArray instTodo = new JSONArray();
 
-        TaskList instList = CurrentStorage.get.openInstrTodoList();
+        TaskList instList = CurrentStorage.get().openInstrTodoList(course);
 
-        Vector<Task> todos = instList.getTopLevelTasks();
+        Collection<Task> todos = instList.getTopLevelTasks();
 
         for (Task t : todos) {
             addTask(instTodo, t);
@@ -154,9 +169,9 @@ public class JsonBuilder {
 
         JSONArray studentTodo = new JSONArray();
 
-        TaskList studentList = CurrentStorage.get.openStudentTodo(course);
+        TaskList studentList = CurrentStorage.get().openStudentTodo(course);
 
-        Vector<Task> todos = studentList.getTopLevelTasks();
+        Collection<Task> todos = studentList.getTopLevelTasks();
 
         for (Task t : todos) {
             addTask(studentTodo, t);
@@ -172,16 +187,16 @@ public class JsonBuilder {
 
         ResourcesList resourceList = CurrentStorage.get().openResourcesList(course);
 
-        Vector<Resource> resources = resourceList.getAllResources();
+        Collection<Resource> resources = resourceList.getAllResources();
 
         for (Resource r : resources) {
-            addResource(resourceArray, r)
+            addResource(resourceArray, r);
         }
 
         courseObject.put("resources", resourceArray);
     }
 
-    private void addResources(JSONArray resourceArray, Resource resource) {
+    private void addResource(JSONArray resourceArray, Resource resource) {
         
         JSONObject resourceObject = new JSONObject();
 
@@ -208,6 +223,4 @@ public class JsonBuilder {
 
         taskArray.add(singleTask);
     }
-
-    
 }
