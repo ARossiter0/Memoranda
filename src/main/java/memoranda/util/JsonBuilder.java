@@ -13,14 +13,13 @@ import main.java.memoranda.Task;
 import main.java.memoranda.TaskList;
 import main.java.memoranda.ui.ExceptionDialog;
 import main.java.memoranda.util.Util;
+import main.java.memoranda.date.CalendarDate;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 public class JsonBuilder {
 
-    public JsonBuilder() {
-
-    }
+    public JsonBuilder() {}
 
     public void exportMemoranda() {
 
@@ -65,9 +64,9 @@ public class JsonBuilder {
     private void addCourseData(JSONObject courseObject, Project course) {
 
         courseObject.put("courseId", course.getID());
-        courseObject.put("startDate", course.getStartDate());
-        courseObject.put("endDate", course.getEndDate());
-        courseObject.put("finalDate", course.getFinalDate());
+        courseObject.put("startDate", dateToString(course.getStartDate()));
+        courseObject.put("endDate", dateToString(course.getEndDate()));
+        courseObject.put("finalDate", dateToString(course.getFinalDate()));
         courseObject.put("title", course.getTitle());
         courseObject.put("description", course.getDescription());
     }
@@ -92,11 +91,11 @@ public class JsonBuilder {
         JSONObject singleTask = new JSONObject();
 
         singleTask.put("text", task.getText());
-        singleTask.put("date", task.getStartDate());
+        singleTask.put("date", dateToString(task.getStartDate()));
         singleTask.put("repeating", false);
         singleTask.put("frequency", null);
         singleTask.put("type", task.getType());
-        singleTask.put("endRepeatingDate", task.getEndDate());
+        singleTask.put("endRepeatingDate", dateToString(task.getEndDate()));
 
         taskArray.add(singleTask);
     }
@@ -122,7 +121,7 @@ public class JsonBuilder {
 
         lectureObject.put("topic", lecture.getTopic());
         lectureObject.put("repeat", false);
-        lectureObject.put("startDate", lecture.getDate());
+        lectureObject.put("startDate", dateToString(lecture.getDate()));
         lectureObject.put("startTime", lecture.getStartTimeString());
         lectureObject.put("endTime", lecture.getEndTimeString());
 
@@ -212,8 +211,8 @@ public class JsonBuilder {
         JSONObject singleTask = new JSONObject();
 
         singleTask.put("id", task.getID());
-        singleTask.put("startDate", task.getStartDate());
-        singleTask.put("endDate", task.getEndDate());
+        singleTask.put("startDate", dateToString(task.getStartDate()));
+        singleTask.put("endDate", dateToString(task.getEndDate()));
         singleTask.put("text", task.getText());
         singleTask.put("priority", task.getPriority());
         singleTask.put("effort", task.getEffort());
@@ -222,5 +221,12 @@ public class JsonBuilder {
         singleTask.put("isInReduced", task.getIsInReduced());
 
         taskArray.add(singleTask);
+    }
+
+    private String dateToString(CalendarDate date) {
+        if (date != null) {
+            return date.toString().replace('/', '-');
+        }
+        return null;
     }
 }

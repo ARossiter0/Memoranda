@@ -175,7 +175,6 @@ public class JsonLoader {
             }
             storage.storeResourcesList(resourcesList, courseProject);
         }
-
     }
 
     private void loadLecture(JSONObject lectureJSON, LectureList lectureList){
@@ -274,9 +273,4 @@ public class JsonLoader {
         // Create the new task in the tasklist
         Task task = taskList.createSingleEventTask(name, date, type);
     }
-
-
-
-
-
 }

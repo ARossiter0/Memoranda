@@ -17,6 +17,7 @@ import main.java.memoranda.ui.AppFrame;
 import main.java.memoranda.util.Context;
 import main.java.memoranda.util.CurrentStorage;
 import main.java.memoranda.util.Storage;
+import main.java.memoranda.util.JsonBuilder;
 
 /**
  *
@@ -75,11 +76,11 @@ public class CurrentProject {
         _notelist = CurrentStorage.get().openNoteList(_project);
         _resources = CurrentStorage.get().openResourcesList(_project);
         _assignlist = CurrentStorage.get().openAssignList(_project);
-        
+       
         // When exiting the application, save the current project
         AppFrame.addExitListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                save();                                               
+                save();
             }
         });
     }
@@ -228,6 +229,9 @@ public class CurrentProject {
         storage.storeInstrTodoList(_instrTodoList, _project);
         storage.storeResourcesList(_resources, _project);
         storage.storeProjectManager();
+
+        JsonBuilder jsonBuilder = new JsonBuilder();
+        jsonBuilder.exportMemoranda();        
     }
     
     /**
