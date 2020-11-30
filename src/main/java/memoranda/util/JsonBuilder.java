@@ -70,36 +70,52 @@ public class JsonBuilder {
         courseObject.put("tasks", taskArray);
     }
 
-    /**
-     * "text": "Student Field Trip",
-        "date": "2020-1-14T11:00:00.000-07:00",
-        "repeating": true,
-        "frequency": 1,
-        "type": "Free Day",
-        "endRepeatingDate": "2021-1-14T11:00:00.000-07:00"
-     */
     private void addTask(JSONArray taskArray, Task task) {
 
         JSONObject singleTask = new JSONObject();
 
         singleTask.put("text", task.getText());
         singleTask.put("date", task.getStartDate());
-        singleTask.put("repeating",
-        singleTask.put("frequency")
-        singleTask.put("type")
-        singleTask.put("endRepeatingDate")
+        singleTask.put("repeating", false);
+        singleTask.put("frequency", null);
+        singleTask.put("type", task.getType());
+        singleTask.put("endRepeatingDate", task.getEndDate());
+
+        taskArray.add(singleTask);
     }
 
     private void addLecturesArray(JSONObject courseObject, Project course) {
-        /**
-         * TODO: 
-         */
+        
+        JSONArray lectureArray = new JSONArray();
+
+        LectureList lectureList = CurrentStorage.get().openLectureList(course);
+
+        Vector lectures = lectureList.getAllLectures();
+
+        for (Lecture l : lectures) {
+            addLectures(lectureArray, l);
+        }
+
+        courseObject.put("lectures", lectureArray);
     }
 
-    private void addLectures(JSONArray lecturesArray) {
-        /**
-         * TODO:
-         */
+    /**
+     * topic": "Spaceships",
+        "startDate": "2020-01-12T09:00:00.000-07:00",
+        "endDate": "2020-01-12T10:00:00.000-07:00",
+        "repeat": true
+     */
+    private void addLectures(JSONArray lecturesArray, Lecture lecture) {
+        
+        JSONObject lectureObject = new JSONObject();
+
+        lectureObject.put("topic", lecture.getTopic());
+        lectureObject.put("startDate", lecture.getDate());
+        lectureObject.put("endDate", lecture.get
+        lectureObject.put("repeat",
+
+
+        lectureArray.add(lectureObject);
     }
 
     private void addLAssignmentsArray(JSONObject courseObject, Project course) {

@@ -21,6 +21,7 @@ public interface LectureList {
 	Project getProject();
     Lecture getLecture(String id);
 
+
     Lecture createLecture(CalendarDate date, Calendar startTime, Calendar endTime, String topic);
 
     nu.xom.Document getXMLContent();
