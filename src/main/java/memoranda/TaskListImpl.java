@@ -10,6 +10,8 @@ package main.java.memoranda;
 
 import main.java.memoranda.date.CalendarDate;
 import main.java.memoranda.util.Util;
+import main.java.memoranda.Task;
+import main.java.memoranda.TaskList;
 import nu.xom.*;
 
 import java.util.Collection;

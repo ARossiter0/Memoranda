@@ -15,6 +15,7 @@ import main.java.memoranda.ui.TaskTableModel;
 import main.java.memoranda.util.Context;
 import main.java.memoranda.util.CurrentStorage;
 import main.java.memoranda.util.FileStorage;
+import main.java.memoranda.util.Storage;
 import main.java.memoranda.util.Util;
 import nu.xom.Attribute;
 import nu.xom.Document;
@@ -168,10 +169,11 @@ public class US160_Whitebox {
                 taskList.createTask(CalendarDate.today(), CalendarDate.today(), "Test: " + i, 0, 0, "", null, false);
             }
         }
-        
-        CurrentStorage.get().storeTaskList(taskList, project);
-        CurrentStorage.get().storeInstrTodoList(instrTodoList, project);
-        CurrentProject.set(project);        
+
+        Storage storage = CurrentStorage.get();
+        storage.storeTaskList(taskList, project);
+        storage.storeInstrTodoList(instrTodoList, project);
+        CurrentProject.set(project);
                         
         CurrentProject.currentTaskType = CurrentProject.TaskType.INSTR_TODO_LIST;
         TaskList getInstrTodoList = CurrentProject.getTaskList();        
@@ -185,6 +187,8 @@ public class US160_Whitebox {
         final int EXPECTED2 = 500;
         final int RESULT2 = getTaskList.getTopLevelTasks().size();          
         assertEquals(EXPECTED2, RESULT2);
+
+        storage.removeProjectStorage(project);
     }
     
     /**
@@ -220,9 +224,9 @@ public class US160_Whitebox {
         Task task = taskList.createTask(CalendarDate.today(), CalendarDate.today(), "Separate Test", 0, 0, "", null, true);
         taskList.createTask(CalendarDate.today(), CalendarDate.today(), "Separate Subtest", 0, 0, "", task.getID(), true);
         
-        
-        CurrentStorage.get().storeTaskList(taskList, project);
-        CurrentStorage.get().storeInstrTodoList(instrTodoList, project);
+        Storage storage = CurrentStorage.get();
+        storage.storeTaskList(taskList, project);
+        storage.storeInstrTodoList(instrTodoList, project);
         CurrentProject.set(project);        
         
         Context.put("SHOW_REDUCED_ONLY", false);
@@ -259,7 +263,9 @@ public class US160_Whitebox {
         taskTableModel.fireUpdateCache();
         final long EXPECTED5 = 1;
         final long RESULT5 = taskTableModel.getChildCount(instrTodoTask);  
-        assertTrue(EXPECTED5 == RESULT5);        
+        assertTrue(EXPECTED5 == RESULT5);
+
+        storage.removeProjectStorage(project);
     }
     
     /**
@@ -281,8 +287,9 @@ public class US160_Whitebox {
         Task instrTodoTask2 = instrTodoList.createTask(CalendarDate.today(), CalendarDate.today(), "Todo 2", 0, 0, "", null, true);
         Task subtask0 = instrTodoList.createTask(CalendarDate.today(), CalendarDate.today(), "Subtodo 0", 0, 0, "", instrTodoTask1.getID(), true);
         Task subtask1 = instrTodoList.createTask(CalendarDate.today(), CalendarDate.today(), "Subtodo 1", 0, 0, "", instrTodoTask1.getID(), true);
-                      
-        CurrentStorage.get().storeInstrTodoList(instrTodoList, project);
+
+        Storage storage = CurrentStorage.get();
+        storage.storeInstrTodoList(instrTodoList, project);
         CurrentProject.set(project);        
                 
         
@@ -299,6 +306,8 @@ public class US160_Whitebox {
         final Task EXPECTED2 = subtask1;
         final Task RESULT2 = (Task) taskTableModel.getChild(instrTodoTask1, 1);          
         assertEquals(EXPECTED2, RESULT2);
+
+        storage.removeProjectStorage(project);
     }
 }
 

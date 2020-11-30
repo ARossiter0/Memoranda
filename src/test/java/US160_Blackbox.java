@@ -15,6 +15,7 @@ import main.java.memoranda.ui.TaskTableModel;
 import main.java.memoranda.util.Context;
 import main.java.memoranda.util.CurrentStorage;
 import main.java.memoranda.util.FileStorage;
+import main.java.memoranda.util.Storage;
 import main.java.memoranda.util.Util;
 import nu.xom.Attribute;
 import nu.xom.Document;
@@ -284,7 +285,7 @@ public class US160_Blackbox {
         
         
         // Zero taskList
-        project = ProjectManager.createProject("Project 1", CalendarDate.yesterday(), CalendarDate.tomorrow());     
+        project = ProjectManager.createProject("Project 2", CalendarDate.yesterday(), CalendarDate.tomorrow());
         
         instrTodoList = new TaskListImpl(project);                  
         for(int i = 0; i < 50; i++) {
@@ -322,7 +323,7 @@ public class US160_Blackbox {
         
         
         // Tasks long ago 
-        project = ProjectManager.createProject("Project 1", CalendarDate.yesterday(), CalendarDate.tomorrow());     
+        project = ProjectManager.createProject("Project 3", CalendarDate.yesterday(), CalendarDate.tomorrow());
         
         final CalendarDate START_DATE = new CalendarDate(1, 1, 1900);
         final CalendarDate END_DATE = new CalendarDate(1, 1, 1910);
@@ -448,9 +449,10 @@ public class US160_Blackbox {
                 taskList.createTask(CalendarDate.today(), CalendarDate.today(), "Test: " + i, 0, 0, "", null, false);
             }
         }
-        
-        CurrentStorage.get().storeTaskList(taskList, project);
-        CurrentStorage.get().storeInstrTodoList(instrTodoList, project);
+
+        Storage storage = CurrentStorage.get();
+        storage.storeTaskList(taskList, project);
+        storage.storeInstrTodoList(instrTodoList, project);
         CurrentProject.set(project);        
                         
         CurrentProject.currentTaskType = CurrentProject.TaskType.INSTR_TODO_LIST;
@@ -465,6 +467,8 @@ public class US160_Blackbox {
         final int EXPECTED1 = 500;
         final int RESULT1 = getTaskList.getTopLevelTasks().size();          
         assertEquals(EXPECTED1, RESULT1);
+
+        storage.removeProjectStorage(project);
         
         
         // Zero instrTodoList
@@ -479,9 +483,9 @@ public class US160_Blackbox {
                 taskList.createTask(CalendarDate.today(), CalendarDate.today(), "Test: " + i, 0, 0, "", null, false);
             }
         }
-        
-        CurrentStorage.get().storeTaskList(taskList, project);
-        CurrentStorage.get().storeInstrTodoList(instrTodoList, project);
+
+        storage.storeTaskList(taskList, project);
+        storage.storeInstrTodoList(instrTodoList, project);
         CurrentProject.set(project);        
                         
         CurrentProject.currentTaskType = CurrentProject.TaskType.INSTR_TODO_LIST;
@@ -496,8 +500,8 @@ public class US160_Blackbox {
         final int EXPECTED3 = 500;
         final int RESULT3 = getTaskList.getTopLevelTasks().size();          
         assertEquals(EXPECTED3, RESULT3);
-        
-        
+
+        storage.removeProjectStorage(project);
         
         // Zero taskList
         project = ProjectManager.createProject("Project 0", CalendarDate.yesterday(), CalendarDate.tomorrow());   
@@ -510,9 +514,10 @@ public class US160_Blackbox {
                 instrTodoList.createTask(CalendarDate.today(), CalendarDate.today(), "Test: " + i, 0, 0, "", null, false);
             }
         }
-        
-        CurrentStorage.get().storeTaskList(taskList, project);
-        CurrentStorage.get().storeInstrTodoList(instrTodoList, project);
+
+
+        storage.storeTaskList(taskList, project);
+        storage.storeInstrTodoList(instrTodoList, project);
         CurrentProject.set(project);        
                         
         CurrentProject.currentTaskType = CurrentProject.TaskType.INSTR_TODO_LIST;
@@ -527,8 +532,8 @@ public class US160_Blackbox {
         final int EXPECTED6 = 0;
         final int RESULT6 = getTaskList.getTopLevelTasks().size();          
         assertEquals(EXPECTED6, RESULT6);
-        
-        
+
+        storage.removeProjectStorage(project);
         
         // Tasks long ago
         project = ProjectManager.createProject("Project 0", CalendarDate.yesterday(), CalendarDate.tomorrow());  
@@ -554,8 +559,8 @@ public class US160_Blackbox {
             }
         }
         
-        CurrentStorage.get().storeTaskList(taskList, project);
-        CurrentStorage.get().storeInstrTodoList(instrTodoList, project);
+        storage.storeTaskList(taskList, project);
+        storage.storeInstrTodoList(instrTodoList, project);
         CurrentProject.set(project);        
                         
         CurrentProject.currentTaskType = CurrentProject.TaskType.INSTR_TODO_LIST;
@@ -570,8 +575,8 @@ public class US160_Blackbox {
         final int EXPECTED8 = 500;
         final int RESULT8 = getTaskList.getTopLevelTasks().size();          
         assertEquals(EXPECTED8, RESULT8);
-        
-        
+
+        storage.removeProjectStorage(project);
         
         // Tasks in the future
         project = ProjectManager.createProject("Project 0", CalendarDate.yesterday(), CalendarDate.tomorrow());   
@@ -596,9 +601,9 @@ public class US160_Blackbox {
                 taskList.createTask(START_DATE1, END_DATE1, "Test: " + i, 0, 0, "", null, false);
             }
         }
-        
-        CurrentStorage.get().storeTaskList(taskList, project);
-        CurrentStorage.get().storeInstrTodoList(instrTodoList, project);
+
+        storage.storeTaskList(taskList, project);
+        storage.storeInstrTodoList(instrTodoList, project);
         CurrentProject.set(project);        
                         
         CurrentProject.currentTaskType = CurrentProject.TaskType.INSTR_TODO_LIST;
@@ -613,6 +618,8 @@ public class US160_Blackbox {
         final int EXPECTED10 = 500;
         final int RESULT10 = getTaskList.getTopLevelTasks().size();          
         assertEquals(EXPECTED10, RESULT10);
+
+        storage.removeProjectStorage(project);
     }
     
     /**
@@ -647,10 +654,10 @@ public class US160_Blackbox {
         
         Task task = taskList.createTask(CalendarDate.today(), CalendarDate.today(), "Separate Test", 0, 0, "", null, true);
         taskList.createTask(CalendarDate.today(), CalendarDate.today(), "Separate Subtest", 0, 0, "", task.getID(), true);
-        
-        
-        CurrentStorage.get().storeTaskList(taskList, project);
-        CurrentStorage.get().storeInstrTodoList(instrTodoList, project);
+
+        Storage storage = CurrentStorage.get();
+        storage.storeTaskList(taskList, project);
+        storage.storeInstrTodoList(instrTodoList, project);
         CurrentProject.set(project);        
         Context.put("SHOW_REDUCED_ONLY", false);
                 
@@ -686,8 +693,9 @@ public class US160_Blackbox {
         taskTableModel.fireUpdateCache();
         final long EXPECTED4 = 1;
         final long RESULT4 = taskTableModel.getChildCount(instrTodoTask);  
-        assertTrue(EXPECTED4 == RESULT4);    
-        
+        assertTrue(EXPECTED4 == RESULT4);
+
+        storage.removeProjectStorage(project);
         
         // Zero instrTodoList and taskList
         project = ProjectManager.createProject("Project 1", CalendarDate.yesterday(), CalendarDate.tomorrow());   
@@ -695,11 +703,10 @@ public class US160_Blackbox {
                         
         instrTodoList = new TaskListImpl(project);          
         
-        taskList = new TaskListImpl(project);                  
-        
-        
-        CurrentStorage.get().storeTaskList(taskList, project);
-        CurrentStorage.get().storeInstrTodoList(instrTodoList, project);
+        taskList = new TaskListImpl(project);
+
+        storage.storeTaskList(taskList, project);
+        storage.storeInstrTodoList(instrTodoList, project);
         CurrentProject.set(project);        
         Context.put("SHOW_REDUCED_ONLY", false);
                 
@@ -724,6 +731,8 @@ public class US160_Blackbox {
         final long EXPECTED8 = 0;
         final long RESULT8 = taskTableModel.getChildCount(project);          
         assertTrue(EXPECTED8 == RESULT8);
+
+        storage.removeProjectStorage(project);
     }
     
     /**
@@ -745,8 +754,9 @@ public class US160_Blackbox {
         Task instrTodoTask2 = instrTodoList.createTask(CalendarDate.today(), CalendarDate.today(), "Todo 2", 0, 0, "", null, true);
         Task subtask0 = instrTodoList.createTask(CalendarDate.today(), CalendarDate.today(), "Subtodo 0", 0, 0, "", instrTodoTask1.getID(), true);
         Task subtask1 = instrTodoList.createTask(CalendarDate.today(), CalendarDate.today(), "Subtodo 1", 0, 0, "", instrTodoTask1.getID(), true);
-                      
-        CurrentStorage.get().storeInstrTodoList(instrTodoList, project);
+
+        Storage storage = CurrentStorage.get();
+        storage.storeInstrTodoList(instrTodoList, project);
         CurrentProject.set(project);        
                 
         
@@ -763,6 +773,8 @@ public class US160_Blackbox {
         final Task EXPECTED2 = subtask1;
         final Task RESULT2 = (Task) taskTableModel.getChild(instrTodoTask1, 1);          
         assertEquals(EXPECTED2, RESULT2);
+
+        storage.removeProjectStorage(project);
     }
 }
 
