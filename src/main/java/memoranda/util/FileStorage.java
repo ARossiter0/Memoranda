@@ -35,6 +35,7 @@ import main.java.memoranda.TaskListImpl;
 import main.java.memoranda.date.CalendarDate;
 import main.java.memoranda.ui.ExceptionDialog;
 import main.java.memoranda.ui.htmleditor.AltHTMLWriter;
+import memoranda.util.JsonLoader;
 import nu.xom.Builder;
 import nu.xom.DocType;
 import nu.xom.Document;
@@ -392,7 +393,8 @@ public class FileStorage implements Storage {
         //tasklistDoc.setDocType(TaskListVersioning.getCurrentDocType());
         saveDocument(tasklistDoc,JN_DOCPATH + prj.getID() + File.separator + ".studenttodo");
     }
-    
+
+	//public
 
 	/**
 	 * @see main.java.memoranda.util.Storage#createProjectStorage(main.java.memoranda.Project)

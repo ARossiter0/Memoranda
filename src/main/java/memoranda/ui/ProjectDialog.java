@@ -570,7 +570,9 @@ public class ProjectDialog extends JDialog {
         Project prj = ProjectManager.createProject(title, startD, endD, FinalExamDate);
         CurrentStorage.get().storeProjectManager(); //does this set the current project? If not set it before setTasks is called
         CurrentProject.set(prj);
-        
+
+        CurrentProject.currentTaskType = CurrentProject.TaskType.DEFAULT;
+
         for(LectureTime lt : dlg.lectureTimes) {
             Task newTask = CurrentProject.getTaskList().createLectureTask(lt.day, lt.hour, lt.min, "Lecture");
         }
@@ -585,6 +587,8 @@ public class ProjectDialog extends JDialog {
         }
        
         CurrentStorage.get().storeTaskList(CurrentProject.getTaskList(), CurrentProject.get());
+
+        // TODO store freeDay, holiday, and break
         
         CurrentProject.updateAllListeners();
 

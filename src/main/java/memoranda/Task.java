@@ -55,7 +55,8 @@ public interface Task {
 
     CalendarDate getEndDate();
     void setEndDate(CalendarDate date);
-    
+
+
     int getStatus(CalendarDate date);
     
     int getProgress();
