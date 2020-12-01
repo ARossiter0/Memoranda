@@ -251,6 +251,7 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 				LectureList tl,
 				TaskList t2,
 				TaskList s1,
+				TaskList s2,
 				ResourcesList rl) {
 			}
 			public void projectWasChanged() {
@@ -300,7 +301,7 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 
 		// Add projects from JSON - TODO May need to remove this.
 		JsonLoader jsonLoader = new JsonLoader();
-		jsonLoader.loadFromJSON();
+		jsonLoader.loadFromJson();
 	}
 
 	class PopupListener extends MouseAdapter {

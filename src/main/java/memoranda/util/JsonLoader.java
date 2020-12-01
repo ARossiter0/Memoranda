@@ -1,12 +1,5 @@
 package memoranda.util;
 
-import main.java.memoranda.date.CalendarDate;
-import org.apache.xpath.operations.Bool;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -32,16 +25,25 @@ import main.java.memoranda.date.CalendarDate;
 import main.java.memoranda.util.CurrentStorage;
 import main.java.memoranda.util.Storage;
 
+import org.apache.xpath.operations.Bool;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
 public class JsonLoader {
 
-    public void loadFromJSON(){
+    /**
+     * Load from the Data.json file in the .memoranda folder.
+     */
+    public void loadFromJson() {
 
         String path = main.java.memoranda.util.Util.getEnvDir() + "/Data.json";
         //JSON parser object to parse read file
         JSONParser jsonParser = new JSONParser();
 
-        try (FileReader reader = new FileReader(path))
-        {
+        try (FileReader reader = new FileReader(path)) {
             //Read JSON file
             JSONObject programObject = (JSONObject) jsonParser.parse(reader);
 
@@ -49,7 +51,7 @@ public class JsonLoader {
 
             // Load Courses
             JSONArray courses = (JSONArray) programObject.get("courses");
-            for(Object course : courses){
+            for (Object course : courses) {
                 loadCourse((JSONObject) course);
             }
 
@@ -62,13 +64,19 @@ public class JsonLoader {
         }
     }
 
-    private void loadCourse(JSONObject course){
+    /**
+     * Load a course from the Data.json file.
+     *
+     * @param course the JSON object that represents the course.
+     */
+    private void loadCourse(JSONObject course) {
 
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX", Locale.ENGLISH);
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX",
+                Locale.ENGLISH);
 
         String id = (String) course.get("courseId");
 
-        if(ProjectManager.getProject(id) != null){
+        if (ProjectManager.getProject(id) != null) {
             System.out.println("[DEBUG] Project " + id + " already exists!");
             return;
         }
@@ -79,23 +87,19 @@ public class JsonLoader {
         CalendarDate endDate = null;
         CalendarDate finalDate = null;
         try {
-            startDate = new CalendarDate(df.parse((String) course.get("startDate")));
-            endDate = new CalendarDate(df.parse((String) course.get("endDate")));
-            finalDate = new CalendarDate(df.parse((String) course.get("finalDate")));
+            startDate = new CalendarDate(df.parse((String) course.get(
+                    "startDate")));
+            endDate =
+                    new CalendarDate(df.parse((String) course.get("endDate")));
+            finalDate = new CalendarDate(df.parse((String) course.get(
+                    "finalDate")));
         } catch (java.text.ParseException e) {
             e.printStackTrace();
         }
 
-
-        Project courseProject = ProjectManager.createProject(id, title, startDate, endDate, finalDate);
+        Project courseProject = ProjectManager.createProject(id, title,
+                startDate, endDate, finalDate);
         Storage storage = CurrentStorage.get();
-
-
-        // TODO: Load Free Days
-
-        // TODO: Load Holidays
-
-        // TODO: Load Breaks
 
         // Load Default Tasks (Free Days, Holidays, Breaks)
         JSONArray defaultTasks = (JSONArray) course.get("defaultTasks");
@@ -112,8 +116,8 @@ public class JsonLoader {
         JSONArray lectures = (JSONArray) course.get("lectures");
         LectureList lectureList = new LectureListImpl(courseProject);
 
-        if (lectures != null){
-            for(Object lecture : lectures){
+        if (lectures != null) {
+            for (Object lecture : lectures) {
                 loadLecture((JSONObject) lecture, lectureList);
             }
             storage.storeLectureList(lectureList, courseProject);
@@ -149,7 +153,9 @@ public class JsonLoader {
             for (Object taGraderTodo : taGraderTodos) {
                 loadTask((JSONObject) taGraderTodo, taGraderTodoList);
             }
-            // TODO: Create method in FileStorage.java for storing TA/Grader todo lists.
+            storage.storeTaTodoList(taGraderTodoList, courseProject);
+            // TODO: Create method in FileStorage.java for storing TA/Grader
+            //  todo lists.
         }
 
         // Load Student Todos
@@ -169,103 +175,170 @@ public class JsonLoader {
         JSONArray resources = (JSONArray) course.get("resources");
         ResourcesList resourcesList = new ResourcesListImpl(courseProject);
 
-        if(resources != null) {
+        if (resources != null) {
             for (Object resource : resources) {
-                loadResource((JSONObject) resource, resourcesList, courseProject);
+                loadResource((JSONObject) resource, resourcesList,
+                        courseProject);
             }
             storage.storeResourcesList(resourcesList, courseProject);
         }
     }
 
-    private void loadLecture(JSONObject lectureJSON, LectureList lectureList){
-        System.out.println("[DEBUG] Load lecture " + lectureJSON + " from Data.json");
+    /**
+     * Load a lecture from Data.json.
+     *
+     * @param lectureJson
+     * the JSON object for the lecture
+     * @param lectureList the lecture list
+     */
+    private void loadLecture(JSONObject lectureJson,
+              LectureList lectureList) {
+        System.out.println("[DEBUG] Load lecture " + lectureJson
+                + " from "
+                + "Data.json");
 
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX", Locale.ENGLISH);
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX",
+                Locale.ENGLISH);
 
         // Pull vars from JSON
-        String topic = (String) lectureJSON.get("topic");
-        boolean repeat = (Boolean) lectureJSON.get("repeat");
+        final String topic = (String) lectureJson
+                .get("topic");
+        boolean repeat = (Boolean) lectureJson
+                .get("repeat");
         CalendarDate date = null;
         Date startTime = null;
         Date endTime = null;
 
         try {
-            date = new CalendarDate(df.parse((String) lectureJSON.get("startDate")));
-            startTime = df.parse((String) lectureJSON.get("startTime"));
-            endTime = df.parse((String) lectureJSON.get("endTime"));
+            date = new CalendarDate(df.parse((String) lectureJson
+                    .get(
+                    "startDate")));
+            startTime = df.parse((String) lectureJson
+                    .get("startDate"));
+            endTime = df.parse((String) lectureJson
+                    .get("endDate"));
         } catch (java.text.ParseException e) {
             e.printStackTrace();
         }
 
-        Calendar sTime = new GregorianCalendar();
-        sTime.set(startTime.getYear(), startTime.getMonth(), startTime.getDay(), startTime.getHours(), startTime.getMinutes(), startTime.getSeconds());
+        Calendar startTimeCal = new GregorianCalendar();
+        startTimeCal.set(startTime.getYear(), startTime.getMonth(),
+                startTime.getDay(), startTime.getHours(),
+                startTime.getMinutes(), startTime.getSeconds());
 
-        Calendar eTime = new GregorianCalendar();
-        sTime.set(endTime.getYear(), endTime.getMonth(), endTime.getDay(), endTime.getHours(), endTime.getMinutes(), endTime.getSeconds());
+        Calendar endTimeCal = new GregorianCalendar();
+        startTimeCal.set(endTime.getYear(), endTime.getMonth(), endTime.getDay(),
+                endTime.getHours(), endTime.getMinutes(), endTime.getSeconds());
 
         // Create the new lecture in the lecture list
-        lectureList.createLecture(date, sTime, eTime, topic);
+        lectureList.createLecture(date, startTimeCal, endTimeCal, topic);
 
 
         // Set the id of the lecture
     }
 
-    private void loadResource(JSONObject resource, ResourcesList resourcesList, main.java.memoranda.Project courseProject) {
+    /**
+     * Load a resource from Data.json.
+     *
+     * @param resource      the JSON object for the resource to load
+     * @param resourcesList the resources list
+     * @param courseProject the course
+     */
+    private void loadResource(JSONObject resource,
+                              ResourcesList resourcesList,
+                              main.java.memoranda.Project courseProject) {
         // Pull vars from JSON
         String path = (String) resource.get("path");
         System.out.println("Load resource " + path + " from Data.json");
-        boolean isInternetShortcut = (Boolean) resource.get("isInternetShortcut");
+        boolean isInternetShortcut = (Boolean) resource.get(
+                "isInternetShortcut");
         boolean isProjectFile = (Boolean) resource.get("isProjectFile");
 
         // Add resource to resource list
         resourcesList.addResource(path, isInternetShortcut, isProjectFile);
     }
 
-    private void loadTask(JSONObject taskJSON, TaskList taskList){
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX", Locale.ENGLISH);
+    /**
+     * Load a task (assignment, to do list) from Data.json.
+     *
+     * @param taskJson
+     * the JSON object for the task
+     * @param taskList the task list
+     */
+    private void loadTask(JSONObject taskJson,
+                TaskList taskList) {
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX",
+                Locale.ENGLISH);
 
         // Pull vars from JSON
-        String id = (String) taskJSON.get("id"); // TODO Need to create method to verify id format, and another to assign ID to task.
+        String id = (String) taskJson
+                .get("id"); // TODO Need to create
+        // method to verify id format, and another to assign ID to task.
 
-        //CalendarDate startDate = (CalendarDate) taskJSON.get("startDate");
+        //CalendarDate startDate = (CalendarDate) taskJson
+        // .get("startDate");
         CalendarDate startDate = null;
         CalendarDate endDate = null;
 
         try {
-            startDate = new CalendarDate(df.parse((String) taskJSON.get("startDate")));
-            endDate = new CalendarDate(df.parse((String) taskJSON.get("endDate")));
+            startDate = new CalendarDate(df.parse((String) taskJson
+                    .get(
+                    "startDate")));
+            endDate = new CalendarDate(df.parse((String) taskJson
+                    .get(
+                    "endDate")));
         } catch (java.text.ParseException e) {
             e.printStackTrace();
         }
 
-        String text = (String) taskJSON.get("text");
-        int priority = ((Long) taskJSON.get("priority")).intValue();
-        long effort = (Long) taskJSON.get("effort");
-        String description = (String) taskJSON.get("description");
-        String parentTaskId = (String) taskJSON.get("parentId");
-        boolean isInReduced = (Boolean) taskJSON.get("isInReduced");
+        String text = (String) taskJson
+                .get("text");
+        int priority = ((Long) taskJson
+                .get("priority")).intValue();
+        long effort = (Long) taskJson
+                .get("effort");
+        String description = (String) taskJson
+                .get("description");
+        String parentTaskId = (String) taskJson
+                .get("parentId");
+        boolean isInReduced = (Boolean) taskJson
+                .get("isInReduced");
 
         // Create the new task in the tasklist
-        Task task = taskList.createTask(startDate, endDate, text, priority, effort, description, parentTaskId, isInReduced);
+        Task task = taskList.createTask(startDate, endDate, text, priority,
+                effort, description, parentTaskId, isInReduced);
 
-        // TODO: Create a public verifyId method in Util, if returns false, throw exception?
+        // TODO: Create a public verifyId method in Util, if returns false,
+        //  throw exception?
 
         // Set the id of the task
         taskList.setTaskId(task, id);
     }
 
-    private void loadDefaultTask(JSONObject taskJSON, TaskList taskList){
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX", Locale.ENGLISH);
+    /**
+     * Load a task (free day, holiday, break) from Data.json.
+     *
+     * @param taskJson
+     * the JSON object for the task
+     * @param taskList the task list
+     */
+    private void loadDefaultTask(JSONObject taskJson,
+                TaskList taskList) {
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX",
+                Locale.ENGLISH);
 
         // Pull vars from JSON
         String id = main.java.memoranda.util.Util.generateId();
-        String name = (String) taskJSON.get("text");
-        String type = (String) taskJSON.get("type");
+        String name = (String) taskJson
+                .get("text");
+        String type = (String) taskJson
+                .get("type");
         CalendarDate date = null;
 
 
         try {
-            date = new CalendarDate(df.parse((String) taskJSON.get("date")));
+            date = new CalendarDate(df.parse((String) taskJson
+                    .get("date")));
         } catch (java.text.ParseException e) {
             e.printStackTrace();
         }
@@ -273,4 +346,6 @@ public class JsonLoader {
         // Create the new task in the tasklist
         Task task = taskList.createSingleEventTask(name, date, type);
     }
+
+
 }
