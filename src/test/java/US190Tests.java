@@ -80,6 +80,8 @@ public class US190Tests {
         CalendarDate taskEndDate2 = new CalendarDate(10, 9, 2020);
         CalendarDate taskStartDate3 = new CalendarDate(10, 1, 2021);
         CalendarDate taskEndDate3 = new CalendarDate(10, 2, 2021);
+
+
         final Task task1 = taskList.createTask(taskStartDate1, taskEndDate1,
                 "US190"
                 + "-Test Task 1", 1, 3, "The first task", null);
@@ -89,10 +91,10 @@ public class US190Tests {
         final Task task3 = taskList.createTask(taskStartDate1, taskEndDate1,
                 "US190"
                 + "-Test Task 3", 1, 3, "The first task", null);
-        final Task task4 = taskList.createTask(taskStartDate3, taskEndDate3,
+        final Task task4 = taskList.createTask(taskStartDate1, taskEndDate1,
                 "US190"
                 + "-Test Task 4", 1, 3, "The first task", null);
-        final Task task5 = taskList.createTask(taskStartDate1, taskEndDate1,
+        final Task task5 = taskList.createTask(taskStartDate3, taskEndDate3,
                 "US190"
                 + "-Test Task 5", 1, 3, "The first task", null);
 
@@ -107,10 +109,9 @@ public class US190Tests {
 
         main.java.memoranda.util.Context.put("SHOW_ACTIVE_TASKS_ONLY", true);
 
-        Task firstChild = (Task) taskTableSorter.getChild(project, 0);
-        Task secondChild = (Task) taskTableSorter.getChild(project, 1);
-        Task thirdChild = (Task) taskTableSorter.getChild(project, 2);
-
+        final Task firstChild = (Task) taskTableSorter.getChild(project, 0);
+        final Task secondChild = (Task) taskTableSorter.getChild(project, 1);
+        final Task thirdChild = (Task) taskTableSorter.getChild(project, 2);
 
         assertEquals(task1, firstChild);
         assertEquals(task3, secondChild);
