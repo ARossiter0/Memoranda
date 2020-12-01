@@ -11,6 +11,7 @@ import main.java.memoranda.date.CalendarDate;
 
 import main.java.memoranda.ui.TaskTable;
 import main.java.memoranda.ui.TaskTableSorter;
+import main.java.memoranda.ui.TaskTableModel;
 
 import main.java.memoranda.util.CurrentStorage;
 import main.java.memoranda.util.Storage;
@@ -91,10 +92,10 @@ public class US190Tests {
         final Task task3 = taskList.createTask(taskStartDate1, taskEndDate1,
                 "US190"
                 + "-Test Task 3", 1, 3, "The first task", null);
-        final Task task4 = taskList.createTask(taskStartDate1, taskEndDate1,
+        final Task task4 = taskList.createTask(taskStartDate3, taskEndDate3,
                 "US190"
                 + "-Test Task 4", 1, 3, "The first task", null);
-        final Task task5 = taskList.createTask(taskStartDate3, taskEndDate3,
+        final Task task5 = taskList.createTask(taskStartDate1, taskEndDate1,
                 "US190"
                 + "-Test Task 5", 1, 3, "The first task", null);
 
@@ -107,18 +108,19 @@ public class US190Tests {
         TaskTable taskTable = new TaskTable();
         TaskTableSorter taskTableSorter = new TaskTableSorter(taskTable);
 
-        main.java.memoranda.util.Context.put("SHOW_ACTIVE_TASKS_ONLY", true);
-
         final Task firstChild = (Task) taskTableSorter.getChild(project, 0);
         final Task secondChild = (Task) taskTableSorter.getChild(project, 1);
         final Task thirdChild = (Task) taskTableSorter.getChild(project, 2);
+        final Task fourthChild = (Task) taskTableSorter.getChild(project, 3);
+        final Task fifthChild = (Task) taskTableSorter.getChild(project, 4);
 
         assertEquals(task1, firstChild);
-        assertEquals(task3, secondChild);
-        assertEquals(task5, thirdChild);
+        assertEquals(task2, secondChild);
+        assertEquals(task3, thirdChild);
+        assertEquals(task4, fourthChild);
+        assertEquals(task5, fifthChild);
 
         storage.removeProjectStorage(project);
-        main.java.memoranda.util.Context.put("SHOW_ACTIVE_TASKS_ONLY", false);
     }
 
 
