@@ -98,9 +98,12 @@ public class TaskListImpl implements TaskList {
     public Collection getActiveSubTasks(String taskId, CalendarDate date) {
         Collection allTasks = getAllSubTasks(taskId);
 
-        if ((taskId == null) || (taskId.length() == 0)) {
-            System.out.println("Active Subtasks: " + filterActiveTasks(allTasks, date).size());
-        }
+        System.out.println("\n\n\n\n\n\n[DEBUG] TaskListImpl"
+                + ".getActiveSubTasks allTasks size: " + allTasks.size());
+        System.out.println("[DEBUG] TaskListImpl.getActiveSubTasks "
+                + "activeTasks size: " + filterActiveTasks(allTasks,
+                date).size());
+
         return filterActiveTasks(allTasks,date);
     }
     

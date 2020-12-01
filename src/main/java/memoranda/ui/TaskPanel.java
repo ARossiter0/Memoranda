@@ -240,8 +240,11 @@ public class TaskPanel extends JPanel {
                 toggleShowActiveOnly_actionPerformed(e);
             }
         });
-        boolean isShao = (Context.get("SHOW_ACTIVE_TASKS_ONLY") != null)
-                && (Context.get("SHOW_ACTIVE_TASKS_ONLY").equals("true"));
+
+
+        //boolean isShao = (Context.get("SHOW_ACTIVE_TASKS_ONLY") != null)
+                //&& (Context.get("SHOW_ACTIVE_TASKS_ONLY").equals("true"));
+        boolean isShao = false;
         ppShowActiveOnlyChB.setSelected(isShao);
         toggleShowActiveOnly_actionPerformed(null);
 
@@ -1011,9 +1014,7 @@ public class TaskPanel extends JPanel {
 
 	// toggle "show active only"
 	void toggleShowActiveOnly_actionPerformed(ActionEvent e) {
-		Context.put(
-			"SHOW_ACTIVE_TASKS_ONLY",
-                ppShowActiveOnlyChB.isSelected());
+		Context.put("SHOW_ACTIVE_TASKS_ONLY", new Boolean(ppShowActiveOnlyChB.isSelected()));
 		taskTable.tableChanged();
     }
 

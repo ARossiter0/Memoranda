@@ -115,9 +115,13 @@ public class TaskTableSorter extends TaskTableModel {
             TaskList taskList = CurrentProject.getTaskList();
             if (check_activeOnly()) {
                 collection = taskList.getActiveSubTasks(null, main.java.memoranda.date.CurrentDate.get());
+                System.out.println("[DEBUG] TaskTableSorter.getChild active "
+                        + "tasks size: " + collection.size());
                 //return CurrentProject.getTaskList().getActiveSubTasks(null, CurrentDate.get()).size();
             } else {
                 collection = taskList.getTopLevelTasks();
+                System.out.println("[DEBUG] TaskTableSorter.getChild all "
+                        + "tasks size: " + collection.size());
                 //return CurrentProject.getTaskList().getTopLevelTasks().size();
             }
 

@@ -173,8 +173,6 @@ public class TaskTableModel extends AbstractTreeTableModel implements TreeTableM
      */
     public int getChildCount(Object parent) {
 
-
-        // TODO make active only work
         if (parent instanceof Project) {
             TaskList taskList = CurrentProject.getTaskList();
             Collection collection = null;
@@ -293,16 +291,23 @@ public class TaskTableModel extends AbstractTreeTableModel implements TreeTableM
      */
     public void fireUpdateCache() {
         activeOnly = check_activeOnly();
-        System.out.println("[DEBUG] Active Only: " + activeOnly);
     }
 
     public static boolean check_activeOnly() {
         Object o = Context.get("SHOW_ACTIVE_TASKS_ONLY");
-        if (o == null)
+        if (o == null) {
             return false;
+        }
+
+        System.out.println("[DEBUG] TaskTableModel.check_activeOnly" + o.toString().equals("true"));
+
         return o.toString().equals("true");
     }
-    
+
+    public void setActiveOnly(boolean isActiveOnly){
+        activeOnly = isActiveOnly;
+    }
+
     /**
      * Check if the table is only supposed to display items 
      * that are checked as is in reduced (for example: students
@@ -316,10 +321,6 @@ public class TaskTableModel extends AbstractTreeTableModel implements TreeTableM
             return false;
         }
         return o.toString().equals("true");           
-    }
-
-    public boolean activeOnly() {
-        return activeOnly;
     }
 
     public boolean isCellEditable(Object node, int column) {
