@@ -161,7 +161,17 @@ public class JsonBuilder {
 
     private void addTaGraderTodoArray(JSONObject courseObject, Project course) {
 
-        //This is on hold for US 170 / TA graders
+        JSONArray taGradeTodo = new JSONArray();
+
+        TaskList taList = CurrentStorage.get().openTaTodoList(course);
+
+        Collection<Task> todos = taList.getTopLevelTasks();
+
+        for (Task t : todos) {
+            addTask(taGradeTodo, t);
+        }
+
+        courseObject.put("taGraderTodos", taGradeTodo);
     }
 
     private void addStudentTodoArray(JSONObject courseObject, Project course) {
