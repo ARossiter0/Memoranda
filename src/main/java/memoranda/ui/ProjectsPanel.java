@@ -301,7 +301,7 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 
 		// Add projects from JSON - TODO May need to remove this.
 		JsonLoader jsonLoader = new JsonLoader();
-		jsonLoader.loadFromJSON();
+		jsonLoader.loadFromJson();
 	}
 
 	class PopupListener extends MouseAdapter {
