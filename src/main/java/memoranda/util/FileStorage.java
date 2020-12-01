@@ -64,23 +64,43 @@ public class FileStorage implements Storage {
 		}
 	}
 
+	/**
+	 * In case the file does not exits, as in it is being loaded from a JSON file,
+	 * created the file and then retries itself once.
+	 */
 	public static void saveDocument(Document doc, String filePath) {
 		/**
 		 * @todo: Configurable parameters
 		 */
+		boolean tryAgain = true;
 		try {
 			/* The XOM bug: reserved characters are not escaped */
 			// Serializer serializer = new Serializer(new FileOutputStream(filePath),
 			// "UTF-8");
 			// serializer.write(doc);
+			OutputStreamWriter fw;
 
-			OutputStreamWriter fw = new OutputStreamWriter(new FileOutputStream(filePath), "UTF-8");
+			if (documentExists(filePath)) {
+				fw = new OutputStreamWriter(new FileOutputStream(filePath), "UTF-8");
+				
+			} else {
+				String parentDir = filePath.substring(0, filePath.lastIndexOf(File.separator));
+				File parent = new File(parentDir);
+				parent.mkdirs();
+				File child = new File(filePath);
+				child.createNewFile();
+				fw = new OutputStreamWriter(new FileOutputStream(child), "UTF-8");
+				
+			}
+
 			fw.write(doc.toXML());
 			fw.flush();
 			fw.close();
+
 		} catch (IOException ex) {
 			new ExceptionDialog(ex, "Failed to write a document to " + filePath, "");
-		}
+
+		} 
 	}
 
 	public static Document openDocument(InputStream in) throws Exception {
