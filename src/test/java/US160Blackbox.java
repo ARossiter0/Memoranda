@@ -31,6 +31,14 @@ import org.junit.Before;
 
 import org.junit.Test;
 
+/**
+ * Test Name: US160Blackbox.java
+ * <p></p>
+ * Test Description: Test the methods changed significantly in US160.
+ * <p></p>
+ * @Author Tristan Johnson
+ * @Date 11/30/2020
+ */
 public class US160Blackbox {
 
     @Before
