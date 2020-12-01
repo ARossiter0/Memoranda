@@ -68,12 +68,14 @@ public class AgendaGenerator {
 		// Other Tasks
 		CurrentProject.currentTaskType = CurrentProject.TaskType.INSTR_TODO_LIST;
 		s += generateIndividualTasksInfo("Instructor Todo Items", p, date, getTaskList(p), expandedTasks);
+		CurrentProject.currentTaskType = CurrentProject.TaskType.TA_TODO;
+		s += generateIndividualTasksInfo("TA/Grader Todo Items", p, date,
+				getTaskList(p),	expandedTasks);
 		CurrentProject.currentTaskType = CurrentProject.TaskType.STUDENT_TODO;
 		s += generateIndividualTasksInfo("Student Todo Items", p, date, getTaskList(p), expandedTasks);
 		CurrentProject.currentTaskType = CurrentProject.TaskType.DEFAULT;
-		s += generateIndividualTasksInfo("Free Days, Holidays, and Breaks", p, date, getTaskList(p), expandedTasks);
-
-
+		s += generateIndividualTasksInfo("Free Days, Holidays, and Breaks",
+				p, date, getTaskList(p), expandedTasks);
 
 		return s;
 	}
