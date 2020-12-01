@@ -34,6 +34,9 @@ import main.java.memoranda.util.Storage;
 
 public class JsonLoader {
 
+    /**
+     * Load from the Data.json file in the .memoranda folder.
+     */
     public void loadFromJSON(){
 
         String path = main.java.memoranda.util.Util.getEnvDir() + "/Data.json";
@@ -62,6 +65,10 @@ public class JsonLoader {
         }
     }
 
+    /**
+     * Load a course from the Data.json file.
+     * @param course the JSON object that represents the course.
+     */
     private void loadCourse(JSONObject course){
 
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX", Locale.ENGLISH);
@@ -86,16 +93,8 @@ public class JsonLoader {
             e.printStackTrace();
         }
 
-
         Project courseProject = ProjectManager.createProject(id, title, startDate, endDate, finalDate);
         Storage storage = CurrentStorage.get();
-
-
-        // TODO: Load Free Days
-
-        // TODO: Load Holidays
-
-        // TODO: Load Breaks
 
         // Load Default Tasks (Free Days, Holidays, Breaks)
         JSONArray defaultTasks = (JSONArray) course.get("defaultTasks");
@@ -149,6 +148,7 @@ public class JsonLoader {
             for (Object taGraderTodo : taGraderTodos) {
                 loadTask((JSONObject) taGraderTodo, taGraderTodoList);
             }
+            storage.storeTaTodoList(taGraderTodoList, courseProject);
             // TODO: Create method in FileStorage.java for storing TA/Grader todo lists.
         }
 
@@ -178,6 +178,11 @@ public class JsonLoader {
 
     }
 
+    /**
+     * Load a lecture from Data.json.
+     * @param lectureJSON the JSON object for the lecture
+     * @param lectureList the lecture list
+     */
     private void loadLecture(JSONObject lectureJSON, LectureList lectureList){
         System.out.println("[DEBUG] Load lecture " + lectureJSON + " from Data.json");
 
@@ -211,6 +216,12 @@ public class JsonLoader {
         // Set the id of the lecture
     }
 
+    /**
+     * Load a resource from Data.json.
+     * @param resource the JSON object for the resource to load
+     * @param resourcesList the resources list
+     * @param courseProject the course
+     */
     private void loadResource(JSONObject resource, ResourcesList resourcesList, main.java.memoranda.Project courseProject) {
         // Pull vars from JSON
         String path = (String) resource.get("path");
@@ -222,6 +233,11 @@ public class JsonLoader {
         resourcesList.addResource(path, isInternetShortcut, isProjectFile);
     }
 
+    /**
+     * Load a task (assignment, to do list) from Data.json.
+     * @param taskJSON the JSON object for the task
+     * @param taskList the task list
+     */
     private void loadTask(JSONObject taskJSON, TaskList taskList){
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX", Locale.ENGLISH);
 
@@ -255,6 +271,11 @@ public class JsonLoader {
         taskList.setTaskId(task, id);
     }
 
+    /**
+     * Load a task (free day, holiday, break) from Data.json.
+     * @param taskJSON the JSON object for the task
+     * @param taskList the task list
+     */
     private void loadDefaultTask(JSONObject taskJSON, TaskList taskList){
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX", Locale.ENGLISH);
 
