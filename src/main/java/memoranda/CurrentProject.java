@@ -30,13 +30,14 @@ public class CurrentProject {
     private static TaskList _assignlist = null;
     private static TaskList _studenttodo = null;
     private static TaskList _instrTodoList = null;
+    private static TaskList _taTodoList = null;
 
     private static NoteList _notelist = null;
     private static ResourcesList _resources = null;
     private static Vector projectListeners = new Vector();
 
     private static final String PRJ_ID_KEY = "LAST_OPENED_PROJECT_ID";
-    public enum TaskType {DEFAULT, INSTR_TODO_LIST, STUDENT_TODO}
+    public enum TaskType {DEFAULT, INSTR_TODO_LIST, STUDENT_TODO,TA_TODO}
     public static TaskType currentTaskType = TaskType.DEFAULT;
 
     
@@ -70,6 +71,7 @@ public class CurrentProject {
 		// and resources from the project
         _tasklist = CurrentStorage.get().openTaskList(_project);
         _instrTodoList = CurrentStorage.get().openInstrTodoList(_project);
+        _taTodoList = CurrentStorage.get().openTaTodoList(_project);
         _studenttodo = CurrentStorage.get().openStudentTodo(_project);
         _lecturelist = CurrentStorage.get().openLectureList(_project);
         _notelist = CurrentStorage.get().openNoteList(_project);
@@ -106,7 +108,11 @@ public class CurrentProject {
         } else if (currentTaskType == TaskType.INSTR_TODO_LIST) {
     		final String DEBUG = "\t\t[DEBUG] Returning _instrTodoList";
     		return _instrTodoList; 
-        } else {
+        } else if (currentTaskType == TaskType.TA_TODO) {
+    		final String DEBUG = "\t\t[DEBUG] Returning _instrTodoList";
+    		return  _taTodoList; 
+        } 
+        else {
             return _tasklist;
         }
     }
@@ -155,17 +161,19 @@ public class CurrentProject {
         TaskList newtasklist = CurrentStorage.get().openTaskList(project);
         TaskList newstudentodo = CurrentStorage.get().openStudentTodo(project);
         TaskList newinstrtodolist = CurrentStorage.get().openInstrTodoList(project);
+        TaskList newtatodolist = CurrentStorage.get().openTaTodoList(project);
         NoteList newnotelist = CurrentStorage.get().openNoteList(project);
         ResourcesList newresources = CurrentStorage.get().openResourcesList(project);
         TaskList newassignlist = CurrentStorage.get().openAssignList(project);
         //notifyListenersBefore(project, newnotelist, newtasklist, newresources); //Old style change extent unknown
-        notifyListenersBefore(project, newnotelist, newlecturelist, newinstrtodolist, newstudentodo, newresources);
+        notifyListenersBefore(project, newnotelist, newlecturelist, newinstrtodolist, newstudentodo, newtatodolist, newresources);
 
         _project = project;
         _lecturelist = newlecturelist;
         _tasklist = newtasklist;
         _studenttodo = newstudentodo;
         _instrTodoList = newinstrtodolist;
+        _taTodoList = newtatodolist;
         _notelist = newnotelist;
         _resources = newresources;
         _assignlist = newassignlist;
@@ -198,9 +206,9 @@ public class CurrentProject {
      * @param rl the new resource list
      */
 
-    private static void notifyListenersBefore(Project project, NoteList nl, LectureList tl, TaskList t2, TaskList s1, ResourcesList rl) {
+    private static void notifyListenersBefore(Project project, NoteList nl, LectureList tl, TaskList t2, TaskList s1, TaskList s2, ResourcesList rl) {
         for (int i = 0; i < projectListeners.size(); i++) {
-            ((ProjectListener)projectListeners.get(i)).projectChange(project, nl, tl, t2, s1, rl);
+            ((ProjectListener)projectListeners.get(i)).projectChange(project, nl, tl, t2, s1, s2, rl);
             /*DEBUGSystem.out.println(projectListeners.get(i));*/
         }
     }
@@ -226,6 +234,7 @@ public class CurrentProject {
         storage.storeTaskList(_tasklist, _project); 
         storage.storeStudentTodo(_studenttodo, _project); 
         storage.storeInstrTodoList(_instrTodoList, _project);
+        storage.storeTaTodoList(_taTodoList, _project);
         storage.storeResourcesList(_resources, _project);
         storage.storeProjectManager();
     }
@@ -237,6 +246,7 @@ public class CurrentProject {
         _project = null;
         _lecturelist = null;
         _tasklist = null;
+        _taTodoList = null;
         _assignlist = null;
         _notelist = null;
         _resources = null;

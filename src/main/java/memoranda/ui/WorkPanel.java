@@ -385,9 +385,10 @@ public class WorkPanel extends JPanel {
 	}
 	
 	public void tagraderTasksB_actionPerformed(ActionEvent e) {
-		Context.put("CURRENT_PANEL", "TA");
+		Context.put("CURRENT_PANEL", "TASKS");
+		CurrentProject.currentTaskType = CurrentProject.TaskType.TA_TODO;
 		cardLayout1.show(panel, "DAILYITEMS");
-		dailyItemsPanel.selectPanel("TA");
+		dailyItemsPanel.selectPanel("TASKS");
 		setCurrentButton(tagraderTasksB);
 		
 	}

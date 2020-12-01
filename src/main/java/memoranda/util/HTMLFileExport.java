@@ -18,7 +18,7 @@ import org.apache.xml.serialize.Method;
 import org.apache.xml.serialize.OutputFormat;
 import org.apache.xml.serialize.XMLSerializer;
 import org.cyberneko.html.parsers.SAXParser;
-import org.xml.sax.InputSource;
+//import org.xml.sax.InputSource;
 
 import main.java.memoranda.Note;
 import main.java.memoranda.ui.ExceptionDialog;
@@ -155,7 +155,7 @@ public class HTMLFileExport {
      
      public static String convertToXHTML(String in) {       
         SAXParser parser = new SAXParser();
-        InputSource source;
+        //InputSource source;
         OutputFormat outputFormat = new OutputFormat();
         try {
             //parser.setProperty("http://cyberneko.org/html/properties/default-encoding", charset);
@@ -166,9 +166,9 @@ public class HTMLFileExport {
             outputFormat.setIndenting(true);            
             StringReader sr = new StringReader(in);
             StringWriter sw = new StringWriter();
-            source = new InputSource(sr);
+           // source = new InputSource(sr);
             parser.setContentHandler(new XMLSerializer(sw, outputFormat));
-            parser.parse(source);
+            //.parse(source);
             return sw.toString();
         }
         catch (Exception ex) {
