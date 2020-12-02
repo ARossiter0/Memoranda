@@ -42,6 +42,7 @@ public class ResourcesPanel extends JPanel {
 	JButton removeResB = new JButton();
 	JScrollPane scrollPane = new JScrollPane();
 	JButton refreshB = new JButton();
+	JButton visibleB = new JButton();
 	JPopupMenu resPPMenu = new JPopupMenu();
 	JMenuItem ppRun = new JMenuItem();
 	JMenuItem ppRemoveRes = new JMenuItem();
@@ -135,6 +136,22 @@ public class ResourcesPanel extends JPanel {
 		refreshB.setMaximumSize(new Dimension(24, 24));
 		refreshB.setEnabled(true);
 		refreshB.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/refreshres.png")));
+		
+		// Style the visibility button
+		visibleB.setBorderPainted(false);
+		visibleB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                visibleB_actionPerformed(e);
+            }
+        });
+		visibleB.setFocusable(false);
+		visibleB.setPreferredSize(new Dimension(24, 24));
+		visibleB.setRequestFocusEnabled(false);
+		visibleB.setToolTipText(Local.getString("Refresh"));
+		visibleB.setMinimumSize(new Dimension(24, 24));
+		visibleB.setMaximumSize(new Dimension(24, 24));
+		visibleB.setEnabled(true);
+		visibleB.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/visibilityres.png")));
 
 		// Style the resource dialog
 		resPPMenu.setFont(new java.awt.Font("Dialog", 1, 10));
@@ -186,6 +203,8 @@ public class ResourcesPanel extends JPanel {
 		toolBar.add(removeResB, null);
 		toolBar.addSeparator();
 		toolBar.add(refreshB, null);
+		toolBar.addSeparator();
+		toolBar.add(visibleB, null);
 		
 		// Add the scrollpane (and resources table inside of it) to this
 		this.add(scrollPane, BorderLayout.CENTER);
@@ -282,6 +301,16 @@ public class ResourcesPanel extends JPanel {
 					((Resource) resourcesTable.getModel().getValueAt(toRemove[i], ResourcesTable._RESOURCE)).getPath());
 		}
 		resourcesTable.tableChanged();
+	}
+	
+	void visibleB_actionPerformed(ActionEvent e) {
+	    int[] toSetVisibility = resourcesTable.getSelectedRows();
+	    for (int i = 0; i < toSetVisibility.length; i++) {
+            CurrentProject.getResourcesList().setResourceVisibility(
+                    ((Resource) resourcesTable.getModel().getValueAt(toSetVisibility[i], ResourcesTable._RESOURCE))
+                    .getPath());
+        }
+	    resourcesTable.tableChanged();
 	}
 
 	/**

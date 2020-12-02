@@ -48,7 +48,7 @@ public class ResourcesListImpl implements ResourcesList {
         Vector v = new Vector();
         Elements rs = _root.getChildElements("resource");
         for (int i = 0; i < rs.size(); i++)
-            v.add(new Resource(rs.get(i).getAttribute("path").getValue(), rs.get(i).getAttribute("isInetShortcut") != null, rs.get(i).getAttribute("isProjectFile") != null));
+            v.add(new Resource(rs.get(i).getAttribute("path").getValue(), rs.get(i).getAttribute("isInetShortcut") != null, rs.get(i).getAttribute("isProjectFile") != null, rs.get(i).getAttribute("isStudentVisible").getValue().equals("true")));
         return v;
     }
 
@@ -59,7 +59,7 @@ public class ResourcesListImpl implements ResourcesList {
         Elements rs = _root.getChildElements("resource");
         for (int i = 0; i < rs.size(); i++)
             if (rs.get(i).getAttribute("path").getValue().equals(path))
-                return new Resource(rs.get(i).getAttribute("path").getValue(), rs.get(i).getAttribute("isInetShortcut") != null, rs.get(i).getAttribute("isProjectFile") != null);
+                return new Resource(rs.get(i).getAttribute("path").getValue(), rs.get(i).getAttribute("isInetShortcut") != null, rs.get(i).getAttribute("isProjectFile") != null, rs.get(i).getAttribute("isStudentVisible").getValue().equals("true"));
         return null;
     }
 
@@ -85,6 +85,7 @@ public class ResourcesListImpl implements ResourcesList {
             el.addAttribute(new Attribute("isInetShortcut", "true"));
         if (isProjectFile)
             el.addAttribute(new Attribute("isProjectFile", "true"));
+        el.addAttribute(new Attribute("isStudentVisible", "false"));
         _root.appendChild(el);
     }
 
@@ -120,6 +121,21 @@ public class ResourcesListImpl implements ResourcesList {
      */
     public Document getXMLContent() {
         return _doc;
+    }
+
+    @Override
+    public void setResourceVisibility(String path) {
+        Elements rs = _root.getChildElements("resource");
+        for (int i = 0; i < rs.size(); i++)
+            if (rs.get(i).getAttribute("path").getValue().equals(path)) {
+                if (rs.get(i).getAttribute("isStudentVisible").getValue().equals("true")) {
+                    rs.get(i).getAttribute("isStudentVisible").setValue("false");
+                    System.out.println("[DEBUG] visibility set to false");
+                } else {
+                    rs.get(i).getAttribute("isStudentVisible").setValue("true");
+                    System.out.println("[DEBUG] visibility set to true");
+                }
+            }
     }
     
     /**

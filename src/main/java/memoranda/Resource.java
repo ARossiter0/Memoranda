@@ -24,10 +24,11 @@ public class Resource {
      * @param isInetShortcut, if the resource is a internet shortcut.
      * @param isProjectFile, if file is copied to project directory.
      */
-    public Resource(String path, boolean isInetShortcut, boolean isProjectFile) {
+    public Resource(String path, boolean isInetShortcut, boolean isProjectFile, boolean studentVisible) {
         _path = path;
         _isInetShortcut = isInetShortcut;
         _isProjectFile = isProjectFile;
+        _studentVisible = studentVisible;
     }
     
     public Resource(String path) {
