@@ -192,10 +192,15 @@ public class TaskImpl implements Task, Comparable {
     }
     //// -------------------------------- New methods for US 90 --------------------
     public boolean doesTaskHaveAType() {
-        return _element.getAttribute("Type") != null;
+        return _element.getAttribute("Type") != null 
+            || _element.getAttribute("type").toString().equals("Typeless");
     }
     public String getType() {
-        return _element.getAttribute("Type").getValue();
+        try {
+            return _element.getAttribute("Type").getValue();
+        } catch (NullPointerException n) {
+            return "Typeless";
+        }
     }
     public String getDay(){
         return _element.getAttribute("Day").getValue();
@@ -207,7 +212,11 @@ public class TaskImpl implements Task, Comparable {
         return _element.getAttribute("Minute").getValue();
     }
     public String getName() {
-        return _element.getAttribute("Name").getValue();
+        try {
+            return _element.getAttribute("Name").getValue();
+        } catch (NullPointerException n) {
+            return "No name task";
+        }
     }
     public String getDate() {
         return _element.getAttribute("Date").getValue();
