@@ -1,6 +1,6 @@
 package test.java;
 
-import memoranda.util.JsonLoader;
+import java.main.memoranda.util.JsonLoader;
 import org.junit.Before;
 import org.junit.Test;
 

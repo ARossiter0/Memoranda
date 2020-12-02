@@ -7,6 +7,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
@@ -33,6 +34,8 @@ import org.junit.Test;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+//ref : https://cliftonlabs.github.io/json-simple/target/apidocs/index.html
+
 public class US188_Tests {
 
 
@@ -49,9 +52,9 @@ public class US188_Tests {
 
         String id = "COURSE_ID_1_TEST_ONLY";
         String title = "TEST_COURSE_TITLE_33";
-        CalenderDate startDate = new CalenderDate(3, 11, 2020);
-        CalenderDate endDate = new CalenderDate(18, 2, 2021);
-        CalenderDate finalDate = new CalenderDate(16, 2, 2021);
+        CalendarDate startDate = new CalendarDate(3, 11, 2020);
+        CalendarDate endDate = new CalendarDate(18, 2, 2021);
+        CalendarDate finalDate = new CalendarDate(16, 2, 2021);
         Project course = ProjectManager.createProject(id, title, startDate, endDate, finalDate);
 
         CurrentProject.set(course);
@@ -88,7 +91,7 @@ public class US188_Tests {
     public void setUpLectureTask(Project course) {
         LectureList lectureList = new LectureListImpl(course);
 
-        CalenderDate lectureDate = new CalendarDate(9, 12, 2020);
+        CalendarDate lectureDate = new CalendarDate(9, 12, 2020);
         Calendar startTimeCal = new GregorianCalendar(2020, 12, 9, 5, 30);
         Calendar endTimeCal = new GregorianCalendar(2020, 12, 9, 7, 30);
         String topic = "LECTURE_TEST_TOPIC";
@@ -202,9 +205,9 @@ public class US188_Tests {
 
         String id = "COURSE_ID_1_TEST_ONLY";
         String title = "TEST_COURSE_TITLE_33";
-        CalenderDate startDate = new CalenderDate(3, 11, 2020);
-        CalenderDate endDate = new CalenderDate(18, 2, 2021);
-        CalenderDate finalDate = new CalenderDate(16, 2, 2021);
+        CalendarDate startDate = new CalendarDate(3, 11, 2020);
+        CalendarDate endDate = new CalendarDate(18, 2, 2021);
+        CalendarDate finalDate = new CalendarDate(16, 2, 2021);
 
         assertEquals(id, testCourse.getString("id"));
         assertEquals(title, testCourse.getString("title"));
