@@ -82,7 +82,7 @@ public class AgendaGenerator {
         s += generateIndividualTasksInfo("Student Todo Items", p, date,
 				getTaskList(p), expandedTasks);
         CurrentProject.currentTaskType = CurrentProject.TaskType.DEFAULT;
-        s += generateIndividualTasksInfo("Lectures, Free Days, Holidays, and "
+        s += generateIndividualTasksInfo("Free Days, Holidays, and "
                         + "Breaks",
                 p, date, getTaskList(p), expandedTasks);
 
@@ -163,14 +163,15 @@ public class AgendaGenerator {
             Collections.sort(tasks);
             for (Iterator i = tasks.iterator(); i.hasNext(); ) {
                 Task t = (Task) i.next();
+                if (t != null && !t.getType().equals("Lecture")) {
+                    if (tl.hasParentTask(t.getID())) {
+                        continue;
+                    }
 
-                if (tl.hasParentTask(t.getID())) {
-                    continue;
-                }
-
-                s = s + renderTask(p, date, tl, t, 0, expandedTasks);
-                if (expandedTasks.contains(t.getID())) {
-                    s = s + expandRecursively(p, date, tl, t, expandedTasks, 1);
+                    s = s + renderTask(p, date, tl, t, 0, expandedTasks);
+                    if (expandedTasks.contains(t.getID())) {
+                        s = s + expandRecursively(p, date, tl, t, expandedTasks, 1);
+                    }
                 }
             }
             s += "\n</ul>\n";
