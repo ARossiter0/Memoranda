@@ -257,33 +257,82 @@ public class US188_Tests {
         String id = "ASSIGNEMNT_ID_3434";
         CalendarDate startDate = new CalendarDate(14, 12, 2020);
         String text = "ASSIGNMENT_TEXT";
-        long effort = 9004493;
         String description = "DESCRIPTION_3432";
 
         JSONArray assignmentsArray = (JSONArray) testCourse.get("assignments");
         JSONObject testAssign = (JSONObject) assignmentsArray.get(0);
 
-        assertEquals(id, testAssign.get(""));
-
+        assertEquals(id, testAssign.get("id").toString());
+        assertEquals(dateToString(startDate), testAssign.get("startDate").toString());
+        assertEquals(text, testAssign.get("text").toString());
+        assertEquals(description, testAssign.get("description").toString());
 
     }
 
     @Test public void testInstTodo() {
 
+        String id = "INSTRUCTOR_ID_55";
+        CalendarDate startDate = new CalendarDate(13, 11, 2020);
+        String text = "INSTRUCTOR_TEXT";
+        String description = "DESCRIPTION_INSTRUCTOR";
+
+        JSONArray instArray = (JSONArray) testCourse.get("instructorTodos");
+        JSONObject testInst = (JSONObject) instArray.get(0);
+
+        assertEquals(id, testInst.get("id").toString());
+        assertEquals(dateToString(startDate), testInst.get("startDate").toString());
+        assertEquals(text, testInst.get("text").toString());
+        assertEquals(description, testInst.get("description").toString());
+
     }
 
     @Test public void testTaTodo() {
+
+        String id = "TA_TODO_ID_001";
+        CalendarDate startDate = new CalendarDate(9, 12, 2020);
+        String text = "ASSIGNMENT_TEXT";
+        String description = "DESCRIPTION_3432";
+
+        JSONArray taArray = (JSONArray) testCourse.get("taGraderTodos");
+        JSONObject testTa = (JSONObject) taArray.get(0);
+
+        assertEquals(id, testTa.get("id").toString());
+        assertEquals(dateToString(startDate), testTa.get("startDate").toString());
+        assertEquals(text, testTa.get("text").toString());
+        assertEquals(description, testTa.get("description").toString());
 
     }
 
     @Test public void testStudentTodo() {
 
+        String id = "STUDENT_TODO_55";
+        CalendarDate startDate = new CalendarDate(16, 1, 2021);
+        String text = "STUDENT_TEXT";
+        String description = "DESCRIPTION_5455553";
+
+        JSONArray studentArray = (JSONArray) testCourse.get("studentTodos");
+        JSONObject testStudent = (JSONObject) studentArray.get(0);
+
+        assertEquals(id, testStudent.get("id").toString());
+        assertEquals(dateToString(startDate), testStudent.get("startDate").toString());
+        assertEquals(text, testStudent.get("text").toString());
+        assertEquals(description, testStudent.get("description").toString());
+
     }
 
     @Test public void testResources() {
 
+        String path = "/path/to/nearest/file/look.txt";
+        boolean isInternetShortcut = false;
+        boolean isProjectFile = true;
+
+        JSONArray resArray = (JSONArray) testCourse.get("resources");
+        JSONObject testRes = (JSONObject) resArray.get(0);
+
+        assertEquals(path, testRes.get("path").toString());
+        assertEquals(isInternetShortcut, testRes.get("isInternetShortcut"));
+        assertEquals(isProjectFile, testRes.get("isProjectFile"));
+
+
     }
-
-
-    
 }
