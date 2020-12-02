@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
+import memoranda.Lecture;
 import memoranda.LectureList;
 import memoranda.LectureListImpl;
 import memoranda.Project;
@@ -19,8 +20,8 @@ import memoranda.ResourcesListImpl;
 import memoranda.Task;
 import memoranda.TaskList;
 import memoranda.TaskListImpl;
-
 import memoranda.date.CalendarDate;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -66,30 +67,23 @@ public class JsonLoader {
      */
     private void loadCourse(JSONObject course) {
 
-        DateFormat df = new SimpleDateFormat("dd-MM-yyyy",
-                Locale.ENGLISH);
+        //DateFormat df = new SimpleDateFormat("dd-MM-yyyy",
+                //Locale.ENGLISH);
+        DateFormat df = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
 
         String id = (String) course.get("courseId");
         String title = (String) course.get("title");
         System.out.println("[DEBUG] Load course " + title + " from Data.json");
-        CalendarDate startDate = null;
-        CalendarDate endDate = null;
-        CalendarDate finalDate = null;
+        CalendarDate startDate = parseDate((String) course.get(
+                "startDate"));
+        CalendarDate endDate = parseDate((String) course.get(
+                "endDate"));
+        CalendarDate finalDate = parseDate((String) course.get(
+                "finalDate"));
 
         if (id == null || title == null || startDate == null || endDate == null || finalDate == null){
             System.out.println("[DEBUG] Course could not be loaded!");
             return;
-        }
-
-        try {
-            startDate = new CalendarDate(df.parse((String) course.get(
-                    "startDate")));
-            endDate =
-                    new CalendarDate(df.parse((String) course.get("endDate")));
-            finalDate = new CalendarDate(df.parse((String) course.get(
-                    "finalDate")));
-        } catch (java.text.ParseException e) {
-            e.printStackTrace();
         }
 
         Project courseProject;
@@ -207,33 +201,17 @@ public class JsonLoader {
                 .get("topic");
         boolean repeat = (Boolean) lectureJson
                 .get("repeat");
-        CalendarDate date = null;
-        Date startTime = null;
-        Date endTime = null;
+        CalendarDate date = parseDate((String) lectureJson
+                .get("startDate"));
+        Calendar startTime = parseCalendar(date, (String) lectureJson
+                .get("startTime"));
+        Calendar endTime = parseCalendar(date, (String) lectureJson
+                .get("endTime"));
 
-        try {
-            date = new CalendarDate(df.parse((String) lectureJson
-                    .get(
-                    "startDate")));
-            startTime = df.parse((String) lectureJson
-                    .get("startDate"));
-            endTime = df.parse((String) lectureJson
-                    .get("endDate"));
-        } catch (java.text.ParseException e) {
-            e.printStackTrace();
-        }
-
-        Calendar startTimeCal = new GregorianCalendar();
-        startTimeCal.set(startTime.getYear(), startTime.getMonth(),
-                startTime.getDay(), startTime.getHours(),
-                startTime.getMinutes(), startTime.getSeconds());
-
-        Calendar endTimeCal = new GregorianCalendar();
-        startTimeCal.set(endTime.getYear(), endTime.getMonth(), endTime.getDay(),
-                endTime.getHours(), endTime.getMinutes(), endTime.getSeconds());
 
         // Create the new lecture in the lecture list
-        lectureList.createLecture(date, startTimeCal, endTimeCal, topic);
+        Lecture lecture = lectureList.createLecture(date, startTime, endTime,
+                topic);
 
 
         // Set the id of the lecture
@@ -269,30 +247,14 @@ public class JsonLoader {
      */
     private void loadTask(JSONObject taskJson,
                 TaskList taskList) {
-        DateFormat df = new SimpleDateFormat("dd-MM-yyyy'T'HH:mm:ss.SSSX",
-                Locale.ENGLISH);
 
         // Pull vars from JSON
         String id = (String) taskJson
                 .get("id"); // TODO Need to create
-        // method to verify id format, and another to assign ID to task.
-
-        //CalendarDate startDate = (CalendarDate) taskJson
-        // .get("startDate");
-        CalendarDate startDate = null;
-        CalendarDate endDate = null;
-
-        try {
-            startDate = new CalendarDate(df.parse((String) taskJson
-                    .get(
-                    "startDate")));
-            endDate = new CalendarDate(df.parse((String) taskJson
-                    .get(
-                    "endDate")));
-        } catch (java.text.ParseException e) {
-            e.printStackTrace();
-        }
-
+        CalendarDate startDate = parseDate((String) taskJson
+                .get("startDate"));
+        CalendarDate endDate = parseDate((String) taskJson
+                .get("endDate"));
         String text = (String) taskJson
                 .get("text");
         int priority = ((Long) taskJson
@@ -305,6 +267,10 @@ public class JsonLoader {
                 .get("parentId");
         boolean isInReduced = (Boolean) taskJson
                 .get("isInReduced");
+
+        if (id == null){
+            return;
+        }
 
         // Create the new task in the tasklist
         Task task = taskList.createTask(startDate, endDate, text, priority,
@@ -335,19 +301,68 @@ public class JsonLoader {
                 .get("text");
         String type = (String) taskJson
                 .get("type");
-        CalendarDate date = null;
+        CalendarDate date = parseDate((String) taskJson
+                .get("date"));
 
 
-        try {
-            date = new CalendarDate(df.parse((String) taskJson
-                    .get("date")));
-        } catch (java.text.ParseException e) {
-            e.printStackTrace();
+        if (id == null){
+            return;
         }
 
         // Create the new task in the tasklist
         Task task = taskList.createSingleEventTask(name, date, type);
+        taskList.setTaskId(task, id);
     }
 
+    private CalendarDate parseDate(String dateStr){
+
+        if (dateStr != null) {
+            String[] dateArr = dateStr.split("-");
+            String day = dateArr[0];
+            String month = dateArr[1];
+            String year = dateArr[2];
+
+            if (day != null || month != null && year != null) {
+                try {
+                    int dayInt = Integer.parseInt(day);
+                    int monthInt = Integer.parseInt(month);
+                    int yearInt = Integer.parseInt(year);
+
+                    return new CalendarDate(dayInt, monthInt, yearInt);
+                } catch (ArithmeticException e) {
+                    System.err.println("Cannot parse date into ints!");
+                }
+            }
+        }
+
+        return null;
+    }
+
+    private Calendar parseCalendar(CalendarDate calendarDate, String time){
+        int day = calendarDate.getDay();
+        int month = calendarDate.getMonth();
+        int year = calendarDate.getYear();
+
+        String[] hourMinArr = time.split(":");
+        String[] morningNightArr = hourMinArr[1].split(" ");
+        boolean isMorning = morningNightArr[1].equals("AM");
+
+        try {
+            int hour = Integer.parseInt(hourMinArr[0]);
+            if (!isMorning){
+                hour += 12;
+                hour %= 24;
+            }
+            int min = Integer.parseInt(morningNightArr[0]);
+
+            Calendar calendar = new GregorianCalendar();
+            calendar.set(day, month, year, hour, min);
+            return calendar;
+        } catch (ArithmeticException e){
+            System.err.println("Cannot parse time into ints!");
+        }
+
+        return new GregorianCalendar();
+    }
 
 }
