@@ -62,7 +62,7 @@ public class ResourcesTable extends JTable {
      * Initialize width for columns
      */
     void initColumsWidth() {
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 5; i++) {
             TableColumn column = getColumnModel().getColumn(i);
             if (i == 0) {
                 column.setPreferredWidth(32767);
@@ -143,6 +143,7 @@ public class ResourcesTable extends JTable {
 
         String[] columnNames = {
                 Local.getString("Name"),
+                Local.getString("Student Visible"),
                 Local.getString("Type"),
                 Local.getString("Date modified"),
                 Local.getString("Path")};
@@ -174,13 +175,15 @@ public class ResourcesTable extends JTable {
                 File f = new File(r.getPath());
                 switch (col) {
                     case 0: return f.getName();
-                    case 1: MimeType mt = MimeTypesList.getMimeTypeForFile(f.getName());
+                    case 1: if (r.getStudentVisible()) return "Yes";
+                            else return "No";
+                    case 2: MimeType mt = MimeTypesList.getMimeTypeForFile(f.getName());
                             if (mt != null) return mt.getLabel();
                             else return "unknown";
-                    case 2: Date d = new Date(f.lastModified());
+                    case 3: Date d = new Date(f.lastModified());
                             return d;/*Local.getDateString(d, java.text.DateFormat.SHORT) +" "+
                                    Local.getTimeString(d);*/
-                    case 3:return f.getPath();
+                    case 4:return f.getPath();
                 }
             }
             else {
