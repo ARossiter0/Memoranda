@@ -192,8 +192,12 @@ public class TaskImpl implements Task, Comparable {
     }
     //// -------------------------------- New methods for US 90 --------------------
     public boolean doesTaskHaveAType() {
-        return _element.getAttribute("Type") != null 
-            || _element.getAttribute("type").toString().equals("Typeless");
+        try {
+            return _element.getAttribute("Type") != null
+                    || _element.getAttribute("type").toString().equals("Typeless");
+        } catch (NullPointerException n) {
+            return false;
+        }
     }
     public String getType() {
         try {
