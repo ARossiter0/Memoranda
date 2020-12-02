@@ -12,7 +12,6 @@ import memoranda.Resource;
 import memoranda.Task;
 import memoranda.TaskList;
 import memoranda.ui.ExceptionDialog;
-import memoranda.util.Util;
 import memoranda.date.CalendarDate;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -95,6 +94,7 @@ public class JsonBuilder {
         JSONObject singleTask = new JSONObject();
 
         singleTask.put("text", task.getText());
+        singleTask.put("name", task.getName());
         singleTask.put("date", dateToString(task.getStartDate()));
         singleTask.put("repeating", false);
         singleTask.put("frequency", null);

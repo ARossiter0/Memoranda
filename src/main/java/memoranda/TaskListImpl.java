@@ -155,10 +155,9 @@ public class TaskListImpl implements TaskList {
         desc.appendChild(description);
         el.appendChild(desc);
 
-        if (parentTaskId == null) {
+        if (parentTaskId == null || getTaskElement(parentTaskId) == null) {
             _root.appendChild(el);
-        }
-        else {
+        } else {
             Element parent = getTaskElement(parentTaskId);
             parent.appendChild(el);
         }

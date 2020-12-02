@@ -1,18 +1,19 @@
 
-import java.io.FileNotFoundException;
+import static org.junit.Assert.assertEquals;
+
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.junit.Test;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import memoranda.CurrentProject;
 import memoranda.LectureList;
 import memoranda.LectureListImpl;
 import memoranda.Project;
@@ -26,30 +27,24 @@ import memoranda.util.CurrentStorage;
 import memoranda.util.JsonBuilder;
 import memoranda.util.Util;
 import memoranda.date.CalendarDate;
+import memoranda.date.CurrentDate;
 
 //ref : https://cliftonlabs.github.io/json-simple/target/apidocs/index.html
 
 public class US188_Tests {
 
-    private String path = Util.getEnvDir() + "/Data.json";
-    public JSONObject testCourse;
+    public static JSONObject testCourse;
 
-    @Before
-    public void setUp() throws IOException, ParseException {
-        /**
-         * Create sample course with values
-         * run the exporter
-         * compate the values exported to the values put in
-         */
+    @BeforeClass
+    public static void setUp() throws IOException, ParseException {
 
+        String path = Util.getEnvDir() + "/Data.json";
         String id = "COURSE_ID_1_TEST_ONLY";
         String title = "TEST_COURSE_TITLE_33";
-        CalendarDate startDate = new CalendarDate(3, 11, 2020);
+        CalendarDate startDate = new CalendarDate(3, 10, 2020);
         CalendarDate endDate = new CalendarDate(18, 2, 2021);
         CalendarDate finalDate = new CalendarDate(16, 2, 2021);
         Project course = ProjectManager.createProject(id, title, startDate, endDate, finalDate);
-
-        CurrentProject.set(course);
 
         setUpAssignment(course);
         setUpDefTask(course);
@@ -67,20 +62,37 @@ public class US188_Tests {
         JSONObject root = (JSONObject) jsonParser.parse(reader);
 
         JSONArray coursesArray = (JSONArray) root.get("courses");
-        testCourse = (JSONObject) coursesArray.get(0);
+        
+        for (Object jsonCourse : coursesArray) {
+            String courseId = "";
+            try {
+                courseId = ((JSONObject) jsonCourse).get("courseId").toString();
+            } catch (NullPointerException n) {
+                continue;
+            }
+
+            if (courseId.equals(id)) {
+                testCourse = (JSONObject) jsonCourse;
+            }
+        }
     }
 
-    //DefaultTask
-    public void setUpDefTask(Project course) {
+    // DefaultTask
+    public static void setUpDefTask(Project course) {
+
         TaskList defaultTaskList = new TaskListImpl(course);
+
         String name = "DEFAULT_TASK_1";
         String type = "TYPE_21";
-        CalendarDate taskDate = new CalendarDate(13, 11, 2020);
-        Task defTaskOne = defaultTaskList.createSingleEventTask(name, taskDate, type);
+        CalendarDate taskDate = new CalendarDate(6, 11, 2020);
 
+        defaultTaskList.createSingleEventTask(name, taskDate, type);
+
+        CurrentStorage.get().storeTaskList(defaultTaskList, course);
     }
-    //Lectures
-    public void setUpLectureTask(Project course) {
+
+    // Lectures
+    public static void setUpLectureTask(Project course) {
         LectureList lectureList = new LectureListImpl(course);
 
         CalendarDate lectureDate = new CalendarDate(9, 12, 2020);
@@ -93,8 +105,8 @@ public class US188_Tests {
         CurrentStorage.get().storeLectureList(lectureList, course);
     }
 
-    //Assignment
-    public void setUpAssignment(Project course) { 
+    // Assignment
+    public static void setUpAssignment(Project course) {
         TaskList assignmentList = new TaskListImpl(course);
 
         String id = "ASSIGNEMNT_ID_3434";
@@ -104,7 +116,7 @@ public class US188_Tests {
         int priority = 3;
         long effort = 9004493;
         String description = "DESCRIPTION_3432";
-        String parentTaskId = "DEF_PARENT_ID_98";
+        String parentTaskId = null;
         Boolean isInReduced = false;
 
         Task assignTask = assignmentList.createTask(startDate, endDate, text, priority, effort, description, parentTaskId, isInReduced);
@@ -113,7 +125,7 @@ public class US188_Tests {
     }
 
     //Instructor Todos
-    public void setUpInstTodo(Project course) {
+    public static void setUpInstTodo(Project course) {
         TaskList instrTodoList = new TaskListImpl(course);
 
         String id = "INSTRUCTOR_ID_55";
@@ -133,7 +145,7 @@ public class US188_Tests {
     }
 
     //Grader Todos
-    public void setUpTaGraderTodo(Project course) {
+    public static void setUpTaGraderTodo(Project course) {
         TaskList taGraderTodoList = new TaskListImpl(course);
         
         String id = "TA_TODO_ID_001";
@@ -153,7 +165,7 @@ public class US188_Tests {
     }
 
     //Student Todos      
-    public void setUpStudent(Project course) {
+    public static void setUpStudent(Project course) {
         TaskList studentTodoList = new TaskListImpl(course);
 
         String id = "STUDENT_TODO_55";
@@ -173,7 +185,7 @@ public class US188_Tests {
     }
 
     //Resources  
-    public void setUpResources(Project course) {
+    public static void setUpResources(Project course) {
         ResourcesList resourcesList = new ResourcesListImpl(course);
 
         String path = "/path/to/nearest/file/look.txt";
@@ -197,28 +209,62 @@ public class US188_Tests {
 
         String id = "COURSE_ID_1_TEST_ONLY";
         String title = "TEST_COURSE_TITLE_33";
-        CalendarDate startDate = new CalendarDate(3, 11, 2020);
+        CalendarDate startDate = new CalendarDate(3, 10, 2020);
         CalendarDate endDate = new CalendarDate(18, 2, 2021);
         CalendarDate finalDate = new CalendarDate(16, 2, 2021);
 
-        assertEquals(id, testCourse.getString("id"));
-        assertEquals(title, testCourse.getString("title"));
+        assertEquals(id, testCourse.get("courseId").toString());
+        assertEquals(title, testCourse.get("title").toString());
 
-        assertEquals(dateToString(startDate), testCourse.getString("startDate"));
-        assertEquals(dateToString(endDate), testCourse.getString("endDate"));
-        assertEquals(dateToString(finalDate), testCourse.getString("finalDate"));
-
+        assertEquals(dateToString(startDate), testCourse.get("startDate").toString());
+        assertEquals(dateToString(endDate), testCourse.get("endDate").toString());
+        assertEquals(dateToString(finalDate), testCourse.get("finalDate").toString());
     }
 
     @Test public void testDefaultTask() {
 
+        String name = "DEFAULT_TASK_1";
+        String type = "TYPE_21";
+        CalendarDate taskDate = new CalendarDate((Date) CurrentDate.get().getDate());
+
+        JSONArray defaultTaskArray = (JSONArray) testCourse.get("defaultTasks");
+        JSONObject defaultTask = (JSONObject) defaultTaskArray.get(0);
+
+        assertEquals(name, defaultTask.get("name").toString());
+        assertEquals(type, defaultTask.get("type").toString());
+        assertEquals(dateToString(taskDate), defaultTask.get("date").toString());
     }
 
     @Test public void testLectures() {
 
+        CalendarDate lectureDate = new CalendarDate(9, 12, 2020);
+        String startTime = "5:30 AM";
+        String endTime = "7:30 AM";
+        String topic = "LECTURE_TEST_TOPIC";
+
+        JSONArray lectureArray = (JSONArray) testCourse.get("lectures");
+        JSONObject testLecture = (JSONObject) lectureArray.get(0);
+
+        assertEquals(dateToString(lectureDate), testLecture.get("startDate").toString());
+        assertEquals(startTime, testLecture.get("startTime").toString());
+        assertEquals(endTime, testLecture.get("endTime").toString());
+        assertEquals(topic, testLecture.get("topic").toString());
+
     }
 
     @Test public void testAssignments() {
+
+        String id = "ASSIGNEMNT_ID_3434";
+        CalendarDate startDate = new CalendarDate(14, 12, 2020);
+        String text = "ASSIGNMENT_TEXT";
+        long effort = 9004493;
+        String description = "DESCRIPTION_3432";
+
+        JSONArray assignmentsArray = (JSONArray) testCourse.get("assignments");
+        JSONObject testAssign = (JSONObject) assignmentsArray.get(0);
+
+        assertEquals(id, testAssign.get(""));
+
 
     }
 

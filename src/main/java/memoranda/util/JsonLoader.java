@@ -21,12 +21,6 @@ import memoranda.TaskList;
 import memoranda.TaskListImpl;
 
 import memoranda.date.CalendarDate;
-
-import memoranda.util.CurrentStorage;
-import memoranda.util.Storage;
-
-import org.apache.xpath.operations.Bool;
-
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
