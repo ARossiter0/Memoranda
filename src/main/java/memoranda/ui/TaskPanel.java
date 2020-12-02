@@ -1,4 +1,4 @@
-package main.java.memoranda.ui;
+package memoranda.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -28,25 +28,25 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
-import main.java.memoranda.CurrentProject;
-import main.java.memoranda.History;
-import main.java.memoranda.LectureList;
-import main.java.memoranda.NoteList;
-import main.java.memoranda.Project;
-import main.java.memoranda.ProjectListener;
-import main.java.memoranda.ResourcesList;
-import main.java.memoranda.Task;
-import main.java.memoranda.TaskList;
-import main.java.memoranda.date.CalendarDate;
-import main.java.memoranda.date.CurrentDate;
-import main.java.memoranda.date.DateListener;
-import main.java.memoranda.ui.TaskDialog;
-import main.java.memoranda.util.Context;
-import main.java.memoranda.util.CurrentStorage;
-import main.java.memoranda.util.Local;
-import main.java.memoranda.util.Util;
-import main.java.memoranda.LectureTime;
-import main.java.memoranda.SpecialCalendarDate;
+import memoranda.CurrentProject;
+import memoranda.History;
+import memoranda.LectureList;
+import memoranda.NoteList;
+import memoranda.Project;
+import memoranda.ProjectListener;
+import memoranda.ResourcesList;
+import memoranda.Task;
+import memoranda.TaskList;
+import memoranda.date.CalendarDate;
+import memoranda.date.CurrentDate;
+import memoranda.date.DateListener;
+import memoranda.ui.TaskDialog;
+import memoranda.util.Context;
+import memoranda.util.CurrentStorage;
+import memoranda.util.Local;
+import memoranda.util.Util;
+import memoranda.LectureTime;
+import memoranda.SpecialCalendarDate;
 
 /*$Id: TaskPanel.java,v 1.27 2007/01/17 20:49:12 killerjoe Exp $*/
 public class TaskPanel extends JPanel {
@@ -121,7 +121,7 @@ public class TaskPanel extends JPanel {
         historyForwardB.setMaximumSize(new Dimension(24, 24));
         historyForwardB.setText("");
         // add new task and a call to the method newTaskB_actionPerformed(e)
-        newTaskB.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_new.png")));
+        newTaskB.setIcon(new ImageIcon(memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_new.png")));
         newTaskB.setEnabled(true);
         newTaskB.setMaximumSize(new Dimension(24, 24));
         newTaskB.setMinimumSize(new Dimension(24, 24));
@@ -144,7 +144,7 @@ public class TaskPanel extends JPanel {
 
         // add new sub task button and a call to method addSubTask_actionPerformed(e);
         subTaskB.setIcon(
-                new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_new_sub.png")));
+                new ImageIcon(memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_new_sub.png")));
         subTaskB.setEnabled(true);
         subTaskB.setMaximumSize(new Dimension(24, 24));
         subTaskB.setMinimumSize(new Dimension(24, 24));
@@ -176,7 +176,7 @@ public class TaskPanel extends JPanel {
         editTaskB.setMinimumSize(new Dimension(24, 24));
         editTaskB.setMaximumSize(new Dimension(24, 24));
         // editTaskB.setEnabled(true);
-        editTaskB.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_edit.png")));
+        editTaskB.setIcon(new ImageIcon(memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_edit.png")));
 
         // remove task button setup and action
         removeTaskB.setBorderPainted(false);
@@ -193,7 +193,7 @@ public class TaskPanel extends JPanel {
         removeTaskB.setMinimumSize(new Dimension(24, 24));
         removeTaskB.setMaximumSize(new Dimension(24, 24));
         removeTaskB
-                .setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_remove.png")));
+                .setIcon(new ImageIcon(memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_remove.png")));
         // mark task a complete button and action
         completeTaskB.setBorderPainted(false);
         completeTaskB.setFocusable(false);
@@ -208,7 +208,7 @@ public class TaskPanel extends JPanel {
         completeTaskB.setMinimumSize(new Dimension(24, 24));
         completeTaskB.setMaximumSize(new Dimension(24, 24));
         completeTaskB.setIcon(
-                new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_complete.png")));
+                new ImageIcon(memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_complete.png")));
 
         // added by rawsushi
 //		showActiveOnly.setBorderPainted(false);
@@ -286,7 +286,7 @@ public class TaskPanel extends JPanel {
         });
         // edit task button
         ppEditTask.setEnabled(false);
-        ppEditTask.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_edit.png")));
+        ppEditTask.setIcon(new ImageIcon(memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_edit.png")));
         taskPPMenu.setFont(new java.awt.Font("Dialog", 1, 10));
         // remove task button and action to be called upon clicking
         ppRemoveTask.setFont(new java.awt.Font("Dialog", 1, 11));
@@ -297,7 +297,7 @@ public class TaskPanel extends JPanel {
             }
         });
         ppRemoveTask
-                .setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_remove.png")));
+                .setIcon(new ImageIcon(memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_remove.png")));
         ppRemoveTask.setEnabled(false);
         ppNewTask.setFont(new java.awt.Font("Dialog", 1, 11));
         ppNewTask.setText(Local.getString("New task") + "...");
@@ -306,7 +306,7 @@ public class TaskPanel extends JPanel {
                 ppNewTask_actionPerformed(e);
             }
         });
-        ppNewTask.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_new.png")));
+        ppNewTask.setIcon(new ImageIcon(memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_new.png")));
         // add sub task action performed
         ppAddSubTask.setFont(new java.awt.Font("Dialog", 1, 11));
         ppAddSubTask.setText(Local.getString("Add subtask"));
@@ -315,7 +315,7 @@ public class TaskPanel extends JPanel {
                 ppAddSubTask_actionPerformed(e);
             }
         });
-        ppAddSubTask.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_new_sub.png")));
+        ppAddSubTask.setIcon(new ImageIcon(memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_new_sub.png")));
 
         /*
         ppSubTasks.setFont(new java.awt.Font("Dialog", 1, 11));
@@ -344,7 +344,7 @@ public class TaskPanel extends JPanel {
 				ppCompleteTask_actionPerformed(e);
 			}
 		});
-        ppCompleteTask.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_complete.png")));
+        ppCompleteTask.setIcon(new ImageIcon(memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_complete.png")));
         ppCompleteTask.setEnabled(false);
         // calculate task button and action performed 
         ppCalcTask.setFont(new java.awt.Font("Dialog", 1, 11));
@@ -354,7 +354,7 @@ public class TaskPanel extends JPanel {
 				ppCalcTask_actionPerformed(e);
 			}
 		});
-        ppCalcTask.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_complete.png")));
+        ppCalcTask.setIcon(new ImageIcon(memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_complete.png")));
         ppCalcTask.setEnabled(false);
         //add buttons to task tool bar
         scrollPane.getViewport().add(taskTable, null);

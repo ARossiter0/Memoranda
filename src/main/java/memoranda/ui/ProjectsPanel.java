@@ -1,4 +1,4 @@
-package main.java.memoranda.ui;
+package memoranda.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -33,26 +33,26 @@ import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import main.java.memoranda.CurrentProject;
-import main.java.memoranda.LectureList;
-import main.java.memoranda.NoteList;
-import main.java.memoranda.Project;
-import main.java.memoranda.ProjectListener;
-import main.java.memoranda.ProjectManager;
-import main.java.memoranda.ResourcesList;
-import main.java.memoranda.TaskList;
-import main.java.memoranda.date.CalendarDate;
-import main.java.memoranda.date.CurrentDate;
-import main.java.memoranda.date.DateListener;
-import main.java.memoranda.util.*;
+import memoranda.CurrentProject;
+import memoranda.LectureList;
+import memoranda.NoteList;
+import memoranda.Project;
+import memoranda.ProjectListener;
+import memoranda.ProjectManager;
+import memoranda.ResourcesList;
+import memoranda.TaskList;
+import memoranda.date.CalendarDate;
+import memoranda.date.CurrentDate;
+import memoranda.date.DateListener;
+import memoranda.util.*;
 
-import main.java.memoranda.util.CurrentStorage;
-import main.java.memoranda.util.Local;
-import main.java.memoranda.LectureTime;
-import main.java.memoranda.SpecialCalendarDate;
-import main.java.memoranda.Task;
-import main.java.memoranda.TaskListImpl;
-import main.java.memoranda.util.JsonLoader;
+import memoranda.util.CurrentStorage;
+import memoranda.util.Local;
+import memoranda.LectureTime;
+import memoranda.SpecialCalendarDate;
+import memoranda.Task;
+import memoranda.TaskListImpl;
+import memoranda.util.JsonLoader;
 
 /*$Id: ProjectsPanel.java,v 1.14 2005/01/04 09:59:22 pbielen Exp $*/
 public class ProjectsPanel extends JPanel implements ExpandablePanel {
@@ -67,11 +67,11 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 	boolean expanded = false;
 	ImageIcon expIcon =
 		new ImageIcon(
-			main.java.memoranda.ui.AppFrame.class.getResource(
+			memoranda.ui.AppFrame.class.getResource(
 				"/ui/icons/exp_panel.png"));
 	ImageIcon collIcon =
 		new ImageIcon(
-			main.java.memoranda.ui.AppFrame.class.getResource(
+			memoranda.ui.AppFrame.class.getResource(
 				"/ui/icons/coll_panel.png"));
 	JLabel curProjectTitle = new JLabel();
 	Component component1;
@@ -88,7 +88,7 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 		new AbstractAction(
 			Local.getString("New course") + "...",
 			new ImageIcon(
-				main.java.memoranda.ui.AppFrame.class.getResource(
+				memoranda.ui.AppFrame.class.getResource(
 					"/ui/icons/newproject.png"))) {
 
 		public void actionPerformed(ActionEvent e) {
@@ -169,7 +169,7 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 		});
 		ppProperties.setIcon(
 			new ImageIcon(
-				main.java.memoranda.ui.AppFrame.class.getResource(
+				memoranda.ui.AppFrame.class.getResource(
 					"/ui/icons/editproject.png")));
 		ppProperties.setEnabled(false);
 		ppDeleteProject.setFont(new java.awt.Font("Dialog", 1, 11));
@@ -181,7 +181,7 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 		});
 		ppDeleteProject.setIcon(
 			new ImageIcon(
-				main.java.memoranda.ui.AppFrame.class.getResource(
+				memoranda.ui.AppFrame.class.getResource(
 					"/ui/icons/removeproject.png")));
 		ppDeleteProject.setEnabled(false);
 
@@ -226,7 +226,7 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 		});
 		ppOpenB.setIcon(
 			new ImageIcon(
-				main.java.memoranda.ui.AppFrame.class.getResource(
+				memoranda.ui.AppFrame.class.getResource(
 					"/ui/icons/ppopen.png")));
 		buttonsPanel.add(ppOpenB, null);
 		buttonsPanel.add(component1, null);
@@ -399,7 +399,7 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 			i < prjTablePanel.projectsTable.getSelectedRows().length;
 			i++) {
 			prj =
-				(main.java.memoranda.Project) prjTablePanel
+				(memoranda.Project) prjTablePanel
 					.projectsTable
 					.getModel()
 					.getValueAt(

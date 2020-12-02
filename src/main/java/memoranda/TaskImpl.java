@@ -6,13 +6,13 @@
  * @author Alex V. Alishevskikh, alex@openmechanics.net
  * Copyright (c) 2003 Memoranda Team. http://memoranda.sf.net
  */
-package main.java.memoranda;
+package memoranda;
 
 import java.util.Collection;
 import java.util.Vector;
 
-import main.java.memoranda.date.CalendarDate;
-import main.java.memoranda.date.CurrentDate;
+import memoranda.date.CalendarDate;
+import memoranda.date.CurrentDate;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -141,7 +141,7 @@ public class TaskImpl implements Task, Comparable {
     }
 
     /**s
-     * @see main.java.memoranda.Task#getStatus()
+     * @see memoranda.Task#getStatus()
      */
     public int getStatus(CalendarDate date) {
         CalendarDate start = getStartDate();
@@ -214,14 +214,14 @@ public class TaskImpl implements Task, Comparable {
     }
 
     /**
-     * @see main.java.memoranda.Task#getID()
+     * @see memoranda.Task#getID()
      */
     public String getID() {
         return _element.getAttribute("id").getValue();
     }
 
     /**
-     * @see main.java.memoranda.Task#getText()
+     * @see memoranda.Task#getText()
      */
     public String getText() {
         if (_element.getFirstChildElement("text") != null) {
@@ -236,7 +236,7 @@ public class TaskImpl implements Task, Comparable {
     }
     
     /**
-     * @see main.java.memoranda.Task#setText()
+     * @see memoranda.Task#setText()
      */
     public void setText(String s) {
         _element.getFirstChildElement("text").removeChildren();
@@ -244,14 +244,14 @@ public class TaskImpl implements Task, Comparable {
     }
 
     /**
-     * @see main.java.memoranda.Task#freeze()
+     * @see memoranda.Task#freeze()
      */
     public void freeze() {
         setAttr("frozen", "yes");
     }
 
     /**
-     * @see main.java.memoranda.Task#unfreeze()
+     * @see memoranda.Task#unfreeze()
      */
     public void unfreeze() {
         if (this.isFrozen())
@@ -259,7 +259,7 @@ public class TaskImpl implements Task, Comparable {
     }
 
     /**
-     * @see main.java.memoranda.Task#getDependsFrom()
+     * @see memoranda.Task#getDependsFrom()
      */
     public Collection getDependsFrom() {
         Vector v = new Vector();
@@ -273,7 +273,7 @@ public class TaskImpl implements Task, Comparable {
         return v;
     }
     /**
-     * @see main.java.memoranda.Task#addDependsFrom(main.java.memoranda.Task)
+     * @see memoranda.Task#addDependsFrom(memoranda.Task)
      */
     public void addDependsFrom(Task task) {
         Element dep = new Element("dependsFrom");
@@ -281,7 +281,7 @@ public class TaskImpl implements Task, Comparable {
         _element.appendChild(dep);
     }
     /**
-     * @see main.java.memoranda.Task#removeDependsFrom(main.java.memoranda.Task)
+     * @see memoranda.Task#removeDependsFrom(memoranda.Task)
      */
     public void removeDependsFrom(Task task) {
         Elements deps = _element.getChildElements("dependsFrom");
@@ -294,7 +294,7 @@ public class TaskImpl implements Task, Comparable {
         }
     }
     /**
-     * @see main.java.memoranda.Task#getProgress()
+     * @see memoranda.Task#getProgress()
      */
     public int getProgress() {
         if (_element.getAttribute("progress") != null) {
@@ -304,14 +304,14 @@ public class TaskImpl implements Task, Comparable {
         }
     }
     /**
-     * @see main.java.memoranda.Task#setProgress(int)
+     * @see memoranda.Task#setProgress(int)
      */
     public void setProgress(int p) {
         if ((p >= 0) && (p <= 100))
             setAttr("progress", new Integer(p).toString());
     }
     /**
-     * @see main.java.memoranda.Task#getPriority()
+     * @see memoranda.Task#getPriority()
      */
     public int getPriority() {
         Attribute pa = _element.getAttribute("priority");
@@ -335,7 +335,7 @@ public class TaskImpl implements Task, Comparable {
 
     
     /**
-     * @see main.java.memoranda.Task#setPriority(int)
+     * @see memoranda.Task#setPriority(int)
      */
     public void setPriority(int p) {
         setAttr("priority", String.valueOf(p));
@@ -379,7 +379,7 @@ public class TaskImpl implements Task, Comparable {
 	}
 
     /**
-     * @see main.java.memoranda.Task#getRate()
+     * @see memoranda.Task#getRate()
      */
 	 
      public long getRate() {

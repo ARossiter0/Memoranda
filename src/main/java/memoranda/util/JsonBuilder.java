@@ -1,19 +1,19 @@
-package main.java.memoranda.util;
+package memoranda.util;
 
 import java.util.Collection;
 import java.io.FileWriter;
 import java.io.IOException;
-import main.java.memoranda.Lecture;
-import main.java.memoranda.LectureList;
-import main.java.memoranda.Project;
-import main.java.memoranda.ProjectManager; 
-import main.java.memoranda.ResourcesList;
-import main.java.memoranda.Resource;
-import main.java.memoranda.Task;
-import main.java.memoranda.TaskList;
-import main.java.memoranda.ui.ExceptionDialog;
-import main.java.memoranda.util.Util;
-import main.java.memoranda.date.CalendarDate;
+import memoranda.Lecture;
+import memoranda.LectureList;
+import memoranda.Project;
+import memoranda.ProjectManager; 
+import memoranda.ResourcesList;
+import memoranda.Resource;
+import memoranda.Task;
+import memoranda.TaskList;
+import memoranda.ui.ExceptionDialog;
+import memoranda.util.Util;
+import memoranda.date.CalendarDate;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 

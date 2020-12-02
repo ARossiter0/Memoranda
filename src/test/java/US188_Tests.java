@@ -1,49 +1,41 @@
-package test.java;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
-
 import java.util.GregorianCalendar;
-import java.util.Locale;
-
-import main.java.memoranda.LectureList;
-import main.java.memoranda.LectureListImpl;
-import main.java.memoranda.Project;
-import main.java.memoranda.ProjectManager;
-import main.java.memoranda.ResourcesList;
-import main.java.memoranda.ResourcesListImpl;
-import main.java.memoranda.Task;
-import main.java.memoranda.TaskList;
-import main.java.memoranda.TaskListImpl;
-
-import main.java.memoranda.date.CalendarDate;
-
-import main.java.memoranda.util.CurrentStorage;
-import main.java.memoranda.util.Storage;
-import main.java.memoranda.util.Util;
-
-import memoranda.util.JsonBuilder;
-import org.junit.Before;
-import org.junit.Test;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.junit.Test;
+import org.junit.Before;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
+import memoranda.CurrentProject;
+import memoranda.LectureList;
+import memoranda.LectureListImpl;
+import memoranda.Project;
+import memoranda.ProjectManager;
+import memoranda.ResourcesList;
+import memoranda.ResourcesListImpl;
+import memoranda.Task;
+import memoranda.TaskList;
+import memoranda.TaskListImpl;
+import memoranda.util.CurrentStorage;
+import memoranda.util.JsonBuilder;
+import memoranda.util.Util;
+import memoranda.date.CalendarDate;
 
 //ref : https://cliftonlabs.github.io/json-simple/target/apidocs/index.html
 
 public class US188_Tests {
 
-
     private String path = Util.getEnvDir() + "/Data.json";
     public JSONObject testCourse;
-    
-    @setup
-    public void setUp() {
+
+    @Before
+    public void setUp() throws IOException, ParseException {
         /**
          * Create sample course with values
          * run the exporter
@@ -74,8 +66,8 @@ public class US188_Tests {
         FileReader reader = new FileReader(path);
         JSONObject root = (JSONObject) jsonParser.parse(reader);
 
-        JsonArray coursesArray = (JSONArray) root.get("courses");
-        testCourse = coursesArray.get(0);
+        JSONArray coursesArray = (JSONArray) root.get("courses");
+        testCourse = (JSONObject) coursesArray.get(0);
     }
 
     //DefaultTask
@@ -96,7 +88,7 @@ public class US188_Tests {
         Calendar endTimeCal = new GregorianCalendar(2020, 12, 9, 7, 30);
         String topic = "LECTURE_TEST_TOPIC";
 
-        lectureList.createLecture(date, startTimeCal, endTimeCal, topic);
+        lectureList.createLecture(lectureDate, startTimeCal, endTimeCal, topic);
 
         CurrentStorage.get().storeLectureList(lectureList, course);
     }

@@ -1,10 +1,10 @@
-package test.java;
 
-import java.main.memoranda.util.JsonLoader;
+
+import memoranda.util.JsonLoader;
 import org.junit.Before;
 import org.junit.Test;
 
-//import main.java.*;
+//import *;
 
 public class US187_Tests {
 

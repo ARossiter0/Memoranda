@@ -1,4 +1,4 @@
-package main.java.memoranda.ui;
+package memoranda.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -26,26 +26,26 @@ import javax.swing.JToolBar;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import main.java.memoranda.CurrentProject;
-import main.java.memoranda.EventsManager;
-import main.java.memoranda.History;
-import main.java.memoranda.NoteList;
-import main.java.memoranda.Project;
-import main.java.memoranda.ProjectListener;
-import main.java.memoranda.ResourcesList;
-import main.java.memoranda.Lecture;
-import main.java.memoranda.LectureList;
-import main.java.memoranda.date.CalendarDate;
-import main.java.memoranda.date.CurrentDate;
-import main.java.memoranda.date.DateListener;
-import main.java.memoranda.util.Configuration;
-import main.java.memoranda.util.Context;
-import main.java.memoranda.util.CurrentStorage;
-import main.java.memoranda.util.Local;
-import main.java.memoranda.util.Util;
-import main.java.memoranda.LectureTime;
-import main.java.memoranda.SpecialCalendarDate;
-import main.java.memoranda.TaskList;
+import memoranda.CurrentProject;
+import memoranda.EventsManager;
+import memoranda.History;
+import memoranda.NoteList;
+import memoranda.Project;
+import memoranda.ProjectListener;
+import memoranda.ResourcesList;
+import memoranda.Lecture;
+import memoranda.LectureList;
+import memoranda.date.CalendarDate;
+import memoranda.date.CurrentDate;
+import memoranda.date.DateListener;
+import memoranda.util.Configuration;
+import memoranda.util.Context;
+import memoranda.util.CurrentStorage;
+import memoranda.util.Local;
+import memoranda.util.Util;
+import memoranda.LectureTime;
+import memoranda.SpecialCalendarDate;
+import memoranda.TaskList;
 
 /*$Id: LecturePanel.java,v 1.27 2007/01/17 20:49:12 killerjoe Exp $*/
 public class LecturePanel extends JPanel {
@@ -101,7 +101,7 @@ public class LecturePanel extends JPanel {
         historyForwardB.setText("");
         // add new Lecture and a call to the method newLectureB_actionPerformed(e)
         newLectureB
-                .setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/event_new.png")));
+                .setIcon(new ImageIcon(memoranda.ui.AppFrame.class.getResource("/ui/icons/event_new.png")));
         newLectureB.setEnabled(true);
         newLectureB.setMaximumSize(new Dimension(24, 24));
         newLectureB.setMinimumSize(new Dimension(24, 24));
@@ -130,7 +130,7 @@ public class LecturePanel extends JPanel {
         editLectureB.setMinimumSize(new Dimension(24, 24));
         editLectureB.setMaximumSize(new Dimension(24, 24));
         editLectureB
-                .setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/event_edit.png")));
+                .setIcon(new ImageIcon(memoranda.ui.AppFrame.class.getResource("/ui/icons/event_edit.png")));
 
         // remove Lecture button setup and action
         removeLectureB.setBorderPainted(false);
@@ -146,7 +146,7 @@ public class LecturePanel extends JPanel {
         removeLectureB.setMinimumSize(new Dimension(24, 24));
         removeLectureB.setMaximumSize(new Dimension(24, 24));
         removeLectureB.setIcon(
-                new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/event_remove.png")));
+                new ImageIcon(memoranda.ui.AppFrame.class.getResource("/ui/icons/event_remove.png")));
 
         this.setLayout(borderLayout1);
         scrollPane.getViewport().setBackground(Color.white);
@@ -164,7 +164,7 @@ public class LecturePanel extends JPanel {
         // edit Lecture button
         ppEditLecture.setEnabled(false);
         ppEditLecture
-                .setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/event_edit.png")));
+                .setIcon(new ImageIcon(memoranda.ui.AppFrame.class.getResource("/ui/icons/event_edit.png")));
         LecturePPMenu.setFont(new java.awt.Font("Dialog", 1, 10));
         // remove Lecture button and action to be called upon clicking
         ppRemoveLecture.setFont(new java.awt.Font("Dialog", 1, 11));
@@ -175,7 +175,7 @@ public class LecturePanel extends JPanel {
             }
         });
         ppRemoveLecture.setIcon(
-                new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/event_remove.png")));
+                new ImageIcon(memoranda.ui.AppFrame.class.getResource("/ui/icons/event_remove.png")));
         ppRemoveLecture.setEnabled(false);
         ppNewLecture.setFont(new java.awt.Font("Dialog", 1, 11));
         ppNewLecture.setText(Local.getString("New lecture") + "...");
@@ -185,7 +185,7 @@ public class LecturePanel extends JPanel {
             }
         });
         ppNewLecture
-                .setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/event_new.png")));
+                .setIcon(new ImageIcon(memoranda.ui.AppFrame.class.getResource("/ui/icons/event_new.png")));
 
         // add buttons to Lecture tool bar
         scrollPane.getViewport().add(LectureTable, null);
@@ -367,13 +367,13 @@ public class LecturePanel extends JPanel {
     // actions to be performed when removing a Lecture
     void removeLectureB_actionPerformed(ActionEvent e) {
         String msg;
-        main.java.memoranda.Lecture le;
+        memoranda.Lecture le;
 
         if (LectureTable.getSelectedRows().length > 1)
             msg = Local.getString("Remove") + " " + LectureTable.getSelectedRows().length + " "
                     + Local.getString("lectures") + "\n" + Local.getString("Are you sure?");
         else {
-            le = (main.java.memoranda.Lecture) LectureTable.getModel().getValueAt(LectureTable.getSelectedRow(),
+            le = (memoranda.Lecture) LectureTable.getModel().getValueAt(LectureTable.getSelectedRow(),
                     LectureTable.LECTURE);
             msg = Local.getString("Remove lecture") + "\n'" + le.getTopic() + "'\n" + Local.getString("Are you sure?");
         }
@@ -384,9 +384,9 @@ public class LecturePanel extends JPanel {
             return;
 
         for (int i = 0; i < LectureTable.getSelectedRows().length; i++) {
-            le = (main.java.memoranda.Lecture) LectureTable.getModel().getValueAt(LectureTable.getSelectedRows()[i],
+            le = (memoranda.Lecture) LectureTable.getModel().getValueAt(LectureTable.getSelectedRows()[i],
                     EventsTable.EVENT);
-            main.java.memoranda.LectureListImpl.removeLecture(le);
+            memoranda.LectureListImpl.removeLecture(le);
         }
         LectureTable.getSelectionModel().clearSelection();
         CurrentStorage.get().storeLectureList(CurrentProject.getLectureList(), CurrentProject.get());

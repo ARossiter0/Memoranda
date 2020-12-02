@@ -25,7 +25,6 @@ dependencies {
 
 
 
-
 ///////////////////////////////////////////////////////////////////////
 // Configure Checkstyle
 /////////////////////////////////////////////////////////////////////
@@ -70,7 +69,7 @@ spotbugs {
 
 task fatJar(type: Jar) {
     manifest {
-        attributes 'Main-Class': 'main.java.memoranda.Start'
+        attributes 'Main-Class': 'memoranda.Start'
     }
     baseName = 'RunMemorandaFromJar'
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }

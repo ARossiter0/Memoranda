@@ -6,7 +6,7 @@
  * @author Alex V. Alishevskikh, alex@openmechanics.net
  * Copyright (c) 2003 Memoranda Team. http://memoranda.sf.net
  */
-package main.java.memoranda.ui;
+package memoranda.ui;
 
 import java.awt.Component;
 import java.awt.Font;
@@ -18,21 +18,21 @@ import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellRenderer;
 
-import main.java.memoranda.CurrentProject;
-import main.java.memoranda.Event;
-import main.java.memoranda.EventsManager;
-import main.java.memoranda.Lecture;
-import main.java.memoranda.LectureList;
-import main.java.memoranda.NoteList;
-import main.java.memoranda.Project;
-import main.java.memoranda.ProjectImpl;
-import main.java.memoranda.ProjectListener;
-import main.java.memoranda.ResourcesList;
-import main.java.memoranda.TaskList;
-import main.java.memoranda.date.CalendarDate;
-import main.java.memoranda.date.CurrentDate;
-import main.java.memoranda.date.DateListener;
-import main.java.memoranda.util.Local;
+import memoranda.CurrentProject;
+import memoranda.Event;
+import memoranda.EventsManager;
+import memoranda.Lecture;
+import memoranda.LectureList;
+import memoranda.NoteList;
+import memoranda.Project;
+import memoranda.ProjectImpl;
+import memoranda.ProjectListener;
+import memoranda.ResourcesList;
+import memoranda.TaskList;
+import memoranda.date.CalendarDate;
+import memoranda.date.CurrentDate;
+import memoranda.date.DateListener;
+import memoranda.util.Local;
 import nu.xom.Element;
 
 /**

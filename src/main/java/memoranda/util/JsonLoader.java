@@ -1,4 +1,4 @@
-package main.java.memoranda.util;
+package memoranda.util;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -10,20 +10,20 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
-import main.java.memoranda.LectureList;
-import main.java.memoranda.LectureListImpl;
-import main.java.memoranda.Project;
-import main.java.memoranda.ProjectManager;
-import main.java.memoranda.ResourcesList;
-import main.java.memoranda.ResourcesListImpl;
-import main.java.memoranda.Task;
-import main.java.memoranda.TaskList;
-import main.java.memoranda.TaskListImpl;
+import memoranda.LectureList;
+import memoranda.LectureListImpl;
+import memoranda.Project;
+import memoranda.ProjectManager;
+import memoranda.ResourcesList;
+import memoranda.ResourcesListImpl;
+import memoranda.Task;
+import memoranda.TaskList;
+import memoranda.TaskListImpl;
 
-import main.java.memoranda.date.CalendarDate;
+import memoranda.date.CalendarDate;
 
-import main.java.memoranda.util.CurrentStorage;
-import main.java.memoranda.util.Storage;
+import memoranda.util.CurrentStorage;
+import memoranda.util.Storage;
 
 import org.apache.xpath.operations.Bool;
 
@@ -39,7 +39,7 @@ public class JsonLoader {
      */
     public void loadFromJson() {
 
-        String path = main.java.memoranda.util.Util.getEnvDir() + "/Data.json";
+        String path = memoranda.util.Util.getEnvDir() + "/Data.json";
         //JSON parser object to parse read file
         JSONParser jsonParser = new JSONParser();
 
@@ -251,7 +251,7 @@ public class JsonLoader {
      */
     private void loadResource(JSONObject resource,
                               ResourcesList resourcesList,
-                              main.java.memoranda.Project courseProject) {
+                              memoranda.Project courseProject) {
         // Pull vars from JSON
         String path = (String) resource.get("path");
         System.out.println("Load resource " + path + " from Data.json");
@@ -333,7 +333,7 @@ public class JsonLoader {
                 Locale.ENGLISH);
 
         // Pull vars from JSON
-        String id = main.java.memoranda.util.Util.generateId();
+        String id = memoranda.util.Util.generateId();
         String name = (String) taskJson
                 .get("text");
         String type = (String) taskJson
