@@ -70,14 +70,17 @@ public class JsonLoader {
                 Locale.ENGLISH);
 
         String id = (String) course.get("courseId");
-
-        
-
         String title = (String) course.get("title");
         System.out.println("[DEBUG] Load course " + title + " from Data.json");
         CalendarDate startDate = null;
         CalendarDate endDate = null;
         CalendarDate finalDate = null;
+
+        if (id == null || title == null || startDate == null || endDate == null || finalDate == null){
+            System.out.println("[DEBUG] Course could not be loaded!");
+            return;
+        }
+
         try {
             startDate = new CalendarDate(df.parse((String) course.get(
                     "startDate")));
