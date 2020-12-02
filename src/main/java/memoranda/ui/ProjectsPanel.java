@@ -52,7 +52,7 @@ import main.java.memoranda.LectureTime;
 import main.java.memoranda.SpecialCalendarDate;
 import main.java.memoranda.Task;
 import main.java.memoranda.TaskListImpl;
-import memoranda.util.JsonLoader;
+import main.java.memoranda.util.JsonLoader;
 
 /*$Id: ProjectsPanel.java,v 1.14 2005/01/04 09:59:22 pbielen Exp $*/
 public class ProjectsPanel extends JPanel implements ExpandablePanel {

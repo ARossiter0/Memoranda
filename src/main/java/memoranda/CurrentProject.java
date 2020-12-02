@@ -18,6 +18,7 @@ import main.java.memoranda.util.Context;
 import main.java.memoranda.util.CurrentStorage;
 import main.java.memoranda.util.Storage;
 import main.java.memoranda.util.JsonBuilder;
+import main.java.memoranda.util.JsonLoader;
 
 /**
  *
@@ -157,6 +158,9 @@ public class CurrentProject {
      */
     public static void set(Project project) {
         if (project.getID().equals(_project.getID())) return;
+        
+        JsonLoader jsonLoader = new JsonLoader();
+		jsonLoader.loadFromJson();
         
         LectureList newlecturelist = CurrentStorage.get().openLectureList(project);
         TaskList newtasklist = CurrentStorage.get().openTaskList(project);

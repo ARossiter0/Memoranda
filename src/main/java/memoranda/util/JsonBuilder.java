@@ -19,7 +19,11 @@ import org.json.simple.JSONObject;
 
 public class JsonBuilder {
 
-    public JsonBuilder() {}
+    private String outputPath;
+
+    public JsonBuilder() {
+        outputPath = Util.getEnvDir() + "/Data.json";
+    }
 
     public void exportMemoranda() {
 
@@ -27,7 +31,7 @@ public class JsonBuilder {
         addCourses(root);
 
         try {
-            FileWriter file = new FileWriter(Util.getEnvDir() + "/Data.json");
+            FileWriter file = new FileWriter(outputPath);
             file.write(root.toJSONString());
             file.close();
             System.out.println("[DEBUG] JSON file written");

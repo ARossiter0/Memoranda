@@ -1,4 +1,4 @@
-package memoranda.util;
+package main.java.memoranda.util;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -51,6 +51,7 @@ public class JsonLoader {
 
             // Load Courses
             JSONArray courses = (JSONArray) programObject.get("courses");
+            //System.out.println("[DEBUG]\n\n courses length : " + courses.size() + " \n\n");
             for (Object course : courses) {
                 loadCourse((JSONObject) course);
             }
@@ -71,15 +72,12 @@ public class JsonLoader {
      */
     private void loadCourse(JSONObject course) {
 
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX",
+        DateFormat df = new SimpleDateFormat("dd-MM-yyyy",
                 Locale.ENGLISH);
 
         String id = (String) course.get("courseId");
 
-        if (ProjectManager.getProject(id) != null) {
-            System.out.println("[DEBUG] Project " + id + " already exists!");
-            return;
-        }
+        
 
         String title = (String) course.get("title");
         System.out.println("[DEBUG] Load course " + title + " from Data.json");
@@ -97,8 +95,15 @@ public class JsonLoader {
             e.printStackTrace();
         }
 
-        Project courseProject = ProjectManager.createProject(id, title,
-                startDate, endDate, finalDate);
+        Project courseProject;
+
+        if (ProjectManager.getProject(id) != null) {
+            System.out.println("[DEBUG] Project " + id + " already exists!");
+            courseProject = ProjectManager.getProject(id);
+        } else {
+            courseProject = ProjectManager.createProject(id, title,
+                    startDate, endDate, finalDate);
+        }
         Storage storage = CurrentStorage.get();
 
         // Load Default Tasks (Free Days, Holidays, Breaks)
@@ -197,7 +202,7 @@ public class JsonLoader {
                 + " from "
                 + "Data.json");
 
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX",
+        DateFormat df = new SimpleDateFormat("dd-MM-yyyy'T'HH:mm:ss.SSSX",
                 Locale.ENGLISH);
 
         // Pull vars from JSON
@@ -267,7 +272,7 @@ public class JsonLoader {
      */
     private void loadTask(JSONObject taskJson,
                 TaskList taskList) {
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX",
+        DateFormat df = new SimpleDateFormat("dd-MM-yyyy'T'HH:mm:ss.SSSX",
                 Locale.ENGLISH);
 
         // Pull vars from JSON
@@ -324,7 +329,7 @@ public class JsonLoader {
      */
     private void loadDefaultTask(JSONObject taskJson,
                 TaskList taskList) {
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX",
+        DateFormat df = new SimpleDateFormat("dd-MM-yyyy'T'HH:mm:ss.SSSX",
                 Locale.ENGLISH);
 
         // Pull vars from JSON
