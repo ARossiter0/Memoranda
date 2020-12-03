@@ -36,7 +36,6 @@ import memoranda.date.CalendarDate;
 import memoranda.ui.ExceptionDialog;
 import memoranda.ui.htmleditor.AltHTMLWriter;
 import nu.xom.Builder;
-import nu.xom.DocType;
 import nu.xom.Document;
 
 /**
@@ -247,10 +246,14 @@ public class FileStorage implements Storage {
 	public void removeProjectStorage(Project prj) {
 		String id = prj.getID();
 		File f = new File(JN_DOCPATH + id);
-		File[] files = f.listFiles();
-		for (int i = 0; i < files.length; i++)
-			files[i].delete();
-		f.delete();
+
+		if (!f.delete()) {
+			File[] files = f.listFiles();
+			for (int i = 0; i < files.length; i++) {
+				files[i].delete();
+			}
+			f.delete();
+		}
 	}
 
 	public TaskList openTaskList(Project prj) {

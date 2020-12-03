@@ -160,9 +160,10 @@ public class TaskImpl implements Task, Comparable {
 		else if(date.before(start)) {
 				return Task.SCHEDULED;
 		}
-		
-		if(start.after(end)) {
-			return Task.ACTIVE;
+
+		// TODO if start...
+		if(date.after(end)) {
+			return Task.FAILED;
 		}
 
         return Task.FAILED;

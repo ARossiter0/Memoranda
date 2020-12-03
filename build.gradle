@@ -67,6 +67,50 @@ spotbugs {
     effort = 'max'
 }
 
+
+
+///////////////////////////////////////////////////////////////////////
+// Configure Checkstyle
+/////////////////////////////////////////////////////////////////////
+apply plugin: 'checkstyle'
+
+checkstyle {
+    // Keep checkstyle a little quieter
+    ignoreFailures = true
+    showViolations = false
+}
+
+tasks.withType(Checkstyle) {
+    reports {
+        html.enabled = true
+        xml.enabled = false
+    }
+}
+
+checkstyle {
+    toolVersion = "8.8"
+}
+
+
+///////////////////////////////////////////////////////////////////////
+// Configure SpotBugs
+///////////////////////////////////////////////////////////////////////
+// To generate an HTML report instead of XML
+spotbugsMain {
+    reports {
+        xml.enabled = false
+        html.enabled = true
+    }
+}
+
+spotbugs {
+    //toolVersion = '4.0.0-beta4'
+    toolVersion = '4.1.4'
+    ignoreFailures = true
+    showProgress = true
+    effort = 'max'
+}
+
 task fatJar(type: Jar) {
     manifest {
         attributes 'Main-Class': 'memoranda.Start'

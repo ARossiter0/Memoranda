@@ -398,7 +398,8 @@ public class TaskDialog extends JDialog {
         jPanel2.add(jPanel4, null);
         jPanel4.add(priorityCB, null);
         
-        if (CurrentProject.currentTaskType == CurrentProject.TaskType.INSTR_TODO_LIST) {
+        if (CurrentProject.currentTaskType == CurrentProject.TaskType.INSTR_TODO_LIST
+            || CurrentProject.currentTaskType == CurrentProject.TaskType.STUDENT_TODO) {
             jPanel4.add(chkIsInReduced, null);
         }
         

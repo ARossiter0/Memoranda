@@ -35,8 +35,8 @@ public class App {
        The actual values are substituted by the Ant build script using 
        'version' property and datestamp.*/
 
-	public static final String VERSION_INFO = "@VERSION@";
-	public static final String BUILD_INFO = "@BUILD@";
+	public static final String VERSION_INFO = "V3.0";
+	public static final String BUILD_INFO = "17.0";
 	
 	/*========================================================================*/
 
@@ -54,6 +54,7 @@ public class App {
 
 	public App(boolean fullmode) {
 		super();
+		System.out.println("[Debug]Current Date: " + memoranda.date.CurrentDate.get());
 		if (fullmode)
 			fullmode = !Configuration.get("START_MINIMIZED").equals("yes");
 		/* DEBUG */

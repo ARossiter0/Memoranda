@@ -84,6 +84,7 @@ public class TaskTableSorter extends TaskTableModel {
      * @return the child of the parent at the index
      */
     public Object getChild(Object parent, int index) {
+        /**
         Collection c = null;
         TaskList taskList = CurrentProject.getTaskList();
 
@@ -105,8 +106,49 @@ public class TaskTableSorter extends TaskTableModel {
         if (check_isInReducedOnly()) {
             c = taskList.getReducedTasks(c);
         }
+*/
 
-        Object array[] = c.toArray();
+
+        Collection collection = null;
+
+        if (parent instanceof Project) {
+            TaskList taskList = CurrentProject.getTaskList();
+            if (check_activeOnly()) {
+                collection = taskList.getActiveSubTasks(null, memoranda.date.CurrentDate.get());
+                System.out.println("[DEBUG] TaskTableSorter.getChild active "
+                        + "tasks size: " + collection.size());
+                //return CurrentProject.getTaskList().getActiveSubTasks(null, CurrentDate.get()).size();
+            } else {
+                collection = taskList.getTopLevelTasks();
+                System.out.println("[DEBUG] TaskTableSorter.getChild all "
+                        + "tasks size: " + collection.size());
+                //return CurrentProject.getTaskList().getTopLevelTasks().size();
+            }
+
+            if (check_isInReducedOnly()) {
+                collection = taskList.getReducedTasks(collection);
+            }
+        } else {
+
+            Task task = (Task) parent;
+            TaskList taskList = CurrentProject.getTaskList();
+
+            if (check_activeOnly()) {
+                collection = taskList.getActiveSubTasks(task.getID(), memoranda.date.CurrentDate.get());
+                //return CurrentProject.getTaskList().getActiveSubTasks(t.getID(), CurrentDate.get()).size();
+            } else {
+                collection = (Collection) task.getSubTasks();
+                //return t.getSubTasks().size();
+            }
+
+            if (check_isInReducedOnly()) {
+                collection = taskList.getReducedTasks(collection);
+            }
+        }
+
+
+
+        Object array[] = collection.toArray();
         Arrays.sort(array, comparator);
         if (opposite) {
             return array[array.length - index - 1];
