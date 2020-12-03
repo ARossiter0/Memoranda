@@ -69,15 +69,15 @@ Answer as a team!
 
 **What do you think is the value you created this Sprint?**
 
-> Your Answer
+> We finished most of the required functionality for the program (besides sprints). We also created the ability to load/save to a Data.json file automatically when using the application. 
 
 **Do you think you worked enough and that you did what was expected of you?**
 
-> Your Answer
+> We know that most of the team members worked far more than the suggested ~10 hours per week on this project. However, we were not able to achieve everything that was expected. We were unable to implement sprints, and the unit testing is more sparse than would be ideal. Frankly, we just didn’t have enough time. 
 
 **Would you say you met the customers’ expectations? Why, why not?**
 
-> Your Answer
+> No. We failed to implement the sprint-functionality. There may also be a quirk revolving around the .context xml file and it’s use. Besides that, however, we created a well-functioning product that provides accurate information about various todo lists, assignments, and free dates. 
 
 
 ### Sprint Retrospective
@@ -86,11 +86,11 @@ Answer as a team!
 
 **Did you meet your sprint goal?**
 
-> Your Answer
+> No. We failed to implement sprint functionality. We did meet most of our objectives. 
 
 **Did you complete all stories on your Spring Backlog?**
 
-> Your Answer
+> Yes. We did complete all of the stories on our sprint backlog. We did not, however, include creating and managing sprints on the sprint backlog like we originally intended. 
 
 **If not, what went wrong?**
 
@@ -98,19 +98,19 @@ Answer as a team!
 
 **Did you work at a consistent rate of speed, or velocity? (Meaning did you work during the whole Sprint or did you start working when the deadline approached.)**
 
-> Your Answer
+> No. Some of the team members had other obligations, and were unable to provide significant work until after a week. Also, some of the user stories were interdependent, and we were not able to push them to completion status until late into the sprint. 
 
 **Did you deliver business value?**
 
-> Your Answer
+> Yes. The program now functions mostly as intended and specified in the requirements, with the exception of the sprint functionality.  
 
 **Are there things the team thinks it can do better in the next Sprint?**
 
-> Your Answer
+> Our work on this project is concluded. There will be no next sprint. In future projects, we have learned to spend more time on planning and design, so that we do not end up with code that is hard to disentangle. 
 
 **How do you feel at this point? Get a pulse on the optimism of the team.**
 
-> Your Answer
+> We are very exhausted at this point, having spent as much time as was possible trying to finish this project, as well as preparing for exams and other assignments.   
 
 ### Contributions:
 
