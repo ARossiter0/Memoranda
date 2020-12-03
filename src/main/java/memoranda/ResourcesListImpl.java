@@ -6,11 +6,11 @@
  * @author Alex V. Alishevskikh, alex@openmechanics.net
  * Copyright (c) 2003 Memoranda Team. http://memoranda.sf.net
  */
-package main.java.memoranda;
+package memoranda;
 
 import java.util.Vector;
 
-import main.java.memoranda.util.Util;
+import memoranda.util.Util;
 
 import java.io.File;
 
@@ -25,7 +25,7 @@ import nu.xom.Elements;
 /*$Id: ResourcesListImpl.java,v 1.5 2007/03/20 06:21:46 alexeya Exp $*/
 public class ResourcesListImpl implements ResourcesList {
     
-	private Project _project = null;
+    private Project _project = null;
     private Document _doc = null;
     private Element _root = null;
 
@@ -53,7 +53,7 @@ public class ResourcesListImpl implements ResourcesList {
     }
 
     /**
-     * @see main.java.memoranda.ResourcesList#getResource(java.lang.String)
+     * @see memoranda.ResourcesList#getResource(java.lang.String)
      */
     public Resource getResource(String path) {
         Elements rs = _root.getChildElements("resource");
@@ -75,7 +75,7 @@ public class ResourcesListImpl implements ResourcesList {
     }*/
     
     /**
-     * @see main.java.memoranda.ResourcesList#addResource(java.lang.String, boolean)
+     * @see memoranda.ResourcesList#addResource(java.lang.String, boolean)
      */
     public void addResource(String path, boolean isInternetShortcut, boolean isProjectFile) {
         Element el = new Element("resource");
@@ -93,30 +93,30 @@ public class ResourcesListImpl implements ResourcesList {
     }
 
     /**
-     * @see main.java.memoranda.ResourcesList#removeResource(java.lang.String)
+     * @see memoranda.ResourcesList#removeResource(java.lang.String)
      */
     public void removeResource(String path) {
         Elements rs = _root.getChildElements("resource");
         for (int i = 0; i < rs.size(); i++)
             if (rs.get(i).getAttribute("path").getValue().equals(path)) {
-            	if(getResource(path).isProjectFile()) {
-            		File f = new File(path);
-            		System.out.println("[DEBUG] Removing file "+path);
-                	f.delete();
-            	}
-            	_root.removeChild(rs.get(i));
+                if(getResource(path).isProjectFile()) {
+                    File f = new File(path);
+                    System.out.println("[DEBUG] Removing file "+path);
+                    f.delete();
+                }
+                _root.removeChild(rs.get(i));
             }
     }
         
 
     /**
-     * @see main.java.memoranda.ResourcesList#getAllResourcesCount()
+     * @see memoranda.ResourcesList#getAllResourcesCount()
      */
     public int getAllResourcesCount() {
         return _root.getChildElements("resource").size();
     }
     /**
-     * @see main.java.memoranda.ResourcesList#getXMLContent()
+     * @see memoranda.ResourcesList#getXMLContent()
      */
     public Document getXMLContent() {
         return _doc;

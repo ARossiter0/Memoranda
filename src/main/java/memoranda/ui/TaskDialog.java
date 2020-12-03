@@ -1,4 +1,4 @@
-package main.java.memoranda.ui;
+package memoranda.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -35,9 +35,9 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import main.java.memoranda.CurrentProject;
-import main.java.memoranda.date.CalendarDate;
-import main.java.memoranda.util.Local;
+import memoranda.CurrentProject;
+import memoranda.date.CalendarDate;
+import memoranda.util.Local;
 
 import javax.swing.JCheckBox;
 
@@ -98,22 +98,22 @@ public class TaskDialog extends JDialog {
     // added by rawsushi
     JLabel jLabelEffort = new JLabel();
     JLabel jLabelDescription = new JLabel();
-	JCheckBox chkEndDate = new JCheckBox();
-	
-	JPanel jPanelProgress = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-	JLabel jLabelProgress = new JLabel();
-	JSpinner progress = new JSpinner(new SpinnerNumberModel(0, 0, 100, 5));
-	
-	//Forbid to set dates outside the bounds
-	CalendarDate startDateMin = CurrentProject.get().getStartDate();
-	CalendarDate startDateMax = CurrentProject.get().getEndDate();
-	CalendarDate endDateMin = startDateMin;
-	CalendarDate endDateMax = startDateMax;
-	JCheckBox chkIsInReduced = new JCheckBox();
+    JCheckBox chkEndDate = new JCheckBox();
+    
+    JPanel jPanelProgress = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+    JLabel jLabelProgress = new JLabel();
+    JSpinner progress = new JSpinner(new SpinnerNumberModel(0, 0, 100, 5));
+    
+    //Forbid to set dates outside the bounds
+    CalendarDate startDateMin = CurrentProject.get().getStartDate();
+    CalendarDate startDateMax = CurrentProject.get().getEndDate();
+    CalendarDate endDateMin = startDateMin;
+    CalendarDate endDateMax = startDateMax;
+    JCheckBox chkIsInReduced = new JCheckBox();
     
     
-	//main frame for the task dialog
-	public TaskDialog(Frame frame, String title) {
+    //main frame for the task dialog
+    public TaskDialog(Frame frame, String title) {
         super(frame, title, true);
         try {
             jbInit();            
@@ -124,10 +124,10 @@ public class TaskDialog extends JDialog {
         }
     }
     
-	//defines the title of the window, and some default sizes for borders
+    //defines the title of the window, and some default sizes for borders
     void jbInit() throws Exception {
-	this.setResizable(false);
-	this.setSize(new Dimension(430,300));
+    this.setResizable(false);
+    this.setSize(new Dimension(430,300));
         border1 = BorderFactory.createEmptyBorder(5, 5, 5, 5);
         border2 = BorderFactory.createEtchedBorder(Color.white, 
             new Color(142, 142, 142));
@@ -154,21 +154,21 @@ public class TaskDialog extends JDialog {
         //spinner component (up and down arrows) for the start and end date fields
         startDate = new JSpinner(new SpinnerDateModel(new Date(),null,null,Calendar.DAY_OF_WEEK));
         endDate = new JSpinner(new SpinnerDateModel(new Date(),null,null,Calendar.DAY_OF_WEEK));
-		
+        
         //set the End date field to be disabled unless checked
         chkEndDate.setSelected(false);
-		chkEndDate_actionPerformed(null);
-		chkEndDate.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				chkEndDate_actionPerformed(e);
-			}
-		});
-		
-		// Only for instructor todo
-		//chkIsInReduced.setSelected(false);
-		chkIsInReduced.setLabel("Visible to students");
-		
-		//set dimensions for the OK button and call the event listener
+        chkEndDate_actionPerformed(null);
+        chkEndDate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                chkEndDate_actionPerformed(e);
+            }
+        });
+        
+        // Only for instructor todo
+        //chkIsInReduced.setSelected(false);
+        chkIsInReduced.setLabel("Visible to students");
+        
+        //set dimensions for the OK button and call the event listener
         okB.setMaximumSize(new Dimension(100, 26));
         okB.setMinimumSize(new Dimension(100, 26));
         okB.setPreferredSize(new Dimension(100, 26));
@@ -190,12 +190,12 @@ public class TaskDialog extends JDialog {
         header.setFont(new java.awt.Font("Dialog", 0, 20));
         header.setForeground(new Color(0, 0, 124));
         header.setText(Local.getString("To do"));
-        header.setIcon(new ImageIcon(main.java.memoranda.ui.TaskDialog.class.getResource(
+        header.setIcon(new ImageIcon(memoranda.ui.TaskDialog.class.getResource(
             "/ui/icons/task48.png")));
         
         GridBagLayout gbLayout = (GridBagLayout) jPanel8.getLayout();
         jPanel8.setBorder(border3);
-				
+                
         //to do field location on the grid and dimensions
         todoField.setBorder(border8);
         todoField.setPreferredSize(new Dimension(375, 24));
@@ -237,19 +237,19 @@ public class TaskDialog extends JDialog {
         //start date field border and size and set to the correct data format
         startDate.setBorder(border8);
         startDate.setPreferredSize(new Dimension(80, 24));                
-		SimpleDateFormat sdf = new SimpleDateFormat();
-		sdf = (SimpleDateFormat)DateFormat.getDateInstance(DateFormat.SHORT);
-		
-		//Added by (jcscoobyrs) on 14-Nov-2003 at 10:45:16 PM
-		//set spinner and get the correct date pattern
-		startDate.setEditor(new JSpinner.DateEditor(startDate, sdf.toPattern()));
-		
-		//this method sets some validation rules so that bad data is handled 
+        SimpleDateFormat sdf = new SimpleDateFormat();
+        sdf = (SimpleDateFormat)DateFormat.getDateInstance(DateFormat.SHORT);
+        
+        //Added by (jcscoobyrs) on 14-Nov-2003 at 10:45:16 PM
+        //set spinner and get the correct date pattern
+        startDate.setEditor(new JSpinner.DateEditor(startDate, sdf.toPattern()));
+        
+        //this method sets some validation rules so that bad data is handled 
         startDate.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
-            	// it's an ugly hack so that the spinner can increase day by day
-            	SpinnerDateModel sdm = new SpinnerDateModel((Date)startDate.getModel().getValue(),null,null,Calendar.DAY_OF_WEEK);
-            	startDate.setModel(sdm);
+                // it's an ugly hack so that the spinner can increase day by day
+                SpinnerDateModel sdm = new SpinnerDateModel((Date)startDate.getModel().getValue(),null,null,Calendar.DAY_OF_WEEK);
+                startDate.setModel(sdm);
 
                 if (ignoreStartChanged)
                     return;
@@ -263,12 +263,12 @@ public class TaskDialog extends JDialog {
                 }
                 //if the current project's end date is not null, and the start date is after the end date of the project, set start date 
                 //to be the end date of the project.
-				if ((startDateMax != null) && sd.after(startDateMax.getDate())) {
-					startDate.getModel().setValue(startDateMax.getDate());
+                if ((startDateMax != null) && sd.after(startDateMax.getDate())) {
+                    startDate.getModel().setValue(startDateMax.getDate());
                     sd = startDateMax.getDate();
-				}
-				//if the current project's start date is not null and task start date is before the project start date
-				//set the task start date to be the project start date
+                }
+                //if the current project's start date is not null and task start date is before the project start date
+                //set the task start date to be the project start date
                 if ((startDateMin != null) && sd.before(startDateMin.getDate())) {
                     startDate.getModel().setValue(startDateMin.getDate());
                     sd = startDateMin.getDate();
@@ -288,7 +288,7 @@ public class TaskDialog extends JDialog {
         setStartDateB.setPreferredSize(new Dimension(24, 24));
         setStartDateB.setText("");
         setStartDateB.setIcon(
-            new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/calendar.png")));
+            new ImageIcon(memoranda.ui.AppFrame.class.getResource("/ui/icons/calendar.png")));
         setStartDateB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 setStartDateB_actionPerformed(e);
@@ -304,39 +304,39 @@ public class TaskDialog extends JDialog {
         endDate.setBorder(border8);
         endDate.setPreferredSize(new Dimension(80, 24));
         //set end date date format to the correct format
-		endDate.setEditor(new JSpinner.DateEditor(endDate, sdf.toPattern())); //Added by (jcscoobyrs) on
-		//14-Nov-2003 at 10:45:16PM
+        endDate.setEditor(new JSpinner.DateEditor(endDate, sdf.toPattern())); //Added by (jcscoobyrs) on
+        //14-Nov-2003 at 10:45:16PM
         
-		//this method sets some validation rules so that bad data is handled 
+        //this method sets some validation rules so that bad data is handled 
         endDate.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
-            	// it's an ugly hack so that the spinner can increase day by day
-            	SpinnerDateModel sdm = new SpinnerDateModel((Date)endDate.getModel().getValue(),null,null,Calendar.DAY_OF_WEEK);
-            	endDate.setModel(sdm);
-            	
+                // it's an ugly hack so that the spinner can increase day by day
+                SpinnerDateModel sdm = new SpinnerDateModel((Date)endDate.getModel().getValue(),null,null,Calendar.DAY_OF_WEEK);
+                endDate.setModel(sdm);
+                
                 if (ignoreEndChanged)
                     return;
                 ignoreEndChanged = true;
                 Date sd = (Date) startDate.getModel().getValue();
-                Date ed = (Date) endDate.getModel().getValue();				
-				//if task end date is before start date, set end date to be the start date
+                Date ed = (Date) endDate.getModel().getValue();                
+                //if task end date is before start date, set end date to be the start date
                 if (ed.before(sd)) {
                     endDate.getModel().setValue(ed);
                     ed = sd;
                 }
                 //if the current project's end date is not null and the task end date is after the project end date
                 //set task's end date to be the project end date.  
-				if ((endDateMax != null) && ed.after(endDateMax.getDate())) {
-					endDate.getModel().setValue(endDateMax.getDate());
+                if ((endDateMax != null) && ed.after(endDateMax.getDate())) {
+                    endDate.getModel().setValue(endDateMax.getDate());
                     ed = endDateMax.getDate();
-				}
-				//if project's start date is not null and the end date of the task if before the project's start date
-				//set task end date to be the start date of the project
+                }
+                //if project's start date is not null and the end date of the task if before the project's start date
+                //set task end date to be the start date of the project
                 if ((endDateMin != null) && ed.before(endDateMin.getDate())) {
                     endDate.getModel().setValue(endDateMin.getDate());
                     ed = endDateMin.getDate();
                 }
-				endCalFrame.cal.set(new CalendarDate(ed));
+                endCalFrame.cal.set(new CalendarDate(ed));
                 ignoreEndChanged = false;
             }
         });
@@ -345,7 +345,7 @@ public class TaskDialog extends JDialog {
         setEndDateB.setPreferredSize(new Dimension(24, 24));
         setEndDateB.setText("");
         setEndDateB.setIcon(
-            new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/calendar.png")));
+            new ImageIcon(memoranda.ui.AppFrame.class.getResource("/ui/icons/calendar.png")));
         setEndDateB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 setEndDateB_actionPerformed(e);
@@ -355,7 +355,7 @@ public class TaskDialog extends JDialog {
         // set notification button and icon and action event 
         setNotifB.setText(Local.getString("Set notification"));
         setNotifB.setIcon(
-            new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/notify.png")));
+            new ImageIcon(memoranda.ui.AppFrame.class.getResource("/ui/icons/notify.png")));
         setNotifB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 setNotifB_actionPerformed(e);
@@ -386,7 +386,7 @@ public class TaskDialog extends JDialog {
         jPanel6.add(startDate, null);
         jPanel6.add(setStartDateB, null);
         jPanel2.add(jPanel1, null);
-		jPanel1.add(chkEndDate, null);
+        jPanel1.add(chkEndDate, null);
         jPanel1.add(jLabel2, null);
         jPanel1.add(endDate, null);
         jPanel1.add(setEndDateB, null);
@@ -433,34 +433,34 @@ public class TaskDialog extends JDialog {
     }
     
     // start date setter
-	public void setStartDate(CalendarDate d) {
-		this.startDate.getModel().setValue(d.getDate());
-	}
-	// end date setter
-	public void setEndDate(CalendarDate d) {		
-		if (d != null) 
-			this.endDate.getModel().setValue(d.getDate());
-	}
-	
-	public void setChkIsInReduced(boolean isInReduced) {
-	    chkIsInReduced.setSelected(isInReduced);
-	}
-	
-	public void setStartDateLimit(CalendarDate min, CalendarDate max) {
-		this.startDateMin = min;
-		this.startDateMax = max;
-	}
-	//start and end date of the project. this method sets end date limits of a task to be between project's start date to end date
-	public void setEndDateLimit(CalendarDate min, CalendarDate max) {
-		this.endDateMin = min;
-		this.endDateMax = max;
-	}
-	
-	public boolean getIsInReduced() {
-	    return chkIsInReduced.isSelected();
-	}
-	
-	//action to be performed upon clicking ok
+    public void setStartDate(CalendarDate d) {
+        this.startDate.getModel().setValue(d.getDate());
+    }
+    // end date setter
+    public void setEndDate(CalendarDate d) {        
+        if (d != null) 
+            this.endDate.getModel().setValue(d.getDate());
+    }
+    
+    public void setChkIsInReduced(boolean isInReduced) {
+        chkIsInReduced.setSelected(isInReduced);
+    }
+    
+    public void setStartDateLimit(CalendarDate min, CalendarDate max) {
+        this.startDateMin = min;
+        this.startDateMax = max;
+    }
+    //start and end date of the project. this method sets end date limits of a task to be between project's start date to end date
+    public void setEndDateLimit(CalendarDate min, CalendarDate max) {
+        this.endDateMin = min;
+        this.endDateMax = max;
+    }
+    
+    public boolean getIsInReduced() {
+        return chkIsInReduced.isSelected();
+    }
+    
+    //action to be performed upon clicking ok
     void okB_actionPerformed(ActionEvent e) {
         CANCELLED = false;
         this.dispose();
@@ -469,18 +469,18 @@ public class TaskDialog extends JDialog {
     void cancelB_actionPerformed(ActionEvent e) {
         this.dispose();
     }
-	//action to be performed upon enabling end date (checkbox)
-	void chkEndDate_actionPerformed(ActionEvent e) {
-		endDate.setEnabled(chkEndDate.isSelected());
-		setEndDateB.setEnabled(chkEndDate.isSelected());
-		jLabel2.setEnabled(chkEndDate.isSelected());
-		if(chkEndDate.isSelected()) {
-			Date currentEndDate = (Date) endDate.getModel().getValue();
-			Date currentStartDate = (Date) startDate.getModel().getValue();
-			if(currentEndDate.getTime() < currentStartDate.getTime()) {
-				endDate.getModel().setValue(currentStartDate);
-			}
-		}
+    //action to be performed upon enabling end date (checkbox)
+    void chkEndDate_actionPerformed(ActionEvent e) {
+        endDate.setEnabled(chkEndDate.isSelected());
+        setEndDateB.setEnabled(chkEndDate.isSelected());
+        jLabel2.setEnabled(chkEndDate.isSelected());
+        if(chkEndDate.isSelected()) {
+            Date currentEndDate = (Date) endDate.getModel().getValue();
+            Date currentStartDate = (Date) startDate.getModel().getValue();
+            if(currentEndDate.getTime() < currentStartDate.getTime()) {
+                endDate.getModel().setValue(currentStartDate);
+            }
+        }
     }
     /**
      * Alows for the end date field to be set as enabled
@@ -488,17 +488,17 @@ public class TaskDialog extends JDialog {
      * Added for US149.
      */
     void chkEndDate_Augmented() {
-		endDate.setEnabled(true);
-		setEndDateB.setEnabled(true);
-		jLabel2.setEnabled(true);
+        endDate.setEnabled(true);
+        setEndDateB.setEnabled(true);
+        jLabel2.setEnabled(true);
         Date currentEndDate = (Date) endDate.getModel().getValue();
         Date currentStartDate = (Date) startDate.getModel().getValue();
         if(currentEndDate.getTime() < currentStartDate.getTime()) {
             endDate.getModel().setValue(currentStartDate);
-		}
-	}
-	
-	//action to be performed upon entering start date
+        }
+    }
+    
+    //action to be performed upon entering start date
     void setStartDateB_actionPerformed(ActionEvent e) {
         startCalFrame.setLocation(setStartDateB.getLocation());
         startCalFrame.setSize(200, 200);
@@ -516,8 +516,8 @@ public class TaskDialog extends JDialog {
 
     //action to be performed upon clicking set notification button
     void setNotifB_actionPerformed(ActionEvent e) {
-    	((AppFrame)App.getFrame()).workPanel.dailyItemsPanel.eventsPanel.newEventB_actionPerformed(e, 
-			this.todoField.getText(), (Date)startDate.getModel().getValue(),(Date)endDate.getModel().getValue());
+        ((AppFrame)App.getFrame()).workPanel.dailyItemsPanel.eventsPanel.newEventB_actionPerformed(e, 
+            this.todoField.getText(), (Date)startDate.getModel().getValue(),(Date)endDate.getModel().getValue());
     }
 
 }

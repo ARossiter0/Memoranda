@@ -11,10 +11,10 @@
 /.idea/
 
 ### Eclipse Patch ###
-# Eclipse Core		
+# Eclipse Core        
 .project
 
-# JDT-specific (Eclipse Java Development Tools)		
+# JDT-specific (Eclipse Java Development Tools)        
 .classpath
 /classes/
 

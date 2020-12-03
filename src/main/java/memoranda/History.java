@@ -6,7 +6,7 @@
  * @author Alex V. Alishevskikh, alex@openmechanics.net
  * Copyright (c) 2003 Memoranda Team. http://memoranda.sf.net
  */
-package main.java.memoranda;
+package memoranda;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
@@ -20,7 +20,7 @@ import javax.swing.Action;
 import javax.swing.ImageIcon;
 import javax.swing.KeyStroke;
 
-import main.java.memoranda.util.Local;
+import memoranda.util.Local;
 /**
  * 
  */
@@ -142,7 +142,7 @@ public class History {
 
         public HistoryBackAction() {
             super(Local.getString("History back"), 
-            new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/hist_back.png")));
+            new ImageIcon(memoranda.ui.AppFrame.class.getResource("/ui/icons/hist_back.png")));
             putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, KeyEvent.ALT_MASK));
             setEnabled(false);
         }
@@ -161,12 +161,12 @@ public class History {
             if (canRollBack()) {
                 setEnabled(true);
 
-		SimpleDateFormat sdf = new SimpleDateFormat();
-		sdf = (SimpleDateFormat)DateFormat.getDateInstance(DateFormat.SHORT);
-		Date date = ((HistoryItem) prev).getDate().getDate();
-		    putValue(
+        SimpleDateFormat sdf = new SimpleDateFormat();
+        sdf = (SimpleDateFormat)DateFormat.getDateInstance(DateFormat.SHORT);
+        Date date = ((HistoryItem) prev).getDate().getDate();
+            putValue(
                     Action.SHORT_DESCRIPTION,
-		   Local.getString("Back to") + " " + sdf.format(date));
+           Local.getString("Back to") + " " + sdf.format(date));
 
 //                putValue(Action.SHORT_DESCRIPTION, Local.getString("Back to") + " " + ((HistoryItem) prev).getDate().toString());
             }
@@ -181,7 +181,7 @@ public class History {
 
         public HistoryForwardAction() {
             super(Local.getString("History forward"), 
-            new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/hist_forward.png")));
+            new ImageIcon(memoranda.ui.AppFrame.class.getResource("/ui/icons/hist_forward.png")));
             putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, KeyEvent.ALT_MASK));
             setEnabled(false);
         }
@@ -200,14 +200,14 @@ public class History {
             if (canRollForward()) {
                 setEnabled(true);
 
-		SimpleDateFormat sdf = new SimpleDateFormat();
-		sdf = (SimpleDateFormat)DateFormat.getDateInstance(DateFormat.SHORT);
-		Date date = ((HistoryItem) next).getDate().getDate();
+        SimpleDateFormat sdf = new SimpleDateFormat();
+        sdf = (SimpleDateFormat)DateFormat.getDateInstance(DateFormat.SHORT);
+        Date date = ((HistoryItem) next).getDate().getDate();
 
-		    putValue(
+            putValue(
                     Action.SHORT_DESCRIPTION,
                    // Local.getString("Forward to") + " " + ((HistoryItem) next).getDate().toString());
-		   Local.getString("Forward to") + " " + sdf.format(date));
+           Local.getString("Forward to") + " " + sdf.format(date));
             }
             else {
                 setEnabled(false);

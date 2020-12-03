@@ -6,18 +6,17 @@
  * @author Alex V. Alishevskikh, alex@openmechanics.net
  * Copyright (c) 2003 Memoranda Team. http://memoranda.sf.net
  */
-package main.java.memoranda;
+package memoranda;
 import java.util.Collection;
 
-import main.java.memoranda.date.CalendarDate;
-import main.java.memoranda.Task;
+import memoranda.date.CalendarDate;
 /**
  * 
  */
 /*$Id: TaskList.java,v 1.8 2005/12/01 08:12:26 alexeya Exp $*/
 public interface TaskList {
 
-	Project getProject();
+    Project getProject();
     Task getTask(String id);
 
     Task createTask(CalendarDate startDate, CalendarDate endDate, String text, int priority, long effort, String description, String parentTaskId);
@@ -31,10 +30,10 @@ public interface TaskList {
 
     public boolean hasSubTasks(String id);
     
-	public boolean hasParentTask(String id);
+    public boolean hasParentTask(String id);
 
-	public Collection getTopLevelTasks();
-	
+    public Collection getTopLevelTasks();
+    
     public Collection getAllSubTasks(String taskId);
     public Collection getActiveSubTasks(String taskId,CalendarDate date);
     public Collection getReducedTasks(Collection c);
@@ -47,6 +46,7 @@ public interface TaskList {
     public long[] calculateCompletionFromSubTasks(Task t);
 
     nu.xom.Document getXMLContent();
-    
 
+
+    void setTaskId(Task task, String id);
 }

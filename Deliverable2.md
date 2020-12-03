@@ -148,7 +148,7 @@ Answer as a team!
 
   **GitHub links to your Code Reviews (up to 3 links) -- Sprint 2 and 3:
 
-    - https://github.com/amehlhase316/Leipzig-2/commit/5f4cf637523b3ba2d53f97ac1611c8be1712a9c1	
+    - https://github.com/amehlhase316/Leipzig-2/commit/5f4cf637523b3ba2d53f97ac1611c8be1712a9c1    
     - https://github.com/amehlhase316/Leipzig-2/pull/18
     - https://github.com/amehlhase316/Leipzig-2/pull/20
  

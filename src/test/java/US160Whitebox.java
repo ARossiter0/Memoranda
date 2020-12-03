@@ -1,30 +1,23 @@
-package test.java;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import main.java.memoranda.CurrentProject;
-import main.java.memoranda.Project;
-import main.java.memoranda.ProjectImpl;
-import main.java.memoranda.ProjectManager;
-import main.java.memoranda.Task;
-import main.java.memoranda.TaskImpl;
-import main.java.memoranda.TaskList;
-import main.java.memoranda.TaskListImpl;
-import main.java.memoranda.date.CalendarDate;
-import main.java.memoranda.date.CurrentDate;
-import main.java.memoranda.ui.TaskTableModel;
-import main.java.memoranda.util.Context;
-import main.java.memoranda.util.CurrentStorage;
-import main.java.memoranda.util.FileStorage;
-import main.java.memoranda.util.Storage;
-import main.java.memoranda.util.Util;
-import nu.xom.Attribute;
+import memoranda.CurrentProject;
+import memoranda.Project;
+import memoranda.ProjectImpl;
+import memoranda.ProjectManager;
+import memoranda.Task;
+import memoranda.TaskImpl;
+import memoranda.TaskList;
+import memoranda.TaskListImpl;
+import memoranda.date.CalendarDate;
+import memoranda.ui.TaskTableModel;
+import memoranda.util.Context;
+import memoranda.util.CurrentStorage;
+import memoranda.util.FileStorage;
+import memoranda.util.Storage;
 import nu.xom.Document;
 import nu.xom.Element;
-import nu.xom.Elements;
-import nu.xom.Node;
-import nu.xom.Nodes;
+
 
 import org.junit.Before;
 import org.junit.Test;

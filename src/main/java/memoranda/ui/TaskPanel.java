@@ -1,4 +1,4 @@
-package main.java.memoranda.ui;
+package memoranda.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -28,25 +28,25 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
-import main.java.memoranda.CurrentProject;
-import main.java.memoranda.History;
-import main.java.memoranda.LectureList;
-import main.java.memoranda.NoteList;
-import main.java.memoranda.Project;
-import main.java.memoranda.ProjectListener;
-import main.java.memoranda.ResourcesList;
-import main.java.memoranda.Task;
-import main.java.memoranda.TaskList;
-import main.java.memoranda.date.CalendarDate;
-import main.java.memoranda.date.CurrentDate;
-import main.java.memoranda.date.DateListener;
-import main.java.memoranda.ui.TaskDialog;
-import main.java.memoranda.util.Context;
-import main.java.memoranda.util.CurrentStorage;
-import main.java.memoranda.util.Local;
-import main.java.memoranda.util.Util;
-import main.java.memoranda.LectureTime;
-import main.java.memoranda.SpecialCalendarDate;
+import memoranda.CurrentProject;
+import memoranda.History;
+import memoranda.LectureList;
+import memoranda.NoteList;
+import memoranda.Project;
+import memoranda.ProjectListener;
+import memoranda.ResourcesList;
+import memoranda.Task;
+import memoranda.TaskList;
+import memoranda.date.CalendarDate;
+import memoranda.date.CurrentDate;
+import memoranda.date.DateListener;
+import memoranda.ui.TaskDialog;
+import memoranda.util.Context;
+import memoranda.util.CurrentStorage;
+import memoranda.util.Local;
+import memoranda.util.Util;
+import memoranda.LectureTime;
+import memoranda.SpecialCalendarDate;
 
 /*$Id: TaskPanel.java,v 1.27 2007/01/17 20:49:12 killerjoe Exp $*/
 public class TaskPanel extends JPanel {
@@ -121,7 +121,7 @@ public class TaskPanel extends JPanel {
         historyForwardB.setMaximumSize(new Dimension(24, 24));
         historyForwardB.setText("");
         // add new task and a call to the method newTaskB_actionPerformed(e)
-        newTaskB.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_new.png")));
+        newTaskB.setIcon(new ImageIcon(memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_new.png")));
         newTaskB.setEnabled(true);
         newTaskB.setMaximumSize(new Dimension(24, 24));
         newTaskB.setMinimumSize(new Dimension(24, 24));
@@ -144,7 +144,7 @@ public class TaskPanel extends JPanel {
 
         // add new sub task button and a call to method addSubTask_actionPerformed(e);
         subTaskB.setIcon(
-                new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_new_sub.png")));
+                new ImageIcon(memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_new_sub.png")));
         subTaskB.setEnabled(true);
         subTaskB.setMaximumSize(new Dimension(24, 24));
         subTaskB.setMinimumSize(new Dimension(24, 24));
@@ -176,7 +176,7 @@ public class TaskPanel extends JPanel {
         editTaskB.setMinimumSize(new Dimension(24, 24));
         editTaskB.setMaximumSize(new Dimension(24, 24));
         // editTaskB.setEnabled(true);
-        editTaskB.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_edit.png")));
+        editTaskB.setIcon(new ImageIcon(memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_edit.png")));
 
         // remove task button setup and action
         removeTaskB.setBorderPainted(false);
@@ -193,7 +193,7 @@ public class TaskPanel extends JPanel {
         removeTaskB.setMinimumSize(new Dimension(24, 24));
         removeTaskB.setMaximumSize(new Dimension(24, 24));
         removeTaskB
-                .setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_remove.png")));
+                .setIcon(new ImageIcon(memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_remove.png")));
         // mark task a complete button and action
         completeTaskB.setBorderPainted(false);
         completeTaskB.setFocusable(false);
@@ -208,28 +208,28 @@ public class TaskPanel extends JPanel {
         completeTaskB.setMinimumSize(new Dimension(24, 24));
         completeTaskB.setMaximumSize(new Dimension(24, 24));
         completeTaskB.setIcon(
-                new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_complete.png")));
+                new ImageIcon(memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_complete.png")));
 
         // added by rawsushi
-//		showActiveOnly.setBorderPainted(false);
-//		showActiveOnly.setFocusable(false);
-//		showActiveOnly.addActionListener(new java.awt.event.ActionListener() {
-//			public void actionPerformed(ActionEvent e) {
-//				toggleShowActiveOnly_actionPerformed(e);
-//			}
-//		});
-//		showActiveOnly.setPreferredSize(new Dimension(24, 24));
-//		showActiveOnly.setRequestFocusEnabled(false);
-//		if (taskTable.isShowActiveOnly()) {
-//			showActiveOnly.setToolTipText(Local.getString("Show All"));			
-//		}
-//		else {
-//			showActiveOnly.setToolTipText(Local.getString("Show Active Only"));			
-//		}
-//		showActiveOnly.setMinimumSize(new Dimension(24, 24));
-//		showActiveOnly.setMaximumSize(new Dimension(24, 24));
-//		showActiveOnly.setIcon(
-//			new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_remove.png")));
+//        showActiveOnly.setBorderPainted(false);
+//        showActiveOnly.setFocusable(false);
+//        showActiveOnly.addActionListener(new java.awt.event.ActionListener() {
+//            public void actionPerformed(ActionEvent e) {
+//                toggleShowActiveOnly_actionPerformed(e);
+//            }
+//        });
+//        showActiveOnly.setPreferredSize(new Dimension(24, 24));
+//        showActiveOnly.setRequestFocusEnabled(false);
+//        if (taskTable.isShowActiveOnly()) {
+//            showActiveOnly.setToolTipText(Local.getString("Show All"));            
+//        }
+//        else {
+//            showActiveOnly.setToolTipText(Local.getString("Show Active Only"));            
+//        }
+//        showActiveOnly.setMinimumSize(new Dimension(24, 24));
+//        showActiveOnly.setMaximumSize(new Dimension(24, 24));
+//        showActiveOnly.setIcon(
+//            new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_remove.png")));
         // added by rawsushi
 
         // show active tasks only method
@@ -289,7 +289,7 @@ public class TaskPanel extends JPanel {
         });
         // edit task button
         ppEditTask.setEnabled(false);
-        ppEditTask.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_edit.png")));
+        ppEditTask.setIcon(new ImageIcon(memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_edit.png")));
         taskPPMenu.setFont(new java.awt.Font("Dialog", 1, 10));
         // remove task button and action to be called upon clicking
         ppRemoveTask.setFont(new java.awt.Font("Dialog", 1, 11));
@@ -300,7 +300,7 @@ public class TaskPanel extends JPanel {
             }
         });
         ppRemoveTask
-                .setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_remove.png")));
+                .setIcon(new ImageIcon(memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_remove.png")));
         ppRemoveTask.setEnabled(false);
         ppNewTask.setFont(new java.awt.Font("Dialog", 1, 11));
         ppNewTask.setText(Local.getString("New task") + "...");
@@ -309,7 +309,7 @@ public class TaskPanel extends JPanel {
                 ppNewTask_actionPerformed(e);
             }
         });
-        ppNewTask.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_new.png")));
+        ppNewTask.setIcon(new ImageIcon(memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_new.png")));
         // add sub task action performed
         ppAddSubTask.setFont(new java.awt.Font("Dialog", 1, 11));
         ppAddSubTask.setText(Local.getString("Add subtask"));
@@ -318,7 +318,7 @@ public class TaskPanel extends JPanel {
                 ppAddSubTask_actionPerformed(e);
             }
         });
-        ppAddSubTask.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_new_sub.png")));
+        ppAddSubTask.setIcon(new ImageIcon(memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_new_sub.png")));
 
         /*
         ppSubTasks.setFont(new java.awt.Font("Dialog", 1, 11));
@@ -343,21 +343,21 @@ public class TaskPanel extends JPanel {
         ppCompleteTask.setFont(new java.awt.Font("Dialog", 1, 11));
         ppCompleteTask.setText(Local.getString("Complete task"));
         ppCompleteTask.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				ppCompleteTask_actionPerformed(e);
-			}
-		});
-        ppCompleteTask.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_complete.png")));
+            public void actionPerformed(ActionEvent e) {
+                ppCompleteTask_actionPerformed(e);
+            }
+        });
+        ppCompleteTask.setIcon(new ImageIcon(memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_complete.png")));
         ppCompleteTask.setEnabled(false);
         // calculate task button and action performed 
         ppCalcTask.setFont(new java.awt.Font("Dialog", 1, 11));
         ppCalcTask.setText(Local.getString("Calculate task data"));
         ppCalcTask.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				ppCalcTask_actionPerformed(e);
-			}
-		});
-        ppCalcTask.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_complete.png")));
+            public void actionPerformed(ActionEvent e) {
+                ppCalcTask_actionPerformed(e);
+            }
+        });
+        ppCalcTask.setIcon(new ImageIcon(memoranda.ui.AppFrame.class.getResource("/ui/icons/todo_complete.png")));
         ppCalcTask.setEnabled(false);
         //add buttons to task tool bar
         scrollPane.getViewport().add(taskTable, null);
@@ -678,7 +678,7 @@ public class TaskPanel extends JPanel {
         CalendarDate ed = new CalendarDate((Date) dlg.endDate.getModel().getValue());
 
         long effort = Util.getMillisFromHours(dlg.effortField.getText());
-		Task newTask = CurrentProject.getAssignList().createTask(sd, ed, dlg.todoField.getText(), dlg.priorityCB.getSelectedIndex(),effort, dlg.descriptionField.getText(),null);
+        Task newTask = CurrentProject.getAssignList().createTask(sd, ed, dlg.todoField.getText(), dlg.priorityCB.getSelectedIndex(),effort, dlg.descriptionField.getText(),null);
         CurrentStorage.get().storeAssignList(CurrentProject.getAssignList(), CurrentProject.get());
         taskTable.tableChanged();
         parentPanel.updateIndicators();
@@ -880,13 +880,13 @@ public class TaskPanel extends JPanel {
 //        CalendarDate sd = new CalendarDate((Date) dlg.startDate.getModel().getValue());
 ////        CalendarDate ed = new CalendarDate((Date) dlg.endDate.getModel().getValue());
 //          CalendarDate ed;
-// 		if(dlg.chkEndDate.isSelected())
-// 			ed = new CalendarDate((Date) dlg.endDate.getModel().getValue());
-// 		else
-// 			ed = new CalendarDate(0,0,0);
+//         if(dlg.chkEndDate.isSelected())
+//             ed = new CalendarDate((Date) dlg.endDate.getModel().getValue());
+//         else
+//             ed = new CalendarDate(0,0,0);
 //        long effort = Util.getMillisFromHours(dlg.effortField.getText());
-//		Task newTask = CurrentProject.getTaskList().createTask(sd, ed, dlg.todoField.getText(), dlg.priorityCB.getSelectedIndex(),effort, dlg.descriptionField.getText(),parentTaskId);
-//		
+//        Task newTask = CurrentProject.getTaskList().createTask(sd, ed, dlg.todoField.getText(), dlg.priorityCB.getSelectedIndex(),effort, dlg.descriptionField.getText(),parentTaskId);
+//        
 
         CurrentStorage.get().storeTaskList(CurrentProject.getTaskList(), CurrentProject.get());
         taskTable.tableChanged();
@@ -906,9 +906,9 @@ public class TaskPanel extends JPanel {
     }
 
     void parentTask_actionPerformed(ActionEvent e) {
-//    	String taskId = taskTable.getModel().getValueAt(taskTable.getSelectedRow(), TaskTable.TASK_ID).toString();
+//        String taskId = taskTable.getModel().getValueAt(taskTable.getSelectedRow(), TaskTable.TASK_ID).toString();
 //      
-//    	Task t = CurrentProject.getTaskList().getTask(taskId);
+//        Task t = CurrentProject.getTaskList().getTask(taskId);
         /*
          * XXX Task t2 =
          * CurrentProject.getTaskList().getTask(taskTable.getCurrentRootTask());
@@ -930,13 +930,13 @@ public class TaskPanel extends JPanel {
             if (taskTable.getSelectedRows().length > 1)
                 msg = Local.getString("Remove")+" "+taskTable.getSelectedRows().length +" "+Local.getString("assignments")+"?"
                 + "\n"+Local.getString("Are you sure?");
-            else {        	
+            else {            
                 Task t = CurrentProject.getTaskList().getTask(thisTaskId);
                 // check if there are subtasks
                 if(CurrentProject.getTaskList().hasSubTasks(thisTaskId)) {
                     msg = Local.getString("Remove assignment")+"\n'" + t.getText() + Local.getString("' and all sub-assignments") +"\n"+Local.getString("Are you sure?");
                 }
-                else {		            
+                else {                    
                     msg = Local.getString("Remove assignment")+"\n'" + t.getText() + "'\n"+Local.getString("Are you sure?");
                 }
             }
@@ -944,13 +944,13 @@ public class TaskPanel extends JPanel {
             if (taskTable.getSelectedRows().length > 1)
                 msg = Local.getString("Remove")+" "+taskTable.getSelectedRows().length +" "+Local.getString("tasks")+"?"
                 + "\n"+Local.getString("Are you sure?");
-            else {        	
+            else {            
                 Task t = CurrentProject.getTaskList().getTask(thisTaskId);
                 // check if there are subtasks
                 if(CurrentProject.getTaskList().hasSubTasks(thisTaskId)) {
                     msg = Local.getString("Remove task")+"\n'" + t.getText() + Local.getString("' and all subtasks") +"\n"+Local.getString("Are you sure?");
                 }
-                else {		            
+                else {                    
                     msg = Local.getString("Remove task")+"\n'" + t.getText() + "'\n"+Local.getString("Are you sure?");
                 }
             }
@@ -988,34 +988,34 @@ public class TaskPanel extends JPanel {
 
     }
     //action so be performed when pressing complete task button
-	void ppCompleteTask_actionPerformed(ActionEvent e) {
-		String msg;
-		Vector tocomplete = new Vector();
-		for (int i = 0; i < taskTable.getSelectedRows().length; i++) {
-			Task t =
-			CurrentProject.getTaskList().getTask(
-				taskTable.getModel().getValueAt(taskTable.getSelectedRows()[i], TaskTable.TASK_ID).toString());
-			if (t != null)
-				tocomplete.add(t);
-		}
-		for (int i = 0; i < tocomplete.size(); i++) {
-			Task t = (Task)tocomplete.get(i);
-			t.setProgress(100);
-		}
+    void ppCompleteTask_actionPerformed(ActionEvent e) {
+        String msg;
+        Vector tocomplete = new Vector();
+        for (int i = 0; i < taskTable.getSelectedRows().length; i++) {
+            Task t =
+            CurrentProject.getTaskList().getTask(
+                taskTable.getModel().getValueAt(taskTable.getSelectedRows()[i], TaskTable.TASK_ID).toString());
+            if (t != null)
+                tocomplete.add(t);
+        }
+        for (int i = 0; i < tocomplete.size(); i++) {
+            Task t = (Task)tocomplete.get(i);
+            t.setProgress(100);
+        }
         taskTable.tableChanged();
         if(Context.get("CURRENT_PANEL").equals("ASSIGN")) {
             CurrentStorage.get().storeAssignList(CurrentProject.getAssignList(), CurrentProject.get());
         } else {
             CurrentStorage.get().storeTaskList(CurrentProject.getTaskList(), CurrentProject.get());
         }
-		parentPanel.updateIndicators();
-		//taskTable.updateUI();
-	}
+        parentPanel.updateIndicators();
+        //taskTable.updateUI();
+    }
 
-	// toggle "show active only"
-	void toggleShowActiveOnly_actionPerformed(ActionEvent e) {
-		Context.put("SHOW_ACTIVE_TASKS_ONLY", new Boolean(ppShowActiveOnlyChB.isSelected()));
-		taskTable.tableChanged();
+    // toggle "show active only"
+    void toggleShowActiveOnly_actionPerformed(ActionEvent e) {
+        Context.put("SHOW_ACTIVE_TASKS_ONLY", new Boolean(ppShowActiveOnlyChB.isSelected()));
+        taskTable.tableChanged();
     }
 
     void toggleShowReducedOnly_actionPerformed(ActionEvent e) {

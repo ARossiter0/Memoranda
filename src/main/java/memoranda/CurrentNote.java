@@ -1,11 +1,11 @@
-package main.java.memoranda;
+package memoranda;
 
 import java.util.Collection;
 import java.util.Vector;
 
 public class CurrentNote {
 
-	private static Note currentNote = null;
+    private static Note currentNote = null;
     private static Vector noteListeners = new Vector();
 
     public static Note get() {
@@ -18,7 +18,7 @@ public class CurrentNote {
     }
 
     public static void reset() {
-//    	 set toSave to true to mimic status quo behaviour only. the appropriate setting could be false
+//         set toSave to true to mimic status quo behaviour only. the appropriate setting could be false
         set(null, true);
     }
 
@@ -33,6 +33,6 @@ public class CurrentNote {
     private static void noteChanged(Note note, boolean toSaveCurrentNote) {
         for (int i = 0; i < noteListeners.size(); i++) {
             ((NoteListener)noteListeners.get(i)).noteChange(note,toSaveCurrentNote);
-		}
+        }
     }
 }
