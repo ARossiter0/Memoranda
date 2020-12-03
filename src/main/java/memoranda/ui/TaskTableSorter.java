@@ -113,6 +113,7 @@ public class TaskTableSorter extends TaskTableModel {
 
         if (parent instanceof Project) {
             TaskList taskList = CurrentProject.getTaskList();
+            //TaskList taskList = CurrentStorage.get().openTaskList((Project) parent);
             if (check_activeOnly()) {
                 collection = taskList.getActiveSubTasks(null, memoranda.date.CurrentDate.get());
                 System.out.println("[DEBUG] TaskTableSorter.getChild active "

@@ -1,11 +1,8 @@
 package memoranda.util;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Locale;
 
 import memoranda.Lecture;
 import memoranda.LectureList;

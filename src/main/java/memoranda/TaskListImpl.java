@@ -128,7 +128,13 @@ public class TaskListImpl implements TaskList {
      * @param parentTaskId the id of this task's parent
      * @return the newly created task
      */
-    public Task createTask(CalendarDate startDate, CalendarDate endDate, String text, int priority, long effort, String description, String parentTaskId) {
+    public Task createTask(CalendarDate startDate, 
+                            CalendarDate endDate, 
+                            String text, 
+                            int priority, 
+                            long effort, 
+                            String description, 
+                            String parentTaskId) {
         return createTask(startDate, endDate, text, priority, effort, description, parentTaskId, false);
     }
     
@@ -144,7 +150,14 @@ public class TaskListImpl implements TaskList {
      * @param isInReduced if the task should be in the reduced set
      * @return the newly created task
      */
-    public Task createTask(CalendarDate startDate, CalendarDate endDate, String text, int priority, long effort, String description, String parentTaskId, boolean isInReduced) {
+    public Task createTask(CalendarDate startDate, 
+                            CalendarDate endDate, 
+                            String text, 
+                            int priority, 
+                            long effort, 
+                            String description, 
+                            String parentTaskId, 
+                            boolean isInReduced) {
         Element el = new Element("task");
         el.addAttribute(new Attribute("startDate", startDate.toString()));
         el.addAttribute(new Attribute("endDate", endDate != null? endDate.toString():""));

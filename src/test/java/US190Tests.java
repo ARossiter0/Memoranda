@@ -81,6 +81,8 @@ public class US190Tests {
         CalendarDate taskStartDate3 = new CalendarDate(10, 1, 2021);
         CalendarDate taskEndDate3 = new CalendarDate(10, 2, 2021);
 
+        memoranda.CurrentProject.set(project);
+
 
         final Task task1 = taskList.createTask(taskStartDate1, taskEndDate1,
                 "US190"
@@ -101,7 +103,7 @@ public class US190Tests {
         Storage storage = CurrentStorage.get();
         storage.storeTaskList(taskList, project);
 
-        memoranda.CurrentProject.set(project);
+        
         CurrentProject.currentTaskType = CurrentProject.TaskType.DEFAULT;
 
         TaskTable taskTable = new TaskTable();
@@ -121,6 +123,4 @@ public class US190Tests {
 
         storage.removeProjectStorage(project);
     }
-
-
 }
