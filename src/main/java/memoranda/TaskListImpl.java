@@ -8,19 +8,16 @@
  */
 package main.java.memoranda;
 
+import main.java.memoranda.date.CalendarDate;
+import main.java.memoranda.util.Util;
+import main.java.memoranda.Task;
+import main.java.memoranda.TaskList;
+import nu.xom.*;
+
 import java.util.Collection;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Vector;
-
-import main.java.memoranda.date.CalendarDate;
-import main.java.memoranda.util.Util;
-import nu.xom.Attribute;
-import nu.xom.Document;
-import nu.xom.Element;
-import nu.xom.Elements;
-import nu.xom.Node;
-import nu.xom.Nodes;
 //import nu.xom.converters.*;
 //import org.apache.xerces.dom.*;
 //import nux.xom.xquery.XQueryUtil;
@@ -44,14 +41,14 @@ public class TaskListImpl implements TaskList {
     /**
      * Constructor for TaskListImpl.
      */
-    public TaskListImpl(Document doc, Project prj) {
+    public TaskListImpl(Document doc, main.java.memoranda.Project prj) {
         _doc = doc;
         _root = _doc.getRootElement();
         _project = prj;
 		buildElements(_root);
     }
     
-    public TaskListImpl(Project prj) {            
+    public TaskListImpl(main.java.memoranda.Project prj) {
             _root = new Element("tasklist");
             _doc = new Document(_root);
             _project = prj;
@@ -99,7 +96,14 @@ public class TaskListImpl implements TaskList {
      * If a root task is required, just send a null taskId
      */
     public Collection getActiveSubTasks(String taskId, CalendarDate date) {
-        Collection allTasks = getAllSubTasks(taskId);        
+        Collection allTasks = getAllSubTasks(taskId);
+
+        System.out.println("\n\n\n\n\n\n[DEBUG] TaskListImpl"
+                + ".getActiveSubTasks allTasks size: " + allTasks.size());
+        System.out.println("[DEBUG] TaskListImpl.getActiveSubTasks "
+                + "activeTasks size: " + filterActiveTasks(allTasks,
+                date).size());
+
         return filterActiveTasks(allTasks,date);
     }
     
@@ -175,7 +179,7 @@ public class TaskListImpl implements TaskList {
     }
 
     //-------------------------------
-    public Task createLectureTask(String day, int hour, int min, String text) {
+    public main.java.memoranda.Task createLectureTask(String day, int hour, int min, String text) {
         Element el = new Element("task");
 
         String id = Util.generateId();
@@ -296,7 +300,7 @@ public class TaskListImpl implements TaskList {
      * @param t
      * @return
      */
-    public CalendarDate getEarliestStartDateFromSubTasks(Task t) {
+    public CalendarDate getEarliestStartDateFromSubTasks(main.java.memoranda.Task t) {
         CalendarDate d = t.getStartDate();
         if (hasSubTasks(t.getID())) {
 	        Collection subTasks = getAllSubTasks(t.getID());
@@ -413,9 +417,10 @@ public class TaskListImpl implements TaskList {
         Vector v = new Vector();
 
         for (int i = 0; i < tasks.size(); i++) {
-            Task t = new TaskImpl(tasks.get(i), this);
+            Task t = new main.java.memoranda.TaskImpl(tasks.get(i), this);
             v.add(t);
         }
+
         return v;
     }
 
@@ -450,9 +455,15 @@ public class TaskListImpl implements TaskList {
     }
 
     private boolean isActive(Task t,CalendarDate date) {
+        // Filter for active tasks
+        /*
     	if ((t.getStatus(date) == Task.ACTIVE) || (t.getStatus(date) == Task.DEADLINE) || (t.getStatus(date) == Task.FAILED)) {
     		return true;
     	}
+    	*/
+        if(t.getStatus(date) == Task.ACTIVE){
+            return true;
+        }
     	else {
     		return false;
     	}

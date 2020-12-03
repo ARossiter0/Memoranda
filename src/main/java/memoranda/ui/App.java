@@ -54,6 +54,7 @@ public class App {
 
 	public App(boolean fullmode) {
 		super();
+		System.out.println("[Debug]Current Date: " + main.java.memoranda.date.CurrentDate.get());
 		if (fullmode)
 			fullmode = !Configuration.get("START_MINIMIZED").equals("yes");
 		/* DEBUG */

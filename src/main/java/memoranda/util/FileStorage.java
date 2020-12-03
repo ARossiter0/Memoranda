@@ -20,18 +20,8 @@ import java.net.URL;
 import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
 
-import main.java.memoranda.EventsManager;
-import main.java.memoranda.LectureList;
-import main.java.memoranda.LectureListImpl;
+import main.java.memoranda.*;
 import main.java.memoranda.Note;
-import main.java.memoranda.NoteList;
-import main.java.memoranda.NoteListImpl;
-import main.java.memoranda.Project;
-import main.java.memoranda.ProjectManager;
-import main.java.memoranda.ResourcesList;
-import main.java.memoranda.ResourcesListImpl;
-import main.java.memoranda.TaskList;
-import main.java.memoranda.TaskListImpl;
 import main.java.memoranda.date.CalendarDate;
 import main.java.memoranda.ui.ExceptionDialog;
 import main.java.memoranda.ui.htmleditor.AltHTMLWriter;
@@ -227,10 +217,14 @@ public class FileStorage implements Storage {
 	public void removeProjectStorage(Project prj) {
 		String id = prj.getID();
 		File f = new File(JN_DOCPATH + id);
-		File[] files = f.listFiles();
-		for (int i = 0; i < files.length; i++)
-			files[i].delete();
-		f.delete();
+
+		if (!f.delete()) {
+			File[] files = f.listFiles();
+			for (int i = 0; i < files.length; i++) {
+				files[i].delete();
+			}
+			f.delete();
+		}
 	}
 
 	public TaskList openTaskList(Project prj) {
