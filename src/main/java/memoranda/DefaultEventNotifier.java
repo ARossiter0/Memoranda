@@ -15,28 +15,28 @@ import memoranda.ui.EventNotificationDialog;
 /*$Id: DefaultEventNotifier.java,v 1.4 2004/01/30 12:17:41 alexeya Exp $*/
 public class DefaultEventNotifier implements EventNotificationListener {
 
-	/**
-	 * Constructor for DefaultEventNotifier.
-	 */
-	public DefaultEventNotifier() {
-		super();
-	}
+    /**
+     * Constructor for DefaultEventNotifier.
+     */
+    public DefaultEventNotifier() {
+        super();
+    }
 
-	/**
-	 * @see memoranda.EventNotificationListener#eventIsOccured(memoranda.Event)
-	 */
-	public void eventIsOccured(Event ev) {		
-		new EventNotificationDialog(
-			"Memoranda event",
-			ev.getTimeString(),
-			ev.getText());
-	}
-	/**
-	 * @see memoranda.EventNotificationListener#eventsChanged()
-	 */
-	public void eventsChanged() {
-		//
-	}
+    /**
+     * @see memoranda.EventNotificationListener#eventIsOccured(memoranda.Event)
+     */
+    public void eventIsOccured(Event ev) {        
+        new EventNotificationDialog(
+            "Memoranda event",
+            ev.getTimeString(),
+            ev.getText());
+    }
+    /**
+     * @see memoranda.EventNotificationListener#eventsChanged()
+     */
+    public void eventsChanged() {
+        //
+    }
 
-	
+    
 }

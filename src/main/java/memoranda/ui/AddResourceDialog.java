@@ -58,13 +58,13 @@ public class AddResourceDialog extends JDialog {
         }
     }
 
-	/**
-	 * setup user interface and init dialog
-	 */
-	 
+    /**
+     * setup user interface and init dialog
+     */
+     
     void jbInit() throws Exception {
-    	// Set the style for the title and header
-		this.setResizable(false);
+        // Set the style for the title and header
+        this.setResizable(false);
         dialogTitlePanel.setBackground(Color.WHITE);
         dialogTitlePanel.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
         header.setFont(new java.awt.Font("Dialog", 0, 20));
@@ -209,58 +209,58 @@ public class AddResourceDialog extends JDialog {
         });
         buttonsPanel.add(okB);
         buttonsPanel.add(cancelB);
-		enableFields();
+        enableFields();
         this.getContentPane().add(buttonsPanel, BorderLayout.SOUTH);
     }
 
-	/**
-	 * set CANCELLED variable to false so we can know the user 
-	 * pressed the ok buton and close this dialog.
-	 */
-	 
+    /**
+     * set CANCELLED variable to false so we can know the user 
+     * pressed the ok buton and close this dialog.
+     */
+     
     void okB_actionPerformed(ActionEvent e) {
         CANCELLED = false;
-		this.dispose();
+        this.dispose();
     }
 
-	/**
-	 * close the dialog window
-	 */
-	 
+    /**
+     * close the dialog window
+     */
+     
     void cancelB_actionPerformed(ActionEvent e) {
         this.dispose();
     }
 
-	/**
-	 * enable localRB fields. Request focus for the text field 
-	 * so the user can start typing and set the pathField text selected
-	 */
-	 
+    /**
+     * enable localRB fields. Request focus for the text field 
+     * so the user can start typing and set the pathField text selected
+     */
+     
     void localFileRB_actionPerformed(ActionEvent e) {
-		enableFields();
+        enableFields();
         checkOkEnabled();
-		urlField.select(0,0);
-		pathField.select(0,pathField.getText().length());
-		pathField.requestFocus();
-	}
+        urlField.select(0,0);
+        pathField.select(0,pathField.getText().length());
+        pathField.requestFocus();
+    }
 
-	/**
-	 * enable inetShorcutRB fields. Request focus for the text field 
-	 * so the user can start typing and set the urlField text selected
-	 */
-	
+    /**
+     * enable inetShorcutRB fields. Request focus for the text field 
+     * so the user can start typing and set the urlField text selected
+     */
+    
     void inetShortcutRB_actionPerformed(ActionEvent e) {
-		enableFields();
+        enableFields();
         checkOkEnabled();
-		pathField.select(0,0);
-		urlField.select(0,urlField.getText().length());
-		urlField.requestFocus();
-	}
+        pathField.select(0,0);
+        urlField.select(0,urlField.getText().length());
+        urlField.requestFocus();
+    }
 
-	/**
-	 * setup the JFileChooser so the user can select the resource file
-	 */
-	 
+    /**
+     * setup the JFileChooser so the user can select the resource file
+     */
+     
     void browseB_actionPerformed(ActionEvent e) {
         // Fix until Sun's JVM supports more locales...
         UIManager.put("FileChooser.lookInLabelText", 
@@ -305,26 +305,26 @@ public class AddResourceDialog extends JDialog {
         checkOkEnabled();
     }
 
-	/**
-	 * disable the ok button if pathField is empty
-	 */
-	 
+    /**
+     * disable the ok button if pathField is empty
+     */
+     
     void pathField_caretUpdate(CaretEvent e) {
         checkOkEnabled();
     }
 
-	/**
-	 * disable the ok button if urlField is empty
-	 */
-	
+    /**
+     * disable the ok button if urlField is empty
+     */
+    
     void urlField_caretUpdate(CaretEvent e) {        
         checkOkEnabled();
     }
     
-	/**
-	 * do not enable the ok button until the text field is not empty.
-	 */
-	 
+    /**
+     * do not enable the ok button until the text field is not empty.
+     */
+     
     void checkOkEnabled() {        
          okB.setEnabled(
             (localFileRB.isSelected() && pathField.getText().length() > 0) ||
@@ -332,17 +332,17 @@ public class AddResourceDialog extends JDialog {
          );
     }
 
-	/** 
-	 * enable and disable fields when user selects the radio buttons options
-	 */
-	 
-	void enableFields() {
-		 pathField.setEnabled(localFileRB.isSelected());
-		 jLabel1.setEnabled(localFileRB.isSelected());
-		 browseB.setEnabled(localFileRB.isSelected());
-		 projectFileCB.setEnabled(localFileRB.isSelected());
-		 
-		 urlField.setEnabled(inetShortcutRB.isSelected());
-		 jLabel2.setEnabled(inetShortcutRB.isSelected());
-	}
+    /** 
+     * enable and disable fields when user selects the radio buttons options
+     */
+     
+    void enableFields() {
+         pathField.setEnabled(localFileRB.isSelected());
+         jLabel1.setEnabled(localFileRB.isSelected());
+         browseB.setEnabled(localFileRB.isSelected());
+         projectFileCB.setEnabled(localFileRB.isSelected());
+         
+         urlField.setEnabled(inetShortcutRB.isSelected());
+         jLabel2.setEnabled(inetShortcutRB.isSelected());
+    }
 }

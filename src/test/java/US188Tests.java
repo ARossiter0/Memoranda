@@ -7,13 +7,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.junit.Test;
-import org.junit.BeforeClass;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-
 import memoranda.LectureList;
 import memoranda.LectureListImpl;
 import memoranda.Project;
@@ -23,20 +16,31 @@ import memoranda.ResourcesListImpl;
 import memoranda.Task;
 import memoranda.TaskList;
 import memoranda.TaskListImpl;
+import memoranda.date.CalendarDate;
+import memoranda.date.CurrentDate;
 import memoranda.util.CurrentStorage;
 import memoranda.util.JsonBuilder;
 import memoranda.util.Util;
-import memoranda.date.CalendarDate;
-import memoranda.date.CurrentDate;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 //ref : https://cliftonlabs.github.io/json-simple/target/apidocs/index.html
 
-public class US188_Tests {
+public class US188Tests {
 
     public static JSONObject testCourse;
 
-    @BeforeClass
-    public static void setUp() throws IOException, ParseException {
+    /**
+     * Directs the setup of US188 tests.
+     * @throws IOException Thrown by IO implementaion.
+     * @throws ParseException Thrown by json parser.
+     */
+    @BeforeClass public static void setUp() throws IOException, ParseException {
 
         String path = Util.getEnvDir() + "/Data.json";
         String id = "COURSE_ID_1_TEST_ONLY";
@@ -77,7 +81,10 @@ public class US188_Tests {
         }
     }
 
-    // DefaultTask
+    /**
+     * Sets up memoranda object for export with specific values.
+     * @param course The course to apply the created object with.
+     */
     public static void setUpDefTask(Project course) {
 
         TaskList defaultTaskList = new TaskListImpl(course);
@@ -91,7 +98,10 @@ public class US188_Tests {
         CurrentStorage.get().storeTaskList(defaultTaskList, course);
     }
 
-    // Lectures
+    /**
+     * Sets up memoranda object for export with specific values.
+     * @param course The course to apply the created object with.
+     */
     public static void setUpLectureTask(Project course) {
         LectureList lectureList = new LectureListImpl(course);
 
@@ -105,7 +115,10 @@ public class US188_Tests {
         CurrentStorage.get().storeLectureList(lectureList, course);
     }
 
-    // Assignment
+    /**
+     * Sets up memoranda object for export with specific values.
+     * @param course The course to apply the created object with.
+     */
     public static void setUpAssignment(Project course) {
         TaskList assignmentList = new TaskListImpl(course);
 
@@ -119,12 +132,17 @@ public class US188_Tests {
         String parentTaskId = null;
         Boolean isInReduced = false;
 
-        Task assignTask = assignmentList.createTask(startDate, endDate, text, priority, effort, description, parentTaskId, isInReduced);
+        Task assignTask = assignmentList.createTask(startDate, 
+            endDate, text, priority, effort, 
+            description, parentTaskId, isInReduced);
         assignmentList.setTaskId(assignTask, id);
         CurrentStorage.get().storeAssignList(assignmentList, course);
     }
 
-    //Instructor Todos
+    /**
+     * Sets up memoranda object for export with specific values.
+     * @param course The course to apply the created object with.
+     */
     public static void setUpInstTodo(Project course) {
         TaskList instrTodoList = new TaskListImpl(course);
 
@@ -138,13 +156,18 @@ public class US188_Tests {
         String parentTaskId = "DEF_PARENT_ID_009";
         Boolean isInReduced = false;
 
-        Task instTask = instrTodoList.createTask(startDate, endDate, text, priority, effort, description, parentTaskId, isInReduced);
+        Task instTask = instrTodoList.createTask(startDate, 
+            endDate, text, priority, effort, 
+            description, parentTaskId, isInReduced);
         instrTodoList.setTaskId(instTask, id);
 
         CurrentStorage.get().storeInstrTodoList(instrTodoList, course);
     }
 
-    //Grader Todos
+    /**
+     * Sets up memoranda object for export with specific values.
+     * @param course The course to apply the created object with.
+     */
     public static void setUpTaGraderTodo(Project course) {
         TaskList taGraderTodoList = new TaskListImpl(course);
         
@@ -158,13 +181,18 @@ public class US188_Tests {
         String parentTaskId = "DEF_PARENT_ID_98";
         Boolean isInReduced = false;
 
-        Task taTask = taGraderTodoList.createTask(startDate, endDate, text, priority, effort, description, parentTaskId, isInReduced);
+        Task taTask = taGraderTodoList.createTask(startDate, 
+            endDate, text, priority, effort, 
+            description, parentTaskId, isInReduced);
         taGraderTodoList.setTaskId(taTask, id);
 
         CurrentStorage.get().storeTaTodoList(taGraderTodoList, course);
     }
 
-    //Student Todos      
+    /**
+     * Sets up memoranda object for export with specific values.
+     * @param course The course to apply the created object with.
+     */     
     public static void setUpStudent(Project course) {
         TaskList studentTodoList = new TaskListImpl(course);
 
@@ -178,13 +206,18 @@ public class US188_Tests {
         String parentTaskId = "DEF_PARENT_ID_31";
         Boolean isInReduced = false;
 
-        Task studentTask = studentTodoList.createTask(startDate, endDate, text, priority, effort, description, parentTaskId, isInReduced);
+        Task studentTask = studentTodoList.createTask(startDate, 
+            endDate, text, priority, effort, 
+            description, parentTaskId, isInReduced);
         studentTodoList.setTaskId(studentTask, id);
 
         CurrentStorage.get().storeStudentTodo(studentTodoList, course);
     }
 
-    //Resources  
+    /**
+     * Sets up memoranda object for export with specific values.
+     * @param course The course to apply the created object with.
+     */
     public static void setUpResources(Project course) {
         ResourcesList resourcesList = new ResourcesListImpl(course);
 
@@ -204,7 +237,9 @@ public class US188_Tests {
         return null;
     }
     
-
+    /**
+     * Tests JSON exported values according to test naming convention.
+     */
     @Test public void testCourseData() {
 
         String id = "COURSE_ID_1_TEST_ONLY";
@@ -221,6 +256,9 @@ public class US188_Tests {
         assertEquals(dateToString(finalDate), testCourse.get("finalDate").toString());
     }
 
+    /**
+     * Test the defautlt task exported to JSON.
+     */
     @Test public void testDefaultTask() {
 
         String name = "DEFAULT_TASK_1";
@@ -235,6 +273,9 @@ public class US188_Tests {
         assertEquals(dateToString(taskDate), defaultTask.get("date").toString());
     }
 
+    /**
+     * Test lectures exported to JSON.
+     */
     @Test public void testLectures() {
 
         CalendarDate lectureDate = new CalendarDate(9, 12, 2020);
@@ -252,6 +293,9 @@ public class US188_Tests {
 
     }
 
+    /**
+     * Tests the assignment exported to JSON.
+     */
     @Test public void testAssignments() {
 
         String id = "ASSIGNEMNT_ID_3434";
@@ -269,6 +313,9 @@ public class US188_Tests {
 
     }
 
+    /**
+     * Tests the Instructor Todo exported to JSON.
+     */
     @Test public void testInstTodo() {
 
         String id = "INSTRUCTOR_ID_55";
@@ -286,6 +333,9 @@ public class US188_Tests {
 
     }
 
+    /**
+     * Tests the Ta Todo exported to JSON.
+     */
     @Test public void testTaTodo() {
 
         String id = "TA_TODO_ID_001";
@@ -303,6 +353,9 @@ public class US188_Tests {
 
     }
 
+    /**
+     * Tests the student ToDo exported to JSON.
+     */
     @Test public void testStudentTodo() {
 
         String id = "STUDENT_TODO_55";
@@ -320,6 +373,9 @@ public class US188_Tests {
 
     }
 
+    /**
+     * Tests the resourses exported to JSON.
+     */
     @Test public void testResources() {
 
         String path = "/path/to/nearest/file/look.txt";

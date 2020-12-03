@@ -46,8 +46,8 @@ public class CurrentProject {
     static {
         System.out.println("[DEBUG] Opening Everything !!!");
 
-    	// Check if there is some project that has been opened last.
-    	// If not, create a default.
+        // Check if there is some project that has been opened last.
+        // If not, create a default.
         String prjId = (String)Context.get(PRJ_ID_KEY);
         if (prjId == null) {
             prjId = "__default";
@@ -60,19 +60,19 @@ public class CurrentProject {
         
         //ProjectManager.init();
         _project = ProjectManager.getProject(prjId);
-		
-		if (_project == null) {
-			// alexeya: Fixed bug with NullPointer when LAST_OPENED_PROJECT_ID
-			// references to missing project
-			_project = ProjectManager.getProject("__default");
-			if (_project == null) 
-				_project = (Project)ProjectManager.getActiveProjects().get(0);						
+        
+        if (_project == null) {
+            // alexeya: Fixed bug with NullPointer when LAST_OPENED_PROJECT_ID
+            // references to missing project
+            _project = ProjectManager.getProject("__default");
+            if (_project == null) 
+                _project = (Project)ProjectManager.getActiveProjects().get(0);                        
             Context.put(PRJ_ID_KEY, _project.getID());
-			
-		}		
-		
-		// Get the tasks, instructor todo lists, notes, 
-		// and resources from the project
+            
+        }        
+        
+        // Get the tasks, instructor todo lists, notes, 
+        // and resources from the project
         _tasklist = CurrentStorage.get().openTaskList(_project);
         _instrTodoList = CurrentStorage.get().openInstrTodoList(_project);
         _taTodoList = CurrentStorage.get().openTaTodoList(_project);
@@ -110,11 +110,11 @@ public class CurrentProject {
         } else if (currentTaskType == TaskType.STUDENT_TODO) {
             return _studenttodo;
         } else if (currentTaskType == TaskType.INSTR_TODO_LIST) {
-    		final String DEBUG = "\t\t[DEBUG] Returning _instrTodoList";
-    		return _instrTodoList; 
+            final String DEBUG = "\t\t[DEBUG] Returning _instrTodoList";
+            return _instrTodoList; 
         } else if (currentTaskType == TaskType.TA_TODO) {
-    		final String DEBUG = "\t\t[DEBUG] Returning _instrTodoList";
-    		return  _taTodoList; 
+            final String DEBUG = "\t\t[DEBUG] Returning _instrTodoList";
+            return  _taTodoList; 
         } 
         else {
             return _tasklist;
@@ -130,7 +130,7 @@ public class CurrentProject {
      * @return the list of lectures associated with this project
      */
     public static LectureList getLectureList() {
-    	return _lecturelist;
+        return _lecturelist;
     }
     
 
@@ -162,7 +162,7 @@ public class CurrentProject {
         if (project.getID().equals(_project.getID())) return;
         
         JsonLoader jsonLoader = new JsonLoader();
-		jsonLoader.loadFromJson();
+        jsonLoader.loadFromJson();
         
         LectureList newlecturelist = CurrentStorage.get().openLectureList(project);
         TaskList newtasklist = CurrentStorage.get().openTaskList(project);

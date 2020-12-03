@@ -20,9 +20,9 @@ public interface Note {
     String getTitle();
     void setTitle(String s);
     
-	String getId();
-	void setId(String s);
-	
+    String getId();
+    void setId(String s);
+    
     boolean isMarked();
     void setMark(boolean mark);
         

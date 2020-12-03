@@ -39,7 +39,7 @@ public class EventsScheduler {
             Date evTime = ev.getTime();
         /*DEBUG*/System.out.println((Calendar.getInstance()).getTime());
           //  if (evTime.after(new Date())) {
-	      if (evTime.after((Calendar.getInstance()).getTime())) {	
+          if (evTime.after((Calendar.getInstance()).getTime())) {    
                 EventTimer t = new EventTimer(ev);
                 t.schedule(new NotifyTask(t), ev.getTime());                
                 _timers.add(t);

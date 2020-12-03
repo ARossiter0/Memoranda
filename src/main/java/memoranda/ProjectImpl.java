@@ -172,27 +172,27 @@ public class ProjectImpl implements Project {
             _root.removeAttribute(a);
     }
 
-	public String getDescription() {
-    	Element thisElement = _root.getFirstChildElement("description");
-    	if (thisElement == null) {
-    		return null;
-    	}
-    	else {
-       		return thisElement.getValue();
-    	}
+    public String getDescription() {
+        Element thisElement = _root.getFirstChildElement("description");
+        if (thisElement == null) {
+            return null;
+        }
+        else {
+               return thisElement.getValue();
+        }
     }
 
     public void setDescription(String s) {
-    	Element desc = _root.getFirstChildElement("description");
-    	if (desc == null) {
-        	desc = new Element("description");
+        Element desc = _root.getFirstChildElement("description");
+        if (desc == null) {
+            desc = new Element("description");
             desc.appendChild(s);
-            _root.appendChild(desc);    	
-    	}
-    	else {
+            _root.appendChild(desc);        
+        }
+        else {
             desc.removeChildren();
-            desc.appendChild(s);    	
-    	}
+            desc.appendChild(s);        
+        }
     }
         
     /**

@@ -87,7 +87,7 @@ public class ProjectPackager {
                 if (n != JOptionPane.YES_OPTION) {
                     zip.close();
                     return;
-                }	
+                }    
                 ProjectManager.removeProject(pId);
             }
             Project prj = ProjectManager.createProject(pId, pTitle, new CalendarDate(pStartD), null);

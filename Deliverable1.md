@@ -6,16 +6,16 @@
 Note: we had a meeting on Sunday the 18th and this is when we chose the topic, the scrum master and the git master.
 
 **Topic you chose:** 
-	>Topic 2 - Teacher Course Planning Tool
+    >Topic 2 - Teacher Course Planning Tool
 
 **Sprint Number:** 
-	>1
+    >1
 
 **Scrum Master**: 
-	>Maayan Janow
+    >Maayan Janow
 
 **Git Master**: 
-	>Tristan Johnson
+    >Tristan Johnson
 
 ### Sprint Planning (For Sprint 1-3)
 Document your Sprint Planning here. Also check the kickoff document for more details on what needs to be done. This is just the documentation. 
@@ -92,7 +92,7 @@ so that we can finish everything on time and have time for final testing.
    Ian: 2 
    Alexander: 3
    Andrew: 2 
-	
+    
 
 ## 3: After the Sprint
 

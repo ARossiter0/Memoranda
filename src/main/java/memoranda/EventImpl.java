@@ -115,35 +115,35 @@ public class EventImpl implements Event, Comparable {
      * @see memoranda.Event#getTime()
      */
     public Date getTime() {
-    	//Deprecated methods
-		//Date d = new Date();
-		//d.setHours(getHour());
-		//d.setMinutes(getMinute());
-		//d.setSeconds(0);
-		//End deprecated methods
+        //Deprecated methods
+        //Date d = new Date();
+        //d.setHours(getHour());
+        //d.setMinutes(getMinute());
+        //d.setSeconds(0);
+        //End deprecated methods
 
-		Date d = new Date(); //Revision to fix deprecated methods (jcscoobyrs) 12-NOV-2003 14:26:00
-		Calendar calendar = new GregorianCalendar(Local.getCurrentLocale()); //Revision to fix deprecated methods (jcscoobyrs) 12-NOV-2003 14:26:00
-		calendar.setTime(d); //Revision to fix deprecated methods (jcscoobyrs) 12-NOV-2003 14:26:00
-		calendar.set(Calendar.HOUR_OF_DAY, getHour()); //Revision to fix deprecated methods (jcscoobyrs) 12-NOV-2003 14:26:00
-		calendar.set(Calendar.MINUTE, getMinute()); //Revision to fix deprecated methods (jcscoobyrs) 12-NOV-2003 14:26:00
-		calendar.set(Calendar.SECOND, 0); //Revision to fix deprecated methods (jcscoobyrs) 12-NOV-2003 14:26:00
-		d = calendar.getTime(); //Revision to fix deprecated methods (jcscoobyrs) 12-NOV-2003 14:26:00
+        Date d = new Date(); //Revision to fix deprecated methods (jcscoobyrs) 12-NOV-2003 14:26:00
+        Calendar calendar = new GregorianCalendar(Local.getCurrentLocale()); //Revision to fix deprecated methods (jcscoobyrs) 12-NOV-2003 14:26:00
+        calendar.setTime(d); //Revision to fix deprecated methods (jcscoobyrs) 12-NOV-2003 14:26:00
+        calendar.set(Calendar.HOUR_OF_DAY, getHour()); //Revision to fix deprecated methods (jcscoobyrs) 12-NOV-2003 14:26:00
+        calendar.set(Calendar.MINUTE, getMinute()); //Revision to fix deprecated methods (jcscoobyrs) 12-NOV-2003 14:26:00
+        calendar.set(Calendar.SECOND, 0); //Revision to fix deprecated methods (jcscoobyrs) 12-NOV-2003 14:26:00
+        d = calendar.getTime(); //Revision to fix deprecated methods (jcscoobyrs) 12-NOV-2003 14:26:00
         return d;
     }
-	
-	/**
+    
+    /**
      * @see memoranda.Event#getWorkinDays()
      */
-	public boolean getWorkingDays() {
+    public boolean getWorkingDays() {
         Attribute a = _elem.getAttribute("workingDays");
         if (a != null && a.getValue().equals("true")) return true;
         return false;
-	}
-	
-	public int compareTo(Object o) {
-		Event event = (Event) o;
-		return (getHour() * 60 + getMinute()) - (event.getHour() * 60 + event.getMinute());
-	}
+    }
+    
+    public int compareTo(Object o) {
+        Event event = (Event) o;
+        return (getHour() * 60 + getMinute()) - (event.getHour() * 60 + event.getMinute());
+    }
 
 }

@@ -67,8 +67,8 @@ public class ProjectsTablePanel extends JPanel {
     boolean activeOnly = false;
 
     public void updateUI() {
-		if(projectsTable!=null) projectsTable.updateUI();
-		super.updateUI();
+        if(projectsTable!=null) projectsTable.updateUI();
+        super.updateUI();
     }
 
     public ProjectsTablePanel() {
@@ -146,12 +146,12 @@ public class ProjectsTablePanel extends JPanel {
         }
 
         public Object getValueAt(int row, int col) {
-			if(row==-1) return "";
-			Project pr;
-			if (activeOnly)
-				pr = (Project) ProjectManager.getActiveProjects().get(row);
-			else
-				pr = (Project) ProjectManager.getAllProjects().get(row);
+            if(row==-1) return "";
+            Project pr;
+            if (activeOnly)
+                pr = (Project) ProjectManager.getActiveProjects().get(row);
+            else
+                pr = (Project) ProjectManager.getAllProjects().get(row);
             switch (col) {
                 case 0 :
                     return pr.getTitle();

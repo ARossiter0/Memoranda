@@ -25,7 +25,7 @@ import nu.xom.Elements;
 /*$Id: ResourcesListImpl.java,v 1.5 2007/03/20 06:21:46 alexeya Exp $*/
 public class ResourcesListImpl implements ResourcesList {
     
-	private Project _project = null;
+    private Project _project = null;
     private Document _doc = null;
     private Element _root = null;
 
@@ -99,12 +99,12 @@ public class ResourcesListImpl implements ResourcesList {
         Elements rs = _root.getChildElements("resource");
         for (int i = 0; i < rs.size(); i++)
             if (rs.get(i).getAttribute("path").getValue().equals(path)) {
-            	if(getResource(path).isProjectFile()) {
-            		File f = new File(path);
-            		System.out.println("[DEBUG] Removing file "+path);
-                	f.delete();
-            	}
-            	_root.removeChild(rs.get(i));
+                if(getResource(path).isProjectFile()) {
+                    File f = new File(path);
+                    System.out.println("[DEBUG] Removing file "+path);
+                    f.delete();
+                }
+                _root.removeChild(rs.get(i));
             }
     }
         

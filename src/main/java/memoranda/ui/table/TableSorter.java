@@ -122,38 +122,38 @@ public class TableSorter extends TableMap {
                 return 0;
             }
         } else if (type == String.class) {
-	    int result;
-	    if(data.getColumnName(column).equals(Local.getString("Priority"))) {
-		    Hashtable priority = new Hashtable();
-		    priority.put(Local.getString("Lowest"), new Integer(1));
-		    priority.put(Local.getString("Low"), new Integer(2));
-		    priority.put(Local.getString("Normal"), new Integer(3));
-		    priority.put(Local.getString("High"), new Integer(4));
-		    priority.put(Local.getString("Highest"), new Integer(5));
-	
-		    Integer s1 = (Integer)priority.get((String)data.getValueAt(row1, column));
-		    Integer s2 = (Integer)priority.get((String)data.getValueAt(row2, column));
-		    if (s1==null || s2==null) return 0;
-		    result = s1.compareTo(s2);
-	    }
-	    else if(data.getColumnName(column).equals(Local.getString("Status"))) {
-		    Hashtable priority = new Hashtable();
-		    priority.put(Local.getString("Completed"), new Integer(1));
-		    priority.put(Local.getString("Failed"), new Integer(2));
-		    priority.put(Local.getString("Scheduled"), new Integer(3));
-		    priority.put(Local.getString("Active"), new Integer(4));
-		    priority.put(Local.getString("Deadline"), new Integer(5));
-	
-		    Integer s1 = (Integer)priority.get((String)data.getValueAt(row1, column));
-		    Integer s2 = (Integer)priority.get((String)data.getValueAt(row2, column));
-		    if (s1==null || s2==null) return 0;
-		    result = s1.compareTo(s2);
-	    }		
-	    else {
-		    String s1 = (String)data.getValueAt(row1, column);
-		    String s2    = (String)data.getValueAt(row2, column);
-		    result = s1.compareTo(s2);
-	    }
+        int result;
+        if(data.getColumnName(column).equals(Local.getString("Priority"))) {
+            Hashtable priority = new Hashtable();
+            priority.put(Local.getString("Lowest"), new Integer(1));
+            priority.put(Local.getString("Low"), new Integer(2));
+            priority.put(Local.getString("Normal"), new Integer(3));
+            priority.put(Local.getString("High"), new Integer(4));
+            priority.put(Local.getString("Highest"), new Integer(5));
+    
+            Integer s1 = (Integer)priority.get((String)data.getValueAt(row1, column));
+            Integer s2 = (Integer)priority.get((String)data.getValueAt(row2, column));
+            if (s1==null || s2==null) return 0;
+            result = s1.compareTo(s2);
+        }
+        else if(data.getColumnName(column).equals(Local.getString("Status"))) {
+            Hashtable priority = new Hashtable();
+            priority.put(Local.getString("Completed"), new Integer(1));
+            priority.put(Local.getString("Failed"), new Integer(2));
+            priority.put(Local.getString("Scheduled"), new Integer(3));
+            priority.put(Local.getString("Active"), new Integer(4));
+            priority.put(Local.getString("Deadline"), new Integer(5));
+    
+            Integer s1 = (Integer)priority.get((String)data.getValueAt(row1, column));
+            Integer s2 = (Integer)priority.get((String)data.getValueAt(row2, column));
+            if (s1==null || s2==null) return 0;
+            result = s1.compareTo(s2);
+        }        
+        else {
+            String s1 = (String)data.getValueAt(row1, column);
+            String s2    = (String)data.getValueAt(row2, column);
+            result = s1.compareTo(s2);
+        }
 
 
             if (result < 0) {
@@ -188,7 +188,7 @@ public class TableSorter extends TableMap {
             } else if (result > 0) {
                 return 1;
             } else {
-        	return 0;
+            return 0;
             }
         }
     }

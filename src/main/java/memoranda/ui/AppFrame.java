@@ -173,7 +173,7 @@ public class AppFrame extends JFrame {
     JMenuItem jMenuInsertDate = new JMenuItem(
             workPanel.dailyItemsPanel.editorPanel.insertDateAction);
     JMenuItem jMenuInsertTime = new JMenuItem(
-    		workPanel.dailyItemsPanel.editorPanel.insertTimeAction);
+            workPanel.dailyItemsPanel.editorPanel.insertTimeAction);
     JMenuItem jMenuInsertFile = new JMenuItem(
             workPanel.dailyItemsPanel.editorPanel.importAction);
 
@@ -1062,7 +1062,7 @@ public class AppFrame extends JFrame {
                         content = document.getRootElement().getFirstChildElement("body").getValue();
                         content = content.substring(content.indexOf("\n", content.indexOf("-")));
                         content = content.replace("<p>","").replace("</p>","\n");
-                        name = f.getName().substring(0,f.getName().lastIndexOf("."));	
+                        name = f.getName().substring(0,f.getName().lastIndexOf("."));    
                         Element item;
                         id=Util.generateId();
                         System.out.println(id+" "+name+" "+content);

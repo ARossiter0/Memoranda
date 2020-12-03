@@ -27,7 +27,7 @@ public interface NoteList {
     Note createNoteForDate(CalendarDate date);
     
 //    void removeNoteForDate(CalendarDate date);
-	void removeNote(CalendarDate date, String id);
+    void removeNote(CalendarDate date, String id);
 
     Note getActiveNote();
     

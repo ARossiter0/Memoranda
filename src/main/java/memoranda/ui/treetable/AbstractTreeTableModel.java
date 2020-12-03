@@ -1,6 +1,6 @@
 package memoranda.ui.treetable;
 /*
- * @(#)AbstractTreeTableModel.java	1.2 98/10/27
+ * @(#)AbstractTreeTableModel.java    1.2 98/10/27
  *
  * Copyright 1997, 1998 by Sun Microsystems, Inc.,
  * 901 San Antonio Road, Palo Alto, California, 94303, U.S.A.
@@ -48,11 +48,11 @@ public abstract class AbstractTreeTableModel implements TreeTableModel {
     // This is not called in the JTree's default mode: use a naive implementation. 
     public int getIndexOfChild(Object parent, Object child) {
         for (int i = 0; i < getChildCount(parent); i++) {
-	    if (getChild(parent, i).equals(child)) { 
-	        return i; 
-	    }
+        if (getChild(parent, i).equals(child)) { 
+            return i; 
         }
-	return -1; 
+        }
+    return -1; 
     }
 
     public void addTreeModelListener(TreeModelListener l) {

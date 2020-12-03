@@ -55,20 +55,20 @@ public class HTMLFileExport {
                     //FileWriter fw = new FileWriter(f);
                     Writer fw;
                     
-					//Added to fix the file if there was no extention given
-					//jcscoobyrs 17-Nov-2003 at 09:08:55
-					//------------------------------------------------------
-					if(f.getName().indexOf(".htm") == -1)
-					{
-						String dir = f.getPath();
-						String ext = ".html";
-						//String ps = System.getProperty("file.separator");
-						String nfile = dir + ext;
-			
-						f = new File(nfile);                    	
-					}
-					//------------------------------------------------------
-					//End appendage
+                    //Added to fix the file if there was no extention given
+                    //jcscoobyrs 17-Nov-2003 at 09:08:55
+                    //------------------------------------------------------
+                    if(f.getName().indexOf(".htm") == -1)
+                    {
+                        String dir = f.getPath();
+                        String ext = ".html";
+                        //String ps = System.getProperty("file.separator");
+                        String nfile = dir + ext;
+            
+                        f = new File(nfile);                        
+                    }
+                    //------------------------------------------------------
+                    //End appendage
                     
                     if (charset != null)    
                         fw = new OutputStreamWriter(new FileOutputStream(f), charset);
@@ -82,53 +82,53 @@ public class HTMLFileExport {
                     new ExceptionDialog(ex, "Cannot export file "+f.getPath(), null);
                 }
         }
-	 
      
-	 private String getTemplateString(String templF) {		
-	    if ((templF != null) && (templF.length() >0)) {
-    		File f = new File(templF);			
-			String text = "";	
-			try {
-				BufferedReader fr = new BufferedReader(new InputStreamReader(new FileInputStream(f)));		
-				String s = fr.readLine();
-				while (s != null) {				
-					text = text + s;
-					s = fr.readLine();
-				}
-				fr.close();
-			}
-			catch (Exception ex) {
-				new ExceptionDialog(ex, "Cannot read template file from "+templF, null);
-			}	
-			if (text.length() > 0)
-				return text;
-		}
-	    String t = (String)Configuration.get("DEFAULT_EXPORT_TEMPLATE");
-	    if ((t != null) && (t.length() > 0))
-	        return t;
-		return "<html>\n<head>\n@METACHARSET@\n<title>@TITLE@ - @PROJECT@</title>\n</head>\n<body>\n@CONTENT@\n</body>\n</html>";
-	 }
      
-	 private String applyTemplate() {
+     private String getTemplateString(String templF) {        
+        if ((templF != null) && (templF.length() >0)) {
+            File f = new File(templF);            
+            String text = "";    
+            try {
+                BufferedReader fr = new BufferedReader(new InputStreamReader(new FileInputStream(f)));        
+                String s = fr.readLine();
+                while (s != null) {                
+                    text = text + s;
+                    s = fr.readLine();
+                }
+                fr.close();
+            }
+            catch (Exception ex) {
+                new ExceptionDialog(ex, "Cannot read template file from "+templF, null);
+            }    
+            if (text.length() > 0)
+                return text;
+        }
+        String t = (String)Configuration.get("DEFAULT_EXPORT_TEMPLATE");
+        if ((t != null) && (t.length() > 0))
+            return t;
+        return "<html>\n<head>\n@METACHARSET@\n<title>@TITLE@ - @PROJECT@</title>\n</head>\n<body>\n@CONTENT@\n</body>\n</html>";
+     }
+     
+     private String applyTemplate() {
         String body = getNoteBody();        
-		String title = note != null? note.getTitle() : "";
-		String id = note != null? note.getId() : "";
-		String project = note != null? note.getProject().getTitle() : "";
-		String date = note != null? note.getDate().getFullDateString() : "";
-		String now = new Date().toString();
-		String templ = getTemplateString(templFile);
-		templ = templ.replaceAll("@CONTENT@", body);
-		templ = templ.replaceAll("@TITLE@", title);
-		templ = templ.replaceAll("@ID@", id);
-		templ = templ.replaceAll("@PROJECT@", project);
-		templ = templ.replaceAll("@DATE@", date);
-		templ = templ.replaceAll("@NOW@", now);
-		if ((charset != null) && (charset.length() >0))
-		    templ = templ.replaceAll("@METACHARSET@", "<meta http-equiv=\"Content-Type\" content=\"text/html; charset="
+        String title = note != null? note.getTitle() : "";
+        String id = note != null? note.getId() : "";
+        String project = note != null? note.getProject().getTitle() : "";
+        String date = note != null? note.getDate().getFullDateString() : "";
+        String now = new Date().toString();
+        String templ = getTemplateString(templFile);
+        templ = templ.replaceAll("@CONTENT@", body);
+        templ = templ.replaceAll("@TITLE@", title);
+        templ = templ.replaceAll("@ID@", id);
+        templ = templ.replaceAll("@PROJECT@", project);
+        templ = templ.replaceAll("@DATE@", date);
+        templ = templ.replaceAll("@NOW@", now);
+        if ((charset != null) && (charset.length() >0))
+            templ = templ.replaceAll("@METACHARSET@", "<meta http-equiv=\"Content-Type\" content=\"text/html; charset="
                         + charset + "\" >");
-		if (xhtml)
-		    templ = convertToXHTML(templ);
-		return templ;
+        if (xhtml)
+            templ = convertToXHTML(templ);
+        return templ;
      }
      
      private String getNoteBody() {

@@ -39,10 +39,10 @@ public class LoadableProperties extends Hashtable {
     }
 
     public void save(OutputStream outStream, boolean sorted) throws IOException {
-    	if (!sorted) {
-    		save(outStream);
-    		return;
-    	}
+        if (!sorted) {
+            save(outStream);
+            return;
+        }
         BufferedWriter out = new BufferedWriter(new OutputStreamWriter(outStream, "UTF-8"));
         String aKey;
         Object aValue;

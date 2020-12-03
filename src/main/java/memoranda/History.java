@@ -161,12 +161,12 @@ public class History {
             if (canRollBack()) {
                 setEnabled(true);
 
-		SimpleDateFormat sdf = new SimpleDateFormat();
-		sdf = (SimpleDateFormat)DateFormat.getDateInstance(DateFormat.SHORT);
-		Date date = ((HistoryItem) prev).getDate().getDate();
-		    putValue(
+        SimpleDateFormat sdf = new SimpleDateFormat();
+        sdf = (SimpleDateFormat)DateFormat.getDateInstance(DateFormat.SHORT);
+        Date date = ((HistoryItem) prev).getDate().getDate();
+            putValue(
                     Action.SHORT_DESCRIPTION,
-		   Local.getString("Back to") + " " + sdf.format(date));
+           Local.getString("Back to") + " " + sdf.format(date));
 
 //                putValue(Action.SHORT_DESCRIPTION, Local.getString("Back to") + " " + ((HistoryItem) prev).getDate().toString());
             }
@@ -200,14 +200,14 @@ public class History {
             if (canRollForward()) {
                 setEnabled(true);
 
-		SimpleDateFormat sdf = new SimpleDateFormat();
-		sdf = (SimpleDateFormat)DateFormat.getDateInstance(DateFormat.SHORT);
-		Date date = ((HistoryItem) next).getDate().getDate();
+        SimpleDateFormat sdf = new SimpleDateFormat();
+        sdf = (SimpleDateFormat)DateFormat.getDateInstance(DateFormat.SHORT);
+        Date date = ((HistoryItem) next).getDate().getDate();
 
-		    putValue(
+            putValue(
                     Action.SHORT_DESCRIPTION,
                    // Local.getString("Forward to") + " " + ((HistoryItem) next).getDate().toString());
-		   Local.getString("Forward to") + " " + sdf.format(date));
+           Local.getString("Forward to") + " " + sdf.format(date));
             }
             else {
                 setEnabled(false);

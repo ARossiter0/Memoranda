@@ -18,13 +18,13 @@ import memoranda.date.CalendarDate;
 /*$Id: TaskList.java,v 1.8 2005/12/01 08:12:26 alexeya Exp $*/
 public interface LectureList {
 
-	Project getProject();
+    Project getProject();
     Lecture getLecture(String id);
 
 
     Lecture createLecture(CalendarDate date, Calendar startTime, Calendar endTime, String topic);
 
     nu.xom.Document getXMLContent();
-	Vector getAllLectures();
+    Vector getAllLectures();
 
 }

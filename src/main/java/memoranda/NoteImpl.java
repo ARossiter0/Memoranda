@@ -33,15 +33,15 @@ public class NoteImpl implements Note, Comparable {
      * @see memoranda.Note#getDate()
      */
     public CalendarDate getDate() {
-		Element day = (Element)_el.getParent();
-		Element month = (Element)day.getParent();
-		Element year = (Element)month.getParent();
+        Element day = (Element)_el.getParent();
+        Element month = (Element)day.getParent();
+        Element year = (Element)month.getParent();
 
      //   return new CalendarDate(day.getAttribute("date").getValue());
-		
-		return new CalendarDate(new Integer(day.getAttribute("day").getValue()).intValue(), 
-								new Integer(month.getAttribute("month").getValue()).intValue(),
-								new Integer(year.getAttribute("year").getValue()).intValue());
+        
+        return new CalendarDate(new Integer(day.getAttribute("day").getValue()).intValue(), 
+                                new Integer(month.getAttribute("month").getValue()).intValue(),
+                                new Integer(year.getAttribute("year").getValue()).intValue());
 
     }
     
@@ -65,25 +65,25 @@ public class NoteImpl implements Note, Comparable {
         else 
             ta.setValue(s);
     }
-	
-	/**
+    
+    /**
      * @see memoranda.Note#getId
      */
-	
-	public String getId() {
-		Attribute id = _el.getAttribute("refid");
-		if (id==null) return "";
-		return _el.getAttribute("refid").getValue();
-	}
-	
-	/**
+    
+    public String getId() {
+        Attribute id = _el.getAttribute("refid");
+        if (id==null) return "";
+        return _el.getAttribute("refid").getValue();
+    }
+    
+    /**
      * @see memoranda.Note#setId(java.lang.String)
      */
-	 
-	public void setId(String s) {
-		Attribute id = _el.getAttribute("refid");
-		if(id==null) _el.addAttribute(new Attribute("refid", s));
-	}
+     
+    public void setId(String s) {
+        Attribute id = _el.getAttribute("refid");
+        if(id==null) _el.addAttribute(new Attribute("refid", s));
+    }
     /**
      * @see memoranda.Note#isMarked()
      */
@@ -103,18 +103,18 @@ public class NoteImpl implements Note, Comparable {
         else if (!mark)
             _el.removeAttribute(ma);
     }
-	
-	/*
-	 * Comparable interface
-	 */
-	public int compareTo(Object o) {
-		Note note = (Note) o;
-		if(getDate().getDate().getTime() > note.getDate().getDate().getTime())
-			return 1;
-		else if(getDate().getDate().getTime() < note.getDate().getDate().getTime())
-			return -1;
-		else 
-			return 0;
-	}
+    
+    /*
+     * Comparable interface
+     */
+    public int compareTo(Object o) {
+        Note note = (Note) o;
+        if(getDate().getDate().getTime() > note.getDate().getDate().getTime())
+            return 1;
+        else if(getDate().getDate().getTime() < note.getDate().getDate().getTime())
+            return -1;
+        else 
+            return 0;
+    }
     
 }

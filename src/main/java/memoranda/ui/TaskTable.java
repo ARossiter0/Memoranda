@@ -74,7 +74,7 @@ import memoranda.util.*;
  *
  * <p>Article about <a href="http://java.sun.com/products/jfc/tsc/articles/treetable1/">treetables</a>.</p>
  *
- * @see	main.java.memoranda.ui.TaskTreeTableCellRenderer
+ * @see    main.java.memoranda.ui.TaskTreeTableCellRenderer
  * @version $Id: TaskTable.java,v 1.26 2007/01/05 10:33:26 alexeya Exp $
  * @author $Author: alexeya $
  */
@@ -563,5 +563,5 @@ public class TaskTable extends JTable {
             System.out.println(expanded.size());
         }
 
-    } // }}}		
+    } // }}}        
 }

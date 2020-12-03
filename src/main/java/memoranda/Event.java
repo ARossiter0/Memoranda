@@ -42,6 +42,6 @@ public interface Event {
     Date getTime();
     String getTimeString();
     
-	boolean getWorkingDays();
+    boolean getWorkingDays();
     
 }
