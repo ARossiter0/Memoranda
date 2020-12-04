@@ -116,30 +116,34 @@ Answer as a team!
 
 > In this section I want you to point me to your main contributions (each of you individually). Some of the topcs are not needed for the first deliverables (you should know which things you should have done in this Sprint, if you don't then you have probably missed something):
 
-#### Team member A -- replace this with your name:
+#### Tristan Johnson:
   **Links to GitHub commits with main code contribution (up to 5 links) - all Sprints:
 
-    - link1
-    - link2
+    - https://github.com/amehlhase316/Leipzig-2/commit/c086dd277ff36bdf00119b00ec17ee31a3cf8529
+    - https://github.com/amehlhase316/Leipzig-2/commit/50f071fb708c6b371d7742b05473621184a1d8aa
+    - https://github.com/amehlhase316/Leipzig-2/commit/b7b1f3b0803202bc6b19159710babe22dec30eef
+    - https://github.com/amehlhase316/Leipzig-2/commit/7120fa9aa54c852ebf87a3d43c712249500f157d
 
    **GitHub links to your Unit Tests (up to 3 links) -- Sprint 2 and 3:
 
-    - link1
-    - link2
+    - https://github.com/amehlhase316/Leipzig-2/commit/69006a53cfb509184905645f8551f52ec4ce6048
+    - https://github.com/amehlhase316/Leipzig-2/commit/1851e9d040e92a063c4404e0a21ffc6bef25990a
+    - https://github.com/amehlhase316/Leipzig-2/commit/413e148892039e2b2f44adb4cb72752444868102
 
   **GitHub links to your Code Reviews (up to 3 links) -- Sprint 2 and 3:
 
-    - link1
-    - link2
+    - https://github.com/amehlhase316/Leipzig-2/pull/27
+    - https://github.com/amehlhase316/Leipzig-2/pull/28
 
   **How did you contribute to Static Analysis -- Sprint 3:
 
-    - link1
-    - link2
+    - I was the first to set up checkstyle, spotbugs, and TravisCI in one of my branches. 
+    - I did my best to make sure that my newly developed code was free of checkstyle and spotbugs errors. 
+    - I made sure that only pull requests that passed the TravisCI checks were merged into development. 
  
  **What was your main contribution to the Quality Policy documentation?:
 
-    - info
+    - I wrote the first draft for the static analysis information in the quality policy document: both for handling checkstyle and spotbugs, and for TravisCI. 
 
 #### Team member -- Ian Swanlund:
   **Links to GitHub commits with main code contribution (up to 5 links) - all Sprints:
