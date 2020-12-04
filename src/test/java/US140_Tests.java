@@ -46,11 +46,11 @@ public class US140_Tests {
         cal1.set(Calendar.MINUTE, 30);
         LectureImpl lect1 = (LectureImpl) lectList.createLecture(CalendarDate.today(), cal1, cal1, "Lecture");
         LectureImpl lect2 = (LectureImpl) lectList.createLecture(CalendarDate.today(), cal1, cal1, "Lecture");
-        assertTrue(lect1.compareTo(lect2) == 0);
+        assertEquals(lect1.compareTo(lect2), 0);
         
         // Test w/ one day apart
-        LectureImpl lect3 = (LectureImpl) lectList.createLecture(CalendarDate.today(), cal1, cal1, "Lecture");
-        LectureImpl lect4 = (LectureImpl) lectList.createLecture(CalendarDate.tomorrow(), cal1, cal1, "Lecture");
+        lectList.createLecture(CalendarDate.today(), cal1, cal1, "Lecture");
+        lectList.createLecture(CalendarDate.tomorrow(), cal1, cal1, "Lecture");
         //assertTrue(lect3.compareTo(lect4) == -1);
         //assertTrue(lect4.compareTo(lect3) == 1);
         
@@ -59,8 +59,8 @@ public class US140_Tests {
         CalendarDate cDate2 = new CalendarDate(1, 2, 2020);
         LectureImpl lect5 = (LectureImpl) lectList.createLecture(cDate1, cal1, cal1, "Lecture");
         LectureImpl lect6 = (LectureImpl) lectList.createLecture(cDate2, cal1, cal1, "Lecture");
-        assertTrue(lect5.compareTo(lect6) == -1);
-        assertTrue(lect6.compareTo(lect5) == 1);
+        assertEquals(lect5.compareTo(lect6), -1);
+        assertEquals(lect6.compareTo(lect5), 1);
         
         // Test /w one year apart
         CalendarDate cDate3 = new CalendarDate(1, 1, 2020);

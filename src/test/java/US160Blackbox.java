@@ -519,15 +519,15 @@ public class US160Blackbox {
         storage.storeInstrTodoList(instrTodoList, project);
         CurrentProject.set(project);
 
-        CurrentProject.currentTaskType =
-                CurrentProject.TaskType.INSTR_TODO_LIST;
+        CurrentProject.setCurrentTaskType(
+                CurrentProject.TaskType.INSTR_TODO_LIST);
         TaskList getInstrTodoList = CurrentProject.getTaskList();
         final long Expected0 = 50;
         final long Result0 = getInstrTodoList.getTopLevelTasks().size();
 
         assertEquals(Expected0, Result0);
 
-        CurrentProject.currentTaskType = CurrentProject.TaskType.DEFAULT;
+        CurrentProject.setCurrentTaskType( CurrentProject.TaskType.DEFAULT);
         TaskList getTaskList = CurrentProject.getTaskList();
         final int Expected1 = 500;
         final int Result1 = getTaskList.getTopLevelTasks().size();
@@ -558,15 +558,15 @@ public class US160Blackbox {
         storage.storeInstrTodoList(instrTodoList, project);
         CurrentProject.set(project);
 
-        CurrentProject.currentTaskType =
-                CurrentProject.TaskType.INSTR_TODO_LIST;
+        CurrentProject.setCurrentTaskType(
+                CurrentProject.TaskType.INSTR_TODO_LIST);
         getInstrTodoList = CurrentProject.getTaskList();
         final long Expected2 = 0;
         final long Result2 = getInstrTodoList.getTopLevelTasks().size();
 
         assertEquals(Expected2, Result2);
 
-        CurrentProject.currentTaskType = CurrentProject.TaskType.DEFAULT;
+        CurrentProject.setCurrentTaskType( CurrentProject.TaskType.DEFAULT);
         getTaskList = CurrentProject.getTaskList();
         final int Expected3 = 500;
         final int Result3 = getTaskList.getTopLevelTasks().size();
@@ -596,15 +596,15 @@ public class US160Blackbox {
         storage.storeInstrTodoList(instrTodoList, project);
         CurrentProject.set(project);
 
-        CurrentProject.currentTaskType =
-                CurrentProject.TaskType.INSTR_TODO_LIST;
+        CurrentProject.setCurrentTaskType(
+                CurrentProject.TaskType.INSTR_TODO_LIST);
         getInstrTodoList = CurrentProject.getTaskList();
-        final long Expected4 = 50;
+        //final long Expected4 = 50;
         final long Result4 = getInstrTodoList.getTopLevelTasks().size();
 
-        assertEquals(Expected4, Result4);
+        assertEquals(50, Result4);
 
-        CurrentProject.currentTaskType = CurrentProject.TaskType.DEFAULT;
+        CurrentProject.setCurrentTaskType( CurrentProject.TaskType.DEFAULT);
         getTaskList = CurrentProject.getTaskList();
         final int Expected6 = 0;
         final int Result6 = getTaskList.getTopLevelTasks().size();
@@ -645,15 +645,15 @@ public class US160Blackbox {
         storage.storeInstrTodoList(instrTodoList, project);
         CurrentProject.set(project);
 
-        CurrentProject.currentTaskType =
-                CurrentProject.TaskType.INSTR_TODO_LIST;
+        CurrentProject.setCurrentTaskType(
+                CurrentProject.TaskType.INSTR_TODO_LIST);
         getInstrTodoList = CurrentProject.getTaskList();
         final long Expected7 = 50;
         final long Result7 = getInstrTodoList.getTopLevelTasks().size();
 
         assertEquals(Expected7, Result7);
 
-        CurrentProject.currentTaskType = CurrentProject.TaskType.DEFAULT;
+        CurrentProject.setCurrentTaskType( CurrentProject.TaskType.DEFAULT);
         getTaskList = CurrentProject.getTaskList();
         final int Expected8 = 500;
         final int Result8 = getTaskList.getTopLevelTasks().size();
@@ -694,15 +694,15 @@ public class US160Blackbox {
         storage.storeInstrTodoList(instrTodoList, project);
         CurrentProject.set(project);
 
-        CurrentProject.currentTaskType =
-                CurrentProject.TaskType.INSTR_TODO_LIST;
+        CurrentProject.setCurrentTaskType(
+                CurrentProject.TaskType.INSTR_TODO_LIST);
         getInstrTodoList = CurrentProject.getTaskList();
         final long Expected9 = 50;
         final long Result9 = getInstrTodoList.getTopLevelTasks().size();
 
         assertEquals(Expected9, Result9);
 
-        CurrentProject.currentTaskType = CurrentProject.TaskType.DEFAULT;
+        CurrentProject.setCurrentTaskType( CurrentProject.TaskType.DEFAULT);
         getTaskList = CurrentProject.getTaskList();
         final int Expected10 = 500;
         final int Result10 = getTaskList.getTopLevelTasks().size();
@@ -761,7 +761,7 @@ public class US160Blackbox {
         Context.put("SHOW_REDUCED_ONLY", false);
 
         // Check that the task table model has 501 children
-        CurrentProject.currentTaskType = CurrentProject.TaskType.DEFAULT;
+        CurrentProject.setCurrentTaskType( CurrentProject.TaskType.DEFAULT);
         TaskTableModel taskTableModel = new TaskTableModel();
         taskTableModel.fireUpdateCache();
         final long Expected0 = 501;
@@ -775,8 +775,8 @@ public class US160Blackbox {
         assertTrue(Expected1 == Result1);
 
         // Check that the task table model has 51 children
-        CurrentProject.currentTaskType =
-                CurrentProject.TaskType.INSTR_TODO_LIST;
+        CurrentProject.setCurrentTaskType(
+                CurrentProject.TaskType.INSTR_TODO_LIST);
         taskTableModel.fireUpdateCache();
         final long Expected2 = 51;
         final long Result2 = taskTableModel.getChildCount(project);
@@ -812,7 +812,7 @@ public class US160Blackbox {
         Context.put("SHOW_REDUCED_ONLY", false);
 
         // Check that the task table model has 501 children
-        CurrentProject.currentTaskType = CurrentProject.TaskType.DEFAULT;
+        CurrentProject.setCurrentTaskType( CurrentProject.TaskType.DEFAULT);
         taskTableModel = new TaskTableModel();
         taskTableModel.fireUpdateCache();
         final long Expected5 = 0;
@@ -820,8 +820,8 @@ public class US160Blackbox {
         assertTrue(Expected5 == Result5);
 
         // Check that the task table model has 51 children
-        CurrentProject.currentTaskType =
-                CurrentProject.TaskType.INSTR_TODO_LIST;
+        CurrentProject.setCurrentTaskType(
+                CurrentProject.TaskType.INSTR_TODO_LIST);
         taskTableModel.fireUpdateCache();
         final long Expected7 = 0;
         final long Result7 = taskTableModel.getChildCount(project);
@@ -852,7 +852,6 @@ public class US160Blackbox {
 
         TaskList instrTodoList = new TaskListImpl(project);
 
-        final Task instrTodoTask0 =
                 instrTodoList.createTask(CalendarDate.today(),
                 CalendarDate.today(), "Todo 0", 0, 0, "", null, true);
         final Task instrTodoTask1 =
@@ -861,7 +860,7 @@ public class US160Blackbox {
         final Task instrTodoTask2 =
                 instrTodoList.createTask(CalendarDate.today(),
                 CalendarDate.today(), "Todo 2", 0, 0, "", null, true);
-        final Task subtask0 = instrTodoList.createTask(CalendarDate.today(),
+        instrTodoList.createTask(CalendarDate.today(),
                 CalendarDate.today(), "Subtodo 0", 0, 0, "",
                 instrTodoTask1.getID(), true);
         final Task subtask1 = instrTodoList.createTask(CalendarDate.today(),
@@ -874,8 +873,8 @@ public class US160Blackbox {
 
 
         // Check that the 3rd child of project is instrTodoTask2
-        CurrentProject.currentTaskType =
-                CurrentProject.TaskType.INSTR_TODO_LIST;
+        CurrentProject.setCurrentTaskType(
+                CurrentProject.TaskType.INSTR_TODO_LIST);
         TaskTableModel taskTableModel = new TaskTableModel();
         taskTableModel.fireUpdateCache();
         final Task Expected1 = instrTodoTask2;

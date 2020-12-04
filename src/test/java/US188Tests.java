@@ -79,6 +79,11 @@ public class US188Tests {
                 testCourse = (JSONObject) jsonCourse;
             }
         }
+        try {
+            reader.close();
+        } finally {
+            System.out.println("[DEBUG] Reader not closed.");
+        }
     }
 
     /**
@@ -106,8 +111,8 @@ public class US188Tests {
         LectureList lectureList = new LectureListImpl(course);
 
         CalendarDate lectureDate = new CalendarDate(9, 12, 2020);
-        Calendar startTimeCal = new GregorianCalendar(2020, 12, 9, 5, 30);
-        Calendar endTimeCal = new GregorianCalendar(2020, 12, 9, 7, 30);
+        Calendar startTimeCal = new GregorianCalendar(2020, 11, 9, 5, 30);
+        Calendar endTimeCal = new GregorianCalendar(2020, 11, 9, 7, 30);
         String topic = "LECTURE_TEST_TOPIC";
 
         lectureList.createLecture(lectureDate, startTimeCal, endTimeCal, topic);
