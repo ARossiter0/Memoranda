@@ -86,7 +86,7 @@ Answer as a team!
 
 **Did you meet your sprint goal?**
 
-> No. We failed to implement sprint functionality. We did meet most of our objectives. 
+> All of the created and assigned user stories and tasks were completed. However we failed to implement sprint functionality becuase it was glanced over. We did meet the majority of our express objectives. 
 
 **Did you complete all stories on your Spring Backlog?**
 
@@ -140,6 +140,34 @@ Answer as a team!
  **What was your main contribution to the Quality Policy documentation?:
 
     - info
+
+#### Team member -- Ian Swanlund:
+  **Links to GitHub commits with main code contribution (up to 5 links) - all Sprints:
+
+    - https://github.com/amehlhase316/Leipzig-2/commit/b9dbfbe734c7f9c5436382dde7c643f033963a05
+    - https://github.com/amehlhase316/Leipzig-2/commit/069b07d185402b1718786252b29d715f30dd8c27
+    - https://github.com/amehlhase316/Leipzig-2/commit/5d9acafbe7b13c5bb4ceb8ef1f99b939d48d20ac
+
+
+   **GitHub links to your Unit Tests (up to 3 links) -- Sprint 2 and 3:
+
+    - https://github.com/amehlhase316/Leipzig-2/blob/US188_ExportData/src/test/java/US188Tests.java
+
+  **GitHub links to your Code Reviews (up to 3 links) -- Sprint 2 and 3:
+
+    - https://github.com/amehlhase316/Leipzig-2/pull/22
+    - https://github.com/amehlhase316/Leipzig-2/pull/25
+
+  **How did you contribute to Static Analysis -- Sprint 3:
+
+    - https://github.com/amehlhase316/Leipzig-2/commit/ee3c17333849a0ee6b98b1446ad7b87caeea17d2
+    - https://github.com/amehlhase316/Leipzig-2/commit/334a32f3f21adc6445dd557034eab8c4326fa237
+ 
+ **What was your main contribution to the Quality Policy documentation?:
+
+    - The revision of the policy to more accuratly reflect the nature and type of features that were being created and tested.
+      Before the revison the criteria for a submission was too broad and required an intensity and time commitment that overshadowed
+      the main team goal of creating business value in Memoranda through the completion of sprints. 
   
 ## 4: Checklist for you to see if you are done
 - [ ] Filled out the complete form from above, all fields are filled and written in full sentences
