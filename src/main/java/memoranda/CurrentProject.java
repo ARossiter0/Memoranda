@@ -132,6 +132,13 @@ public class CurrentProject {
     public static LectureList getLectureList() {
         return _lecturelist;
     }
+
+    /**
+     * This is a test usage method, not for usage in main code.
+     */
+    public static void setCurrentTaskType(TaskType type) {
+        currentTaskType = type;
+    }
     
 
     /**

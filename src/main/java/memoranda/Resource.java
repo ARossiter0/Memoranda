@@ -17,16 +17,18 @@ public class Resource {
     private String _path = null;	// the path to the file
     private boolean _isInetShortcut = false; // true if Internet shortcut
     private boolean _isProjectFile = false;	// true if file is in project directory 
+    private boolean _studentVisible = false;
     /**
      * Constructor for Resource.
      * @param path, the path to the file.
      * @param isInetShortcut, if the resource is a internet shortcut.
      * @param isProjectFile, if file is copied to project directory.
      */
-    public Resource(String path, boolean isInetShortcut, boolean isProjectFile) {
+    public Resource(String path, boolean isInetShortcut, boolean isProjectFile, boolean studentVisible) {
         _path = path;
         _isInetShortcut = isInetShortcut;
         _isProjectFile = isProjectFile;
+        _studentVisible = studentVisible;
     }
     
     public Resource(String path) {
@@ -55,6 +57,22 @@ public class Resource {
      */
     public boolean isProjectFile() {
     	return _isProjectFile;
+    }
+    
+    /**
+     * Set whether this resource is visible to students
+     * @param studentVisible true if students should be able to view document
+     */
+    public void setStudentVisible(boolean studentVisible) {
+        _studentVisible = studentVisible;
+    }
+    
+    /**
+     * Get whether a student can see this document
+     * @return true if student visible
+     */
+    public boolean getStudentVisible() {
+        return _studentVisible;
     }
 
 }

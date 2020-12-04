@@ -58,6 +58,12 @@ spotbugsMain {
         html.enabled = true
     }
 }
+spotbugsTest {
+    reports {
+        xml.enabled = false
+        html.enabled = true
+    }
+}
 
 spotbugs {
     //toolVersion = '4.0.0-beta4'
