@@ -1,5 +1,5 @@
-package main.java.memoranda;
-import main.java.memoranda.date.CalendarDate;
+package memoranda;
+import memoranda.date.CalendarDate;
 
 public class SpecialCalendarDate {
     private String name;

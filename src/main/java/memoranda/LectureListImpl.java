@@ -6,22 +6,19 @@
  * @author Alex V. Alishevskikh, alex@openmechanics.net
  * Copyright (c) 2003 Memoranda Team. http://memoranda.sf.net
  */
-package main.java.memoranda;
+package memoranda;
 
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Hashtable;
-import java.util.Iterator;
 import java.util.Vector;
 
-import main.java.memoranda.date.CalendarDate;
-import main.java.memoranda.util.Util;
+import memoranda.date.CalendarDate;
+import memoranda.util.Util;
 import nu.xom.Attribute;
 import nu.xom.Document;
 import nu.xom.Element;
 import nu.xom.Elements;
-import nu.xom.Node;
-import nu.xom.Nodes;
+
 //import nu.xom.converters.*;
 //import org.apache.xerces.dom.*;
 //import nux.xom.xquery.XQueryUtil;
@@ -38,7 +35,7 @@ public class LectureListImpl implements LectureList {
     private Element _root = null;
     
     private Hashtable elements = new Hashtable();
-	
+    
     /**
      * Constructor for TaskListImpl.
      */
@@ -55,27 +52,27 @@ public class LectureListImpl implements LectureList {
             _project = prj;
     }
     
-	/*
-	 * Build the hashtable recursively
-	 */
-	private void buildElements(Element parent) {
-		Elements els = parent.getChildElements("lecture");
-		for (int i = 0; i < els.size(); i++) {
-			Element el = els.get(i);
-			elements.put(el.getAttribute("id").getValue(), el);
-			buildElements(el);
+    /*
+     * Build the hashtable recursively
+     */
+    private void buildElements(Element parent) {
+        Elements els = parent.getChildElements("lecture");
+        for (int i = 0; i < els.size(); i++) {
+            Element el = els.get(i);
+            elements.put(el.getAttribute("id").getValue(), el);
+            buildElements(el);
         }
-	}
+    }
     
-	public Project getProject() {
-		return _project;
-	}
+    public Project getProject() {
+        return _project;
+    }
 
-	/**
-	 * Called from LecturePanel.java, creates a lecture element from information entered by the user
-	 * in the Lecture Dialog and adds it to the lecture list root as well as returning a new lecture
-	 * object.
-	 */
+    /**
+     * Called from LecturePanel.java, creates a lecture element from information entered by the user
+     * in the Lecture Dialog and adds it to the lecture list root as well as returning a new lecture
+     * object.
+     */
     public Lecture createLecture(CalendarDate date, Calendar startTime, Calendar endTime, String topic) {
         Element el = new Element("lecture");
         el.addAttribute(new Attribute("date", date.toString()));
@@ -84,7 +81,7 @@ public class LectureListImpl implements LectureList {
         el.addAttribute(new Attribute("endHour", String.valueOf(endTime.get(Calendar.HOUR_OF_DAY))));
         el.addAttribute(new Attribute("endMin", String.valueOf(endTime.get(Calendar.MINUTE))));
         el.addAttribute(new Attribute("topic", topic));
-		String id = Util.generateId();
+        String id = Util.generateId();
         el.addAttribute(new Attribute("id", id));
         
         _root.appendChild(el);
@@ -95,38 +92,38 @@ public class LectureListImpl implements LectureList {
      * Adds all lecture elements of this lecture list into a vector. Method primarily used
      * for displaying lectures in LectureTable.java
      */
-	@Override
-	public Vector getAllLectures() {
-		Elements lecs = _root.getChildElements("lecture");
+    @Override
+    public Vector getAllLectures() {
+        Elements lecs = _root.getChildElements("lecture");
         Vector v = new Vector();
         for (int i = 0; i < lecs.size(); i++) {
-        	v.add(new LectureImpl(lecs.get(i), _project));
+            v.add(new LectureImpl(lecs.get(i), _project));
         }
         return v;
-	}
+    }
 
-	public static void removeLecture(Lecture lecture) {
-		ParentNode parent = lecture.getContent().getParent();
-		parent.removeChild(lecture.getContent());
-	}
+    public static void removeLecture(Lecture lecture) {
+        ParentNode parent = lecture.getContent().getParent();
+        parent.removeChild(lecture.getContent());
+    }
 
-	@Override
-	public Document getXMLContent() {
-		return _doc;
-	}
+    @Override
+    public Document getXMLContent() {
+        return _doc;
+    }
 
-	@Override
-	public Lecture getLecture(String id) {
-		return new LectureImpl(getLectureElement(id), this._project); 
-	}
+    @Override
+    public Lecture getLecture(String id) {
+        return new LectureImpl(getLectureElement(id), this._project); 
+    }
 
-	private Element getLectureElement(String id) {
-		Element el = (Element)elements.get(id);
-		if (el == null) {
-			Util.debug("Task " + id + " cannot be found in project " + _project.getTitle());
-		}
-		return el;
-	}
+    private Element getLectureElement(String id) {
+        Element el = (Element)elements.get(id);
+        if (el == null) {
+            Util.debug("Task " + id + " cannot be found in project " + _project.getTitle());
+        }
+        return el;
+    }
 
  
 }

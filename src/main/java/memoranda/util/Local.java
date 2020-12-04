@@ -1,4 +1,4 @@
-package main.java.memoranda.util;
+package memoranda.util;
 
 import java.text.DateFormat;
 import java.util.Calendar;
@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.Hashtable;
 import java.util.Locale;
 
-import main.java.memoranda.date.CalendarDate;
+import memoranda.date.CalendarDate;
 
 import java.io.*;
 
@@ -22,42 +22,42 @@ public class Local {
     static boolean disabled = false;
 
     static {
-    	if (!Configuration.get("DISABLE_L10N").equals("yes")) {
-	    	String fn = "messages_"
-	                    + currentLocale.getLanguage()
-	                    + ".properties";
-	        if (Configuration.get("LOCALES_DIR") != "") {
-	        	System.out.print("Look "+fn+" at: "+Configuration.get("LOCALES_DIR")+" ");
-	        	try {
-	        		messages.load(new FileInputStream(
-	        			Configuration.get("LOCALES_DIR")+File.separator+fn));
-	        		System.out.println(" - found");
-	        	}
-	        	catch (IOException ex) {
-	        		// Do nothing ...
-	        		System.out.println(" - not found");
-	        		ex.printStackTrace();
-	        	}
-	        }
-	        if (messages.size() == 0) {
-		        try {
-		            messages.load(
-		                Local.class.getResourceAsStream(
-		                    "localmessages/"+fn));            
-		        }
-		        catch (Exception e) {
-		            // Do nothing ...
-		        }
-	        }
-    	}
-    	else {
-    		currentLocale = new Locale("en", "US");
-    		/*DEBUG*/
-    		System.out.println("* DEBUG: Locales are disabled");
-    	}       
-    	if (messages.size() == 0) 
-    		messages = null;
-    		
+        if (!Configuration.get("DISABLE_L10N").equals("yes")) {
+            String fn = "messages_"
+                        + currentLocale.getLanguage()
+                        + ".properties";
+            if (Configuration.get("LOCALES_DIR") != "") {
+                System.out.print("Look "+fn+" at: "+Configuration.get("LOCALES_DIR")+" ");
+                try {
+                    messages.load(new FileInputStream(
+                        Configuration.get("LOCALES_DIR")+File.separator+fn));
+                    System.out.println(" - found");
+                }
+                catch (IOException ex) {
+                    // Do nothing ...
+                    System.out.println(" - not found");
+                    ex.printStackTrace();
+                }
+            }
+            if (messages.size() == 0) {
+                try {
+                    messages.load(
+                        Local.class.getResourceAsStream(
+                            "localmessages/"+fn));            
+                }
+                catch (Exception e) {
+                    // Do nothing ...
+                }
+            }
+        }
+        else {
+            currentLocale = new Locale("en", "US");
+            /*DEBUG*/
+            System.out.println("* DEBUG: Locales are disabled");
+        }       
+        if (messages.size() == 0) 
+            messages = null;
+            
         /*** DEBUG PURPOSES ***/
         System.out.println("Default locale: " + currentLocale.getDisplayName());
         if (messages != null) {

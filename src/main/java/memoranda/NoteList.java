@@ -6,10 +6,10 @@
  * @author Alex V. Alishevskikh, alex@openmechanics.net
  * Copyright (c) 2003 Memoranda Team. http://memoranda.sf.net
  */
-package main.java.memoranda;
+package memoranda;
 import java.util.Collection;
 
-import main.java.memoranda.date.CalendarDate;
+import memoranda.date.CalendarDate;
 /**
  * 
  */
@@ -27,7 +27,7 @@ public interface NoteList {
     Note createNoteForDate(CalendarDate date);
     
 //    void removeNoteForDate(CalendarDate date);
-	void removeNote(CalendarDate date, String id);
+    void removeNote(CalendarDate date, String id);
 
     Note getActiveNote();
     

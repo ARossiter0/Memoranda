@@ -1,4 +1,4 @@
-package main.java.memoranda.ui;
+package memoranda.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -12,11 +12,11 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
-import main.java.memoranda.CurrentProject;
-import main.java.memoranda.Project;
-import main.java.memoranda.ProjectManager;
-import main.java.memoranda.date.CalendarDate;
-import main.java.memoranda.util.Local;
+import memoranda.CurrentProject;
+import memoranda.Project;
+import memoranda.ProjectManager;
+import memoranda.date.CalendarDate;
+import memoranda.util.Local;
 
 /*$Id: ProjectsTablePanel.java,v 1.6 2004/04/05 10:05:44 alexeya Exp $*/
 public class ProjectsTablePanel extends JPanel {
@@ -67,8 +67,8 @@ public class ProjectsTablePanel extends JPanel {
     boolean activeOnly = false;
 
     public void updateUI() {
-		if(projectsTable!=null) projectsTable.updateUI();
-		super.updateUI();
+        if(projectsTable!=null) projectsTable.updateUI();
+        super.updateUI();
     }
 
     public ProjectsTablePanel() {
@@ -146,12 +146,12 @@ public class ProjectsTablePanel extends JPanel {
         }
 
         public Object getValueAt(int row, int col) {
-			if(row==-1) return "";
-			Project pr;
-			if (activeOnly)
-				pr = (Project) ProjectManager.getActiveProjects().get(row);
-			else
-				pr = (Project) ProjectManager.getAllProjects().get(row);
+            if(row==-1) return "";
+            Project pr;
+            if (activeOnly)
+                pr = (Project) ProjectManager.getActiveProjects().get(row);
+            else
+                pr = (Project) ProjectManager.getAllProjects().get(row);
             switch (col) {
                 case 0 :
                     return pr.getTitle();

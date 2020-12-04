@@ -1,11 +1,11 @@
-package main.java.memoranda.ui;
+package memoranda.ui;
 
 import java.awt.event.ActionEvent;
 
 import javax.swing.border.Border;
 import javax.swing.plaf.basic.BasicFileChooserUI;
 
-import main.java.memoranda.util.Local;
+import memoranda.util.Local;
 
 import javax.swing.*;
 import java.awt.*;
@@ -65,14 +65,14 @@ public class ProjectExportDialog extends JDialog {
         okB_actionPerformed(e);
         
         // Open file chooser ui
-		if (fileChooser.getUI() instanceof BasicFileChooserUI) //Added to fix problem with export note
-		//jcscoobyrs 17-Nov-2003 at 08:36:14 AM
-		{//Added to fix problem with export note jcscoobyrs 17-Nov-2003 at 08:36:14 AM
-			BasicFileChooserUI ui = (BasicFileChooserUI)fileChooser.getUI();//Added to fix problem with export note
-			//jcscoobyrs 17-Nov-2003 at 08:36:14 AM
-			ui.getApproveSelectionAction().actionPerformed(e);//Added to fix problem with export note
-			//jcscoobyrs 17-Nov-2003 at 08:36:14 AM
-		}//Added to fix problem with export note jcscoobyrs 17-Nov-2003 at 08:36:14 AM
+        if (fileChooser.getUI() instanceof BasicFileChooserUI) //Added to fix problem with export note
+        //jcscoobyrs 17-Nov-2003 at 08:36:14 AM
+        {//Added to fix problem with export note jcscoobyrs 17-Nov-2003 at 08:36:14 AM
+            BasicFileChooserUI ui = (BasicFileChooserUI)fileChooser.getUI();//Added to fix problem with export note
+            //jcscoobyrs 17-Nov-2003 at 08:36:14 AM
+            ui.getApproveSelectionAction().actionPerformed(e);//Added to fix problem with export note
+            //jcscoobyrs 17-Nov-2003 at 08:36:14 AM
+        }//Added to fix problem with export note jcscoobyrs 17-Nov-2003 at 08:36:14 AM
       }
     });
     this.getRootPane().setDefaultButton(okB);

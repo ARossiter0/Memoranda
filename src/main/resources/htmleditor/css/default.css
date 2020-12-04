@@ -4,11 +4,11 @@
  */
 
 /*
- * @(#)default.css	1.46 02/06/11
+ * @(#)default.css    1.46 02/06/11
  */
 
 body  {
-	   font-size:16;		   	
+       font-size:16;               
        font-family: serif;
        font-weight: normal;
        margin-left: 0;
@@ -19,37 +19,37 @@ p   {margin-bottom: 10}
 
 h1  {font-size: xx-large;
     /* font-weight: bold;*/
-	 font-family: sans-serif;
-     margin-top: 10;	 
+     font-family: sans-serif;
+     margin-top: 10;     
      margin-bottom: 5}
 
 h2 {font-size: x-large;
     /*font-weight: bold;*/
-	font-family: sans-serif;
+    font-family: sans-serif;
     margin-top: 8;
     margin-bottom: 4}
 
 h3 {font-size: large;
     /*font-weight: bold;*/
-	font-family: sans-serif;
-    margin-top: 6;	
+    font-family: sans-serif;
+    margin-top: 6;    
     margin-bottom: 3}
 
 h4 {font-size: medium;
     font-weight: bold;
-	font-family: sans-serif;
+    font-family: sans-serif;
     margin-top: 4;
     margin-bottom: 3}
 
 h5 {font-size: small;
     font-weight: bold;
-	font-family: sans-serif;
+    font-family: sans-serif;
     margin-top: 3;
     margin-bottom: 3}
 
 h6 {font-size: x-small;
     font-weight: bold;
-	font-family: sans-serif;
+    font-family: sans-serif;
     margin-top: 2;
     margin-bottom: 1}
 
@@ -187,51 +187,51 @@ var {font-weight: bold;
      font-style: italic}
 
 table {
-	border-color: Gray;
-	border-style: solid;
-	border-width: 1;
-	margin-bottom:10;
+    border-color: Gray;
+    border-style: solid;
+    border-width: 1;
+    margin-bottom:10;
 }
 
 tr {
-	text-align: left
+    text-align: left
 }
 
 td {
-	border-color: Gray;
-	border-style:solid;
-	border-width: 1;
-	
+    border-color: Gray;
+    border-style:solid;
+    border-width: 1;
+    
 }
 
 th {
-	text-align: center;
-	font-weight: bold;
-	border-color: Gray;
-	border-style: inset;
-	padding-left: 3;
-	padding-right: 3;
-	padding-top: 3;
-	padding-bottom: 3
+    text-align: center;
+    font-weight: bold;
+    border-color: Gray;
+    border-style: inset;
+    padding-left: 3;
+    padding-right: 3;
+    padding-top: 3;
+    padding-bottom: 3
 }
 
 address {
-	font-style: italic
+    font-style: italic
 }
 
 blockquote {
-	margin-top: 5;
-	margin-bottom: 5;
-	margin-left: 35;
-	margin-right: 35
+    margin-top: 5;
+    margin-bottom: 5;
+    margin-left: 35;
+    margin-right: 35
 }
 
 center {text-align: center}
 
 pre {margin-top: 10;
      margin-bottom: 0;
-	 font-size:14pt;
-	 margin-left:35;
+     font-size:14pt;
+     margin-left:35;
      font-family: "Courier New", Monospaced}
 
 pre p {margin-top: 0}

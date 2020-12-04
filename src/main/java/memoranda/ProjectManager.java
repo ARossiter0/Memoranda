@@ -6,14 +6,14 @@
  * @author Alex V. Alishevskikh, alex@openmechanics.net
  * Copyright (c) 2003 Memoranda Team. http://memoranda.sf.net
  */
-package main.java.memoranda;
+package memoranda;
 
 import java.util.Vector;
 
-import main.java.memoranda.date.CalendarDate;
-import main.java.memoranda.util.CurrentStorage;
-import main.java.memoranda.util.Local;
-import main.java.memoranda.util.Util;
+import memoranda.date.CalendarDate;
+import memoranda.util.CurrentStorage;
+import memoranda.util.Local;
+import memoranda.util.Util;
 import nu.xom.Attribute;
 import nu.xom.Document;
 import nu.xom.Element;
@@ -58,10 +58,13 @@ public class ProjectManager {
     }
 
     public static Vector getAllProjects() {
+
+        // Add projects from xml
         Elements prjs = _root.getChildElements("project");
         Vector v = new Vector();
         for (int i = 0; i < prjs.size(); i++)
             v.add(new ProjectImpl((Element) prjs.get(i)));
+
         return v;
     }
 
@@ -126,7 +129,6 @@ public class ProjectManager {
         CurrentStorage.get().createProjectStorage(prj);
         return prj;
     }
-
 
     public static Project createProject(String title, CalendarDate startDate, CalendarDate endDate) {
         return createProject(Util.generateId(), title, startDate, endDate);

@@ -5,9 +5,9 @@
  * @author Alex V. Alishevskikh, alex@openmechanics.net Copyright (c) 2003
  *         Memoranda Team. http://memoranda.sf.net
  */
-package main.java.memoranda;
+package memoranda;
 
-import main.java.memoranda.ui.EventNotificationDialog;
+import memoranda.ui.EventNotificationDialog;
 
 /**
  *  
@@ -15,28 +15,28 @@ import main.java.memoranda.ui.EventNotificationDialog;
 /*$Id: DefaultEventNotifier.java,v 1.4 2004/01/30 12:17:41 alexeya Exp $*/
 public class DefaultEventNotifier implements EventNotificationListener {
 
-	/**
-	 * Constructor for DefaultEventNotifier.
-	 */
-	public DefaultEventNotifier() {
-		super();
-	}
+    /**
+     * Constructor for DefaultEventNotifier.
+     */
+    public DefaultEventNotifier() {
+        super();
+    }
 
-	/**
-	 * @see main.java.memoranda.EventNotificationListener#eventIsOccured(main.java.memoranda.Event)
-	 */
-	public void eventIsOccured(Event ev) {		
-		new EventNotificationDialog(
-			"Memoranda event",
-			ev.getTimeString(),
-			ev.getText());
-	}
-	/**
-	 * @see main.java.memoranda.EventNotificationListener#eventsChanged()
-	 */
-	public void eventsChanged() {
-		//
-	}
+    /**
+     * @see memoranda.EventNotificationListener#eventIsOccured(memoranda.Event)
+     */
+    public void eventIsOccured(Event ev) {        
+        new EventNotificationDialog(
+            "Memoranda event",
+            ev.getTimeString(),
+            ev.getText());
+    }
+    /**
+     * @see memoranda.EventNotificationListener#eventsChanged()
+     */
+    public void eventsChanged() {
+        //
+    }
 
-	
+    
 }

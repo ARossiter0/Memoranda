@@ -1,4 +1,4 @@
-package main.java.memoranda.ui;
+package memoranda.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -25,16 +25,16 @@ import javax.swing.border.Border;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import main.java.memoranda.CurrentProject;
-import main.java.memoranda.LectureList;
-import main.java.memoranda.NoteList;
-import main.java.memoranda.Project;
-import main.java.memoranda.ProjectListener;
-import main.java.memoranda.ResourcesList;
-import main.java.memoranda.TaskList;
-import main.java.memoranda.date.CalendarDate;
-import main.java.memoranda.date.CurrentDate;
-import main.java.memoranda.util.Local;
+import memoranda.CurrentProject;
+import memoranda.LectureList;
+import memoranda.NoteList;
+import memoranda.Project;
+import memoranda.ProjectListener;
+import memoranda.ResourcesList;
+import memoranda.TaskList;
+import memoranda.date.CalendarDate;
+import memoranda.date.CurrentDate;
+import memoranda.util.Local;
 
 /**
  * 
@@ -81,7 +81,7 @@ public class JNCalendarPanel extends JPanel {
   public Action dayBackAction =
         new AbstractAction(
             "Go one day back",
-            new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/back16.png"))) {
+            new ImageIcon(memoranda.ui.AppFrame.class.getResource("/ui/icons/back16.png"))) {
         public void actionPerformed(ActionEvent e) {
             dayBackB_actionPerformed(e);
         }
@@ -90,7 +90,7 @@ public class JNCalendarPanel extends JPanel {
   public Action dayForwardAction =
         new AbstractAction(
             "Go one day forward",
-            new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/forward16.png"))) {
+            new ImageIcon(memoranda.ui.AppFrame.class.getResource("/ui/icons/forward16.png"))) {
         public void actionPerformed(ActionEvent e) {
             dayForwardB_actionPerformed(e);
         }
@@ -99,7 +99,7 @@ public class JNCalendarPanel extends JPanel {
   public Action todayAction =
         new AbstractAction(
             "Go to today",
-            new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/today16.png"))) {
+            new ImageIcon(memoranda.ui.AppFrame.class.getResource("/ui/icons/today16.png"))) {
         public void actionPerformed(ActionEvent e) {
             todayB_actionPerformed(e);
         }
@@ -124,7 +124,7 @@ public class JNCalendarPanel extends JPanel {
     dayForwardB.setRequestFocusEnabled(false);
     dayForwardB.setBorderPainted(false);
     dayForwardB.setFocusPainted(false);
-    dayForwardB.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/forward.png")));
+    dayForwardB.setIcon(new ImageIcon(memoranda.ui.AppFrame.class.getResource("/ui/icons/forward.png")));
     dayForwardB.setText("");
     dayForwardB.setToolTipText(Local.getString("One day forward"));
     
@@ -140,7 +140,7 @@ public class JNCalendarPanel extends JPanel {
     todayB.setRequestFocusEnabled(false);
     todayB.setBorderPainted(false);
     todayB.setFocusPainted(false);
-    todayB.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/today.png")));
+    todayB.setIcon(new ImageIcon(memoranda.ui.AppFrame.class.getResource("/ui/icons/today.png")));
     todayB.setText("");
     todayB.setToolTipText(Local.getString("To today"));
     
@@ -157,7 +157,7 @@ public class JNCalendarPanel extends JPanel {
     dayBackB.setToolTipText("");
     dayBackB.setBorderPainted(false);
     dayBackB.setFocusPainted(false);
-    dayBackB.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/back.png")));
+    dayBackB.setIcon(new ImageIcon(memoranda.ui.AppFrame.class.getResource("/ui/icons/back.png")));
     dayBackB.setText("");
     dayBackB.setToolTipText(Local.getString("One day back"));
     
@@ -215,7 +215,7 @@ public class JNCalendarPanel extends JPanel {
     });
     CurrentProject.addProjectListener(new ProjectListener() {
 
-            public void projectChange(Project p, NoteList nl, LectureList tl, TaskList t2, TaskList s1, ResourcesList rl) {}
+            public void projectChange(Project p, NoteList nl, LectureList tl, TaskList t2, TaskList s1, TaskList s2, ResourcesList rl) {}
             public void projectWasChanged() {
                 jnCalendar.updateUI();
             }

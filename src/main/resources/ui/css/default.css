@@ -1,6 +1,6 @@
 
 body  {
-	   font-size:%BASE_FONT_SIZE%;		   	
+       font-size:%BASE_FONT_SIZE%;               
        font-family:%NORMAL_FONT%;
        font-weight: normal;
        margin-left: 0;
@@ -10,35 +10,35 @@ body  {
 p   {margin-bottom: 10}
 
 h1  {font-size: xx-large;
-	 font-family: %HEADER_FONT%;
-     margin-top: 10;	 
+     font-family: %HEADER_FONT%;
+     margin-top: 10;     
      margin-bottom: 5}
 
 h2 {font-size: x-large;
-	font-family: %HEADER_FONT%;
+    font-family: %HEADER_FONT%;
     margin-top: 8;
     margin-bottom: 4}
 
 h3 {font-size: large;
-	font-family: %HEADER_FONT%;
-    margin-top: 6;	
+    font-family: %HEADER_FONT%;
+    margin-top: 6;    
     margin-bottom: 3}
 
 h4 {font-size: medium;
     font-weight: bold;
-	font-family: %HEADER_FONT%;
+    font-family: %HEADER_FONT%;
     margin-top: 4;
     margin-bottom: 3}
 
 h5 {font-size: small;
     font-weight: bold;
-	font-family: %HEADER_FONT%;
+    font-family: %HEADER_FONT%;
     margin-top: 3;
     margin-bottom: 3}
 
 h6 {font-size: x-small;
     font-weight: bold;
-	font-family: %HEADER_FONT%;
+    font-family: %HEADER_FONT%;
     margin-top: 2;
     margin-bottom: 1}
 
@@ -176,51 +176,51 @@ var {font-weight: bold;
      font-style: italic}
 
 table {
-	border-color: Gray;
-	border-style: solid;
-	border-width: 1;
-	margin-bottom:10;
+    border-color: Gray;
+    border-style: solid;
+    border-width: 1;
+    margin-bottom:10;
 }
 
 tr {
-	text-align: left
+    text-align: left
 }
 
 td {
-	border-color: Gray;
-	border-style:solid;
-	border-width: 1;
-	
+    border-color: Gray;
+    border-style:solid;
+    border-width: 1;
+    
 }
 
 th {
-	text-align: center;
-	font-weight: bold;
-	border-color: Gray;
-	border-style: inset;
-	padding-left: 3;
-	padding-right: 3;
-	padding-top: 3;
-	padding-bottom: 3
+    text-align: center;
+    font-weight: bold;
+    border-color: Gray;
+    border-style: inset;
+    padding-left: 3;
+    padding-right: 3;
+    padding-top: 3;
+    padding-bottom: 3
 }
 
 address {
-	font-style: italic
+    font-style: italic
 }
 
 blockquote {
-	margin-top: 5;
-	margin-bottom: 5;
-	margin-left: 35;
-	margin-right: 35
+    margin-top: 5;
+    margin-bottom: 5;
+    margin-left: 35;
+    margin-right: 35
 }
 
 center {text-align: center}
 
 pre {margin-top: 0;
      margin-bottom: 10;
-	 font-size:14pt;
-	 margin-left:35;
+     font-size:14pt;
+     margin-left:35;
      font-family: %MONO_FONT%}
 
 pre p {margin-top: 0}

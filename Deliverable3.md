@@ -69,15 +69,15 @@ Answer as a team!
 
 **What do you think is the value you created this Sprint?**
 
-> Your Answer
+> We finished most of the required functionality for the program (besides sprints). We also created the ability to load/save to a Data.json file automatically when using the application. 
 
 **Do you think you worked enough and that you did what was expected of you?**
 
-> Your Answer
+> We know that most of the team members worked far more than the suggested ~10 hours per week on this project. However, we were not able to achieve everything that was expected. We were unable to implement sprints, and the unit testing is more sparse than would be ideal. Frankly, we just didn’t have enough time. 
 
 **Would you say you met the customers’ expectations? Why, why not?**
 
-> Your Answer
+> No. We failed to implement the sprint-functionality. There may also be a quirk revolving around the .context xml file and it’s use. Besides that, however, we created a well-functioning product that provides accurate information about various todo lists, assignments, and free dates. 
 
 
 ### Sprint Retrospective
@@ -86,11 +86,11 @@ Answer as a team!
 
 **Did you meet your sprint goal?**
 
-> Your Answer
+> All of the created and assigned user stories and tasks were completed. However we failed to implement sprint functionality becuase it was glanced over. We did meet the majority of our express objectives. 
 
 **Did you complete all stories on your Spring Backlog?**
 
-> Your Answer
+> Yes. We did complete all of the stories on our sprint backlog. We did not, however, include creating and managing sprints on the sprint backlog like we originally intended. 
 
 **If not, what went wrong?**
 
@@ -98,19 +98,19 @@ Answer as a team!
 
 **Did you work at a consistent rate of speed, or velocity? (Meaning did you work during the whole Sprint or did you start working when the deadline approached.)**
 
-> Your Answer
+> No. Some of the team members had other obligations, and were unable to provide significant work until after a week. Also, some of the user stories were interdependent, and we were not able to push them to completion status until late into the sprint. 
 
 **Did you deliver business value?**
 
-> Your Answer
+> Yes. The program now functions mostly as intended and specified in the requirements, with the exception of the sprint functionality.  
 
 **Are there things the team thinks it can do better in the next Sprint?**
 
-> Your Answer
+> Our work on this project is concluded. There will be no next sprint. In future projects, we have learned to spend more time on planning and design, so that we do not end up with code that is hard to disentangle. 
 
 **How do you feel at this point? Get a pulse on the optimism of the team.**
 
-> Your Answer
+> We are very exhausted at this point, having spent as much time as was possible trying to finish this project, as well as preparing for exams and other assignments.   
 
 ### Contributions:
 
@@ -140,6 +140,34 @@ Answer as a team!
  **What was your main contribution to the Quality Policy documentation?:
 
     - info
+
+#### Team member -- Ian Swanlund:
+  **Links to GitHub commits with main code contribution (up to 5 links) - all Sprints:
+
+    - https://github.com/amehlhase316/Leipzig-2/commit/b9dbfbe734c7f9c5436382dde7c643f033963a05
+    - https://github.com/amehlhase316/Leipzig-2/commit/069b07d185402b1718786252b29d715f30dd8c27
+    - https://github.com/amehlhase316/Leipzig-2/commit/5d9acafbe7b13c5bb4ceb8ef1f99b939d48d20ac
+
+
+   **GitHub links to your Unit Tests (up to 3 links) -- Sprint 2 and 3:
+
+    - https://github.com/amehlhase316/Leipzig-2/blob/US188_ExportData/src/test/java/US188Tests.java
+
+  **GitHub links to your Code Reviews (up to 3 links) -- Sprint 2 and 3:
+
+    - https://github.com/amehlhase316/Leipzig-2/pull/22
+    - https://github.com/amehlhase316/Leipzig-2/pull/25
+
+  **How did you contribute to Static Analysis -- Sprint 3:
+
+    - https://github.com/amehlhase316/Leipzig-2/commit/ee3c17333849a0ee6b98b1446ad7b87caeea17d2
+    - https://github.com/amehlhase316/Leipzig-2/commit/334a32f3f21adc6445dd557034eab8c4326fa237
+ 
+ **What was your main contribution to the Quality Policy documentation?:
+
+    - The revision of the policy to more accuratly reflect the nature and type of features that were being created and tested.
+      Before the revison the criteria for a submission was too broad and required an intensity and time commitment that overshadowed
+      the main team goal of creating business value in Memoranda through the completion of sprints. 
   
 ## 4: Checklist for you to see if you are done
 - [ ] Filled out the complete form from above, all fields are filled and written in full sentences
@@ -149,6 +177,8 @@ Answer as a team!
 - [ ] **Individual** Survey was submitted **individually** (create checkboxes below -- see Canvas to get link)
   - [ ] Team member 1
   - [ ] Team member 2
+  - [ ] Team member 3
+  - [X] Team member 4
 - [ ] The original of this file was copied for the next Sprint (needed for all but last Sprint where you do not need to copy it anymore)
   - [ ] Basic information (part 1) for next Sprint was included (meaning Spring Planning is complete)
   - [ ] All User Stories have acceptance tests

@@ -90,7 +90,7 @@ Q.: How to change the default port number for Memoranda?
 A.: Open the "memoranda.properties" file in your Memoranda user directory and 
 add a line: 
 
-	PORT_NUMBER=n
+    PORT_NUMBER=n
 
 , where n is any unused port number. 
 
@@ -100,11 +100,11 @@ Q.: Can I disable port listening at all?
 A.: Yes, but it will allow to start more than one instances of Memoranda. Open 
 the "memoranda.properties" file in your Memoranda user directory and add a line: 
 
-	CHECK_IF_ALREADY_STARTED = NO
+    CHECK_IF_ALREADY_STARTED = NO
 
 Note that this is a debug/troubleshooting mode and it is not recommended as a
 normal everyday way of using Memoranda.
-	
+    
 
                                LOCALIZATION 
 

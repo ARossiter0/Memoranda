@@ -1,4 +1,4 @@
-package main.java.memoranda;
+package memoranda;
 
 /*$Id: ProjectListener.java,v 1.3 2004/01/30 12:17:41 alexeya Exp $*/
 public interface ProjectListener {
@@ -10,6 +10,6 @@ public interface ProjectListener {
 	 * @param t2 the instructor todo list associated with the project
 	 * @param rl the resources list associated with the project
 	 */
-  void projectChange(Project prj, NoteList nl, LectureList tl, TaskList t2, TaskList s1, ResourcesList rl);
+  void projectChange(Project prj, NoteList nl, LectureList tl, TaskList t2, TaskList s1, TaskList s2, ResourcesList rl);
   void projectWasChanged();
 }
