@@ -6,7 +6,7 @@
  * @author Alex V. Alishevskikh, alex@openmechanics.net
  * Copyright (c) 2003 Memoranda Team. http://memoranda.sf.net
  */
-package main.java.memoranda;
+package memoranda;
 
 import java.util.Vector;
 
@@ -39,6 +39,12 @@ public interface ResourcesList {
      * @param isProjectFile if the resource is a project file
      */
     void addResource(String path, boolean isInternetShortcut, boolean isProjectFile);
+    
+    /**
+     * Set resource student visibility
+     * @param path of resource to set visibility
+     */
+    void setResourceVisibility(String path);
     
     /**
      * Add a resource 

@@ -6,7 +6,7 @@
  * @author Alex V. Alishevskikh, alex@openmechanics.net
  * Copyright (c) 2003 Memoranda team: http://memoranda.sf.net
  */
-package main.java.memoranda.util;
+package memoranda.util;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -18,10 +18,10 @@ import java.util.Iterator;
 
 import javax.swing.JFileChooser;
 
-import main.java.memoranda.date.CalendarDate;
-import main.java.memoranda.ui.App;
-import main.java.memoranda.ui.AppFrame;
-import main.java.memoranda.ui.ExceptionDialog;
+import memoranda.date.CalendarDate;
+import memoranda.ui.App;
+import memoranda.ui.AppFrame;
+import memoranda.ui.ExceptionDialog;
 
 import java.util.Random;
 
@@ -31,18 +31,18 @@ import java.util.Random;
 /*$Id: Util.java,v 1.13 2007/03/20 08:22:41 alexeya Exp $*/
 public class Util {
 
-	static long seed = 0;
-	
+    static long seed = 0;
+    
     public static String generateId() {
         long seed1 = System.currentTimeMillis();
         while (seed1 == seed) 
-        	seed1 = System.currentTimeMillis(); // Make sure we'll don't get the same seed twice		  
-    	seed = seed1;        	
-    	Random r = new Random(seed); 
-    	return Integer.toString(r.nextInt(), 16) +
-				"-"+Integer.toString(r.nextInt(65535), 16) +
-				"-"+Integer.toString(r.nextInt(65535), 16) +
-				"-"+Integer.toString(r.nextInt(65535), 16);
+            seed1 = System.currentTimeMillis(); // Make sure we'll don't get the same seed twice          
+        seed = seed1;            
+        Random r = new Random(seed); 
+        return Integer.toString(r.nextInt(), 16) +
+                "-"+Integer.toString(r.nextInt(65535), 16) +
+                "-"+Integer.toString(r.nextInt(65535), 16) +
+                "-"+Integer.toString(r.nextInt(65535), 16);
                     
     }
 
@@ -81,13 +81,13 @@ public class Util {
     }
 
     public static String getEnvDir() {
-    	// Changed static building of getEnvDir
-    	// Now system-related path-separator is used
-		String p = System.getProperty("user.home") + File.separator 
-			+ ".jnotes2" + File.separator;
+        // Changed static building of getEnvDir
+        // Now system-related path-separator is used
+        String p = System.getProperty("user.home") + File.separator 
+            + ".jnotes2" + File.separator;
         if (new File(p).isDirectory()) return p;
         return System.getProperty("user.home") + File.separator 
-        	+ ".memoranda" + File.separator;
+            + ".memoranda" + File.separator;
     }
 
     public static String getCDATA(String s) {
@@ -106,7 +106,7 @@ public class Util {
         catch (Exception ex) {
             new ExceptionDialog(ex, "Failed to run an external web-browser application with commandline<br><code>"
                     +commandLine+"</code>", "Check the application path and command line parameters " +
-                    		"(File-&gt;Preferences-&gt;Resource types).");
+                            "(File-&gt;Preferences-&gt;Resource types).");
         }
     }
     
@@ -132,40 +132,40 @@ public class Util {
     }
     
     public static String getHoursFromMillis(long ms) {
-    	double numSeconds = (((double) ms) / 1000d);
-    	return String.valueOf(numSeconds / 3600);
+        double numSeconds = (((double) ms) / 1000d);
+        return String.valueOf(numSeconds / 3600);
     }
     
     public static long getMillisFromHours(String hours) {
-    	try {
-        	double numHours = Double.parseDouble(hours);
-        	double millisDouble = (numHours * 3600 * 1000);
-        	return (long) millisDouble;
-    	}
-    	catch (NumberFormatException e) {
-    		return 0;
-    	}
+        try {
+            double numHours = Double.parseDouble(hours);
+            double millisDouble = (numHours * 3600 * 1000);
+            return (long) millisDouble;
+        }
+        catch (NumberFormatException e) {
+            return 0;
+        }
     }
     
     static Set tempFiles = new HashSet();
     
     static {
-    	AppFrame.addExitListener(new ActionListener() {
+        AppFrame.addExitListener(new ActionListener() {
 
-			public void actionPerformed(ActionEvent arg0) {
-				for (Iterator i = tempFiles.iterator(); i.hasNext();) 
-					((File)i.next()).delete();				}
-			});
+            public void actionPerformed(ActionEvent arg0) {
+                for (Iterator i = tempFiles.iterator(); i.hasNext();) 
+                    ((File)i.next()).delete();                }
+            });
     }
     
     public static File getTempFile() throws IOException {
-    	File f = File.createTempFile("tmp", ".html", null);
-    	tempFiles.add(f);
-    	return f;
+        File f = File.createTempFile("tmp", ".html", null);
+        tempFiles.add(f);
+        return f;
     }
     
     public static void debug(String str) {
-    	System.out.println("[DEBUG] " + str);
+        System.out.println("[DEBUG] " + str);
     }
 
     /**

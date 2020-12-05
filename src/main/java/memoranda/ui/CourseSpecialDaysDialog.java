@@ -1,4 +1,4 @@
-package main.java.memoranda.ui;
+package memoranda.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -40,10 +40,10 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import main.java.memoranda.EventsManager;
-import main.java.memoranda.CurrentProject;
-import main.java.memoranda.date.CalendarDate;
-import main.java.memoranda.util.Local;
+import memoranda.EventsManager;
+import memoranda.CurrentProject;
+import memoranda.date.CalendarDate;
+import memoranda.util.Local;
 
 import javax.swing.JCheckBox;
 
@@ -146,7 +146,7 @@ public class CourseSpecialDaysDialog extends JDialog {
         header.setFont(new java.awt.Font("Dialog", 0, 20));
         header.setForeground(new Color(0, 0, 124));
         header.setText(Local.getString("Title Name and Date"));
-        header.setIcon(new ImageIcon(main.java.memoranda.ui.TaskDialog.class.getResource("/ui/icons/task48.png")));
+        header.setIcon(new ImageIcon(memoranda.ui.TaskDialog.class.getResource("/ui/icons/task48.png")));
 
         dateLabel.setMaximumSize(new Dimension(100, 16));
         dateLabel.setMinimumSize(new Dimension(60, 16));

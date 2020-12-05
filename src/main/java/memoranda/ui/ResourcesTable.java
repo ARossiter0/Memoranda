@@ -1,4 +1,4 @@
-package main.java.memoranda.ui;
+package memoranda.ui;
 
 import java.awt.Component;
 import java.awt.Font;
@@ -13,18 +13,18 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
-import main.java.memoranda.CurrentProject;
-import main.java.memoranda.LectureList;
-import main.java.memoranda.NoteList;
-import main.java.memoranda.Project;
-import main.java.memoranda.ProjectListener;
-import main.java.memoranda.Resource;
-import main.java.memoranda.ResourcesList;
-import main.java.memoranda.TaskList;
-import main.java.memoranda.ui.table.TableSorter;
-import main.java.memoranda.util.Local;
-import main.java.memoranda.util.MimeType;
-import main.java.memoranda.util.MimeTypesList;
+import memoranda.CurrentProject;
+import memoranda.LectureList;
+import memoranda.NoteList;
+import memoranda.Project;
+import memoranda.ProjectListener;
+import memoranda.Resource;
+import memoranda.ResourcesList;
+import memoranda.TaskList;
+import memoranda.ui.table.TableSorter;
+import memoranda.util.Local;
+import memoranda.util.MimeType;
+import memoranda.util.MimeTypesList;
 
 /*$Id: ResourcesTable.java,v 1.4 2004/04/05 10:05:44 alexeya Exp $*/
 public class ResourcesTable extends JTable {
@@ -32,7 +32,7 @@ public class ResourcesTable extends JTable {
     Vector files = null;
     TableSorter sorter = null;
     
-    ImageIcon inetIcon = new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/mimetypes/inetshortcut.png"));
+    ImageIcon inetIcon = new ImageIcon(memoranda.ui.AppFrame.class.getResource("/ui/icons/mimetypes/inetshortcut.png"));
 
     /**
      * Initialize the resources table
@@ -49,7 +49,7 @@ public class ResourcesTable extends JTable {
         //this.setModel(new ResourcesTableModel());
         CurrentProject.addProjectListener(new ProjectListener() {
 
-            public void projectChange(Project p, NoteList nl, LectureList tl, TaskList t2,TaskList s1, ResourcesList rl) {                
+            public void projectChange(Project p, NoteList nl, LectureList tl, TaskList t2, TaskList s1, TaskList s2, ResourcesList rl) {                
                
             }
             public void projectWasChanged() {
@@ -62,7 +62,7 @@ public class ResourcesTable extends JTable {
      * Initialize width for columns
      */
     void initColumsWidth() {
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 5; i++) {
             TableColumn column = getColumnModel().getColumn(i);
             if (i == 0) {
                 column.setPreferredWidth(32767);
@@ -143,6 +143,7 @@ public class ResourcesTable extends JTable {
 
         String[] columnNames = {
                 Local.getString("Name"),
+                Local.getString("Student Visible"),
                 Local.getString("Type"),
                 Local.getString("Date modified"),
                 Local.getString("Path")};
@@ -174,13 +175,15 @@ public class ResourcesTable extends JTable {
                 File f = new File(r.getPath());
                 switch (col) {
                     case 0: return f.getName();
-                    case 1: MimeType mt = MimeTypesList.getMimeTypeForFile(f.getName());
+                    case 1: if (r.getStudentVisible()) return "Yes";
+                            else return "No";
+                    case 2: MimeType mt = MimeTypesList.getMimeTypeForFile(f.getName());
                             if (mt != null) return mt.getLabel();
                             else return "unknown";
-                    case 2: Date d = new Date(f.lastModified());
+                    case 3: Date d = new Date(f.lastModified());
                             return d;/*Local.getDateString(d, java.text.DateFormat.SHORT) +" "+
                                    Local.getTimeString(d);*/
-                    case 3:return f.getPath();
+                    case 4:return f.getPath();
                 }
             }
             else {

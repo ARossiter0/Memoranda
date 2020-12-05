@@ -6,14 +6,14 @@
  * @author Alex V. Alishevskikh, alex@openmechanics.net
  * Copyright (c) 2003 Memoranda Team. http://memoranda.sf.net
  */
-package main.java.memoranda.util;
+package memoranda.util;
 
-import main.java.memoranda.LectureList;
-import main.java.memoranda.Note;
-import main.java.memoranda.NoteList;
-import main.java.memoranda.Project;
-import main.java.memoranda.ResourcesList;
-import main.java.memoranda.TaskList;
+import memoranda.LectureList;
+import memoranda.Note;
+import memoranda.NoteList;
+import memoranda.Project;
+import memoranda.ResourcesList;
+import memoranda.TaskList;
 /**
  * 
  */
@@ -28,11 +28,15 @@ public interface Storage {
     
     TaskList openStudentTodo(Project prj);    
     void storeStudentTodo(TaskList tl, Project prj);
+    
+    TaskList openTaTodoList(Project prj);    
+    void storeTaTodoList(TaskList tl, Project prj);
+    
     TaskList openInstrTodoList(Project prj);
     void storeInstrTodoList(TaskList instrTodoList, Project prj);
+    
     LectureList openLectureList(Project prj);
     void storeLectureList(LectureList ll, Project prj);
-
     
     NoteList openNoteList(Project prj);
     void storeNoteList(NoteList nl, Project prj);
@@ -59,6 +63,6 @@ public interface Storage {
     void storeResourcesList(ResourcesList rl, Project prj);
     
     void restoreContext();
-    void storeContext(); 
-       
+    void storeContext();
+
 }

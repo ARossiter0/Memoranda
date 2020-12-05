@@ -6,7 +6,7 @@
  * @author Alex V. Alishevskikh, alex@openmechanics.net
  * Copyright (c) 2003 Memoranda Team. http://memoranda.sf.net
  */
-package main.java.memoranda;
+package memoranda;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Timer;
@@ -39,7 +39,7 @@ public class EventsScheduler {
             Date evTime = ev.getTime();
         /*DEBUG*/System.out.println((Calendar.getInstance()).getTime());
           //  if (evTime.after(new Date())) {
-	      if (evTime.after((Calendar.getInstance()).getTime())) {	
+          if (evTime.after((Calendar.getInstance()).getTime())) {    
                 EventTimer t = new EventTimer(ev);
                 t.schedule(new NotifyTask(t), ev.getTime());                
                 _timers.add(t);

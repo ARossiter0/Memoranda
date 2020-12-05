@@ -1,4 +1,4 @@
-package main.java.memoranda.ui;
+package memoranda.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -39,10 +39,10 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import main.java.memoranda.EventsManager;
-import main.java.memoranda.CurrentProject;
-import main.java.memoranda.date.CalendarDate;
-import main.java.memoranda.util.Local;
+import memoranda.EventsManager;
+import memoranda.CurrentProject;
+import memoranda.date.CalendarDate;
+import memoranda.util.Local;
 
 import javax.swing.JCheckBox;
 

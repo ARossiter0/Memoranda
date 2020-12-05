@@ -1,27 +1,22 @@
-package test.java;
 
-import main.java.memoranda.CurrentProject;
-//import main.java.*;
-import main.java.memoranda.Project;
-import main.java.memoranda.ProjectImpl;
-import main.java.memoranda.ProjectManager;
-import main.java.memoranda.Task;
-import main.java.memoranda.TaskImpl;
-import main.java.memoranda.TaskList;
-import main.java.memoranda.TaskListImpl;
-import main.java.memoranda.date.CalendarDate;
-import main.java.memoranda.date.CurrentDate;
-import main.java.memoranda.ui.TaskTableModel;
-import main.java.memoranda.util.Context;
-import main.java.memoranda.util.CurrentStorage;
-import main.java.memoranda.util.FileStorage;
-import main.java.memoranda.util.Util;
-import nu.xom.Attribute;
+
+import memoranda.CurrentProject;
+//import *;
+import memoranda.Project;
+import memoranda.ProjectImpl;
+import memoranda.ProjectManager;
+import memoranda.Task;
+import memoranda.TaskImpl;
+import memoranda.TaskList;
+import memoranda.TaskListImpl;
+import memoranda.date.CalendarDate;
+import memoranda.ui.TaskTableModel;
+import memoranda.util.Context;
+import memoranda.util.CurrentStorage;
+import memoranda.util.FileStorage;
 import nu.xom.Document;
 import nu.xom.Element;
-import nu.xom.Elements;
-import nu.xom.Node;
-import nu.xom.Nodes;
+
 
 import static org.junit.Assert.*;
 
@@ -173,14 +168,14 @@ public class US160_Whitebox {
         CurrentStorage.get().storeInstrTodoList(instrTodoList, project);
         CurrentProject.set(project);        
                         
-        CurrentProject.currentTaskType = CurrentProject.TaskType.INSTR_TODO_LIST;
+        CurrentProject.setCurrentTaskType(CurrentProject.TaskType.INSTR_TODO_LIST);
         TaskList getInstrTodoList = CurrentProject.getTaskList();        
         final long EXPECTED1 = 50;
         final long RESULT1 = getInstrTodoList.getTopLevelTasks().size(); 
         
         assertEquals(EXPECTED1, RESULT1);             
                 
-        CurrentProject.currentTaskType = CurrentProject.TaskType.DEFAULT;
+        CurrentProject.setCurrentTaskType(CurrentProject.TaskType.DEFAULT);
         TaskList getTaskList = CurrentProject.getTaskList();
         final int EXPECTED2 = 500;
         final int RESULT2 = getTaskList.getTopLevelTasks().size();          
@@ -228,7 +223,7 @@ public class US160_Whitebox {
         Context.put("SHOW_REDUCED_ONLY", false);
                 
         // Check that the task table model has 501 children
-        CurrentProject.currentTaskType = CurrentProject.TaskType.DEFAULT;        
+        CurrentProject.setCurrentTaskType(CurrentProject.TaskType.DEFAULT);        
         TaskTableModel taskTableModel = new TaskTableModel();        
         taskTableModel.fireUpdateCache();
         final long EXPECTED1 = 501;
@@ -242,7 +237,7 @@ public class US160_Whitebox {
         assertTrue(EXPECTED2 == RESULT2);
         
         // Check that the task table model has 51 children
-        CurrentProject.currentTaskType = CurrentProject.TaskType.INSTR_TODO_LIST;        
+        CurrentProject.setCurrentTaskType(CurrentProject.TaskType.INSTR_TODO_LIST);        
         taskTableModel.fireUpdateCache();
         final long EXPECTED3 = 51;
         final long RESULT3 = taskTableModel.getChildCount(project);          
@@ -276,10 +271,10 @@ public class US160_Whitebox {
                         
         TaskList instrTodoList = new TaskListImpl(project);         
         
-        Task instrTodoTask0 = instrTodoList.createTask(CalendarDate.today(), CalendarDate.today(), "Todo 0", 0, 0, "", null, true);
+        instrTodoList.createTask(CalendarDate.today(), CalendarDate.today(), "Todo 0", 0, 0, "", null, true);
         Task instrTodoTask1 = instrTodoList.createTask(CalendarDate.today(), CalendarDate.today(), "Todo 1", 0, 0, "", null, true);
         Task instrTodoTask2 = instrTodoList.createTask(CalendarDate.today(), CalendarDate.today(), "Todo 2", 0, 0, "", null, true);
-        Task subtask0 = instrTodoList.createTask(CalendarDate.today(), CalendarDate.today(), "Subtodo 0", 0, 0, "", instrTodoTask1.getID(), true);
+        instrTodoList.createTask(CalendarDate.today(), CalendarDate.today(), "Subtodo 0", 0, 0, "", instrTodoTask1.getID(), true);
         Task subtask1 = instrTodoList.createTask(CalendarDate.today(), CalendarDate.today(), "Subtodo 1", 0, 0, "", instrTodoTask1.getID(), true);
                       
         CurrentStorage.get().storeInstrTodoList(instrTodoList, project);
@@ -287,7 +282,7 @@ public class US160_Whitebox {
                 
         
         // Check that the 3rd child of project is instrTodoTask2
-        CurrentProject.currentTaskType = CurrentProject.TaskType.INSTR_TODO_LIST;       
+        CurrentProject.setCurrentTaskType(CurrentProject.TaskType.INSTR_TODO_LIST);       
         TaskTableModel taskTableModel = new TaskTableModel();
         taskTableModel.fireUpdateCache();
         final Task EXPECTED1 = instrTodoTask2;

@@ -1,4 +1,4 @@
-package main.java.memoranda.ui;
+package memoranda.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -22,14 +22,14 @@ import javax.swing.JToolBar;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import main.java.memoranda.CurrentProject;
-import main.java.memoranda.Resource;
-import main.java.memoranda.util.AppList;
-import main.java.memoranda.util.CurrentStorage;
-import main.java.memoranda.util.Local;
-import main.java.memoranda.util.MimeType;
-import main.java.memoranda.util.MimeTypesList;
-import main.java.memoranda.util.Util;
+import memoranda.CurrentProject;
+import memoranda.Resource;
+import memoranda.util.AppList;
+import memoranda.util.CurrentStorage;
+import memoranda.util.Local;
+import memoranda.util.MimeType;
+import memoranda.util.MimeTypesList;
+import memoranda.util.Util;
 
 import java.io.*;
 
@@ -42,6 +42,7 @@ public class ResourcesPanel extends JPanel {
 	JButton removeResB = new JButton();
 	JScrollPane scrollPane = new JScrollPane();
 	JButton refreshB = new JButton();
+	JButton visibleB = new JButton();
 	JPopupMenu resPPMenu = new JPopupMenu();
 	JMenuItem ppRun = new JMenuItem();
 	JMenuItem ppRemoveRes = new JMenuItem();
@@ -61,7 +62,7 @@ public class ResourcesPanel extends JPanel {
 		this.setLayout(borderLayout1);
 
 		// Style new resource button
-		newResB.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/addresource.png")));
+		newResB.setIcon(new ImageIcon(memoranda.ui.AppFrame.class.getResource("/ui/icons/addresource.png")));
 		newResB.setEnabled(true);
 		newResB.setMaximumSize(new Dimension(24, 24));
 		newResB.setMinimumSize(new Dimension(24, 24));
@@ -94,7 +95,7 @@ public class ResourcesPanel extends JPanel {
 		removeResB.setMinimumSize(new Dimension(24, 24));
 		removeResB.setMaximumSize(new Dimension(24, 24));
 		removeResB.setIcon(
-				new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/removeresource.png")));
+				new ImageIcon(memoranda.ui.AppFrame.class.getResource("/ui/icons/removeresource.png")));
 		removeResB.setEnabled(false);
 
 		// Style the scroll pane
@@ -134,7 +135,23 @@ public class ResourcesPanel extends JPanel {
 		refreshB.setMinimumSize(new Dimension(24, 24));
 		refreshB.setMaximumSize(new Dimension(24, 24));
 		refreshB.setEnabled(true);
-		refreshB.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/refreshres.png")));
+		refreshB.setIcon(new ImageIcon(memoranda.ui.AppFrame.class.getResource("/ui/icons/refreshres.png")));
+		
+		// Style the visibility button
+		visibleB.setBorderPainted(false);
+		visibleB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                visibleB_actionPerformed(e);
+            }
+        });
+		visibleB.setFocusable(false);
+		visibleB.setPreferredSize(new Dimension(24, 24));
+		visibleB.setRequestFocusEnabled(false);
+		visibleB.setToolTipText(Local.getString("Refresh"));
+		visibleB.setMinimumSize(new Dimension(24, 24));
+		visibleB.setMaximumSize(new Dimension(24, 24));
+		visibleB.setEnabled(true);
+		visibleB.setIcon(new ImageIcon(memoranda.ui.AppFrame.class.getResource("/ui/icons/visibilityres.png")));
 
 		// Style the resource dialog
 		resPPMenu.setFont(new java.awt.Font("Dialog", 1, 10));
@@ -158,7 +175,7 @@ public class ResourcesPanel extends JPanel {
 			}
 		});
 		ppRemoveRes.setIcon(
-				new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/removeresource.png")));
+				new ImageIcon(memoranda.ui.AppFrame.class.getResource("/ui/icons/removeresource.png")));
 		ppRemoveRes.setEnabled(false);
 		
 		// Create/style a 'new resource' menu item
@@ -169,7 +186,7 @@ public class ResourcesPanel extends JPanel {
 				ppNewRes_actionPerformed(e);
 			}
 		});
-		ppNewRes.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/addresource.png")));
+		ppNewRes.setIcon(new ImageIcon(memoranda.ui.AppFrame.class.getResource("/ui/icons/addresource.png")));
 
 		// Create/style a 'refresh' menu item
 		ppRefresh.setFont(new java.awt.Font("Dialog", 1, 11));
@@ -179,13 +196,15 @@ public class ResourcesPanel extends JPanel {
 				ppRefresh_actionPerformed(e);
 			}
 		});
-		ppRefresh.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/refreshres.png")));
+		ppRefresh.setIcon(new ImageIcon(memoranda.ui.AppFrame.class.getResource("/ui/icons/refreshres.png")));
 
 		// Add menu items to the toolbar
 		toolBar.add(newResB, null);
 		toolBar.add(removeResB, null);
 		toolBar.addSeparator();
 		toolBar.add(refreshB, null);
+		toolBar.addSeparator();
+		toolBar.add(visibleB, null);
 		
 		// Add the scrollpane (and resources table inside of it) to this
 		this.add(scrollPane, BorderLayout.CENTER);
@@ -282,6 +301,16 @@ public class ResourcesPanel extends JPanel {
 					((Resource) resourcesTable.getModel().getValueAt(toRemove[i], ResourcesTable._RESOURCE)).getPath());
 		}
 		resourcesTable.tableChanged();
+	}
+	
+	void visibleB_actionPerformed(ActionEvent e) {
+	    int[] toSetVisibility = resourcesTable.getSelectedRows();
+	    for (int i = 0; i < toSetVisibility.length; i++) {
+            CurrentProject.getResourcesList().setResourceVisibility(
+                    ((Resource) resourcesTable.getModel().getValueAt(toSetVisibility[i], ResourcesTable._RESOURCE))
+                    .getPath());
+        }
+	    resourcesTable.tableChanged();
 	}
 
 	/**

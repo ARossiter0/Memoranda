@@ -7,10 +7,10 @@
  * Copyright (c) 2003 Memoranda Team. http://memoranda.sf.net
  *-----------------------------------------------------
  */
-package main.java.memoranda;
+package memoranda;
 import java.util.Date;
 
-import main.java.memoranda.date.CalendarDate;
+import memoranda.date.CalendarDate;
 
 /**
  * 
@@ -42,6 +42,6 @@ public interface Event {
     Date getTime();
     String getTimeString();
     
-	boolean getWorkingDays();
+    boolean getWorkingDays();
     
 }

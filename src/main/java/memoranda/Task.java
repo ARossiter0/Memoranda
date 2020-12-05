@@ -6,11 +6,11 @@
  * @author Alex V. Alishevskikh, alex@openmechanics.net
  * Copyright (c) 2003 Memoranda Team. http://memoranda.sf.net
  */
-package main.java.memoranda;
+package memoranda;
 
 import java.util.Collection;
 
-import main.java.memoranda.date.CalendarDate;
+import memoranda.date.CalendarDate;
 
 /**
  * 
@@ -55,7 +55,8 @@ public interface Task {
 
     CalendarDate getEndDate();
     void setEndDate(CalendarDate date);
-    
+
+
     int getStatus(CalendarDate date);
     
     int getProgress();
@@ -71,15 +72,7 @@ public interface Task {
     
     String getText();
     void setText(String s);
-    
-    
-    
-    /*Collection getDependsFrom();
-    
-    void addDependsFrom(Task task);
-    
-    void removeDependsFrom(Task task);*/
-            
+ 
     Collection getSubTasks();    
     Task getSubTask(String id);
     
@@ -96,7 +89,13 @@ public interface Task {
     
     void freeze();
     void unfreeze();
-	long getRate();
+    long getRate();
     
     nu.xom.Element getContent();
+
+    /*Collection getDependsFrom();
+    
+    void addDependsFrom(Task task);
+    
+    void removeDependsFrom(Task task);*/
 }

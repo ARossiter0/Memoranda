@@ -1,12 +1,12 @@
-package main.java.memoranda.ui;
+package memoranda.ui;
 
 import javax.swing.*;
 import javax.swing.table.*;
 import javax.swing.tree.*;
 
-import main.java.memoranda.*;
-import main.java.memoranda.date.*;
-import main.java.memoranda.util.*;
+import memoranda.*;
+import memoranda.date.*;
+import memoranda.util.*;
 
 import javax.swing.event.*;
 
@@ -59,22 +59,22 @@ public class TaskTableSorter extends TaskTableModel {
     };
 
     public TaskTableSorter( TaskTable table ){
-		JTableHeader tableHeader = table.getTableHeader();
-		tableHeader.addMouseListener( new MouseHandler() );
-		tableHeader.setDefaultRenderer( new SortableHeaderRenderer());
-		_header = tableHeader;
-	}
-	/**
-	 * This constructor allows for the correct TaskTableModel to be instanciated.
-	 * Added for US149.
-	 */
-	public TaskTableSorter(TaskTable table, boolean isAssign){
-		super(isAssign);
-		JTableHeader tableHeader = table.getTableHeader();
-		tableHeader.addMouseListener( new MouseHandler() );
-		tableHeader.setDefaultRenderer( new SortableHeaderRenderer());
-		_header = tableHeader;
-	}
+        JTableHeader tableHeader = table.getTableHeader();
+        tableHeader.addMouseListener( new MouseHandler() );
+        tableHeader.setDefaultRenderer( new SortableHeaderRenderer());
+        _header = tableHeader;
+    }
+    /**
+     * This constructor allows for the correct TaskTableModel to be instanciated.
+     * Added for US149.
+     */
+    public TaskTableSorter(TaskTable table, boolean isAssign){
+        super(isAssign);
+        JTableHeader tableHeader = table.getTableHeader();
+        tableHeader.addMouseListener( new MouseHandler() );
+        tableHeader.setDefaultRenderer( new SortableHeaderRenderer());
+        _header = tableHeader;
+    }
 
 
     /**
@@ -84,6 +84,7 @@ public class TaskTableSorter extends TaskTableModel {
      * @return the child of the parent at the index
      */
     public Object getChild(Object parent, int index) {
+        /**
         Collection c = null;
         TaskList taskList = CurrentProject.getTaskList();
 
@@ -105,8 +106,50 @@ public class TaskTableSorter extends TaskTableModel {
         if (check_isInReducedOnly()) {
             c = taskList.getReducedTasks(c);
         }
+*/
 
-        Object array[] = c.toArray();
+
+        Collection collection = null;
+
+        if (parent instanceof Project) {
+            TaskList taskList = CurrentProject.getTaskList();
+            //TaskList taskList = CurrentStorage.get().openTaskList((Project) parent);
+            if (check_activeOnly()) {
+                collection = taskList.getActiveSubTasks(null, memoranda.date.CurrentDate.get());
+                System.out.println("[DEBUG] TaskTableSorter.getChild active "
+                        + "tasks size: " + collection.size());
+                //return CurrentProject.getTaskList().getActiveSubTasks(null, CurrentDate.get()).size();
+            } else {
+                collection = taskList.getTopLevelTasks();
+                System.out.println("[DEBUG] TaskTableSorter.getChild all "
+                        + "tasks size: " + collection.size());
+                //return CurrentProject.getTaskList().getTopLevelTasks().size();
+            }
+
+            if (check_isInReducedOnly()) {
+                collection = taskList.getReducedTasks(collection);
+            }
+        } else {
+
+            Task task = (Task) parent;
+            TaskList taskList = CurrentProject.getTaskList();
+
+            if (check_activeOnly()) {
+                collection = taskList.getActiveSubTasks(task.getID(), memoranda.date.CurrentDate.get());
+                //return CurrentProject.getTaskList().getActiveSubTasks(t.getID(), CurrentDate.get()).size();
+            } else {
+                collection = (Collection) task.getSubTasks();
+                //return t.getSubTasks().size();
+            }
+
+            if (check_isInReducedOnly()) {
+                collection = taskList.getReducedTasks(collection);
+            }
+        }
+
+
+
+        Object array[] = collection.toArray();
         Arrays.sort(array, comparator);
         if (opposite) {
             return array[array.length - index - 1];
@@ -121,53 +164,53 @@ public class TaskTableSorter extends TaskTableModel {
             int viewColumn = columnModel.getColumnIndexAtX(e.getX());
             int column = columnModel.getColumn(viewColumn).getModelIndex();
             if (column != -1) {
-				sorting_column = column;
-				
-				// 0 == priority icon column
-				// 4 == priority text column
-				if(column == 0) sorting_column = 4;
-				
-				if(e.isControlDown()) sorting_column = -1;
-				else opposite = !opposite;
-				
-				TaskTable treetable = ( (TaskTable) h.getTable());
-				
-				//java.util.Collection expanded = treetable.getExpandedTreeNodes();
-				
-				treetable.tableChanged();
-				//treetable.setExpandedTreeNodes(expanded);
-				//h.updateUI();
-				h.resizeAndRepaint();
+                sorting_column = column;
+                
+                // 0 == priority icon column
+                // 4 == priority text column
+                if(column == 0) sorting_column = 4;
+                
+                if(e.isControlDown()) sorting_column = -1;
+                else opposite = !opposite;
+                
+                TaskTable treetable = ( (TaskTable) h.getTable());
+                
+                //java.util.Collection expanded = treetable.getExpandedTreeNodes();
+                
+                treetable.tableChanged();
+                //treetable.setExpandedTreeNodes(expanded);
+                //h.updateUI();
+                h.resizeAndRepaint();
             }
         }
-	}
-	public void refreshHeaderAndContents() {
-		JTableHeader h = _header;
-		TableColumnModel columnModel = h.getColumnModel();
-		opposite = !opposite;
-		TaskTable treetable = ( (TaskTable) h.getTable());
-		treetable.tableChanged();
-		h.resizeAndRepaint();
-	}
+    }
+    public void refreshHeaderAndContents() {
+        JTableHeader h = _header;
+        TableColumnModel columnModel = h.getColumnModel();
+        opposite = !opposite;
+        TaskTable treetable = ( (TaskTable) h.getTable());
+        treetable.tableChanged();
+        h.resizeAndRepaint();
+    }
     
-	/**
-	* Render sorting header differently
-	*/
-	private class SortableHeaderRenderer implements TableCellRenderer {
-		public Component getTableCellRendererComponent(JTable table, 
-							       Object value,
-							       boolean isSelected, 
-							       boolean hasFocus,
-							       int row, 
-							       int column) {
-			JComponent c = new JLabel(value.toString());
-			if (column == sorting_column) {
-				c.setFont(c.getFont().deriveFont(Font.BOLD));
-				//c.setBorder(BorderFactory.createMatteBorder(1,1,1,1,Color.BLACK));
-			} else {
+    /**
+    * Render sorting header differently
+    */
+    private class SortableHeaderRenderer implements TableCellRenderer {
+        public Component getTableCellRendererComponent(JTable table, 
+                                   Object value,
+                                   boolean isSelected, 
+                                   boolean hasFocus,
+                                   int row, 
+                                   int column) {
+            JComponent c = new JLabel(value.toString());
+            if (column == sorting_column) {
+                c.setFont(c.getFont().deriveFont(Font.BOLD));
+                //c.setBorder(BorderFactory.createMatteBorder(1,1,1,1,Color.BLACK));
+            } else {
                 c.setFont(c.getFont().deriveFont(Font.PLAIN));
             }
-			return c;
-		}
-	}	
+            return c;
+        }
+    }    
 }

@@ -6,9 +6,9 @@
  * @author Alex V. Alishevskikh, alex@openmechanics.net
  * Copyright (c) 2003 Memoranda Team. http://memoranda.sf.net
  */
-package main.java.memoranda;
+package memoranda;
 
-import main.java.memoranda.date.CalendarDate;
+import memoranda.date.CalendarDate;
 /**
  * 
  */
@@ -20,9 +20,9 @@ public interface Note {
     String getTitle();
     void setTitle(String s);
     
-	String getId();
-	void setId(String s);
-	
+    String getId();
+    void setId(String s);
+    
     boolean isMarked();
     void setMark(boolean mark);
         

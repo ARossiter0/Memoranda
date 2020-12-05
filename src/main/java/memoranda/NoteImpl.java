@@ -6,9 +6,9 @@
  * @author Alex V. Alishevskikh, alex@openmechanics.net
  * Copyright (c) 2003 Memoranda Team. http://memoranda.sf.net
  */
-package main.java.memoranda;
+package memoranda;
 
-import main.java.memoranda.date.CalendarDate;
+import memoranda.date.CalendarDate;
 import nu.xom.Attribute;
 import nu.xom.Element;
 
@@ -30,18 +30,18 @@ public class NoteImpl implements Note, Comparable {
     }
 
     /**
-     * @see main.java.memoranda.Note#getDate()
+     * @see memoranda.Note#getDate()
      */
     public CalendarDate getDate() {
-		Element day = (Element)_el.getParent();
-		Element month = (Element)day.getParent();
-		Element year = (Element)month.getParent();
+        Element day = (Element)_el.getParent();
+        Element month = (Element)day.getParent();
+        Element year = (Element)month.getParent();
 
      //   return new CalendarDate(day.getAttribute("date").getValue());
-		
-		return new CalendarDate(new Integer(day.getAttribute("day").getValue()).intValue(), 
-								new Integer(month.getAttribute("month").getValue()).intValue(),
-								new Integer(year.getAttribute("year").getValue()).intValue());
+        
+        return new CalendarDate(new Integer(day.getAttribute("day").getValue()).intValue(), 
+                                new Integer(month.getAttribute("month").getValue()).intValue(),
+                                new Integer(year.getAttribute("year").getValue()).intValue());
 
     }
     
@@ -49,7 +49,7 @@ public class NoteImpl implements Note, Comparable {
         return _project;
     }
     /**
-     * @see main.java.memoranda.Note#getTitle()
+     * @see memoranda.Note#getTitle()
      */
     public String getTitle() {
         Attribute ta = _el.getAttribute("title");
@@ -57,7 +57,7 @@ public class NoteImpl implements Note, Comparable {
         return _el.getAttribute("title").getValue();
     }
     /**
-     * @see main.java.memoranda.Note#setTitle(java.lang.String)
+     * @see memoranda.Note#setTitle(java.lang.String)
      */
     public void setTitle(String s) {
         Attribute ta = _el.getAttribute("title");
@@ -65,33 +65,33 @@ public class NoteImpl implements Note, Comparable {
         else 
             ta.setValue(s);
     }
-	
-	/**
-     * @see main.java.memoranda.Note#getId
-     */
-	
-	public String getId() {
-		Attribute id = _el.getAttribute("refid");
-		if (id==null) return "";
-		return _el.getAttribute("refid").getValue();
-	}
-	
-	/**
-     * @see main.java.memoranda.Note#setId(java.lang.String)
-     */
-	 
-	public void setId(String s) {
-		Attribute id = _el.getAttribute("refid");
-		if(id==null) _el.addAttribute(new Attribute("refid", s));
-	}
+    
     /**
-     * @see main.java.memoranda.Note#isMarked()
+     * @see memoranda.Note#getId
+     */
+    
+    public String getId() {
+        Attribute id = _el.getAttribute("refid");
+        if (id==null) return "";
+        return _el.getAttribute("refid").getValue();
+    }
+    
+    /**
+     * @see memoranda.Note#setId(java.lang.String)
+     */
+     
+    public void setId(String s) {
+        Attribute id = _el.getAttribute("refid");
+        if(id==null) _el.addAttribute(new Attribute("refid", s));
+    }
+    /**
+     * @see memoranda.Note#isMarked()
      */
     public boolean isMarked() {
         return _el.getAttribute("bookmark") != null;        
     }
     /**
-     * @see main.java.memoranda.Note#setMark(boolean)
+     * @see memoranda.Note#setMark(boolean)
      */
     public void setMark(boolean mark) {
         Attribute ma = _el.getAttribute("bookmark");        
@@ -103,18 +103,18 @@ public class NoteImpl implements Note, Comparable {
         else if (!mark)
             _el.removeAttribute(ma);
     }
-	
-	/*
-	 * Comparable interface
-	 */
-	public int compareTo(Object o) {
-		Note note = (Note) o;
-		if(getDate().getDate().getTime() > note.getDate().getDate().getTime())
-			return 1;
-		else if(getDate().getDate().getTime() < note.getDate().getDate().getTime())
-			return -1;
-		else 
-			return 0;
-	}
+    
+    /*
+     * Comparable interface
+     */
+    public int compareTo(Object o) {
+        Note note = (Note) o;
+        if(getDate().getDate().getTime() > note.getDate().getDate().getTime())
+            return 1;
+        else if(getDate().getDate().getTime() < note.getDate().getDate().getTime())
+            return -1;
+        else 
+            return 0;
+    }
     
 }

@@ -45,17 +45,24 @@ I would also advise you to already fill out the Contributions section (End of sp
 
 | Date  | Attendees  |Meeting notes (very brief)   | Burndown Info (on track, ahead behind is enough) | TravisCI info (does the master pass) | Additional Info  |
 |---|---|---|---|--|--|
-|   |   |   |   |  |  |
-|   |   |   |   |  |  |
-|   |   |   |   |  |  |
-
+| 11/25/2020  |  Tristan | tristan gave an update on what he is working on  |   |  |  |
+| 11/27/2020  |  Tristan | tristan gave an update on what he was working on and shared his concerns  |   |  |  |
+| 11/28/2020  | Maayan, Alex, Ian  | We gave a short update indicating we are working on finishin user stories  |   |  |  |
+| 11/29/2020  | Maayan, Ian, Tristan  | The group shared questions and concerns  |   |  |  |
+| 12/01/2020  | Maayan, Tristan  | The group shared updates and questions  |   |  |  |
+| 12/02/2020  | Maayan, Ian, Tristan  | Wrapping up and scheduling of review  |   |  |  |
 ### Meeting Summary:
 
 > Add rows as needed and add the number how many meetings for each team member:
 
-   Name1 : Num Meetings
+   Ian : 3
 
-   Name2 : Num Meetings
+   Tristan : 5
+
+   Maayan : 4
+
+   Alex : 1
+
 
 
 ## 3: After the Sprint
@@ -63,21 +70,21 @@ I would also advise you to already fill out the Contributions section (End of sp
 ### Sprint Review
 Answer as a team!
 
-**Screen Cast link**: Your link
+**Screen Cast link**: https://youtu.be/yCpwu2Drvog
 
 > Answer the following questions as a team. 
 
 **What do you think is the value you created this Sprint?**
 
-> Your Answer
+> We finished most of the required functionality for the program (besides sprints). We also created the ability to load/save to a Data.json file automatically when using the application. 
 
 **Do you think you worked enough and that you did what was expected of you?**
 
-> Your Answer
+> We know that most of the team members worked far more than the suggested ~10 hours per week on this project. However, we were not able to achieve everything that was expected. We were unable to implement sprints, and the unit testing is more sparse than would be ideal. Frankly, we just didn’t have enough time. 
 
 **Would you say you met the customers’ expectations? Why, why not?**
 
-> Your Answer
+> No. We failed to implement the sprint-functionality. There may also be a quirk revolving around the .context xml file and it’s use. Besides that, however, we created a well-functioning product that provides accurate information about various todo lists, assignments, and free dates. 
 
 
 ### Sprint Retrospective
@@ -86,11 +93,11 @@ Answer as a team!
 
 **Did you meet your sprint goal?**
 
-> Your Answer
+> All of the created and assigned user stories and tasks were completed. However we failed to implement sprint functionality becuase it was glanced over. We did meet the majority of our express objectives. 
 
 **Did you complete all stories on your Spring Backlog?**
 
-> Your Answer
+> Yes. We did complete all of the stories on our sprint backlog. We did not, however, include creating and managing sprints on the sprint backlog like we originally intended. 
 
 **If not, what went wrong?**
 
@@ -98,59 +105,122 @@ Answer as a team!
 
 **Did you work at a consistent rate of speed, or velocity? (Meaning did you work during the whole Sprint or did you start working when the deadline approached.)**
 
-> Your Answer
+> No. Some of the team members had other obligations, and were unable to provide significant work until after a week. Also, some of the user stories were interdependent, and we were not able to push them to completion status until late into the sprint. 
 
 **Did you deliver business value?**
 
-> Your Answer
+> Yes. The program now functions mostly as intended and specified in the requirements, with the exception of the sprint functionality.  
 
 **Are there things the team thinks it can do better in the next Sprint?**
 
-> Your Answer
+> Our work on this project is concluded. There will be no next sprint. In future projects, we have learned to spend more time on planning and design, so that we do not end up with code that is hard to disentangle. 
 
 **How do you feel at this point? Get a pulse on the optimism of the team.**
 
-> Your Answer
+> We are very exhausted at this point, having spent as much time as was possible trying to finish this project, as well as preparing for exams and other assignments.   
 
 ### Contributions:
 
 > In this section I want you to point me to your main contributions (each of you individually). Some of the topcs are not needed for the first deliverables (you should know which things you should have done in this Sprint, if you don't then you have probably missed something):
 
-#### Team member A -- replace this with your name:
+#### Tristan Johnson:
   **Links to GitHub commits with main code contribution (up to 5 links) - all Sprints:
 
-    - link1
-    - link2
+    - https://github.com/amehlhase316/Leipzig-2/commit/c086dd277ff36bdf00119b00ec17ee31a3cf8529
+    - https://github.com/amehlhase316/Leipzig-2/commit/50f071fb708c6b371d7742b05473621184a1d8aa
+    - https://github.com/amehlhase316/Leipzig-2/commit/b7b1f3b0803202bc6b19159710babe22dec30eef
+    - https://github.com/amehlhase316/Leipzig-2/commit/7120fa9aa54c852ebf87a3d43c712249500f157d
 
    **GitHub links to your Unit Tests (up to 3 links) -- Sprint 2 and 3:
 
-    - link1
-    - link2
+    - https://github.com/amehlhase316/Leipzig-2/commit/69006a53cfb509184905645f8551f52ec4ce6048
+    - https://github.com/amehlhase316/Leipzig-2/commit/1851e9d040e92a063c4404e0a21ffc6bef25990a
+    - https://github.com/amehlhase316/Leipzig-2/commit/413e148892039e2b2f44adb4cb72752444868102
 
   **GitHub links to your Code Reviews (up to 3 links) -- Sprint 2 and 3:
 
-    - link1
-    - link2
+    - https://github.com/amehlhase316/Leipzig-2/pull/27
+    - https://github.com/amehlhase316/Leipzig-2/pull/28
 
   **How did you contribute to Static Analysis -- Sprint 3:
 
-    - link1
-    - link2
+    - I was the first to set up checkstyle, spotbugs, and TravisCI in one of my branches. 
+    - I did my best to make sure that my newly developed code was free of checkstyle and spotbugs errors. 
+    - I made sure that only pull requests that passed the TravisCI checks were merged into development. 
  
  **What was your main contribution to the Quality Policy documentation?:
 
-    - info
+    - I wrote the first draft for the static analysis information in the quality policy document: both for handling checkstyle and spotbugs, and for TravisCI. 
+
+#### Team member -- Ian Swanlund:
+  **Links to GitHub commits with main code contribution (up to 5 links) - all Sprints:
+
+    - https://github.com/amehlhase316/Leipzig-2/commit/b9dbfbe734c7f9c5436382dde7c643f033963a05
+    - https://github.com/amehlhase316/Leipzig-2/commit/069b07d185402b1718786252b29d715f30dd8c27
+    - https://github.com/amehlhase316/Leipzig-2/commit/5d9acafbe7b13c5bb4ceb8ef1f99b939d48d20ac
+
+
+   **GitHub links to your Unit Tests (up to 3 links) -- Sprint 2 and 3:
+
+    - https://github.com/amehlhase316/Leipzig-2/blob/US188_ExportData/src/test/java/US188Tests.java
+
+  **GitHub links to your Code Reviews (up to 3 links) -- Sprint 2 and 3:
+
+    - https://github.com/amehlhase316/Leipzig-2/pull/22
+    - https://github.com/amehlhase316/Leipzig-2/pull/25
+
+  **How did you contribute to Static Analysis -- Sprint 3:
+
+    - https://github.com/amehlhase316/Leipzig-2/commit/ee3c17333849a0ee6b98b1446ad7b87caeea17d2
+    - https://github.com/amehlhase316/Leipzig-2/commit/334a32f3f21adc6445dd557034eab8c4326fa237
+ 
+ **What was your main contribution to the Quality Policy documentation?:
+
+    - The revision of the policy to more accuratly reflect the nature and type of features that were being created and tested.
+      Before the revison the criteria for a submission was too broad and required an intensity and time commitment that overshadowed
+      the main team goal of creating business value in Memoranda through the completion of sprints. 
+
+#### Maayan Janow:
+  **Links to GitHub commits with main code contribution (up to 5 links) - all Sprints:
+
+    - https://github.com/amehlhase316/Leipzig-2/commit/85ab37122bef847097129e71d0038b1b610a8956
+    - https://github.com/amehlhase316/Leipzig-2/commit/696c0b7cdf9cd1910a4f0102fe7edcfa8ac432e2
+    - https://github.com/amehlhase316/Leipzig-2/commit/2b201ebdce15b345b958c9b6c243ee866c6282ff
+    - https://github.com/amehlhase316/Leipzig-2/commit/a04e82daebc3333e42e2c1e3565800d46ed4b5ee
+    - https://github.com/amehlhase316/Leipzig-2/commit/14bc78f1df79131fe699923003df44c29f858c49
+
+   **GitHub links to your Unit Tests (up to 3 links) -- Sprint 2 and 3:
+
+   https://github.com/amehlhase316/Leipzig-2/commit/326b2158f248bfa1ba5c3fcc6494dcf48c067638
+   https://github.com/amehlhase316/Leipzig-2/commit/94ee8dc188134df8ccb3487885e58449a04b5183
+
+  **GitHub links to your Code Reviews (up to 3 links) -- Sprint 2 and 3:
+
+    https://github.com/amehlhase316/Leipzig-2/commit/4543c07f671c86d1fc1c018d6e6b5e47b0d14d96
+    https://github.com/amehlhase316/Leipzig-2/commit/3f0c59aeb970435363908258fbe72a60a309a049
+
+  **How did you contribute to Static Analysis -- Sprint 3:
+
+    - I set up checkstyle and spotbug on my branch 
+    - I tried to adhere as much as possible to the policies and write quality code so that no new spotbugs and checkstyles are added 
+    - My builds always passed travisCI. 
+ 
+ **What was your main contribution to the Quality Policy documentation?:
+
+    - I modified the whole draft and added things that were missing, changes a lot of the initials suggestions and siplified the document. 
   
 ## 4: Checklist for you to see if you are done
-- [ ] Filled out the complete form from above, all fields are filled and written in full sentences
-- [ ] Read the kickoff again to make sure you have all the details
-- [ ] User Stories that were not completed, were left in the Sprint and a copy created
-- [ ] Your Quality Policies are accurate and up to date
-- [ ] **Individual** Survey was submitted **individually** (create checkboxes below -- see Canvas to get link)
+- [X] Filled out the complete form from above, all fields are filled and written in full sentences
+- [X] Read the kickoff again to make sure you have all the details
+- [X] User Stories that were not completed, were left in the Sprint and a copy created
+- [X] Your Quality Policies are accurate and up to date
+- [X] **Individual** Survey was submitted **individually** (create checkboxes below -- see Canvas to get link)
   - [ ] Team member 1
   - [ ] Team member 2
-- [ ] The original of this file was copied for the next Sprint (needed for all but last Sprint where you do not need to copy it anymore)
-  - [ ] Basic information (part 1) for next Sprint was included (meaning Spring Planning is complete)
-  - [ ] All User Stories have acceptance tests
-  - [ ] User Stories in your new Sprint Backlog have initial tasks which are in New
-  - [ ] You know how to proceed
+  - [ ] Team member 3
+  - [X] Team member 4
+- [X] The original of this file was copied for the next Sprint (needed for all but last Sprint where you do not need to copy it anymore)
+  - [X] Basic information (part 1) for next Sprint was included (meaning Spring Planning is complete)
+  - [X] All User Stories have acceptance tests
+  - [X] User Stories in your new Sprint Backlog have initial tasks which are in New
+  - [X] You know how to proceed

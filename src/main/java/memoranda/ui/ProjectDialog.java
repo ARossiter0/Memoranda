@@ -1,4 +1,4 @@
-package main.java.memoranda.ui;
+package memoranda.ui;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -29,18 +29,18 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import main.java.memoranda.Project;
-import main.java.memoranda.ProjectManager;
-import main.java.memoranda.date.CalendarDate;
-import main.java.memoranda.util.CurrentStorage;
-import main.java.memoranda.util.Local;
+import memoranda.Project;
+import memoranda.ProjectManager;
+import memoranda.date.CalendarDate;
+import memoranda.util.CurrentStorage;
+import memoranda.util.Local;
 
-import main.java.memoranda.CurrentProject;
-import main.java.memoranda.LectureTime;
-import main.java.memoranda.SpecialCalendarDate;
-import main.java.memoranda.Task;
-import main.java.memoranda.TaskList;
-import main.java.memoranda.TaskListImpl;
+import memoranda.CurrentProject;
+import memoranda.LectureTime;
+import memoranda.SpecialCalendarDate;
+import memoranda.Task;
+import memoranda.TaskList;
+import memoranda.TaskListImpl;
 
 /*$Id: ProjectDialog.java,v 1.26 2004/10/18 19:09:10 ivanrise Exp $*/
 public class ProjectDialog extends JDialog {
@@ -115,7 +115,7 @@ public class ProjectDialog extends JDialog {
         header.setForeground(new Color(0, 0, 124));
         header.setText(Local.getString("Course"));
         //header.setHorizontalAlignment(SwingConstants.CENTER);
-        header.setIcon(new ImageIcon(main.java.memoranda.ui.ProjectDialog.class.getResource(
+        header.setIcon(new ImageIcon(memoranda.ui.ProjectDialog.class.getResource(
             "/ui/icons/project48.png")));
         topPanel.add(header);
         
@@ -183,7 +183,7 @@ public class ProjectDialog extends JDialog {
         
         sdButton.setMinimumSize(new Dimension(20, 20));
         sdButton.setPreferredSize(new Dimension(20, 20));
-        sdButton.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/calendar.png")));
+        sdButton.setIcon(new ImageIcon(memoranda.ui.AppFrame.class.getResource("/ui/icons/calendar.png")));
         sdButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 sdButton_actionPerformed(e);
@@ -248,7 +248,7 @@ public class ProjectDialog extends JDialog {
         edButton.setMinimumSize(new Dimension(20, 20));
         edButton.setMaximumSize(new Dimension(20, 20));
         edButton.setPreferredSize(new Dimension(20, 20));
-        edButton.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/calendar.png")));
+        edButton.setIcon(new ImageIcon(memoranda.ui.AppFrame.class.getResource("/ui/icons/calendar.png")));
         edButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 edButton_actionPerformed(e);
@@ -304,7 +304,7 @@ public class ProjectDialog extends JDialog {
         
         feButton.setMinimumSize(new Dimension(20, 20));
         feButton.setPreferredSize(new Dimension(20, 20));
-        feButton.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/calendar.png")));
+        feButton.setIcon(new ImageIcon(memoranda.ui.AppFrame.class.getResource("/ui/icons/calendar.png")));
         feButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 sdButton_actionPerformed(e);
@@ -328,7 +328,7 @@ public class ProjectDialog extends JDialog {
         //Call for action - open events window upon pressing 
         setLectureDays.setText(Local.getString("Set Lecture Times"));
         setLectureDays.setIcon(
-            new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/notify.png")));
+            new ImageIcon(memoranda.ui.AppFrame.class.getResource("/ui/icons/notify.png")));
         setLectureDays.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	setLectureDays_actionPerformed(e);
@@ -338,7 +338,7 @@ public class ProjectDialog extends JDialog {
         
         setFreeDays.setText(Local.getString("Set Free Days"));
         setFreeDays.setIcon(
-            new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/notify.png")));
+            new ImageIcon(memoranda.ui.AppFrame.class.getResource("/ui/icons/notify.png")));
         
         gbc = new GridBagConstraints();
         gbc.gridx = 4; 
@@ -350,7 +350,7 @@ public class ProjectDialog extends JDialog {
         //Call for action - open events window upon pressing 
         setFreeDays.setText(Local.getString("set Free Days"));
         setFreeDays.setIcon(
-            new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/notify.png")));
+            new ImageIcon(memoranda.ui.AppFrame.class.getResource("/ui/icons/notify.png")));
         setFreeDays.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	setFreeDays_actionPerformed(e);
@@ -364,7 +364,7 @@ public class ProjectDialog extends JDialog {
         
         setHolidays.setText(Local.getString("Add Holidays"));
         setHolidays.setIcon(
-            new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/notify.png")));
+            new ImageIcon(memoranda.ui.AppFrame.class.getResource("/ui/icons/notify.png")));
         
         gbc = new GridBagConstraints();
         gbc.gridx = 4; 
@@ -376,7 +376,7 @@ public class ProjectDialog extends JDialog {
         //Call for action - open events window upon pressing 
         setHolidays.setText(Local.getString("Add Holidays"));
         setHolidays.setIcon(
-            new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/notify.png")));
+            new ImageIcon(memoranda.ui.AppFrame.class.getResource("/ui/icons/notify.png")));
         setHolidays.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	setHolidays_actionPerformed(e);
@@ -386,7 +386,7 @@ public class ProjectDialog extends JDialog {
         //-----------------------------
         
         setBreaks.setText(Local.getString("Add Breaks"));
-        setBreaks.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/notify.png")));
+        setBreaks.setIcon(new ImageIcon(memoranda.ui.AppFrame.class.getResource("/ui/icons/notify.png")));
 
         gbc = new GridBagConstraints();
         gbc.gridx = 4; 
@@ -397,7 +397,7 @@ public class ProjectDialog extends JDialog {
         
         //Call for action - open events window upon pressing 
         setBreaks.setText(Local.getString("Add Breaks"));
-        setBreaks.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/notify.png")));
+        setBreaks.setIcon(new ImageIcon(memoranda.ui.AppFrame.class.getResource("/ui/icons/notify.png")));
         setBreaks.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	setBreaks_actionPerformed(e);
@@ -570,7 +570,9 @@ public class ProjectDialog extends JDialog {
         Project prj = ProjectManager.createProject(title, startD, endD, FinalExamDate);
         CurrentStorage.get().storeProjectManager(); //does this set the current project? If not set it before setTasks is called
         CurrentProject.set(prj);
-        
+
+        CurrentProject.currentTaskType = CurrentProject.TaskType.DEFAULT;
+
         for(LectureTime lt : dlg.lectureTimes) {
             Task newTask = CurrentProject.getTaskList().createLectureTask(lt.day, lt.hour, lt.min, "Lecture");
         }
@@ -585,6 +587,8 @@ public class ProjectDialog extends JDialog {
         }
        
         CurrentStorage.get().storeTaskList(CurrentProject.getTaskList(), CurrentProject.get());
+
+        // TODO store freeDay, holiday, and break
         
         CurrentProject.updateAllListeners();
 
