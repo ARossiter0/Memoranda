@@ -45,17 +45,24 @@ I would also advise you to already fill out the Contributions section (End of sp
 
 | Date  | Attendees  |Meeting notes (very brief)   | Burndown Info (on track, ahead behind is enough) | TravisCI info (does the master pass) | Additional Info  |
 |---|---|---|---|--|--|
-|   |   |   |   |  |  |
-|   |   |   |   |  |  |
-|   |   |   |   |  |  |
-
+| 11/25/2020  |  Tristan | tristan gave an update on what he is working on  |   |  |  |
+| 11/27/2020  |  Tristan | tristan gave an update on what he was working on and shared his concerns  |   |  |  |
+| 11/28/2020  | Maayan, Alex, Ian  | We gave a short update indicating we are working on finishin user stories  |   |  |  |
+| 11/29/2020  | Maayan, Ian, Tristan  | The group shared questions and concerns  |   |  |  |
+| 12/01/2020  | Maayan, Tristan  | The group shared updates and questions  |   |  |  |
+| 12/02/2020  | Maayan, Ian, Tristan  | Wrapping up and scheduling of review  |   |  |  |
 ### Meeting Summary:
 
 > Add rows as needed and add the number how many meetings for each team member:
 
-   Name1 : Num Meetings
+   Ian : 3
 
-   Name2 : Num Meetings
+   Tristan : 5
+
+   Maayan : 4
+
+   Alex : 1
+
 
 
 ## 3: After the Sprint
@@ -63,7 +70,7 @@ I would also advise you to already fill out the Contributions section (End of sp
 ### Sprint Review
 Answer as a team!
 
-**Screen Cast link**: Your link
+**Screen Cast link**: https://youtu.be/yCpwu2Drvog
 
 > Answer the following questions as a team. 
 
@@ -172,19 +179,48 @@ Answer as a team!
     - The revision of the policy to more accuratly reflect the nature and type of features that were being created and tested.
       Before the revison the criteria for a submission was too broad and required an intensity and time commitment that overshadowed
       the main team goal of creating business value in Memoranda through the completion of sprints. 
+
+#### Maayan Janow:
+  **Links to GitHub commits with main code contribution (up to 5 links) - all Sprints:
+
+    - https://github.com/amehlhase316/Leipzig-2/commit/85ab37122bef847097129e71d0038b1b610a8956
+    - https://github.com/amehlhase316/Leipzig-2/commit/696c0b7cdf9cd1910a4f0102fe7edcfa8ac432e2
+    - https://github.com/amehlhase316/Leipzig-2/commit/2b201ebdce15b345b958c9b6c243ee866c6282ff
+    - https://github.com/amehlhase316/Leipzig-2/commit/a04e82daebc3333e42e2c1e3565800d46ed4b5ee
+    - https://github.com/amehlhase316/Leipzig-2/commit/14bc78f1df79131fe699923003df44c29f858c49
+
+   **GitHub links to your Unit Tests (up to 3 links) -- Sprint 2 and 3:
+
+   https://github.com/amehlhase316/Leipzig-2/commit/326b2158f248bfa1ba5c3fcc6494dcf48c067638
+   https://github.com/amehlhase316/Leipzig-2/commit/94ee8dc188134df8ccb3487885e58449a04b5183
+
+  **GitHub links to your Code Reviews (up to 3 links) -- Sprint 2 and 3:
+
+    https://github.com/amehlhase316/Leipzig-2/commit/4543c07f671c86d1fc1c018d6e6b5e47b0d14d96
+    https://github.com/amehlhase316/Leipzig-2/commit/3f0c59aeb970435363908258fbe72a60a309a049
+
+  **How did you contribute to Static Analysis -- Sprint 3:
+
+    - I set up checkstyle and spotbug on my branch 
+    - I tried to adhere as much as possible to the policies and write quality code so that no new spotbugs and checkstyles are added 
+    - My builds always passed travisCI. 
+ 
+ **What was your main contribution to the Quality Policy documentation?:
+
+    - I modified the whole draft and added things that were missing, changes a lot of the initials suggestions and siplified the document. 
   
 ## 4: Checklist for you to see if you are done
-- [ ] Filled out the complete form from above, all fields are filled and written in full sentences
-- [ ] Read the kickoff again to make sure you have all the details
-- [ ] User Stories that were not completed, were left in the Sprint and a copy created
-- [ ] Your Quality Policies are accurate and up to date
-- [ ] **Individual** Survey was submitted **individually** (create checkboxes below -- see Canvas to get link)
+- [X] Filled out the complete form from above, all fields are filled and written in full sentences
+- [X] Read the kickoff again to make sure you have all the details
+- [X] User Stories that were not completed, were left in the Sprint and a copy created
+- [X] Your Quality Policies are accurate and up to date
+- [X] **Individual** Survey was submitted **individually** (create checkboxes below -- see Canvas to get link)
   - [ ] Team member 1
   - [ ] Team member 2
   - [ ] Team member 3
   - [X] Team member 4
-- [ ] The original of this file was copied for the next Sprint (needed for all but last Sprint where you do not need to copy it anymore)
-  - [ ] Basic information (part 1) for next Sprint was included (meaning Spring Planning is complete)
-  - [ ] All User Stories have acceptance tests
-  - [ ] User Stories in your new Sprint Backlog have initial tasks which are in New
-  - [ ] You know how to proceed
+- [X] The original of this file was copied for the next Sprint (needed for all but last Sprint where you do not need to copy it anymore)
+  - [X] Basic information (part 1) for next Sprint was included (meaning Spring Planning is complete)
+  - [X] All User Stories have acceptance tests
+  - [X] User Stories in your new Sprint Backlog have initial tasks which are in New
+  - [X] You know how to proceed
